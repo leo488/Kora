@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useInView } from '../hooks/useInView'
 import { ArrowIcon } from '../components/icons'
+import { HeroCarousel } from '../components/HeroCarousel'
 import { PROJECTS } from '../data'
 
 const CATEGORY_TABS = [
@@ -14,7 +15,10 @@ const CATEGORY_TABS = [
 
 export function Home() {
   const [activeTab, setActiveTab] = useState(CATEGORY_TABS[0].label)
+  const [activeProject, setActiveProject] = useState(PROJECTS[0].name)
   const [aboutRef, aboutVisible] = useInView<HTMLElement>()
+
+  const project = PROJECTS.find((p) => p.name === activeProject) ?? PROJECTS[0]
 
   return (
     <>
@@ -32,37 +36,51 @@ export function Home() {
         ))}
       </div>
 
-      <section className="kora-hero kora-container">
-        <aside className="kora-worklist">
-          {PROJECTS.map((project) => (
-            <a
-              key={project.name}
-              href="#"
-              className={project.active ? 'is-active' : ''}
-            >
-              {project.active && <ArrowIcon />}
-              {project.name}
-            </a>
-          ))}
-        </aside>
+      <section className="kora-hero">
+        <nav className="kora-worklist kora-container" aria-label="Featured projects">
+          {PROJECTS.map((item) => {
+            const isActive = item.name === activeProject
+            return (
+              <button
+                key={item.name}
+                type="button"
+                className={isActive ? 'is-active' : ''}
+                aria-current={isActive}
+                onClick={() => setActiveProject(item.name)}
+              >
+                {isActive && <ArrowIcon />}
+                {item.brand}
+              </button>
+            )
+          })}
+        </nav>
 
         <article className="kora-showcase-media">
-          <img
-            className="kora-showcase-image"
-            src="/hero-01.png"
-            alt="iPayBTC branded t-shirt on a tennis court"
+          <HeroCarousel
+            key={project.name}
+            images={project.images}
+            label={project.brand}
           />
 
           <div className="kora-showcase-overlay">
             <div className="kora-showcase-divider" aria-hidden="true" />
             <div className="kora-showcase-tags">
-              <span>Categories/Industrues</span>
-              <span>Categories/Industrues</span>
-              <span className="kora-showcase-stat">12TRN</span>
+              <span>{project.category}</span>
+              <span>{project.year}</span>
+              <span className="kora-showcase-stat">{project.stat}</span>
             </div>
-            <h1>iPayBTC &mdash; re&#8209;Designing a Bitcoin Brand for Everyday Use</h1>
+            <h1>{project.headline}</h1>
           </div>
         </article>
+      </section>
+
+      <section className="kora-brands">
+        <span className="kora-brands-label">Brands we have worked with</span>
+        <ul className="kora-brands-list">
+          {PROJECTS.map((item) => (
+            <li key={item.name}>{item.brand}</li>
+          ))}
+        </ul>
       </section>
 
       <section
