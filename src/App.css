@@ -12,14 +12,47 @@
    page instead of needing a parallel set of `.is-dark` rules per component. */
 
 .kora-app.is-dark {
+  /* Grounds are tokens rather than literals so a theme can re-point them in
+     one place: --ground is the page itself, --ground-lift a surface raised off
+     it, --plate what sits behind a picture before it paints. */
+  --ground: #1e1e1e;
+  --ground-lift: #262626;
+  --plate: #101010;
+  --plate-lift: #2a2a2a;
+  --band: var(--brand);
+
   --text: rgba(255, 255, 255, 0.62);
   --text-h: #fff;
-  --bg: #1e1e1e;
+  --bg: var(--ground);
   --border: rgba(255, 255, 255, 0.14);
   --code-bg: rgba(255, 255, 255, 0.08);
 
-  background: #1e1e1e;
+  background: var(--ground);
   color: var(--text);
+}
+
+/* Darker — the same site with every ground taken to true black. */
+
+.kora-app.is-darker {
+  --ground: #000;
+  --ground-lift: #0d0d0d;
+  --plate: #000;
+  --plate-lift: #141414;
+  --border: rgba(255, 255, 255, 0.16);
+}
+
+/* Blue — the brand colour carries the whole page rather than one band. The
+   contact band then has to move off it, or it would vanish into the page. */
+
+.kora-app.is-blue {
+  --ground: var(--brand);
+  --ground-lift: #16249f;
+  --plate: #0e1873;
+  --plate-lift: #2438cc;
+  --band: var(--brand-dark);
+  --text: rgba(255, 255, 255, 0.76);
+  --border: rgba(255, 255, 255, 0.26);
+  --code-bg: rgba(255, 255, 255, 0.12);
 }
 
 /* The strip was a white band back when it sat above a light page. The site runs
@@ -27,7 +60,7 @@
    not a bright bar across the top of every page. */
 
 .kora-app.is-dark .kora-announcement {
-  background: #262626;
+  background: var(--ground-lift);
   color: rgba(255, 255, 255, 0.86);
   border-bottom: 1px solid var(--border);
 }
@@ -40,12 +73,12 @@
 
 .kora-app.is-dark .kora-showcase-media,
 .kora-app.is-dark .kora-about-photo {
-  background: #2a2a2a;
+  background: var(--plate-lift);
 }
 
 .kora-app.is-dark .kora-about,
 .kora-app.is-dark .kora-footer {
-  background: #1e1e1e;
+  background: var(--ground);
 }
 
 .kora-announcement {
@@ -765,7 +798,7 @@
   max-height: none;
   /* The stills and the film are all about 2:1 — wider than any laptop viewport
      — so a full-height frame crops their sides rather than letterboxing. */
-  background: #101010;
+  background: var(--plate);
 }
 
 /* A scrim only where the bars sit. Without it the header lands on whatever the
@@ -1261,7 +1294,7 @@
    on the dark home route and the light inner pages. */
 
 .kora-offices {
-  background: var(--brand);
+  background: var(--band);
   color: rgba(255, 255, 255, 0.72);
   padding: 124px 0 136px;
 }
@@ -1648,7 +1681,7 @@
   overflow: hidden;
   /* Overridden per card above — a narrow card crops squarer than a wide one. */
   aspect-ratio: 3 / 2;
-  background: #101010;
+  background: var(--plate);
 }
 
 /* The plates stack on one cell and cross-dissolve, so a project with several
@@ -1840,7 +1873,7 @@
   width: 100%;
   min-height: 60vh;
   padding: 132px 24px 144px;
-  background: #1e1e1e;
+  background: var(--ground);
   color: #fff;
   box-sizing: border-box;
 }
