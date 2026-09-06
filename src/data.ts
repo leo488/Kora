@@ -139,7 +139,7 @@ import tagmi021200 from './assets/tagmi-02-1200.jpg'
 import tagmi022000 from './assets/tagmi-02-2000.jpg'
 import tagmi023000 from './assets/tagmi-02-3000.jpg'
 import tagmi041200 from './assets/tagmi-04-1200.jpg'
-import tagmi042000 from './assets/tagmi-04-2000.jpg'
+import tagmi041774 from './assets/tagmi-04-1774.jpg'
 import tagmi031200 from './assets/tagmi-03-1200.jpg'
 import tagmi032000 from './assets/tagmi-03-2000.jpg'
 import tagmi033000 from './assets/tagmi-03-3000.jpg'
@@ -210,7 +210,10 @@ const FRAMES = {
   escro02: frame([[escro021200, 1200], [escro022000, 2000], [escro023000, 3000]]),
   // Only two tiers: the source is 2752px wide, so a 3000 would be upscaled —
   // bigger bytes for no more detail.
-  tagmi04: frame([[tagmi041200, 1200], [tagmi042000, 2000]]),
+  // 1774 is this plate's native width rather than a round tier: the source is
+  // smaller than every other frame in the set, so resampling it up to 2000
+  // would cost bytes without adding detail.
+  tagmi04: frame([[tagmi041200, 1200], [tagmi041774, 1774]]),
   tagmi01: frame([[tagmi011200, 1200], [tagmi012000, 2000], [tagmi013000, 3000]]),
   tagmi02: frame([[tagmi021200, 1200], [tagmi022000, 2000], [tagmi023000, 3000]]),
   tagmi03: frame([[tagmi031200, 1200], [tagmi032000, 2000], [tagmi033000, 3000]]),
