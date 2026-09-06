@@ -138,6 +138,8 @@ import tagmi013000 from './assets/tagmi-01-3000.jpg'
 import tagmi021200 from './assets/tagmi-02-1200.jpg'
 import tagmi022000 from './assets/tagmi-02-2000.jpg'
 import tagmi023000 from './assets/tagmi-02-3000.jpg'
+import tagmi041200 from './assets/tagmi-04-1200.jpg'
+import tagmi042000 from './assets/tagmi-04-2000.jpg'
 import tagmi031200 from './assets/tagmi-03-1200.jpg'
 import tagmi032000 from './assets/tagmi-03-2000.jpg'
 import tagmi033000 from './assets/tagmi-03-3000.jpg'
@@ -206,6 +208,9 @@ const FRAMES = {
   ipaybtc03: frame([[ipaybtc031200, 1200], [ipaybtc032000, 2000], [ipaybtc033000, 3000]]),
   escro01: frame([[escro011200, 1200], [escro012000, 2000], [escro013000, 3000]]),
   escro02: frame([[escro021200, 1200], [escro022000, 2000], [escro023000, 3000]]),
+  // Only two tiers: the source is 2752px wide, so a 3000 would be upscaled —
+  // bigger bytes for no more detail.
+  tagmi04: frame([[tagmi041200, 1200], [tagmi042000, 2000]]),
   tagmi01: frame([[tagmi011200, 1200], [tagmi012000, 2000], [tagmi013000, 3000]]),
   tagmi02: frame([[tagmi021200, 1200], [tagmi022000, 2000], [tagmi023000, 3000]]),
   tagmi03: frame([[tagmi031200, 1200], [tagmi032000, 2000], [tagmi033000, 3000]]),
@@ -285,7 +290,7 @@ export const PROJECTS: Project[] = [
     year: '2025',
     headline: 'Tagmi — A Bold Identity for a Social Marketplace',
     stat: '860K',
-    images: [FRAMES.tagmi01, FRAMES.tagmi02, FRAMES.tagmi03],
+    images: [FRAMES.tagmi04, FRAMES.tagmi01, FRAMES.tagmi02, FRAMES.tagmi03],
   },
   {
     name: 'Framefest',
@@ -406,16 +411,15 @@ type ReelEntry =
 
 const HERO_REEL: ReelEntry[] = [
   { project: 'Ipaybtc', film: true },
+  // The billboard plate only — the key-tag frame sits on the Work wall.
   { project: '3Projects', frame: 0 },
-  { project: '3Projects', frame: 1 },
-  { project: 'Framefest', frame: 0 },
-  { project: 'Framefest', frame: 1 },
-  // All three Refreeg plates: the group, the 3D mark, the app.
+  // Heads together. The 3D mark and the app screens stay on Work.
   { project: 'Refreeg', frame: 0 },
-  { project: 'Refreeg', frame: 1 },
-  { project: 'Refreeg', frame: 2 },
-  // Frame 1, not 0 — the icon-and-3D plate rather than the type lockup.
-  { project: 'Tagmi', frame: 1 },
+  // Tagmi leads on its 3D characters, then cuts to the icon lockup.
+  { project: 'Tagmi', frame: 0 },
+  { project: 'Tagmi', frame: 2 },
+  // The illustrated pair; the rainbow plate stays on Work.
+  { project: 'Framefest', frame: 0 },
   { closing: true },
 ]
 
