@@ -282,11 +282,11 @@ export const PARTNERS: Partner[] = [
   { name: 'Õhobù', logo: logoOhobu, scale: 0.9 },
   { name: 'Tagmi', logo: logoTagmi, scale: 0.88 },
   // Stacked lockup, so it earns height it would never get from a shared cap.
-  { name: 'Cleon', logo: logoCleon, scale: 1.2 },
+  { name: 'Cleon', logo: logoCleon, scale: 1.45 },
   { name: 'Refreeg', logo: logoRefreeg, scale: 0.92 },
   { name: 'Cleon de Spotless', logo: logoCleonSpotless, scale: 0.82 },
   // Widest mark in the set at 6.8:1 — the most shrinking to do.
-  { name: 'Squaremetre', logo: logoSquaremetre, scale: 0.58 },
+  { name: 'Squaremetre', logo: logoSquaremetre, scale: 0.72 },
   // Very heavy strokes, so it reads large even set small.
   { name: 'Whot', logo: logoWhot, scale: 0.66 },
   { name: 'Frame Fest', logo: logoFrameFest, scale: 0.86 },
