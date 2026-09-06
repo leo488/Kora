@@ -105,7 +105,7 @@ export function Home() {
         className={`kora-about${aboutVisible ? ' is-visible' : ''}`}
         ref={aboutRef}
       >
-        <KoraMark className="kora-about-mark" />
+        <KoraMark className="kora-about-mark kora-mark-drop" />
 
         <span className="kora-about-badge">This Is Kora</span>
 

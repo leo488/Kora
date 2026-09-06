@@ -14,6 +14,11 @@ export function useInView<T extends HTMLElement>() {
       return
     }
 
+    // threshold 0 rather than a fraction of the element: a section taller than
+    // about six screens can never show 15% of itself at once, so a percentage
+    // threshold silently leaves it hidden forever as a section grows. The
+    // bottom rootMargin is what holds the reveal back until the section is
+    // properly on screen, and it does that independently of the height.
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -21,7 +26,7 @@ export function useInView<T extends HTMLElement>() {
           observer.disconnect()
         }
       },
-      { threshold: 0.15 },
+      { threshold: 0, rootMargin: '0px 0px -12% 0px' },
     )
 
     observer.observe(el)
