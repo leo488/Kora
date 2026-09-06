@@ -786,6 +786,65 @@
   );
 }
 
+/* Sound toggle — bottom right of the hero, over the picture. Square, hairline,
+   same language as the Book A Call button rather than a floating round icon. */
+
+.kora-sound-toggle {
+  position: absolute;
+  right: 28px;
+  bottom: 28px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(0, 0, 0, 0.32);
+  /* The picture underneath is anything at all, so the chip carries its own
+     legibility rather than relying on the frame behind it. */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.kora-sound-toggle:hover {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+.kora-sound-toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.kora-sound-toggle svg {
+  flex: none;
+}
+
+@media (max-width: 700px) {
+  .kora-sound-toggle {
+    right: 16px;
+    bottom: 16px;
+    padding: 8px 11px;
+    font-size: 11px;
+  }
+
+  /* The label is the first thing to go on a phone — the icon carries it, and
+     the caption underneath needs the room more. */
+  .kora-sound-toggle span {
+    display: none;
+  }
+}
+
 /* Top bars float over the frame. They keep their own stacking order; the
    wrapper is what lifts them out of flow. */
 

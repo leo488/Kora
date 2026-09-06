@@ -13,6 +13,24 @@ interface HeroCarouselProps {
 const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+const SOUND_KEY = 'kora:hero-sound'
+
+/* Muted is not a style choice, it is the price of autoplay: a browser will
+   refuse to start a video that makes noise until the visitor has interacted
+   with the page. So the reel opens silent and the toggle below turns it up —
+   the click itself is the gesture that buys us the right to play sound. A
+   stored preference is worth attempting on the next visit, because a browser
+   that has seen enough engagement will allow it, but it can still be refused
+   and we have to cope with that rather than end up with a stalled film. */
+const storedSoundPref = () => {
+  try {
+    return localStorage.getItem(SOUND_KEY) === 'on'
+  } catch {
+    // Private mode, or site data blocked. Silence is the safe default.
+    return false
+  }
+}
+
 export function HeroCarousel({
   slides,
   index,
@@ -20,6 +38,10 @@ export function HeroCarousel({
   intervalMs = 6500,
 }: HeroCarouselProps) {
   const [playing, setPlaying] = useState(true)
+  const [soundOn, setSoundOn] = useState(storedSoundPref)
+
+  // Whether any frame in the reel has audio to turn up in the first place.
+  const hasFilm = slides.some((slide) => slide.video)
 
   // Keeping the callback in a ref means the hold timer below restarts only when
   // the frame actually changes, not on every re-render of the page around it.
@@ -67,12 +89,40 @@ export function HeroCarousel({
         film.pause()
         continue
       }
+
+      film.muted = !soundOn
       film.currentTime = 0
+
       // A refused autoplay is not a failure here — the poster is already the
-      // frame underneath, so the reel just shows a still and moves on.
-      void film.play().catch(() => {})
+      // frame underneath, so the reel just shows a still and moves on. But a
+      // refusal caused by the sound is worth one retry muted, otherwise asking
+      // for audio would cost the visitor the picture as well.
+      void film.play().catch(() => {
+        if (film.muted) return
+        film.muted = true
+        setSoundOn(false)
+        void film.play().catch(() => {})
+      })
     }
-  }, [index, playing])
+  }, [index, playing, soundOn])
+
+  const toggleSound = () => {
+    const next = !soundOn
+    setSoundOn(next)
+    try {
+      localStorage.setItem(SOUND_KEY, next ? 'on' : 'off')
+    } catch {
+      // Preference just will not survive the visit; the toggle still works.
+    }
+
+    // Apply it to the frame that is playing right now rather than waiting for
+    // the effect, so the click and the sound land together.
+    const live = films.current.get(index)
+    if (live) {
+      live.muted = !next
+      if (next) void live.play().catch(() => {})
+    }
+  }
 
   useEffect(() => {
     if (!playing || slides.length <= 1 || prefersReducedMotion()) return
@@ -115,15 +165,14 @@ export function HeroCarousel({
                 films.current.delete(i)
                 return
               }
-              // Set on the element, not via the attribute: an unmuted video is
-              // refused autoplay outright.
-              el.muted = true
+              // Set on the element, not via the attribute: React does not
+              // reliably reflect `muted`, and getting it wrong costs autoplay.
+              el.muted = !soundOn
               films.current.set(i, el)
             }}
             className={className}
             src={slide.video}
             poster={slide.src}
-            muted
             playsInline
             preload={i === 0 ? 'auto' : 'metadata'}
             aria-label={isActive ? label : undefined}
@@ -149,7 +198,57 @@ export function HeroCarousel({
 
       {/* No progress ticks, no dots, no arrows: the reel is meant to read as a
           film the visitor has walked into, and every affordance that says
-          "slideshow" undoes that. It advances on its own or not at all. */}
+          "slideshow" undoes that. It advances on its own or not at all.
+
+          The sound toggle is the one exception — audio that cannot be turned
+          off is worse than no audio, so it stays reachable at all times. */}
+      {hasFilm && (
+        <button
+          type="button"
+          className="kora-sound-toggle"
+          onClick={toggleSound}
+          aria-pressed={soundOn}
+        >
+          <SoundIcon on={soundOn} />
+          <span>{soundOn ? 'Sound on' : 'Sound off'}</span>
+        </button>
+      )}
     </div>
+  )
+}
+
+/** Speaker with either two arcs or a cross, drawn to the same weight as the
+ *  arrow so the hero's two marks match. */
+function SoundIcon({ on }: { on: boolean }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M3.4 6.1h2.1L8.6 3.5v9L5.5 9.9H3.4z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      {on ? (
+        <path
+          d="M10.7 5.8c1.4 1.2 1.4 3.2 0 4.4M12.6 3.8c2.4 2.2 2.4 6.2 0 8.4"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+        />
+      ) : (
+        <path
+          d="M11 6.2l3.4 3.6M14.4 6.2L11 9.8"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+        />
+      )}
+    </svg>
   )
 }
