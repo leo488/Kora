@@ -1,5 +1,7 @@
 .kora-app {
-  min-height: 100vh;
+  /* svh, not vh: on iOS the vh unit measures the viewport with the address bar
+     hidden, which leaves a strip of blank page below the footer on first load. */
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -47,6 +49,10 @@
 }
 
 .kora-announcement {
+  /* Above the drawer, like the header, so the two bars at the top of the page
+     stay put when the drawer slides up behind them. */
+  position: relative;
+  z-index: 110;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,43 +210,15 @@
   transition-delay: 0.44s;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .kora-header-wrap,
-  .kora-subnav,
-  .kora-hero,
-  .kora-showcase-media,
-  .kora-showcase-divider,
-  .kora-showcase-tags,
-  .kora-showcase-overlay h1,
-  .kora-announcement span,
-  .kora-page-work-grid li {
-    animation: none;
-  }
-
-  .kora-about-mark,
-  .kora-about-badge,
-  .kora-about-heading,
-  .kora-about-photo,
-  .kora-footer-logo,
-  .kora-page-about-heading,
-  .kora-page-about-copy {
-    transition: none;
-  }
-
-  /* Autoplay is already disabled in JS; kill the crossfade so manual dot
-     selection swaps instantly rather than animating. */
-
-  .kora-carousel-slide {
-    transition: none;
-    transform: none;
-  }
-}
 
 /* Header */
 
 .kora-header-wrap {
   position: relative;
   z-index: 100;
+  /* Opaque so the mobile drawer, which starts at the top of the viewport,
+     passes behind the bar rather than showing through it. */
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -475,6 +453,196 @@
   padding-left: 10px;
 }
 
+/* Phone navigation — the toggle and the drawer it opens. Both sit out of the
+   way until the desktop nav drops out at 860px. */
+
+.kora-menu-toggle {
+  display: none;
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0 -10px 0 0;
+  /* 44px square regardless of the 24px icon inside it — the icon is the mark,
+     this is the thumb target. */
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-h);
+}
+
+.kora-menu-icon {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 14px;
+}
+
+.kora-menu-icon span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transition:
+    top 0.2s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kora-menu-icon span:first-child {
+  top: 0;
+}
+
+.kora-menu-icon span:last-child {
+  top: 12px;
+}
+
+/* Both bars slide to the middle, then cross. */
+
+.kora-menu-toggle.is-open .kora-menu-icon span {
+  top: 6px;
+}
+
+.kora-menu-toggle.is-open .kora-menu-icon span:first-child {
+  transform: rotate(45deg);
+}
+
+.kora-menu-toggle.is-open .kora-menu-icon span:last-child {
+  transform: rotate(-45deg);
+}
+
+.kora-drawer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  /* Under the header, which keeps its own solid background — so the toggle
+     stays visible and tappable while the drawer is open. */
+  z-index: 90;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  box-sizing: border-box;
+  /* Clears the announcement strip (34px) and the header bar (69px, set by the
+     44px toggle inside it), plus air so the first link is not crowded. */
+  padding: calc(env(safe-area-inset-top, 0px) + 124px) 20px
+    calc(env(safe-area-inset-bottom, 0px) + 32px);
+  background: var(--bg);
+  overflow-y: auto;
+  /* Stops the scroll chaining through to the page behind the drawer. */
+  overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.28s;
+}
+
+.kora-drawer.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.kora-drawer-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.kora-drawer-link {
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: none;
+  padding: 18px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font: inherit;
+  font-family: var(--heading);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-align: left;
+  text-decoration: none;
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.kora-drawer-link.is-active {
+  font-weight: 700;
+}
+
+.kora-drawer-trigger .kora-nav-chevron {
+  width: 14px;
+  height: auto;
+  flex: none;
+}
+
+.kora-drawer-trigger.is-open .kora-nav-chevron {
+  transform: rotate(180deg);
+}
+
+.kora-drawer-services {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0 18px;
+  display: flex;
+  flex-direction: column;
+  animation: kora-fade-up 0.3s ease both;
+}
+
+.kora-drawer-services a {
+  display: block;
+  padding: 11px 2px;
+  font-size: 17px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.kora-drawer-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.kora-drawer-cta {
+  align-self: stretch;
+  padding: 15px 20px;
+  font-size: 17px;
+}
+
+.kora-drawer-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 32px;
+}
+
+.kora-drawer-contact a {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 16px;
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.kora-drawer-contact span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
 /* Sub nav */
 
 .kora-subnav {
@@ -594,11 +762,14 @@
   background: #d9d9d9;
 }
 
-/* Carousel — slides crossfade in place, so they all stack on the same cell. */
+/* Carousel — one reel across every project. Frames stack on the same cell and
+   crossfade, while the active frame keeps panning underneath the fade so the
+   hero reads as footage rather than a stack of stills. */
 
 .kora-carousel {
   position: absolute;
   inset: 0;
+  overflow: hidden;
 }
 
 .kora-carousel-slide {
@@ -610,45 +781,98 @@
   object-position: center;
   display: block;
   opacity: 0;
-  transform: scale(1.02);
-  transition:
-    opacity 0.8s ease,
-    transform 1.2s ease;
+  transform: scale(1.04);
+  transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
 .kora-carousel-slide.is-active {
   opacity: 1;
-  transform: scale(1);
+  animation: kora-pan-in var(--kora-pan, 8s) cubic-bezier(0.22, 0.61, 0.36, 1)
+    forwards;
 }
 
-.kora-carousel-dots {
+/* Alternating the pan direction stops consecutive frames from feeling like the
+   same camera move played twice. */
+
+.kora-carousel-slide.is-active.is-alt {
+  animation-name: kora-pan-out;
+}
+
+@keyframes kora-pan-in {
+  from {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.13) translate3d(-1.4%, -1%, 0);
+  }
+}
+
+@keyframes kora-pan-out {
+  from {
+    transform: scale(1.13) translate3d(1.4%, 0.8%, 0);
+  }
+  to {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+}
+
+/* Progress rail — one tick per frame, the active one filling over its hold, so
+   the reel shows how far through the portfolio it is. */
+
+.kora-carousel-progress {
   position: absolute;
   right: 28px;
   top: 24px;
   z-index: 2;
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
-.kora-carousel-dot {
+.kora-carousel-tick {
   appearance: none;
   padding: 0;
-  width: 28px;
+  width: 24px;
   height: 3px;
   border: none;
   border-radius: 0;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.3);
   cursor: pointer;
+  overflow: hidden;
   transition: background-color 0.25s ease;
 }
 
-.kora-carousel-dot:hover {
-  background: rgba(255, 255, 255, 0.65);
+.kora-carousel-tick:hover {
+  background: rgba(255, 255, 255, 0.55);
 }
 
-.kora-carousel-dot.is-active {
+.kora-carousel-tick-fill {
+  display: block;
+  width: 0;
+  height: 100%;
   background: #fff;
 }
+
+.kora-carousel-tick.is-played .kora-carousel-tick-fill {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.kora-carousel-tick.is-active .kora-carousel-tick-fill {
+  animation-name: kora-tick;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes kora-tick {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 
 .kora-showcase-overlay {
   position: absolute;
@@ -666,6 +890,15 @@
   height: 1px;
   background: rgba(255, 255, 255, 0.3);
   margin-bottom: 2px;
+}
+
+/* Remounted whenever the reel reaches a new project, which replays the entrance
+   animation on the tags and headline below — the copy cuts with the picture. */
+
+.kora-showcase-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .kora-showcase-tags {
@@ -698,13 +931,17 @@
 .kora-brands {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 72px 28px 64px;
+  gap: 32px;
+  /* No side padding: the marquee runs the full width and fades at the edges,
+     so a gutter would only cut the loop short of the screen. */
+  padding: 72px 0 64px;
   border-top: 1px solid var(--border);
   margin-top: 56px;
+  overflow: hidden;
 }
 
 .kora-brands-label {
+  padding: 0 28px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -712,26 +949,68 @@
   color: var(--text);
 }
 
-.kora-brands-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* Logo marquee
+   ------------
+   Two identical tracks, each sliding left by its own width. When the first has
+   fully cleared, the second sits exactly where the first began, so the reset is
+   invisible and no JavaScript has to measure anything. */
+
+.kora-marquee {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 20px 56px;
+  width: 100%;
+  overflow: hidden;
+  /* Dissolves the marks at both edges instead of clipping them mid-letter. */
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 7%,
+    #000 93%,
+    transparent 100%
+  );
 }
 
-.kora-brands-list li {
-  font-size: clamp(24px, 3.2vw, 40px);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text-h);
-  opacity: 0.55;
-  transition: opacity 0.2s ease;
+.kora-marquee-track {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--kora-logo-gap, 76px);
+  /* Matches the gap so the join between the two tracks is evenly spaced. */
+  padding: 0 calc(var(--kora-logo-gap, 76px) / 2) 0 0;
+  margin: 0 var(--kora-logo-gap, 76px) 0 0;
+  list-style: none;
+  animation: kora-marquee 46s linear infinite;
+  will-change: transform;
 }
 
-.kora-brands-list li:hover {
+@keyframes kora-marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.kora-marquee:hover .kora-marquee-track {
+  animation-play-state: paused;
+}
+
+.kora-marquee-item {
+  flex: none;
+  display: flex;
+  align-items: center;
+  /* A fixed slot so every logo occupies the same vertical band whatever its
+     own proportions are. */
+  height: var(--kora-logo-band, 64px);
+}
+
+.kora-marquee-item img {
+  display: block;
+  width: auto;
+  /* Base height times the per-logo optical multiplier from the data. */
+  height: calc(var(--kora-logo-h, 46px) * var(--kora-logo-scale, 1));
+  opacity: 0.75;
+  transition: opacity 0.25s ease;
+}
+
+.kora-marquee-item img:hover {
   opacity: 1;
 }
 
@@ -776,16 +1055,19 @@
   line-height: 1.12;
 }
 
+/* The collage is laid out in percentages of a 420x250 box rather than in pixels,
+   so it shrinks to fit a phone instead of overflowing it. */
+
 .kora-about-collage {
   position: relative;
-  width: 420px;
-  height: 250px;
+  width: min(420px, 100%);
+  aspect-ratio: 420 / 250;
   margin-top: 28px;
 }
 
 .kora-about-photo {
   position: absolute;
-  height: 170px;
+  height: 68%;
   object-fit: cover;
   background: #d9d9d9;
   color: transparent;
@@ -793,23 +1075,212 @@
 
 .kora-about-photo-1 {
   left: 0;
-  top: 70px;
-  width: 180px;
+  top: 28%;
+  width: 42.9%;
   z-index: 1;
 }
 
 .kora-about-photo-2 {
-  left: 85px;
-  top: 35px;
-  width: 180px;
+  left: 20.2%;
+  top: 14%;
+  width: 42.9%;
   z-index: 2;
 }
 
 .kora-about-photo-3 {
-  left: 170px;
+  left: 40.5%;
   top: 0;
-  width: 250px;
+  width: 59.5%;
   z-index: 3;
+}
+
+/* Contact band — a full-bleed brand-blue field between the page and the footer.
+   It paints its own colours rather than the theme tokens, so it reads the same
+   on the dark home route and the light inner pages. */
+
+.kora-offices {
+  background: var(--brand);
+  color: rgba(255, 255, 255, 0.72);
+  padding: 96px 0 104px;
+}
+
+.kora-offices-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 64px 48px;
+}
+
+.kora-office {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.kora-office-code {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.08em;
+  font-family: var(--heading);
+  font-size: clamp(44px, 5.5vw, 78px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.kora-office-code span[aria-hidden] {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kora-office-code:hover span[aria-hidden] {
+  transform: translateX(0.12em);
+}
+
+.kora-office-time {
+  margin: 4px 0 0;
+  font-family: var(--heading);
+  font-size: clamp(38px, 4.6vw, 68px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.kora-office-address {
+  display: flex;
+  flex-direction: column;
+  margin: 28px 0 0;
+  font-style: normal;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.kora-office-contact {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.kora-office-contact a {
+  color: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  width: fit-content;
+}
+
+.kora-office-contact a:hover {
+  color: #fff;
+}
+
+/* Cookie notice */
+
+.kora-cookiebar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 28px;
+  background: var(--brand-dark);
+  color: #fff;
+  animation: kora-cookiebar-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+}
+
+.kora-cookiebar.is-leaving {
+  animation: kora-cookiebar-out 0.3s ease forwards;
+}
+
+/* The notice outranks the drawer in z-order, so it would otherwise sit on top
+   of the drawer's Book A Call button. It waits its turn instead. */
+
+.kora-drawer.is-open ~ .kora-cookiebar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The notice is fixed to the bottom, so until it is dismissed it sits on top of
+   the wordmark and the copyright line. The footer makes room for it, and gets
+   that room back the moment the notice leaves the DOM. */
+
+.kora-app:has(.kora-cookiebar) .kora-footer {
+  padding-bottom: 96px;
+}
+
+.kora-cookiebar p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.kora-cookiebar button {
+  appearance: none;
+  flex: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 22px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--brand-dark);
+  background: #fff;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.kora-cookiebar button:hover {
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.kora-cookiebar button:active {
+  transform: translateY(1px);
+}
+
+@keyframes kora-cookiebar-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes kora-cookiebar-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Text that only the screen reader needs — headings that the visual design
+   carries some other way, and link context that the arrow implies. */
+
+.kora-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
 }
 
 /* Footer */
@@ -1030,62 +1501,159 @@
 
 /* About Us page */
 
+/* One centred block of text at a single size and weight, on one flat ground.
+   The ornaments stand in for the paragraph breaks, so the whole page reads as a
+   single statement rather than a heading with copy hung off it. */
+
 .kora-page-about {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 60vh;
-  padding: 120px 24px;
+  padding: 132px 24px 144px;
   background: #1e1e1e;
   color: #fff;
   box-sizing: border-box;
 }
 
-.kora-page-about-inner {
-  display: flex;
-  align-items: flex-start;
-  gap: 80px;
-}
-
-.kora-page-about-heading {
-  flex: 0 0 auto;
-  margin: 0;
-  font-size: clamp(40px, 6vw, 88px);
+.kora-page-about-manifesto {
+  margin: 0 auto;
+  /* Wide enough that a centred block this heavy does not rag into a narrow
+     column of four-word lines. */
+  max-width: 30ch;
+  text-align: center;
+  font-family: var(--heading);
+  font-size: clamp(25px, 3.3vw, 46px);
   font-weight: 700;
+  line-height: 1.3;
   letter-spacing: -0.02em;
-  line-height: 1;
+  color: #fff;
+  /* Keeps the last line of a centred block from stranding a single word. */
+  text-wrap: pretty;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(22px);
   transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.kora-page-about-copy {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 640px;
-  padding-top: 8px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.6s ease 0.1s,
-    transform 0.6s ease 0.1s;
-}
-
-.kora-page-about-copy p {
-  margin: 0;
-  font-size: 18px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.kora-page-about.is-visible .kora-page-about-heading,
-.kora-page-about.is-visible .kora-page-about-copy {
+.kora-page-about.is-visible .kora-page-about-manifesto {
   opacity: 1;
   transform: none;
+}
+
+/* Inline ornaments
+   ----------------
+   Sized in em so they track the type they sit in, and nudged individually — a
+   dot and a full-height square do not sit on the same optical line. */
+
+.kora-shape {
+  display: inline-block;
+  margin: 0 0.1em;
+  /* Never a line-break opportunity in the middle of a mark. */
+  white-space: nowrap;
+}
+
+.kora-shape svg {
+  display: block;
+  width: auto;
+}
+
+.kora-shape.is-blue {
+  color: var(--ornament-blue);
+}
+
+.kora-shape.is-violet {
+  color: var(--ornament-violet);
+}
+
+.kora-shape.is-amber {
+  color: var(--ornament-amber);
+}
+
+.kora-shape.is-coral {
+  color: var(--ornament-coral);
+}
+
+/* The arrow is a hole in the mark, so it is painted in the ground colour
+   rather than a fixed black. */
+
+.kora-shape-knockout {
+  stroke: var(--ornament-knockout);
+}
+
+.kora-shape-arrow-circle svg,
+.kora-shape-arrow-square svg {
+  height: 0.8em;
+  transform: translateY(0.06em);
+}
+
+.kora-shape-asterisk svg {
+  height: 0.7em;
+  transform: translateY(0.02em);
+}
+
+.kora-shape-blade svg {
+  height: 0.7em;
+  transform: translateY(0.04em);
+}
+
+.kora-shape-dot svg {
+  height: 0.3em;
+  transform: translateY(-0.22em);
+}
+
+/* Hover reveal
+   ------------
+   The chip keeps a fixed size so nothing reflows when the image comes through;
+   the growth on hover is a transform, which costs the layout nothing. */
+
+.kora-reveal {
+  position: relative;
+  display: inline-block;
+  width: 2.5em;
+  height: 0.88em;
+  margin: 0 0.14em;
+  vertical-align: -0.06em;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--brand);
+  /* An inset hairline so the resting chip still has an edge against the
+     near-black field. */
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.28);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kora-reveal img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.28);
+  transition:
+    opacity 0.4s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kora-reveal:hover {
+  transform: scale(1.09);
+}
+
+.kora-reveal:hover img {
+  opacity: 1;
+  transform: scale(1);
+}
+/* A pointer that cannot hover would leave these as blank blue pills forever,
+   so on touch the work is simply shown. */
+
+@media (hover: none) {
+  .kora-reveal img {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Blog page */
@@ -1165,64 +1733,495 @@
   color: var(--text-h);
 }
 
-@media (max-width: 860px) {
-  .kora-header {
-    gap: 16px;
-    padding: 14px 18px;
+
+/* ---------------------------------------------------------------------------
+   Intro curtain
+
+   A brand-blue field over the whole viewport while the page loads behind it:
+   the mark wipes in, the statement rises a line at a time, then the curtain
+   lifts away. It never gates the load — the site is already there underneath.
+   --------------------------------------------------------------------------- */
+
+.kora-intro {
+  position: fixed;
+  inset: 0;
+  /* Above everything the page can put up, the cookie notice included. */
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 28px;
+  box-sizing: border-box;
+  background: var(--brand);
+  color: #fff;
+  will-change: transform;
+}
+
+.kora-intro-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* The lockup is drawn in near-black; this forces it to flat white rather than
+   the off-white that a plain invert() would give. */
+
+.kora-intro-mark {
+  height: 46px;
+  width: auto;
+  margin-bottom: 40px;
+  filter: brightness(0) invert(1);
+  animation:
+    kora-intro-mark-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both,
+    kora-card-reveal 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.1s both;
+}
+
+@keyframes kora-intro-mark-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Each line masks its own span, so the type rises out of the line above it
+   instead of just fading up from nowhere. */
+
+.kora-intro-line {
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--heading);
+  font-size: clamp(44px, 8.5vw, 104px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  color: #fff;
+}
+
+.kora-intro-line span {
+  display: block;
+  transform: translateY(105%);
+  animation: kora-intro-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.kora-intro-line:nth-of-type(1) span {
+  animation-delay: 0.7s;
+}
+
+.kora-intro-line:nth-of-type(2) span {
+  animation-delay: 0.82s;
+}
+
+.kora-intro-places {
+  margin: 36px 0 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.kora-intro-places span {
+  display: block;
+  transform: translateY(105%);
+  animation: kora-intro-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1.05s both;
+}
+
+@keyframes kora-intro-rise {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* The curtain lifts, and the content drifts up a little faster than the field
+   it sits on — enough parallax that the two do not read as one flat card. */
+
+/* Duration comes from the component, so the timer that unmounts the curtain and
+   the animation that slides it away cannot drift apart. */
+
+.kora-intro.is-leaving {
+  animation: kora-intro-lift var(--kora-intro-exit, 800ms)
+    cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.kora-intro.is-leaving .kora-intro-inner {
+  animation: kora-intro-inner-out 0.55s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@keyframes kora-intro-lift {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes kora-intro-inner-out {
+  to {
+    opacity: 0;
+    transform: translateY(-28px);
+  }
+}
+
+/* Reduced motion keeps the curtain and drops the choreography: the statement is
+   simply there, and the field fades rather than sliding. The component shortens
+   the hold to match, since there is no longer anything to watch. */
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-intro-mark,
+  .kora-intro-line span,
+  .kora-intro-places span {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
   }
 
-  .kora-nav {
+  .kora-intro.is-leaving {
+    animation: kora-intro-fade var(--kora-intro-exit, 300ms) ease forwards;
+  }
+
+  .kora-intro.is-leaving .kora-intro-inner {
+    animation: none;
+  }
+}
+
+@keyframes kora-intro-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 860px) {
+  .kora-intro {
+    padding: 28px 18px;
+  }
+
+  .kora-intro-mark {
+    height: 38px;
+    margin-bottom: 28px;
+  }
+
+  .kora-intro-places {
+    margin-top: 26px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .kora-intro {
+    padding: 24px 16px;
+  }
+
+  .kora-intro-mark {
+    height: 34px;
+  }
+
+  .kora-intro-line {
+    font-size: clamp(36px, 12vw, 52px);
+  }
+}
+/* ---------------------------------------------------------------------------
+   Responsive
+
+   Three steps rather than one: 1024px thins the mega menu, 860px is where the
+   desktop nav gives way to the drawer and the multi-column layouts collapse,
+   and 480px is tuned for a 390-430px handset where every remaining pixel of
+   gutter has to earn its place.
+   --------------------------------------------------------------------------- */
+
+/* Reaching for something with a mouse is not the same as tapping it. Anything
+   that only appears on hover has to be visible by default on touch, or it is
+   simply missing. */
+
+@media (hover: none) {
+  .kora-page-work-arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* No cursor to lift a logo out of the row, so the whole row sits a little
+     brighter instead. */
+
+  .kora-marquee-item img {
+    opacity: 0.85;
+  }
+}
+
+@media (max-width: 1024px) {
+  .kora-mega-inner {
+    gap: 32px;
+    padding: 32px 22px;
+  }
+
+  .kora-mega-preview {
+    flex: 0 0 300px;
+  }
+
+  .kora-mega-list {
+    gap: 2px 24px;
+  }
+
+  .kora-mega-list a {
+    font-size: 16px;
+    padding: 12px 4px;
+  }
+}
+
+@media (max-width: 860px) {
+  /* Navigation */
+
+  .kora-header {
+    gap: 12px;
+    padding: 12px 18px;
+  }
+
+  .kora-logo {
+    height: 28px;
+  }
+
+  .kora-header-right {
+    gap: 14px;
+  }
+
+  .kora-nav,
+  .kora-mega {
     display: none;
   }
 
-  .kora-subnav {
-    padding: 10px 18px 0;
+  .kora-menu-toggle,
+  .kora-drawer {
+    display: flex;
   }
 
+  /* The header CTA duplicates the one at the foot of the drawer, and the
+     toggle needs the room more than it does. */
+
+  .kora-header-cta {
+    display: none;
+  }
+
+  /* Announcement */
+
+  .kora-announcement {
+    padding: 9px 14px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  /* Category tabs and the project rail both become horizontal rails. Wrapping
+     six tabs onto three lines eats a third of a phone screen before any work
+     is shown. */
+
+  .kora-subnav,
+  .kora-page-work-categories {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .kora-subnav::-webkit-scrollbar,
+  .kora-page-work-categories::-webkit-scrollbar,
+  .kora-worklist::-webkit-scrollbar {
+    display: none;
+  }
+
+  .kora-subnav button,
+  .kora-page-work-categories button {
+    flex: none;
+    scroll-snap-align: start;
+    /* Comfortable thumb target — the label itself is only 12px tall. */
+    padding: 12px 0 14px;
+    margin-bottom: 0;
+  }
+
+  .kora-subnav {
+    gap: 20px;
+    padding: 0 18px;
+    scroll-padding-left: 18px;
+  }
+
+  .kora-page-work-categories {
+    gap: 20px;
+  }
+
+  /* Hero */
+
   .kora-hero {
-    padding: 18px 0 0;
+    padding: 16px 0 0;
     gap: 14px;
   }
 
   .kora-worklist {
-    padding: 0 18px;
-    gap: 10px 18px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    gap: 0 20px;
+    padding: 2px 18px 6px;
+    scroll-padding-left: 18px;
+    /* Softens the right edge so it reads as a rail that continues, rather than
+       a list that happens to be cut off. */
+    mask-image: linear-gradient(
+      90deg,
+      #000 0,
+      #000 calc(100% - 28px),
+      transparent 100%
+    );
   }
 
   .kora-worklist button {
-    font-size: 18px;
+    flex: none;
+    scroll-snap-align: start;
+    font-size: 19px;
+    padding: 6px 0;
   }
 
   .kora-showcase-media {
     aspect-ratio: 4 / 3;
   }
 
+  .kora-showcase-overlay {
+    gap: 10px;
+    padding: 20px 18px 22px;
+    /* A taller wash: the copy sits over a busier crop on a narrow screen. */
+    background: linear-gradient(
+      180deg,
+      transparent 40%,
+      rgba(0, 0, 0, 0.68) 100%
+    );
+  }
+
+  .kora-showcase-copy {
+    gap: 10px;
+  }
+
+  .kora-showcase-tags {
+    gap: 14px;
+    font-size: 12px;
+  }
+
   .kora-showcase-overlay h1 {
-    font-size: 21px;
+    font-size: 22px;
+    line-height: 1.22;
+    max-width: none;
   }
 
-  .kora-brands {
-    padding: 48px 18px 40px;
-    margin-top: 36px;
-    gap: 16px;
-  }
+  /* Every frame in the portfolio gets a tick, so they narrow rather than wrap
+     off the edge of a phone-width showcase. */
 
-  .kora-brands-list {
-    gap: 12px 28px;
-  }
-
-  .kora-carousel-dots {
+  .kora-carousel-progress {
     right: 18px;
     top: 16px;
+    gap: 4px;
   }
 
+  .kora-carousel-tick {
+    width: 14px;
+  }
+
+  /* Client wall */
+
+  .kora-brands {
+    padding: 48px 0 40px;
+    margin-top: 36px;
+    gap: 22px;
+  }
+
+  .kora-brands-label {
+    padding: 0 18px;
+  }
+
+  /* Smaller band and tighter gaps, and a faster loop so a phone-width window
+     still shows the row moving rather than crawling. */
+
+  .kora-marquee-track {
+    --kora-logo-gap: 52px;
+    animation-duration: 34s;
+  }
+
+  .kora-marquee-item {
+    --kora-logo-band: 52px;
+    --kora-logo-h: 38px;
+  }
+
+  /* About */
+
   .kora-about {
-    padding: 72px 20px 96px;
+    padding: 72px 20px 88px;
+    gap: 24px;
   }
 
   .kora-about-collage {
-    transform: scale(0.75);
-    margin-top: 0;
+    margin-top: 8px;
+  }
+
+  /* Contact band */
+
+  .kora-offices {
+    padding: 64px 0 72px;
+  }
+
+  .kora-offices-grid {
+    padding: 0 18px;
+    gap: 48px;
+  }
+
+  /* Footer */
+
+  .kora-footer {
+    padding: 40px 18px 24px;
+    gap: 28px;
+  }
+
+  .kora-footer-top {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 20px;
+  }
+
+  .kora-footer-col {
+    min-width: 0;
+  }
+
+  /* The stacked notice is roughly 130px tall on a handset. */
+
+  .kora-app:has(.kora-cookiebar) .kora-footer {
+    padding-bottom: 152px;
+  }
+
+  /* Cookie notice — stacked, it reads better as two rows than as a squeezed
+     line with the button crammed against the edge. */
+
+  .kora-cookiebar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px 18px calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .kora-cookiebar p {
+    font-size: 15px;
+  }
+
+  /* Inner pages */
+
+  .kora-page-work,
+  .kora-page-blog {
+    padding: 48px 18px 80px;
+  }
+
+  .kora-page-work-header {
+    margin-bottom: 36px;
   }
 
   .kora-page-work-grid {
@@ -1231,12 +2230,15 @@
   }
 
   .kora-page-about {
-    padding: 72px 20px;
+    padding: 88px 20px 96px;
+    min-height: auto;
   }
 
-  .kora-page-about-inner {
-    flex-direction: column;
-    gap: 28px;
+  /* A wider measure once the type stops being large, or a centred block this
+     narrow breaks into a two-word column. */
+
+  .kora-page-about-manifesto {
+    max-width: 30ch;
   }
 
   .kora-page-blog-post {
@@ -1253,5 +2255,322 @@
     width: auto;
     flex-direction: row;
     gap: 12px;
+  }
+}
+
+/* Handset. Sized against a 418px viewport: 16px gutters leave 386px of usable
+   width, which is what the type below is set to fit. */
+
+@media (max-width: 480px) {
+  .kora-header {
+    padding: 12px 16px;
+  }
+
+  .kora-announcement {
+    padding: 9px 12px;
+    font-size: 11.5px;
+  }
+
+  .kora-drawer {
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 32px;
+  }
+
+  .kora-drawer-link {
+    font-size: 26px;
+    padding: 15px 2px;
+  }
+
+  .kora-drawer-services a {
+    font-size: 16px;
+    padding: 10px 2px;
+  }
+
+  .kora-subnav,
+  .kora-worklist,
+  .kora-brands-label,
+  .kora-offices-grid,
+  .kora-footer,
+  .kora-page-work,
+  .kora-page-blog,
+  .kora-cookiebar {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .kora-subnav {
+    scroll-padding-left: 16px;
+    gap: 18px;
+  }
+
+  .kora-worklist {
+    scroll-padding-left: 16px;
+    padding-bottom: 6px;
+  }
+
+  .kora-worklist button {
+    font-size: 18px;
+  }
+
+  /* A 3:2 crop gives the hero more presence than 4:3 without pushing the copy
+     block off the bottom of a short screen. */
+
+  .kora-showcase-media {
+    aspect-ratio: 3 / 2;
+  }
+
+  .kora-showcase-overlay {
+    padding: 18px 16px 20px;
+  }
+
+  .kora-showcase-overlay h1 {
+    font-size: 20px;
+  }
+
+  .kora-showcase-tags {
+    gap: 12px;
+    font-size: 11.5px;
+  }
+
+  .kora-carousel-progress {
+    right: 16px;
+    top: 14px;
+    gap: 3px;
+  }
+
+  .kora-carousel-tick {
+    width: 12px;
+  }
+
+  .kora-brands {
+    padding-top: 40px;
+    padding-bottom: 34px;
+    margin-top: 28px;
+  }
+
+  .kora-marquee-track {
+    --kora-logo-gap: 44px;
+    animation-duration: 30s;
+  }
+
+  .kora-marquee-item {
+    --kora-logo-band: 46px;
+    --kora-logo-h: 33px;
+  }
+
+  .kora-about {
+    padding: 60px 16px 72px;
+    gap: 20px;
+  }
+
+  .kora-about-mark {
+    height: 28px;
+  }
+
+  .kora-about-badge {
+    padding: 8px 14px;
+    font-size: 11px;
+  }
+
+  .kora-about-heading {
+    font-size: 30px;
+    line-height: 1.16;
+  }
+
+  /* The hard line breaks in the markup are set for a wide measure; on a phone
+     they produce a ragged two-word column, so let the text wrap naturally. */
+
+  .kora-about-heading br {
+    display: none;
+  }
+
+  /* Contact band */
+
+  .kora-offices {
+    padding: 56px 0 64px;
+  }
+
+  .kora-offices-grid {
+    gap: 44px;
+  }
+
+  .kora-office-code {
+    font-size: 52px;
+  }
+
+  .kora-office-time {
+    font-size: 42px;
+  }
+
+  .kora-office-address,
+  .kora-office-contact {
+    font-size: 16px;
+  }
+
+  .kora-office-address {
+    margin-top: 20px;
+  }
+
+  .kora-office-contact {
+    margin-top: 18px;
+  }
+
+  /* Footer */
+
+  .kora-footer {
+    padding-top: 36px;
+    padding-bottom: 20px;
+    gap: 24px;
+  }
+
+  .kora-footer-col a,
+  .kora-footer-col span {
+    font-size: 16px;
+  }
+
+  .kora-footer-meta {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+  }
+
+  .kora-cookiebar p {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Inner pages */
+
+  .kora-page-work,
+  .kora-page-blog {
+    padding-top: 40px;
+    padding-bottom: 64px;
+  }
+
+  .kora-page-work-text h2,
+  .kora-page-blog-post h2 {
+    font-size: 20px;
+  }
+
+  .kora-page-about {
+    padding: 72px 16px 80px;
+  }
+
+  .kora-page-about-manifesto {
+    max-width: none;
+    font-size: 23px;
+    line-height: 1.36;
+    letter-spacing: -0.015em;
+  }
+
+  /* At this size a chip is only ~20px tall; widening it keeps the work
+     readable rather than a smear of colour. */
+
+  .kora-reveal {
+    width: 3.4em;
+    height: 1.1em;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+
+   Deliberately the last block in the file. A media query adds no specificity,
+   so while this lived near the top every component defined below it quietly won
+   — the carousel kept panning, the cookie bar kept sliding, the drawer kept
+   transitioning. Anything added here must stay after the rules it overrides.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .kora-header-wrap,
+  .kora-subnav,
+  .kora-hero,
+  .kora-showcase-media,
+  .kora-showcase-divider,
+  .kora-showcase-tags,
+  .kora-showcase-overlay h1,
+  .kora-announcement span,
+  .kora-page-work-grid li {
+    animation: none;
+  }
+
+  .kora-about-mark,
+  .kora-about-badge,
+  .kora-about-heading,
+  .kora-about-photo,
+  .kora-footer-logo,
+  .kora-page-about-manifesto,
+  .kora-reveal,
+  .kora-reveal img {
+    transition: none;
+  }
+
+  /* Without the zoom there is nothing to watch for, so the work is just there. */
+
+  .kora-reveal img {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Autoplay is already disabled in JS; kill the crossfade and the pan so
+     picking a frame from the rail swaps instantly rather than animating. */
+
+  .kora-carousel-slide {
+    transition: none;
+    transform: none;
+  }
+
+  .kora-carousel-slide.is-active,
+  .kora-carousel-slide.is-active.is-alt {
+    animation: none;
+  }
+
+  /* Nothing is counting down, so the tick reads as a plain position marker. */
+
+  .kora-carousel-tick.is-active .kora-carousel-tick-fill {
+    width: 100%;
+    animation: none;
+  }
+
+  /* The notice appears and goes without sliding; dismissing it still works,
+     the bar just leaves on the timer rather than animating out. */
+
+  .kora-cookiebar,
+  .kora-cookiebar.is-leaving {
+    animation: none;
+  }
+
+  /* The drawer still opens and closes, it just does not slide or morph. */
+
+  .kora-drawer,
+  .kora-menu-icon span {
+    transition: none;
+  }
+
+  .kora-drawer-services {
+    animation: none;
+  }
+
+  /* The logo row stops moving and becomes a rail the reader scrolls themselves,
+     so the brands past the fold are still reachable. */
+
+  .kora-marquee {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .kora-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .kora-marquee-track {
+    animation: none;
+  }
+
+  /* One track is enough once it is not looping; the duplicate was only there to
+     hide the seam. */
+
+  .kora-marquee-track[aria-hidden='true'] {
+    display: none;
   }
 }

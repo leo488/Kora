@@ -1,7 +1,9 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { Announcement } from './Announcement'
 import { Header } from './Header'
+import { Offices } from './Offices'
 import { Footer } from './Footer'
+import { CookieBar } from './CookieBar'
 
 export function Layout() {
   const { pathname } = useLocation()
@@ -15,7 +17,9 @@ export function Layout() {
       <Announcement />
       <Header />
       <Outlet />
+      <Offices />
       <Footer />
+      <CookieBar />
     </main>
   )
 }

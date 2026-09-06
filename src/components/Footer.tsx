@@ -29,7 +29,7 @@ export function Footer() {
         <div className="kora-footer-col">
           <h3>Offices</h3>
           {OFFICES.map((office) => (
-            <span key={office}>{office}</span>
+            <span key={office.code}>{office.city}</span>
           ))}
         </div>
 

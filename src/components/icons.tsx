@@ -41,3 +41,14 @@ export function ArrowIcon({ className = 'kora-worklist-arrow' }: { className?: s
     </svg>
   )
 }
+
+/** Hamburger that morphs into a close cross — the bars are positioned by CSS so
+ *  the open state is a class change rather than a second icon. */
+export function MenuIcon() {
+  return (
+    <span className="kora-menu-icon" aria-hidden="true">
+      <span />
+      <span />
+    </span>
+  )
+}

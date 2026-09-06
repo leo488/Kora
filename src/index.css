@@ -10,6 +10,19 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --brand: #1a2db7;
   --brand-dark: #052275;
+  /* The brand blue is almost invisible against the near-black sections, so
+     on-dark accents use this lighter tint of it instead. */
+  --brand-bright: #4e62ff;
+
+  /* Ornament palette for the About manifesto. Blue and violet are tokens the
+     site already has; amber and coral are added so the marks are not one note
+     repeated down the page. */
+  --ornament-blue: var(--brand-bright);
+  --ornament-violet: var(--accent);
+  --ornament-amber: #ffb020;
+  --ornament-coral: #ff5a3d;
+  /* The ground the arrows are knocked out of. */
+  --ornament-knockout: #1e1e1e;
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
@@ -50,6 +63,28 @@
 body {
   margin: 0;
   overflow-x: hidden;
+  /* Safari on iOS inflates body text in landscape unless this is pinned. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Touch defaults. The grey flash on tap belongs to no design here, and
+   `manipulation` drops the 300ms wait Safari otherwise spends deciding whether
+   a tap was the start of a double-tap zoom. */
+
+a,
+button,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Keyboard focus still has to be obvious — clearing the tap highlight above
+   must not quietly take the focus ring with it. */
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
 }
 
 h1,

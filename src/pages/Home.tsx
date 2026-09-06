@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useInView } from '../hooks/useInView'
 import { ArrowIcon } from '../components/icons'
 import { HeroCarousel } from '../components/HeroCarousel'
-import { PROJECTS } from '../data'
+import { BrandMarquee } from '../components/BrandMarquee'
+import { PROJECTS, buildHeroReel } from '../data'
 
 const CATEGORY_TABS = [
   { label: 'Our Work', count: 24 },
@@ -15,10 +16,18 @@ const CATEGORY_TABS = [
 
 export function Home() {
   const [activeTab, setActiveTab] = useState(CATEGORY_TABS[0].label)
-  const [activeProject, setActiveProject] = useState(PROJECTS[0].name)
+  const [slideIndex, setSlideIndex] = useState(0)
   const [aboutRef, aboutVisible] = useInView<HTMLElement>()
 
-  const project = PROJECTS.find((p) => p.name === activeProject) ?? PROJECTS[0]
+  // One reel over every project, so the hero plays the portfolio through rather
+  // than sitting on whichever project happens to be selected.
+  const slides = useMemo(() => buildHeroReel(PROJECTS), [])
+  const project = slides[slideIndex].project
+
+  // Clicking a name in the rail skips the reel to that project's first frame and
+  // lets it keep rolling from there.
+  const jumpTo = (name: string) =>
+    setSlideIndex(slides.findIndex((slide) => slide.project.name === name))
 
   return (
     <>
@@ -39,14 +48,14 @@ export function Home() {
       <section className="kora-hero">
         <nav className="kora-worklist kora-container" aria-label="Featured projects">
           {PROJECTS.map((item) => {
-            const isActive = item.name === activeProject
+            const isActive = item.name === project.name
             return (
               <button
                 key={item.name}
                 type="button"
                 className={isActive ? 'is-active' : ''}
                 aria-current={isActive}
-                onClick={() => setActiveProject(item.name)}
+                onClick={() => jumpTo(item.name)}
               >
                 {isActive && <ArrowIcon />}
                 {item.brand}
@@ -57,30 +66,29 @@ export function Home() {
 
         <article className="kora-showcase-media">
           <HeroCarousel
-            key={project.name}
-            images={project.images}
-            label={project.brand}
+            slides={slides}
+            index={slideIndex}
+            onIndexChange={setSlideIndex}
           />
 
           <div className="kora-showcase-overlay">
             <div className="kora-showcase-divider" aria-hidden="true" />
-            <div className="kora-showcase-tags">
-              <span>{project.category}</span>
-              <span>{project.year}</span>
-              <span className="kora-showcase-stat">{project.stat}</span>
+            {/* Keyed on the project so the copy re-cuts with the picture. */}
+            <div className="kora-showcase-copy" key={project.name}>
+              <div className="kora-showcase-tags">
+                <span>{project.category}</span>
+                <span>{project.year}</span>
+                <span className="kora-showcase-stat">{project.stat}</span>
+              </div>
+              <h1>{project.headline}</h1>
             </div>
-            <h1>{project.headline}</h1>
           </div>
         </article>
       </section>
 
-      <section className="kora-brands">
+      <section className="kora-brands" aria-label="Brands we have worked with">
         <span className="kora-brands-label">Brands we have worked with</span>
-        <ul className="kora-brands-list">
-          {PROJECTS.map((item) => (
-            <li key={item.name}>{item.brand}</li>
-          ))}
-        </ul>
+        <BrandMarquee />
       </section>
 
       <section
@@ -91,22 +99,25 @@ export function Home() {
 
         <span className="kora-about-badge">This Is Kora</span>
 
+        {/* The explicit breaks set the measure on a wide screen and are hidden
+            on a phone, so each fragment keeps the space that follows it — drop
+            the {' '} and the words run together once the breaks go. */}
         <h2 className="kora-about-heading">
-          Through strategic
+          Through strategic{' '}
           <br />
-          branding and
+          branding and{' '}
           <br />
-          storytelling, we help
+          storytelling, we help{' '}
           <br />
-          businesses stand out,
+          businesses stand out,{' '}
           <br />
           connect, and grow.
         </h2>
 
         <div className="kora-about-collage" aria-hidden="true">
-          <img className="kora-about-photo kora-about-photo-1" src="/image.png" alt="" />
-          <img className="kora-about-photo kora-about-photo-2" src="/image-1.png" alt="" />
-          <img className="kora-about-photo kora-about-photo-3" src="/image-2.png" alt="" />
+          <img className="kora-about-photo kora-about-photo-1" src="/about-01.jpg" alt="" />
+          <img className="kora-about-photo kora-about-photo-2" src="/about-02.jpg" alt="" />
+          <img className="kora-about-photo kora-about-photo-3" src="/about-03.jpg" alt="" />
         </div>
       </section>
     </>
