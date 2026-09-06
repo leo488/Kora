@@ -26,6 +26,9 @@ export function HeroCarousel({
   const advance = useRef(onIndexChange)
   advance.current = onIndexChange
 
+  // A film runs to its own last frame; a still takes the reel's interval.
+  const holdMs = slides[index]?.holdMs ?? intervalMs
+
   // The pan outlasts the hold by a beat, so the picture is still drifting
   // underneath the crossfade. That overlap is what reads as footage rather than
   // a slideshow of stills.
@@ -53,74 +56,100 @@ export function HeroCarousel({
     })
   }, [index, slides.length])
 
+  // Film frames are driven by hand rather than left on `autoplay`: the reel
+  // decides which frame is live, so the active film restarts from its first
+  // frame each time round and every other one sits paused.
+  const films = useRef(new Map<number, HTMLVideoElement>())
+
+  useEffect(() => {
+    for (const [i, film] of films.current) {
+      if (i !== index || !playing || prefersReducedMotion()) {
+        film.pause()
+        continue
+      }
+      film.currentTime = 0
+      // A refused autoplay is not a failure here — the poster is already the
+      // frame underneath, so the reel just shows a still and moves on.
+      void film.play().catch(() => {})
+    }
+  }, [index, playing])
+
   useEffect(() => {
     if (!playing || slides.length <= 1 || prefersReducedMotion()) return
 
     const id = setTimeout(
       () => advance.current((index + 1) % slides.length),
-      intervalMs,
+      holdMs,
     )
     return () => clearTimeout(id)
-  }, [index, intervalMs, playing, slides.length])
+  }, [index, holdMs, playing, slides.length])
 
   return (
     <div
       className="kora-carousel"
       style={{ '--kora-pan': `${panMs}ms` } as CSSProperties}
     >
-      {slides.map((slide, i) =>
-        !mounted.has(i) ? null : (
+      {slides.map((slide, i) => {
+        if (!mounted.has(i)) return null
+
+        const isActive = i === index
+        const className = [
+          'kora-carousel-slide',
+          isActive && 'is-active',
+          i % 2 === 1 && 'is-alt',
+          slide.video && 'is-film',
+        ]
+          .filter(Boolean)
+          .join(' ')
+        const label = slide.caption
+          ? `${slide.caption.brand} — frame ${slide.frame} of ${slide.frameCount}`
+          : `Kora — frame ${slide.frame} of ${slide.frameCount}`
+
+        // A film already carries its own camera move, so it gets no pan and no
+        // srcSet — just the poster underneath it until the first frame paints.
+        return slide.video ? (
+          <video
+            key={slide.key}
+            ref={(el) => {
+              if (!el) {
+                films.current.delete(i)
+                return
+              }
+              // Set on the element, not via the attribute: an unmuted video is
+              // refused autoplay outright.
+              el.muted = true
+              films.current.set(i, el)
+            }}
+            className={className}
+            src={slide.video}
+            poster={slide.src}
+            muted
+            playsInline
+            preload={i === 0 ? 'auto' : 'metadata'}
+            aria-label={isActive ? label : undefined}
+            aria-hidden={isActive ? undefined : true}
+            disablePictureInPicture
+            tabIndex={-1}
+          />
+        ) : (
           <img
-            key={slide.src}
-            className={[
-              'kora-carousel-slide',
-              i === index && 'is-active',
-              i % 2 === 1 && 'is-alt',
-            ]
-              .filter(Boolean)
-              .join(' ')}
+            key={slide.key}
+            className={className}
             src={slide.src}
             srcSet={slide.srcSet}
             /* The showcase is full-bleed, so the frame is always viewport-wide. */
             sizes="100vw"
-            alt={
-              i === index
-                ? `${slide.project.brand} — frame ${slide.frame} of ${slide.frameCount}`
-                : ''
-            }
-            aria-hidden={i === index ? undefined : true}
+            alt={isActive ? label : ''}
+            aria-hidden={isActive ? undefined : true}
             fetchPriority={i === 0 ? 'high' : 'low'}
             draggable={false}
           />
-        ),
-      )}
+        )
+      })}
 
-      <div className="kora-carousel-progress">
-        {slides.map((slide, i) => (
-          <button
-            key={slide.src}
-            type="button"
-            className={[
-              'kora-carousel-tick',
-              i === index && 'is-active',
-              i < index && 'is-played',
-            ]
-              .filter(Boolean)
-              .join(' ')}
-            onClick={() => onIndexChange(i)}
-            aria-label={`Play ${slide.project.brand}, frame ${slide.frame} of ${slide.frameCount}`}
-            aria-current={i === index}
-          >
-            <span
-              className="kora-carousel-tick-fill"
-              style={{
-                animationDuration: `${intervalMs}ms`,
-                animationPlayState: playing ? 'running' : 'paused',
-              }}
-            />
-          </button>
-        ))}
-      </div>
+      {/* No progress ticks, no dots, no arrows: the reel is meant to read as a
+          film the visitor has walked into, and every affordance that says
+          "slideshow" undoes that. It advances on its own or not at all. */}
     </div>
   )
 }

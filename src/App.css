@@ -22,18 +22,19 @@
   color: var(--text);
 }
 
-/* The announcement bar paints itself from --text-h, which is now white — flip
-   it to a light strip so it stays legible instead of white-on-white. */
+/* The strip was a white band back when it sat above a light page. The site runs
+   dark end to end now, so it is a slightly lifted black instead — present, but
+   not a bright bar across the top of every page. */
 
 .kora-app.is-dark .kora-announcement {
-  background: #fff;
-  color: #1e1e1e;
+  background: #262626;
+  color: rgba(255, 255, 255, 0.86);
+  border-bottom: 1px solid var(--border);
 }
 
 /* The mark is authored in near-black; invert lifts it to near-white. */
 
 .kora-app.is-dark .kora-logo,
-.kora-app.is-dark .kora-about-mark,
 .kora-app.is-dark .kora-footer-logo {
   filter: invert(1);
 }
@@ -141,7 +142,6 @@
 /* Scroll-triggered reveal — this section sits below the fold, so it animates
    when it enters view (via IntersectionObserver) rather than on page load. */
 
-.kora-about-mark,
 .kora-about-badge,
 .kora-about-heading {
   opacity: 0;
@@ -149,12 +149,6 @@
   transition:
     opacity 0.6s ease,
     transform 0.6s ease;
-}
-
-.kora-about.is-visible .kora-about-mark {
-  opacity: 1;
-  transform: none;
-  transition-delay: 0.05s;
 }
 
 .kora-about.is-visible .kora-about-badge {
@@ -705,6 +699,17 @@
   padding: 28px 0 0;
 }
 
+/* Immersive home hero
+   -------------------
+   The frame is the whole viewport and the page starts inside it: no strip of
+   background above, nothing bracketing it, and the two top bars floating over
+   the picture rather than sitting on top of the page. */
+
+.kora-app.is-immersive .kora-hero {
+  padding: 0;
+  gap: 0;
+}
+
 /* Project switcher — a horizontal rail above the full-bleed showcase. */
 
 .kora-worklist {
@@ -757,9 +762,78 @@
 .kora-showcase-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 7;
+  /* Taller than the 16/7 band this replaces. The stills are 1.81:1 and the film
+     1.97:1, so a 16/9 frame crops far less off the top and bottom of either —
+     and fills enough of the screen that the film reads as the page rather than
+     as a panel sitting on it. */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #d9d9d9;
+}
+
+.kora-app.is-immersive .kora-showcase-media {
+  /* svh for the same reason the app shell uses it: vh measures iOS with the
+     address bar hidden, which would leave a strip of page under the frame. */
+  height: 100svh;
+  aspect-ratio: auto;
+  max-height: none;
+  /* The stills and the film are all about 2:1 — wider than any laptop viewport
+     — so a full-height frame crops their sides rather than letterboxing. */
+  background: #101010;
+}
+
+/* A scrim only where the bars sit. Without it the header lands on whatever the
+   frame happens to be showing, which on the brighter plates is unreadable. */
+
+.kora-app.is-immersive .kora-showcase-media::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 240px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.28) 45%,
+    transparent 100%
+  );
+}
+
+/* Top bars float over the frame. They keep their own stacking order; the
+   wrapper is what lifts them out of flow. */
+
+.kora-app.is-immersive .kora-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 120;
+}
+
+.kora-app.is-immersive .kora-announcement {
+  background: transparent;
+  color: #fff;
+}
+
+.kora-app.is-immersive .kora-header-wrap {
+  background: transparent;
+  border-bottom: none;
+}
+
+/* The caption is pinned to the bottom of the viewport now rather than to the
+   bottom of a panel, so it needs clearance from the screen edge — and from the
+   cookie bar that sits over that edge on a first visit. */
+
+.kora-app.is-immersive .kora-showcase-overlay {
+  padding: 24px 28px 104px;
+  /* A deeper wash to match: the copy is over a full-bleed picture, not a crop
+     that was already darkening toward its own bottom edge. */
+  background: linear-gradient(
+    180deg,
+    transparent 45%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
 }
 
 /* Carousel — one reel across every project. Frames stack on the same cell and
@@ -782,7 +856,7 @@
   display: block;
   opacity: 0;
   transform: scale(1.04);
-  transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: opacity, transform;
 }
 
@@ -797,6 +871,19 @@
 
 .kora-carousel-slide.is-active.is-alt {
   animation-name: kora-pan-out;
+}
+
+/* The film has a camera move of its own, so the pan stays off it — running both
+   at once reads as a wobble rather than as one shot. */
+
+.kora-carousel-slide.is-film {
+  transform: none;
+}
+
+.kora-carousel-slide.is-film.is-active,
+.kora-carousel-slide.is-film.is-active.is-alt {
+  animation: none;
+  transform: none;
 }
 
 @keyframes kora-pan-in {
@@ -940,6 +1027,37 @@
   overflow: hidden;
 }
 
+/* The wall lifts in when it is scrolled to, like every other band on the page. */
+
+.kora-brands-label,
+.kora-brands .kora-marquee {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-brands.is-visible .kora-brands-label {
+  opacity: 1;
+  transform: none;
+}
+
+.kora-brands.is-visible .kora-marquee {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.12s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-brands-label,
+  .kora-brands .kora-marquee {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .kora-brands-label {
   padding: 0 28px;
   font-size: 12px;
@@ -1033,6 +1151,48 @@
 .kora-about-mark {
   height: 34px;
   width: auto;
+  /* Inline SVG now, so it paints from the section's own colour. */
+  color: var(--text-h);
+  overflow: visible;
+}
+
+/* Each part of the lockup drops in on its own — the two halves of the mark
+   first, then the letters left to right. `fill-box` makes the offset relative
+   to each glyph rather than to the viewBox, so the stagger reads the same
+   whatever size the logo is set at. */
+
+.kora-about-mark path {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  transform: translateY(-180%);
+}
+
+.kora-about.is-visible .kora-about-mark path {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.34s ease-out,
+    /* A touch of overshoot at the end, so each glyph lands rather than
+       arriving — that settle is what makes it read as a drop. */
+    transform 0.72s cubic-bezier(0.2, 1.24, 0.36, 1);
+}
+
+.kora-about-mark path:nth-child(1) { transition-delay: 0.02s; }
+.kora-about-mark path:nth-child(2) { transition-delay: 0.08s; }
+.kora-about-mark path:nth-child(3) { transition-delay: 0.16s; }
+.kora-about-mark path:nth-child(4) { transition-delay: 0.22s; }
+.kora-about-mark path:nth-child(5) { transition-delay: 0.28s; }
+.kora-about-mark path:nth-child(6) { transition-delay: 0.34s; }
+.kora-about-mark path:nth-child(7) { transition-delay: 0.40s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-about-mark path,
+  .kora-about.is-visible .kora-about-mark path {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .kora-about-badge {
@@ -1133,12 +1293,21 @@
   transition: opacity 0.2s ease;
 }
 
-.kora-office-code span[aria-hidden] {
-  display: inline-block;
+/* The code is set huge, so the arrow is sized off the type rather than pinned
+   to a pixel value — it scales with the clamp above. `baseline` alignment on
+   the parent has nothing to grab on an SVG, so it is nudged onto the letters'
+   baseline by hand. */
+
+.kora-office-arrow {
+  width: 0.44em;
+  height: auto;
+  flex: none;
+  align-self: center;
+  margin-bottom: 0.06em;
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.kora-office-code:hover span[aria-hidden] {
+.kora-office-code:hover .kora-office-arrow {
   transform: translateX(0.12em);
 }
 
@@ -1356,17 +1525,255 @@
 /* Work page */
 
 .kora-page-work {
-  padding: 64px 28px 96px;
+  padding: 132px 0 96px;
 }
 
-.kora-page-work-header {
-  max-width: 700px;
-  margin-bottom: 56px;
+.kora-page-work-intro {
+  padding-bottom: 72px;
 }
 
-.kora-page-work-label {
+.kora-page-work-intro p {
+  margin: 0;
+  max-width: 22ch;
+  font-size: clamp(28px, 3.4vw, 46px);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--text-h);
+}
+
+/* Two plates across, with the gutter doubling as the page margin so the wall
+   reads edge to edge rather than as cards floating on a background. */
+
+/* A ragged wall rather than a tidy 2x N table. Twelve columns underneath, and
+   each card takes either five or seven of them, so the pair in a row is never
+   the same width; the narrow card is also cropped tighter, so it is shorter
+   than its neighbour and the rows never line up along the bottom. Every other
+   row drops the wide card down a beat, which is what keeps the eye moving down
+   the page instead of scanning across it. */
+
+.kora-work-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 76px 28px;
+  padding: 0 28px;
+  margin: 0;
+  list-style: none;
+  align-items: start;
+}
+
+/* narrow, wide, wide, narrow — so the split flips each row instead of leaving
+   one column permanently the smaller one. */
+
+.kora-work-item:nth-child(4n + 1),
+.kora-work-item:nth-child(4n + 4) {
+  grid-column: span 5;
+}
+
+.kora-work-item:nth-child(4n + 2),
+.kora-work-item:nth-child(4n + 3) {
+  grid-column: span 7;
+}
+
+/* The offset alternates with the split, so it is always the taller card in a
+   row that sits lower — the stagger reinforces the size difference rather than
+   fighting it. */
+
+.kora-work-item:nth-child(4n + 2),
+.kora-work-item:nth-child(4n + 4) {
+  margin-top: 72px;
+}
+
+/* A narrow card is cropped squarer, a wide one stays cinematic. Same plates,
+   different frames — this is what makes one taller than the other. */
+
+.kora-work-item:nth-child(4n + 1) .kora-work-thumb,
+.kora-work-item:nth-child(4n + 4) .kora-work-thumb {
+  aspect-ratio: 4 / 3;
+}
+
+.kora-work-item:nth-child(4n + 2) .kora-work-thumb,
+.kora-work-item:nth-child(4n + 3) .kora-work-thumb {
+  aspect-ratio: 16 / 9;
+}
+
+/* Each card lifts in as it is scrolled to, rather than the whole wall firing
+   on load — the page keeps moving the whole way down. */
+
+.kora-work-item {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-work-item.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.kora-work-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.kora-work-thumb {
+  position: relative;
+  overflow: hidden;
+  /* Overridden per card above — a narrow card crops squarer than a wide one. */
+  aspect-ratio: 3 / 2;
+  background: #101010;
+}
+
+/* The plates stack on one cell and cross-dissolve, so a project with several
+   frames plays in place instead of the card resizing under them. */
+
+.kora-work-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  margin-bottom: 12px;
+  opacity: 0;
+  transform: scale(1.02);
+  transition:
+    opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-work-thumb img.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.kora-work-card:hover .kora-work-thumb img.is-active {
+  transform: scale(1.04);
+}
+
+/* A quiet frame count, so a card that is mid-cycle explains itself. */
+
+.kora-work-ticks {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: flex;
+  gap: 5px;
+}
+
+.kora-work-ticks span {
+  width: 16px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  transition: background-color 0.3s ease;
+}
+
+.kora-work-ticks span.is-active {
+  background: #fff;
+}
+
+/* Caption: the kind on the left, the words in their own column — the plate is
+   what carries the page, so the text stays quiet next to it. */
+
+.kora-work-caption {
+  display: grid;
+  grid-template-columns: 88px 1fr auto;
+  gap: 16px;
+  align-items: start;
+}
+
+.kora-work-arrow {
+  color: var(--text);
+  margin-top: 4px;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+    color 0.28s ease;
+}
+
+.kora-work-card:hover .kora-work-arrow {
+  color: var(--text-h);
+  transform: translateX(5px);
+}
+
+.kora-work-kind {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  padding-top: 2px;
+}
+
+.kora-work-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kora-work-text h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-h);
+}
+
+.kora-work-text p {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.kora-work-meta {
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+  .kora-work-grid {
+    grid-template-columns: 1fr;
+    gap: 52px 0;
+    padding: 0 18px;
+  }
+
+  /* One up, so the spans, the stagger and the two crops all collapse to the
+     same shape — a ragged wall needs two columns to be ragged in. */
+  .kora-work-item:nth-child(4n + 1),
+  .kora-work-item:nth-child(4n + 2),
+  .kora-work-item:nth-child(4n + 3),
+  .kora-work-item:nth-child(4n + 4) {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+
+  .kora-work-item:nth-child(4n + 1) .kora-work-thumb,
+  .kora-work-item:nth-child(4n + 2) .kora-work-thumb,
+  .kora-work-item:nth-child(4n + 3) .kora-work-thumb,
+  .kora-work-item:nth-child(4n + 4) .kora-work-thumb {
+    aspect-ratio: 3 / 2;
+  }
+
+  .kora-work-caption {
+    grid-template-columns: 64px 1fr;
+  }
+}
+
+/* Placeholder page — About while it is being reworked. */
+
+.kora-page-soon {
+  min-height: 62svh;
+  display: flex;
+  align-items: center;
+  padding: 132px 0 96px;
+}
+
+.kora-page-soon-label {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -1374,130 +1781,28 @@
   color: var(--text);
 }
 
-.kora-page-work-header h1 {
-  margin: 0;
-  font-size: clamp(36px, 5.5vw, 64px);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-  color: var(--text-h);
-}
-
-.kora-page-work-categories {
-  display: flex;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin-bottom: 40px;
-  border-bottom: 1px solid var(--border);
-}
-
-.kora-page-work-categories button {
-  appearance: none;
-  border: none;
-  background: none;
-  padding: 0 0 12px;
-  margin: 0 0 -1px;
-  font: inherit;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text);
-  border-bottom: 2px solid transparent;
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.kora-page-work-categories button:hover {
-  color: var(--text-h);
-}
-
-.kora-page-work-categories button.is-active {
-  color: var(--text-h);
-  border-bottom-color: var(--text-h);
-}
-
-.kora-page-work-grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 48px 32px;
-}
-
-.kora-page-work-grid li {
-  animation: kora-fade-up 0.6s ease both;
-}
-
-.kora-page-work-card {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-}
-
-.kora-page-work-thumb {
-  aspect-ratio: 4 / 3;
-  background: #d9d9d9;
-  overflow: hidden;
-  transition: background-color 0.25s ease;
-}
-
-.kora-page-work-card:hover .kora-page-work-thumb {
-  background: #cfcfcf;
-}
-
-.kora-page-work-info {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding-top: 16px;
-}
-
-.kora-page-work-index {
-  flex-shrink: 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.kora-page-work-text {
-  flex: 1;
-  min-width: 0;
+.kora-page-soon-inner {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 14px;
 }
 
-.kora-page-work-text h2 {
+.kora-page-soon-inner h1 {
   margin: 0;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: clamp(38px, 6vw, 78px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--text-h);
 }
 
-.kora-page-work-meta {
-  font-size: 13px;
+.kora-page-soon-inner p {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 17px;
+  line-height: 1.5;
   color: var(--text);
 }
 
-.kora-page-work-arrow {
-  flex-shrink: 0;
-  color: var(--text-h);
-  opacity: 0;
-  transform: translateX(-6px);
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-}
-
-.kora-page-work-card:hover .kora-page-work-arrow {
-  opacity: 1;
-  transform: translateX(0);
-}
 
 /* About Us page */
 
@@ -1940,10 +2245,6 @@
    simply missing. */
 
 @media (hover: none) {
-  .kora-page-work-arrow {
-    opacity: 1;
-    transform: none;
-  }
 
   /* No cursor to lift a logo out of the row, so the whole row sits a little
      brighter instead. */
@@ -2019,14 +2320,6 @@
      is shown. */
 
   .kora-subnav,
-  .kora-page-work-categories {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-  }
 
   .kora-subnav::-webkit-scrollbar,
   .kora-page-work-categories::-webkit-scrollbar,
@@ -2035,13 +2328,6 @@
   }
 
   .kora-subnav button,
-  .kora-page-work-categories button {
-    flex: none;
-    scroll-snap-align: start;
-    /* Comfortable thumb target — the label itself is only 12px tall. */
-    padding: 12px 0 14px;
-    margin-bottom: 0;
-  }
 
   .kora-subnav {
     gap: 20px;
@@ -2049,9 +2335,6 @@
     scroll-padding-left: 18px;
   }
 
-  .kora-page-work-categories {
-    gap: 20px;
-  }
 
   /* Hero */
 
@@ -2220,9 +2503,6 @@
     padding: 48px 18px 80px;
   }
 
-  .kora-page-work-header {
-    margin-bottom: 36px;
-  }
 
   .kora-page-work-grid {
     grid-template-columns: 1fr;

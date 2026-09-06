@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { OFFICES } from '../data'
+import { ArrowIcon } from './icons'
 
 /** "10:35 PM" in the office's own zone, matching the studio's US-style clock. */
 const localTime = (timeZone: string) =>
@@ -47,7 +48,7 @@ export function Offices() {
               rel="noreferrer"
             >
               {office.code}
-              <span aria-hidden="true">&rarr;</span>
+              <ArrowIcon className="kora-office-arrow" />
               <span className="kora-visually-hidden">
                 — {office.city} on the map
               </span>

@@ -1,37 +1,39 @@
 import { useMemo, useState } from 'react'
 import { useInView } from '../hooks/useInView'
-import { ArrowIcon } from '../components/icons'
 import { HeroCarousel } from '../components/HeroCarousel'
 import { BrandMarquee } from '../components/BrandMarquee'
-import { PROJECTS, buildHeroReel } from '../data'
+import { KoraMark } from '../components/KoraMark'
+import { buildHeroReel } from '../data'
 
-const CATEGORY_TABS = [
-  { label: 'Our Work', count: 24 },
-  { label: 'Fintech', count: 8 },
-  { label: 'E-commerce', count: 6 },
-  { label: 'Sports & Lifestyle', count: 5 },
-  { label: 'Web3', count: 4 },
-  { label: 'Healthcare', count: 3 },
-]
+/* Immersive hero experiment.
+   ---------------------------
+   The category row and the project rail are parked, not deleted: the hero is
+   now a single full-viewport frame that the visitor lands inside, so anything
+   that framed it as a panel on a page works against that. Restore these two
+   blocks together with the CATEGORY_TABS list, the activeTab state, jumpTo()
+   and the ArrowIcon import to put the old layout back. */
+
+// const CATEGORY_TABS = [
+//   { label: 'Our Work', count: 24 },
+//   { label: 'Fintech', count: 8 },
+//   { label: 'E-commerce', count: 6 },
+//   { label: 'Sports & Lifestyle', count: 5 },
+//   { label: 'Web3', count: 4 },
+//   { label: 'Healthcare', count: 3 },
+// ]
 
 export function Home() {
-  const [activeTab, setActiveTab] = useState(CATEGORY_TABS[0].label)
   const [slideIndex, setSlideIndex] = useState(0)
   const [aboutRef, aboutVisible] = useInView<HTMLElement>()
+  const [brandsRef, brandsVisible] = useInView<HTMLElement>()
 
-  // One reel over every project, so the hero plays the portfolio through rather
-  // than sitting on whichever project happens to be selected.
-  const slides = useMemo(() => buildHeroReel(PROJECTS), [])
-  const project = slides[slideIndex].project
-
-  // Clicking a name in the rail skips the reel to that project's first frame and
-  // lets it keep rolling from there.
-  const jumpTo = (name: string) =>
-    setSlideIndex(slides.findIndex((slide) => slide.project.name === name))
+  // A short fixed reel rather than the whole portfolio — see HERO_REEL.
+  const slides = useMemo(() => buildHeroReel(), [])
+  const slide = slides[slideIndex]
 
   return (
     <>
-      <div className="kora-subnav kora-container">
+      {/* <div className="kora-subnav kora-container">
         {CATEGORY_TABS.map((tab) => (
           <button
             key={tab.label}
@@ -43,10 +45,10 @@ export function Home() {
             <sup>{tab.count}</sup>
           </button>
         ))}
-      </div>
+      </div> */}
 
       <section className="kora-hero">
-        <nav className="kora-worklist kora-container" aria-label="Featured projects">
+        {/* <nav className="kora-worklist kora-container" aria-label="Featured projects">
           {PROJECTS.map((item) => {
             const isActive = item.name === project.name
             return (
@@ -62,7 +64,7 @@ export function Home() {
               </button>
             )
           })}
-        </nav>
+        </nav> */}
 
         <article className="kora-showcase-media">
           <HeroCarousel
@@ -71,22 +73,30 @@ export function Home() {
             onIndexChange={setSlideIndex}
           />
 
-          <div className="kora-showcase-overlay">
-            <div className="kora-showcase-divider" aria-hidden="true" />
-            {/* Keyed on the project so the copy re-cuts with the picture. */}
-            <div className="kora-showcase-copy" key={project.name}>
-              <div className="kora-showcase-tags">
-                <span>{project.category}</span>
-                <span>{project.year}</span>
-                <span className="kora-showcase-stat">{project.stat}</span>
+          {/* The closing film runs without a caption — it belongs to no
+              project, and a bare plate is the point of it. */}
+          {slide.caption && (
+            <div className="kora-showcase-overlay">
+              <div className="kora-showcase-divider" aria-hidden="true" />
+              {/* Keyed on the frame so the copy re-cuts with the picture. */}
+              <div className="kora-showcase-copy" key={slide.key}>
+                <div className="kora-showcase-tags">
+                  <span>{slide.caption.category}</span>
+                  <span>{slide.caption.year}</span>
+                  <span className="kora-showcase-stat">{slide.caption.stat}</span>
+                </div>
+                <h1>{slide.caption.headline}</h1>
               </div>
-              <h1>{project.headline}</h1>
             </div>
-          </div>
+          )}
         </article>
       </section>
 
-      <section className="kora-brands" aria-label="Brands we have worked with">
+      <section
+        className={`kora-brands${brandsVisible ? ' is-visible' : ''}`}
+        aria-label="Brands we have worked with"
+        ref={brandsRef}
+      >
         <span className="kora-brands-label">Brands we have worked with</span>
         <BrandMarquee />
       </section>
@@ -95,7 +105,7 @@ export function Home() {
         className={`kora-about${aboutVisible ? ' is-visible' : ''}`}
         ref={aboutRef}
       >
-        <img className="kora-about-mark" src="/logo.svg" alt="Kora" />
+        <KoraMark className="kora-about-mark" />
 
         <span className="kora-about-badge">This Is Kora</span>
 
@@ -120,6 +130,7 @@ export function Home() {
           <img className="kora-about-photo kora-about-photo-3" src="/about-03.jpg" alt="" />
         </div>
       </section>
+
     </>
   )
 }

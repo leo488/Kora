@@ -20,19 +20,22 @@ export function ChevronIcon() {
   )
 }
 
-export function ArrowIcon({ className = 'kora-worklist-arrow' }: { className?: string }) {
+export function ArrowIcon({ className = 'kora-arrow' }: { className?: string }) {
   return (
     <svg
       className={className}
-      width="11"
+      width="15"
       height="16"
-      viewBox="0 0 11 16"
+      viewBox="0 0 15 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
+      {/* The barbs are curves, not straight strokes, and they sweep back much
+          further than they drop — a narrow head that hugs the shaft rather than
+          the blunt 45-degree V this replaces. */}
       <path
-        d="M1 8H10M10 8L6 3.5M10 8L6 12.5"
+        d="M0.9 8H13.4M13.4 8C11.5 7.2 9.2 5.6 8.2 3.1M13.4 8C11.5 8.8 9.2 10.4 8.2 12.9"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"

@@ -32,9 +32,13 @@
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light;
+  /* The whole site runs dark now, so the document ground is dark too — this is
+     what shows during load and under an overscroll bounce, and a white flash
+     there undoes the effect before the page has even painted. The tokens above
+     stay light; `.kora-app.is-dark` re-points them for the components. */
+  color-scheme: dark;
   color: var(--text);
-  background: var(--bg);
+  background: #1e1e1e;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
