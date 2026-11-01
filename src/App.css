@@ -2936,3 +2936,507 @@
     display: none;
   }
 }
+
+/* =========================================================================
+   Home — editorial layout
+   Type-led intro, framed showreel, case-study wall, news, newsletter and a
+   contact band. Offices and footer below come from Layout, unchanged.
+   ========================================================================= */
+
+.kora-home-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+  align-items: end;
+  gap: 32px 64px;
+  padding: clamp(56px, 9vw, 140px) 28px clamp(40px, 5vw, 72px);
+}
+
+.kora-home-title {
+  margin: 0;
+  font-size: clamp(48px, 8.4vw, 136px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  color: var(--text-h);
+  animation: kora-home-rise 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.kora-home-lede {
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.4;
+  color: var(--text-h);
+  opacity: 0.82;
+  animation: kora-home-rise 0.9s 0.12s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes kora-home-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* Showreel — the hero films and plates, framed inside the page gutters. */
+
+.kora-home-reel {
+  padding: 0 28px;
+}
+
+.kora-home-reel-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #101010;
+}
+
+.kora-home-reel-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  gap: 18px;
+  padding: 80px 28px 28px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+  animation: kora-home-fade 0.8s ease both;
+}
+
+.kora-home-reel-caption span + span {
+  opacity: 0.7;
+}
+
+@keyframes kora-home-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Shared section furniture */
+
+.kora-home-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 32px;
+  padding-bottom: 28px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid var(--border);
+}
+
+.kora-home-section-head h2 {
+  margin: 0;
+  font-size: clamp(36px, 4.6vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.kora-home-section-head p {
+  font-size: 18px;
+  color: var(--text);
+}
+
+.kora-home-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 44px;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-h);
+  text-decoration: none;
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 4px;
+}
+
+.kora-home-more-arrow {
+  transition: transform 0.2s ease;
+}
+
+.kora-home-more:hover .kora-home-more-arrow {
+  transform: translateX(4px);
+}
+
+.kora-home-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-home-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-home-reveal,
+  .kora-home-title,
+  .kora-home-lede,
+  .kora-home-reel-caption {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Selected work — case-study wall */
+
+.kora-home-work {
+  padding: clamp(80px, 9vw, 140px) 28px 0;
+}
+
+.kora-home-work-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px 28px;
+}
+
+.kora-case-link {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.kora-case-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #2a2a2a;
+}
+
+.kora-case-media img,
+.kora-case-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-case-link:hover .kora-case-media img,
+.kora-case-link:hover .kora-case-media video {
+  transform: scale(1.04);
+}
+
+.kora-case-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kora-case-meta {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.kora-case-line {
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.kora-case-stat {
+  margin-top: 6px;
+  font-size: clamp(44px, 4.4vw, 72px);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--brand-bright);
+}
+
+/* The client wall sits between sections now rather than under the hero. */
+
+.kora-home-work + .kora-brands {
+  margin-top: clamp(80px, 9vw, 140px);
+}
+
+/* Happenings */
+
+.kora-home-news {
+  padding: clamp(40px, 6vw, 96px) 28px clamp(80px, 9vw, 140px);
+}
+
+.kora-home-news-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px 28px;
+}
+
+.kora-news-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.kora-news-media {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: #2a2a2a;
+  margin-bottom: 8px;
+}
+
+.kora-news-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-news-card:hover .kora-news-media img {
+  transform: scale(1.04);
+}
+
+.kora-news-kind,
+.kora-news-date {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.kora-news-card h3 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+/* Newsletter */
+
+.kora-home-newsletter {
+  background: #262626;
+  border-top: 1px solid var(--border);
+}
+
+.kora-home-newsletter-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 520px);
+  align-items: end;
+  gap: 32px 64px;
+  padding: clamp(64px, 7vw, 112px) 28px;
+}
+
+.kora-home-newsletter h2 {
+  margin: 0;
+  font-size: clamp(36px, 4.6vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.kora-home-newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kora-home-newsletter-form label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.kora-home-newsletter-row {
+  display: flex;
+  gap: 12px;
+}
+
+.kora-home-newsletter-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1.5px solid var(--text-h);
+  background: transparent;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 20px;
+  outline: none;
+}
+
+.kora-home-newsletter-row input::placeholder {
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.kora-home-newsletter-row input:focus-visible {
+  border-bottom-color: var(--brand-bright);
+}
+
+.kora-home-newsletter-form small {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.kora-home-newsletter-done {
+  font-size: 22px;
+  color: var(--text-h);
+}
+
+/* Contact band — the closing film runs behind it. */
+
+.kora-home-start {
+  position: relative;
+  overflow: hidden;
+  background: #101010;
+  color: #fff;
+}
+
+.kora-home-start-film {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.45;
+}
+
+.kora-home-start::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
+}
+
+.kora-home-start-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  padding: clamp(96px, 12vw, 200px) 28px;
+}
+
+.kora-home-start h2 {
+  margin: 0;
+  font-size: clamp(48px, 8.4vw, 136px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: #fff;
+}
+
+.kora-home-start-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 20px;
+  font-size: clamp(20px, 2vw, 28px);
+}
+
+.kora-home-start-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.kora-home-start-row a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.5);
+}
+
+.kora-home-copy {
+  appearance: none;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.kora-home-copy:hover {
+  border-color: #fff;
+}
+
+.kora-app.is-dark .kora-home-start .kora-cta {
+  --text-h: #fff;
+  --bg: #101010;
+}
+
+/* Tablet */
+
+@media (max-width: 1100px) {
+  .kora-home-work-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Phone */
+
+@media (max-width: 760px) {
+  .kora-home-intro,
+  .kora-home-newsletter-inner {
+    grid-template-columns: 1fr;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .kora-home-reel {
+    padding: 0;
+  }
+
+  .kora-home-reel-frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  .kora-home-reel-caption {
+    padding: 60px 18px 18px;
+  }
+
+  .kora-home-work,
+  .kora-home-news,
+  .kora-home-start-inner {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .kora-home-work-grid,
+  .kora-home-news-grid {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .kora-home-newsletter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
