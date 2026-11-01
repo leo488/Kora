@@ -2958,6 +2958,7 @@
   letter-spacing: -0.035em;
   font-weight: 500;
   color: var(--text-h);
+  text-wrap: balance;
   animation: kora-home-rise 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
