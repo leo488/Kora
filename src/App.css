@@ -2938,151 +2938,160 @@
 }
 
 /* =========================================================================
-   Home — editorial layout
-   Type-led intro, framed showreel, case-study wall, news, newsletter and a
-   contact band. Offices and footer below come from Layout, unchanged.
+   Home
+   Full-screen film under the Kora lockup, floating pill navigation, then a
+   statement, one client per row, news, newsletter and contact. Offices and
+   footer below come from Layout, unchanged.
    ========================================================================= */
 
-.kora-home-intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
-  align-items: end;
-  gap: 32px 64px;
-  padding: clamp(56px, 9vw, 140px) 28px clamp(40px, 5vw, 72px);
-}
+/* Pills — the navigation and every button on Home share this shape. */
 
-.kora-home-title {
-  margin: 0;
-  font-size: clamp(48px, 8.4vw, 136px);
-  line-height: 0.95;
-  letter-spacing: -0.035em;
+.kora-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
   font-weight: 500;
-  color: var(--text-h);
-  text-wrap: balance;
-  animation: kora-home-rise 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
-.kora-home-lede {
-  font-size: clamp(18px, 1.5vw, 22px);
-  line-height: 1.4;
-  color: var(--text-h);
-  opacity: 0.82;
-  animation: kora-home-rise 0.9s 0.12s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+.kora-pill:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
-@keyframes kora-home-rise {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
+.kora-pill.is-active,
+.kora-pill.is-solid {
+  background: #fff;
+  color: #1e1e1e;
 }
 
-/* Showreel — the hero films and plates, framed inside the page gutters. */
-
-.kora-home-reel {
-  padding: 0 28px;
+.kora-pill.is-solid:hover {
+  background: var(--brand-bright);
+  color: #fff;
 }
 
-.kora-home-reel-frame {
+.kora-pill.is-large {
+  padding: 13px 26px;
+  font-size: 18px;
+}
+
+.kora-pills {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 130;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 24px;
+  pointer-events: none;
+  transition:
+    top 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    bottom 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-pills.is-bottom {
+  bottom: 24px;
+}
+
+.kora-pills.is-top {
+  top: 16px;
+}
+
+/* Over the page (not the film) the frosted pills need a darker base to read. */
+.kora-pills.is-top .kora-pill:not(.is-active):not(.is-solid) {
+  background: rgba(40, 40, 40, 0.72);
+}
+
+.kora-pills-group {
+  display: flex;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+/* Hero — the reel full-screen, the lockup set right across it. */
+
+.kora-rx-hero {
   position: relative;
-  aspect-ratio: 16 / 9;
+  height: 100svh;
+  min-height: 520px;
   overflow: hidden;
   background: #101010;
 }
 
-.kora-home-reel-caption {
+.kora-rx-hero::after {
+  content: '';
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 3;
-  display: flex;
-  gap: 18px;
-  padding: 80px 28px 28px;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5));
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.28);
   pointer-events: none;
-  animation: kora-home-fade 0.8s ease both;
 }
 
-.kora-home-reel-caption span + span {
-  opacity: 0.7;
+.kora-rx-hero-mark {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 0 24px;
+  pointer-events: none;
 }
 
-@keyframes kora-home-fade {
+.kora-rx-hero-logo {
+  width: 100%;
+  height: auto;
+  color: #fff;
+  filter: drop-shadow(0 4px 30px rgba(0, 0, 0, 0.25));
+  animation: kora-rx-rise 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Sound toggle sits above the pills, which own the bottom edge here. */
+.kora-rx-hero .kora-sound-toggle {
+  bottom: 84px;
+  right: 24px;
+  border-radius: 999px;
+}
+
+@keyframes kora-rx-rise {
   from {
     opacity: 0;
+    transform: translateY(30px);
   }
 }
 
-/* Shared section furniture */
+/* Reveal on scroll */
 
-.kora-home-section-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px 32px;
-  padding-bottom: 28px;
-  margin-bottom: 36px;
-  border-bottom: 1px solid var(--border);
-}
-
-.kora-home-section-head h2 {
-  margin: 0;
-  font-size: clamp(36px, 4.6vw, 72px);
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.kora-home-section-head p {
-  font-size: 18px;
-  color: var(--text);
-}
-
-.kora-home-more {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 44px;
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--text-h);
-  text-decoration: none;
-  border-bottom: 1.5px solid currentColor;
-  padding-bottom: 4px;
-}
-
-.kora-home-more-arrow {
-  transition: transform 0.2s ease;
-}
-
-.kora-home-more:hover .kora-home-more-arrow {
-  transform: translateX(4px);
-}
-
-.kora-home-reveal {
+.kora-rx-reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(28px);
   transition:
-    opacity 0.7s ease,
-    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.kora-home-reveal.is-visible {
+.kora-rx-reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kora-home-reveal,
-  .kora-home-title,
-  .kora-home-lede,
-  .kora-home-reel-caption {
+  .kora-rx-reveal,
+  .kora-rx-hero-logo {
     opacity: 1;
     transform: none;
     transition: none;
@@ -3090,354 +3099,407 @@
   }
 }
 
-/* Selected work — case-study wall */
+/* Statement */
 
-.kora-home-work {
-  padding: clamp(80px, 9vw, 140px) 28px 0;
+.kora-rx-statement {
+  padding: clamp(96px, 12vw, 180px) 24px clamp(80px, 9vw, 140px);
 }
 
-.kora-home-work-grid {
+.kora-rx-statement h1 {
+  margin: 0 0 28px;
+  font-size: clamp(40px, 5vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+
+.kora-rx-statement p {
+  max-width: 34ch;
+  font-size: clamp(22px, 2.6vw, 40px);
+  line-height: 1.25;
+  font-weight: 300;
+  color: var(--text-h);
+  opacity: 0.86;
+}
+
+/* Partnerships — one client per row */
+
+.kora-rx-work {
+  padding: 0 24px;
+}
+
+.kora-rx-rows {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 56px 28px;
-}
-
-.kora-case-link {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  height: 100%;
+  gap: clamp(64px, 8vw, 120px);
+}
+
+.kora-rx-row-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px 32px;
   color: inherit;
   text-decoration: none;
 }
 
-.kora-case-media {
+.kora-rx-row-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.kora-rx-row-text h2 {
+  margin: 0;
+  font-size: clamp(28px, 2.6vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.kora-rx-row-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 30ch;
+}
+
+.kora-rx-row-detail p {
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-row-detail .kora-rx-row-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+}
+
+.kora-rx-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--brand-bright);
+}
+
+.kora-rx-row-detail .kora-rx-row-meta {
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.kora-rx-row-media {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   background: #2a2a2a;
 }
 
-.kora-case-media img,
-.kora-case-media video {
+.kora-rx-row-media img,
+.kora-rx-row-media video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.kora-case-link:hover .kora-case-media img,
-.kora-case-link:hover .kora-case-media video {
-  transform: scale(1.04);
+.kora-rx-row-link:hover .kora-rx-row-media img,
+.kora-rx-row-link:hover .kora-rx-row-media video {
+  transform: scale(1.03);
 }
 
-.kora-case-body {
+.kora-rx-center {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  margin-top: clamp(56px, 6vw, 88px);
 }
 
-.kora-case-meta {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.kora-case-line {
-  font-size: 22px;
-  line-height: 1.25;
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-.kora-case-stat {
-  margin-top: 6px;
-  font-size: clamp(44px, 4.4vw, 72px);
-  line-height: 1;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  color: var(--brand-bright);
-}
-
-/* The client wall sits between sections now rather than under the hero. */
-
-.kora-home-work + .kora-brands {
-  margin-top: clamp(80px, 9vw, 140px);
+.kora-rx-work + .kora-brands {
+  margin-top: clamp(96px, 10vw, 160px);
 }
 
 /* Happenings */
 
-.kora-home-news {
-  padding: clamp(40px, 6vw, 96px) 28px clamp(80px, 9vw, 140px);
+.kora-rx-news {
+  padding: clamp(64px, 8vw, 120px) 24px clamp(96px, 10vw, 160px);
 }
 
-.kora-home-news-grid {
+.kora-rx-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 32px;
+  margin-bottom: 36px;
+}
+
+.kora-rx-head h2,
+.kora-rx-newsletter h2,
+.kora-rx-contact h2 {
+  margin: 0;
+  font-size: clamp(36px, 4.4vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.kora-rx-head p {
+  font-size: 18px;
+}
+
+.kora-rx-news-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 40px 28px;
+  gap: 16px;
 }
 
-.kora-news-card {
+.kora-rx-card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  height: 100%;
+  background: #262838;
   color: inherit;
   text-decoration: none;
+  transition: background-color 0.25s ease;
 }
 
-.kora-news-media {
-  aspect-ratio: 3 / 2;
+.kora-rx-card:hover {
+  background: #2f3247;
+}
+
+.kora-rx-card-media {
+  aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: #2a2a2a;
-  margin-bottom: 8px;
 }
 
-.kora-news-media img {
+.kora-rx-card-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.kora-news-card:hover .kora-news-media img {
-  transform: scale(1.04);
-}
-
-.kora-news-kind,
-.kora-news-date {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.kora-news-card h3 {
-  margin: 0;
-  font-size: 24px;
-  line-height: 1.2;
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-/* Newsletter */
-
-.kora-home-newsletter {
-  background: #262626;
-  border-top: 1px solid var(--border);
-}
-
-.kora-home-newsletter-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 520px);
-  align-items: end;
-  gap: 32px 64px;
-  padding: clamp(64px, 7vw, 112px) 28px;
-}
-
-.kora-home-newsletter h2 {
-  margin: 0;
-  font-size: clamp(36px, 4.6vw, 72px);
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-
-.kora-home-newsletter-form {
+.kora-rx-card-body {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  gap: 14px;
+  padding: 24px 24px 28px;
+  text-align: center;
 }
 
-.kora-home-newsletter-form label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.kora-home-newsletter-row {
-  display: flex;
-  gap: 12px;
-}
-
-.kora-home-newsletter-row input {
-  flex: 1;
-  min-width: 0;
-  padding: 10px 0;
-  border: 0;
-  border-bottom: 1.5px solid var(--text-h);
-  background: transparent;
-  color: var(--text-h);
-  font: inherit;
-  font-size: 20px;
-  outline: none;
-}
-
-.kora-home-newsletter-row input::placeholder {
-  color: var(--text);
-  opacity: 0.6;
-}
-
-.kora-home-newsletter-row input:focus-visible {
-  border-bottom-color: var(--brand-bright);
-}
-
-.kora-home-newsletter-form small {
+.kora-rx-card-kind,
+.kora-rx-card-by {
   font-size: 14px;
   color: var(--text);
 }
 
-.kora-home-newsletter-done {
+.kora-rx-card-kind {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-card h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: var(--text-h);
+  text-wrap: balance;
+}
+
+/* Newsletter */
+
+.kora-rx-newsletter {
+  padding: clamp(64px, 7vw, 112px) 24px;
+  border-top: 1px solid var(--border);
+}
+
+.kora-rx-newsletter h2 {
+  margin-bottom: 28px;
+}
+
+.kora-rx-newsletter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.kora-rx-newsletter-form input {
+  width: min(360px, 100%);
+  padding: 13px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 18px;
+  outline: none;
+}
+
+.kora-rx-newsletter-form input:focus-visible {
+  border-color: #fff;
+}
+
+.kora-rx-newsletter small {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.kora-rx-newsletter-done {
+  margin-bottom: 14px;
   font-size: 22px;
   color: var(--text-h);
 }
 
-/* Contact band — the closing film runs behind it. */
+/* Contact */
 
-.kora-home-start {
-  position: relative;
-  overflow: hidden;
-  background: #101010;
-  color: #fff;
+.kora-rx-contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px 32px;
+  padding: clamp(64px, 7vw, 112px) 24px clamp(96px, 10vw, 160px);
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 64px;
 }
 
-.kora-home-start-film {
+.kora-rx-contact-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 36px;
+}
+
+.kora-rx-contact-rows {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+}
+
+.kora-rx-contact-rows > div {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.kora-rx-contact-rows dt {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-contact-rows dd {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+}
+
+.kora-rx-contact-rows a {
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.kora-rx-copy {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.kora-rx-copy:hover {
+  color: var(--text-h);
+}
+
+.kora-rx-contact-media {
+  position: relative;
+  min-height: 320px;
+  overflow: hidden;
+  background: #101010;
+}
+
+.kora-rx-contact-media video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.45;
-}
-
-.kora-home-start::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
-}
-
-.kora-home-start-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 32px;
-  padding: clamp(96px, 12vw, 200px) 28px;
-}
-
-.kora-home-start h2 {
-  margin: 0;
-  font-size: clamp(48px, 8.4vw, 136px);
-  line-height: 0.95;
-  letter-spacing: -0.035em;
-  color: #fff;
-}
-
-.kora-home-start-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 8px 20px;
-  font-size: clamp(20px, 2vw, 28px);
-}
-
-.kora-home-start-label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.kora-home-start-row a {
-  color: #fff;
-  text-decoration: none;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.5);
-}
-
-.kora-home-copy {
-  appearance: none;
-  padding: 4px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  background: transparent;
-  color: #fff;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.kora-home-copy:hover {
-  border-color: #fff;
-}
-
-.kora-app.is-dark .kora-home-start .kora-cta {
-  --text-h: #fff;
-  --bg: #101010;
-}
-
-/* Tablet */
-
-@media (max-width: 1100px) {
-  .kora-home-work-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 /* Phone */
 
 @media (max-width: 760px) {
-  .kora-home-intro,
-  .kora-home-newsletter-inner {
+  .kora-pills {
+    padding: 0 12px;
+    gap: 6px;
+  }
+
+  .kora-pills-group {
+    gap: 4px;
+  }
+
+  .kora-pill {
+    padding: 6px 11px;
+    font-size: 13px;
+  }
+
+  /* Contact folds into Book A Call on a phone; there is no room for both. */
+  .kora-pills-group:last-child .kora-pill:not(.is-solid) {
+    display: none;
+  }
+
+  .kora-rx-hero .kora-sound-toggle {
+    bottom: 72px;
+    right: 12px;
+  }
+
+  .kora-rx-statement,
+  .kora-rx-work,
+  .kora-rx-news,
+  .kora-rx-newsletter,
+  .kora-rx-contact {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .kora-rx-row-link,
+  .kora-rx-contact {
     grid-template-columns: 1fr;
-    padding-left: 18px;
-    padding-right: 18px;
   }
 
-  .kora-home-reel {
-    padding: 0;
+  .kora-rx-row-media {
+    order: -1;
   }
 
-  .kora-home-reel-frame {
-    aspect-ratio: 4 / 5;
+  .kora-rx-row-text {
+    gap: 16px;
   }
 
-  .kora-home-reel-caption {
-    padding: 60px 18px 18px;
-  }
-
-  .kora-home-work,
-  .kora-home-news,
-  .kora-home-start-inner {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-
-  .kora-home-work-grid,
-  .kora-home-news-grid {
+  .kora-rx-news-grid {
     grid-template-columns: 1fr;
-    gap: 44px;
   }
 
-  .kora-home-newsletter-row {
-    flex-direction: column;
-    align-items: stretch;
+  .kora-rx-contact-rows > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 }

@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Announcement } from './Announcement'
 import { Header } from './Header'
 import { Offices } from './Offices'
@@ -11,14 +11,20 @@ export function Layout() {
   // black (the contact band, for one) still have something to opt out of.
   const isDark = true
 
+  // Home carries its own floating pill navigation over a full-screen film, so
+  // the top bars are left off there. Every other route keeps them.
+  const isHome = useLocation().pathname === '/'
+
   return (
     <main
       className={`kora-app${isDark ? ' is-dark' : ''}`}
     >
-      <div className="kora-topbar">
-        <Announcement />
-        <Header />
-      </div>
+      {!isHome && (
+        <div className="kora-topbar">
+          <Announcement />
+          <Header />
+        </div>
+      )}
       <Outlet />
       <Offices />
       <Footer />
