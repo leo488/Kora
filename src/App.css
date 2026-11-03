@@ -3187,114 +3187,36 @@
   overflow: visible;
 }
 
-/* The logo loop, ten seconds round, meant to read as harmony:
-   1. a dot swells and bursts, and the mark grows out of it;
-   2. the letters pop in one after another, bouncing, then ripple in a wave;
-   3. the mark travels right, its two halves opening and closing like jaws,
-      swallowing each letter as it reaches it, and bounces at the far end;
-   4. it shrinks back to the dot, which hops home, and it all begins again.
-   Each letter shares one set of keyframes; the delays stagger them, so the
-   pop-in and the swallowing both run left to right. The loop only plays over
-   the hero — once the lockup docks it rests as the plain logo. */
+/* The build-in: the halves of the mark slide together from opposite corners,
+   the letters rise out of a blur one after another, the ® pops in last. */
 
-.kora-rx-logo path,
-.kora-rx-logo .kora-mark-seed {
+.kora-rx-logo path {
   transform-box: fill-box;
   transform-origin: center;
-  animation: kora-rx-letter 10s linear infinite both;
-}
-
-/* The two halves scale about the centre of the whole mark, not their own. */
-.kora-rx-logo path:nth-child(1),
-.kora-rx-logo path:nth-child(2) {
-  transform-box: view-box;
-  transform-origin: 17px 32px;
-}
-
-.kora-rx-logo path:nth-child(1) { animation-name: kora-rx-jaw-low; }
-.kora-rx-logo path:nth-child(2) { animation-name: kora-rx-jaw-high; }
-.kora-rx-logo .kora-mark-seed { animation-name: kora-rx-seed; }
-
-.kora-rx-logo path:nth-child(4) { animation-delay: 0s; }
-.kora-rx-logo path:nth-child(5) { animation-delay: 0.45s; }
-.kora-rx-logo path:nth-child(6) { animation-delay: 0.9s; }
-.kora-rx-logo path:nth-child(7) { animation-delay: 1.35s; }
-.kora-rx-logo path:nth-child(3) { animation-delay: 1.8s; }
-
-.kora-rx.is-docked .kora-rx-logo path {
-  animation: none;
-}
-
-.kora-rx.is-docked .kora-rx-logo .kora-mark-seed {
-  animation: none;
   opacity: 0;
+  filter: blur(12px);
+  transform: translateY(55%);
+  transition:
+    opacity 0.7s ease-out,
+    filter 0.9s ease-out,
+    transform 1.1s cubic-bezier(0.2, 1.1, 0.3, 1);
 }
 
-@keyframes kora-rx-seed {
-  0% { transform: translate(0, 0) scale(0.5); opacity: 1; animation-timing-function: ease-out; }
-  3% { transform: scale(1.6); }
-  5% { transform: scale(1); animation-timing-function: ease-in; }
-  7% { transform: scale(2.4); opacity: 1; }
-  8.5% { transform: scale(3.2); opacity: 0; }
-  88% { transform: translate(148px, 0) scale(0); opacity: 0; animation-timing-function: ease-out; }
-  89.5% { transform: translate(148px, 0) scale(1.2); opacity: 1; animation-timing-function: ease-in-out; }
-  93.5% { transform: translate(74px, -18px) scale(1); }
-  98% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(0, 0) scale(0.5); opacity: 1; }
+.kora-rx-logo path:nth-child(1) { transform: translate(-60%, 60%); transition-delay: 0.1s; }
+.kora-rx-logo path:nth-child(2) { transform: translate(60%, -60%); transition-delay: 0.1s; }
+.kora-rx-logo path:nth-child(4) { transition-delay: 0.45s; }
+.kora-rx-logo path:nth-child(5) { transition-delay: 0.55s; }
+.kora-rx-logo path:nth-child(6) { transition-delay: 0.65s; }
+.kora-rx-logo path:nth-child(7) { transition-delay: 0.75s; }
+.kora-rx-logo path:nth-child(3) {
+  transform: scale(0);
+  transition-delay: 1.2s;
 }
 
-@keyframes kora-rx-letter {
-  0%, 9% { transform: scale(0); opacity: 0; }
-  10% { transform: translateY(10px) scale(0.2); opacity: 1; animation-timing-function: ease-out; }
-  12% { transform: translateY(-9px) scale(1.25); animation-timing-function: ease-in-out; }
-  14% { transform: translateY(0) scale(0.9); }
-  15.5% { transform: scale(1.06); }
-  17% { transform: scale(1); }
-  36% { transform: translateY(0); animation-timing-function: ease-out; }
-  38% { transform: translateY(-6px); animation-timing-function: ease-in; }
-  40% { transform: translateY(0); }
-  59.5% { transform: translateX(0) scale(1); opacity: 1; animation-timing-function: ease-in; }
-  61% { transform: translateX(-10px) scale(0); opacity: 0; }
-  100% { transform: scale(0); opacity: 0; }
-}
-
-/* The halves part along their seam to open, and meet again to close. */
-@keyframes kora-rx-jaw-high {
-  0%, 5% { transform: translate(0, 0) scale(0); animation-timing-function: ease-out; }
-  8% { transform: scale(1.2); animation-timing-function: ease-in-out; }
-  10% { transform: scale(0.94); }
-  12%, 58% { transform: translate(0, 0) scale(1); }
-  61% { transform: translate(16px, -3px) scale(1); }
-  64% { transform: translate(40px, 0) scale(1); }
-  67% { transform: translate(57px, -3px) scale(1); }
-  70% { transform: translate(81px, 0) scale(1); }
-  73% { transform: translate(97px, -3px) scale(1); }
-  76% { transform: translate(121px, 0) scale(1); }
-  80% { transform: translate(148px, 0) scale(1); animation-timing-function: ease-out; }
-  82% { transform: translate(148px, -14px) scale(1); animation-timing-function: ease-in; }
-  84% { transform: translate(148px, 0) scale(1); animation-timing-function: ease-out; }
-  85% { transform: translate(148px, -5px) scale(1); animation-timing-function: ease-in; }
-  86% { transform: translate(148px, 0) scale(1); }
-  89%, 100% { transform: translate(148px, 0) scale(0); }
-}
-
-@keyframes kora-rx-jaw-low {
-  0%, 5% { transform: translate(0, 0) scale(0); animation-timing-function: ease-out; }
-  8% { transform: scale(1.2); animation-timing-function: ease-in-out; }
-  10% { transform: scale(0.94); }
-  12%, 58% { transform: translate(0, 0) scale(1); }
-  61% { transform: translate(24px, 3px) scale(1); }
-  64% { transform: translate(40px, 0) scale(1); }
-  67% { transform: translate(65px, 3px) scale(1); }
-  70% { transform: translate(81px, 0) scale(1); }
-  73% { transform: translate(105px, 3px) scale(1); }
-  76% { transform: translate(121px, 0) scale(1); }
-  80% { transform: translate(148px, 0) scale(1); animation-timing-function: ease-out; }
-  82% { transform: translate(148px, -14px) scale(1); animation-timing-function: ease-in; }
-  84% { transform: translate(148px, 0) scale(1); animation-timing-function: ease-out; }
-  85% { transform: translate(148px, -5px) scale(1); animation-timing-function: ease-in; }
-  86% { transform: translate(148px, 0) scale(1); }
-  89%, 100% { transform: translate(148px, 0) scale(0); }
+.kora-rx-masthead-logo.is-ready .kora-rx-logo path {
+  opacity: 1;
+  filter: none;
+  transform: none;
 }
 
 /* Hero — calm stills, held in place while the page slides up over them. */
@@ -3331,13 +3253,21 @@
   padding: calc(var(--kora-strip) + 120px) var(--kora-gutter) clamp(72px, 8vw, 128px);
 }
 
-.kora-rx-statement p {
-  max-width: 34ch;
-  margin: 0;
+.kora-rx-statement h1 {
+  margin: 0 0 14px;
   font-size: clamp(28px, 2.6vw, 40px);
-  line-height: 1.15;
+  line-height: 1.1;
   letter-spacing: -0.02em;
   font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-statement p {
+  max-width: 44ch;
+  font-size: clamp(22px, 2.3vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 400;
   color: var(--text-h);
 }
 
@@ -3356,57 +3286,41 @@
   transform: none;
 }
 
-/* Images fold out from the bottom: each one arrives tipped back on its top
-   edge, its lower corners curled and flared, and swings down flat as it
-   scrolls into place, like a sheet of paper being unfolded. Tied to scroll
-   where the browser supports it; elsewhere images simply sit flat. */
+/* Images arrive with a curved leading edge: the corners on their left side
+   start deeply rounded and straighten out as the image scrolls up into
+   place, like a sheet being laid flat. Tied to scroll where the browser
+   supports it; elsewhere images simply sit square. */
 
 @supports (animation-timeline: view()) {
   .kora-rx-curve {
-    transform-origin: 50% 0;
-    animation: kora-rx-unfold linear both;
+    animation: kora-rx-flatten linear both;
     animation-timeline: view();
-    animation-range: entry 0% cover 70%;
+    animation-range: entry 0% cover 45%;
   }
 }
 
-@keyframes kora-rx-unfold {
+@keyframes kora-rx-flatten {
   from {
-    transform: perspective(1600px) rotateX(34deg) scaleY(0.9);
-    border-bottom-left-radius: 50% 26%;
-    border-bottom-right-radius: 50% 26%;
-  }
-  /* Most of the swing is done by the time the bottom edge comes into view,
-     but the corners are still curled, and they're seen settling flat as the
-     bottom rises up the screen. */
-  50% {
-    transform: perspective(1600px) rotateX(8deg) scaleY(0.98);
-    border-bottom-left-radius: 46% 22%;
-    border-bottom-right-radius: 46% 22%;
+    border-top-left-radius: 30% 60%;
+    border-bottom-left-radius: 30% 60%;
+    transform: translateX(4%);
   }
   to {
-    transform: perspective(1600px) rotateX(0) scaleY(1);
+    border-top-left-radius: 0 0;
     border-bottom-left-radius: 0 0;
-    border-bottom-right-radius: 0 0;
+    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .kora-rx-reveal,
   .kora-rx-curve,
-  .kora-rx-logo path,
-  .kora-rx-logo .kora-mark-seed {
+  .kora-rx-logo path {
     opacity: 1;
     filter: none;
     transform: none;
     transition: none;
     animation: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .kora-rx-logo .kora-mark-seed {
-    opacity: 0;
   }
 }
 
@@ -3485,7 +3399,7 @@
 
 .kora-rx-row-media {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--surface);
 }
@@ -3559,7 +3473,7 @@
 /* Blank until the posts have their own images — a deeper tone of the card,
    so it still reads as a picture slot. */
 .kora-rx-card-media {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   background: color-mix(in srgb, var(--surface) 82%, var(--text-h) 10%);
 }
 
@@ -3715,7 +3629,6 @@
 }
 
 .kora-rx-contact-photo {
-  align-self: start;
   aspect-ratio: 4 / 5;
   background: var(--surface);
 }
