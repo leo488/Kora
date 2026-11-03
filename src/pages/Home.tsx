@@ -1,43 +1,40 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, Ref } from 'react'
 import { Link } from 'react-router-dom'
 import { useInView } from '../hooks/useInView'
-import { HeroCarousel } from '../components/HeroCarousel'
 import { BrandMarquee } from '../components/BrandMarquee'
 import { KoraMark } from '../components/KoraMark'
 import { PillNav } from '../components/PillNav'
-import {
-  AMBIENT_FILM,
-  OFFICES,
-  POSTS,
-  PROJECTS,
-  buildHeroReel,
-  leadImageOf,
-  srcSetFor,
-} from '../data'
+import { AMBIENT_FILM, OFFICES, POSTS, PROJECTS, srcSetFor } from '../data'
 import type { Project } from '../data'
 
 /* Home
    ----
-   A full-screen film with the Kora lockup set across it and the navigation
-   floating as pills, then a short statement, the work as one client per row,
-   news, a newsletter sign-up and a contact block. The offices band and the
-   footer come from Layout and are untouched. */
+   A full-screen moving gradient with the Kora lockup animating in across it
+   and the navigation floating as pills, then a short statement, four clients
+   one per row, news, a newsletter sign-up and a contact block. The offices
+   band and the footer come from Layout and are untouched.
+
+   The old film reel (HeroCarousel + buildHeroReel) is no longer on Home but is
+   kept in the codebase in case it comes back. */
 
 const NEW_BUSINESS_EMAIL = 'hello@kora.studio'
+
+/** The clients Home features, in order. The Work page still shows them all. */
+const HOME_PROJECTS = ['Ipaybtc', '3Projects', 'Refreeg', 'Tagmi']
 
 export function Home() {
   const heroRef = useRef<HTMLElement>(null)
   const [heroInView, setHeroInView] = useState(true)
 
-  // The pills sit at the foot of the film, then move to the top of the screen
-  // once most of the film has scrolled away.
+  // The pills sit at the foot of the hero, and move to the top of the screen
+  // as soon as the hero starts to scroll away from under them.
   useEffect(() => {
     const el = heroRef.current
     if (!el) return
     const observer = new IntersectionObserver(
       ([entry]) => setHeroInView(entry.isIntersecting),
-      { threshold: 0, rootMargin: '0px 0px -85% 0px' },
+      { threshold: 0, rootMargin: '-88% 0px 0px 0px' },
     )
     observer.observe(el)
     return () => observer.disconnect()
@@ -58,12 +55,22 @@ export function Home() {
 }
 
 function Hero({ ref }: { ref: Ref<HTMLElement> }) {
-  const [slideIndex, setSlideIndex] = useState(0)
-  const slides = useMemo(() => buildHeroReel(), [])
+  // One frame after mount, so the lockup's starting pose paints first and the
+  // animation has something to run from.
+  const [ready, setReady] = useState(false)
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setReady(true))
+    return () => cancelAnimationFrame(id)
+  }, [])
 
   return (
-    <section className="kora-rx-hero" ref={ref} aria-label="Kora">
-      <HeroCarousel slides={slides} index={slideIndex} onIndexChange={setSlideIndex} />
+    <section className={`kora-rx-hero${ready ? ' is-ready' : ''}`} ref={ref} aria-label="Kora">
+      <div className="kora-rx-gradient" aria-hidden="true">
+        <span className="kora-rx-gradient-a" />
+        <span className="kora-rx-gradient-b" />
+        <span className="kora-rx-gradient-rays" />
+        <span className="kora-rx-gradient-glow" />
+      </div>
       <div className="kora-rx-hero-mark">
         <KoraMark className="kora-rx-hero-logo" />
       </div>
@@ -94,9 +101,10 @@ function Partnerships() {
   return (
     <section className="kora-rx-work kora-container" aria-label="Selected work">
       <ul className="kora-rx-rows">
-        {PROJECTS.map((project) => (
-          <ClientRow key={project.name} project={project} />
-        ))}
+        {HOME_PROJECTS.map((name) => {
+          const project = PROJECTS.find((p) => p.name === name)
+          return project && <ClientRow key={name} project={project} />
+        })}
       </ul>
       <div className="kora-rx-center">
         <Link to="/work" className="kora-pill is-solid is-large">
@@ -127,19 +135,14 @@ function ClientRow({ project }: { project: Project }) {
 
           <div className="kora-rx-row-detail">
             <p>{lineOf(project)}.</p>
-            {hasStat && (
-              <p className="kora-rx-row-stat">
-                <span className="kora-rx-dot" aria-hidden="true" />
-                {project.stat}
-              </p>
-            )}
+            {hasStat && <p className="kora-rx-row-stat">{project.stat}</p>}
             <p className="kora-rx-row-meta">
               {project.category} &middot; {project.year}
             </p>
           </div>
         </div>
 
-        <div className="kora-rx-row-media">
+        <div className="kora-rx-row-media kora-rx-fold">
           {project.film ? (
             <video
               src={project.film.src}
@@ -197,15 +200,11 @@ function Happenings() {
 
       <ul className="kora-rx-news-grid">
         {POSTS.slice(0, 3).map((post) => {
-          const image = leadImageOf(post.project)
           return (
             <li key={post.title}>
               <Link to="/blog" className="kora-rx-card">
-                <div className="kora-rx-card-media">
-                  {image && (
-                    <img src={image.widths[0].url} alt="" loading="lazy" draggable={false} />
-                  )}
-                </div>
+                {/* Left blank until the posts have art of their own. */}
+                <div className="kora-rx-card-media kora-rx-fold" aria-hidden="true" />
                 <div className="kora-rx-card-body">
                   <span className="kora-rx-card-kind">{post.category}</span>
                   <h3>{post.title}</h3>
@@ -298,7 +297,7 @@ function Contact() {
         </a>
       </div>
 
-      <div className="kora-rx-contact-media">
+      <div className="kora-rx-contact-media kora-rx-fold">
         <video
           src={AMBIENT_FILM.src}
           poster={AMBIENT_FILM.poster.src}

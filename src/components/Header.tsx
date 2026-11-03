@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { NAV_LINKS, OFFICES, SERVICES } from '../data'
 import { ChevronIcon, MenuIcon } from './icons'
+import { ThemeToggle } from './ThemeToggle'
 
 export function Header() {
   const [servicesOpen, setServicesOpen] = useState(false)
@@ -83,6 +84,8 @@ export function Header() {
             <a href="#" className="kora-cta kora-header-cta">
               Book A Call
             </a>
+
+            <ThemeToggle />
 
             <button
               type="button"

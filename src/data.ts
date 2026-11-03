@@ -524,17 +524,14 @@ export const PARTNERS: Partner[] = [
   { name: '3PROJECTS', logo: logoThreeProjects, scale: 0.74 },
 ]
 
-/* Posts — shared by the Blog index and the Happenings strip on Home. Each one
-   borrows a plate from a project so the strip has pictures before the posts
-   have art of their own.
-   TODO(kora): placeholder posts — swap for real articles when they exist. */
+/* Posts — shared by the Blog index and the Happenings strip on Home.
+   TODO(kora): placeholder posts — swap for real articles (and their images)
+   when they exist. */
 
 export interface Post {
   title: string
   category: string
   date: string
-  /** Project whose lead plate stands in as the post's thumbnail. */
-  project: string
 }
 
 export const POSTS: Post[] = [
@@ -542,32 +539,23 @@ export const POSTS: Post[] = [
     title: 'Why Bold Branding Wins in Fintech',
     category: 'Branding',
     date: 'Jun 2026',
-    project: 'Escro',
   },
   {
     title: 'Designing for Trust: Lessons From iPayBTC',
     category: 'Case Study',
     date: 'May 2026',
-    project: 'Ipaybtc',
   },
   {
     title: 'The Future of Visual Identity in Web3',
     category: 'Insights',
     date: 'Apr 2026',
-    project: 'Tagmi',
   },
   {
     title: 'What a Global Studio Learns From Local Markets',
     category: 'Studio Notes',
     date: 'Mar 2026',
-    project: 'Fourstrides',
   },
 ]
-
-/** A project's lead plate, by name — for borrowing art across the site. */
-export function leadImageOf(projectName: string): ProjectImage | undefined {
-  return PROJECTS.find((p) => p.name === projectName)?.images[0]
-}
 
 /** The closing street film, reused behind the contact band on Home. */
 export const AMBIENT_FILM = CLOSING_FILM

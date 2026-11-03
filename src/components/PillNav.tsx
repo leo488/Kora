@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { ThemeToggle } from './ThemeToggle'
 
 const LINKS = [
   { label: 'Home', to: '/' },
@@ -29,6 +30,7 @@ export function PillNav({ docked }: { docked: 'bottom' | 'top' }) {
       </div>
 
       <div className="kora-pills-group">
+        <ThemeToggle />
         <a href="#contact" className="kora-pill">
           Contact
         </a>
