@@ -83,16 +83,24 @@ export function Home() {
 /** The lockup and the pills, fixed over everything. Their positions are
  *  driven from --kora-p in CSS, so they glide with the scroll. */
 function Masthead({ docked }: { docked: boolean }) {
+  // One frame after mount, so the lockup's starting pose paints first and the
+  // build-in has something to run from.
+  const [ready, setReady] = useState(false)
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setReady(true))
+    return () => cancelAnimationFrame(id)
+  }, [])
+
   return (
     <>
       <div className="kora-rx-masthead-bar" aria-hidden="true" />
       <Link
         to="/"
-        className="kora-rx-masthead-logo"
+        className={`kora-rx-masthead-logo${ready ? ' is-ready' : ''}`}
         aria-label="Kora — home"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
-        <KoraMark className="kora-rx-logo" withSeed />
+        <KoraMark className="kora-rx-logo" />
       </Link>
       <PillNav docked={docked ? 'top' : 'bottom'} />
     </>
@@ -125,9 +133,10 @@ function Statement() {
   const [ref, cls] = useReveal<HTMLElement>()
   return (
     <section className={`kora-rx-statement kora-rx-reveal${cls}`} ref={ref}>
+      <h1>This is Kora</h1>
       <p>
-        Kora helps ambitious startups and businesses build brands and digital
-        products that are ready to compete globally.
+        A global creative studio. Through strategic branding and storytelling,
+        we help businesses stand out, connect, and grow.
       </p>
     </section>
   )
