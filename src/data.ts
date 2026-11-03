@@ -557,5 +557,19 @@ export const POSTS: Post[] = [
   },
 ]
 
-/** The closing street film, reused behind the contact band on Home. */
-export const AMBIENT_FILM = CLOSING_FILM
+/** A reel of stills only — no films — for a calmer hero. Each entry names a
+    project and which of its plates to show. */
+export function buildStillReel(entries: Array<[string, number]>): HeroSlide[] {
+  return entries.map(([name, index], i): HeroSlide => {
+    const project = PROJECTS.find((p) => p.name === name)
+    const image = project?.images[index]
+    if (!project || !image) throw new Error(`No plate ${index} for ${name}`)
+    return {
+      key: `${name}-${index}`,
+      src: image.src,
+      srcSet: srcSetFor(image),
+      frame: i + 1,
+      frameCount: entries.length,
+    }
+  })
+}
