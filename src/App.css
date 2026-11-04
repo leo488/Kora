@@ -3399,7 +3399,7 @@
 
 .kora-rx-row-media {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--surface);
 }
@@ -3473,7 +3473,7 @@
 /* Blank until the posts have their own images — a deeper tone of the card,
    so it still reads as a picture slot. */
 .kora-rx-card-media {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   background: color-mix(in srgb, var(--surface) 82%, var(--text-h) 10%);
 }
 
@@ -3629,6 +3629,7 @@
 }
 
 .kora-rx-contact-photo {
+  align-self: start;
   aspect-ratio: 4 / 5;
   background: var(--surface);
 }
