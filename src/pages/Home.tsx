@@ -135,8 +135,15 @@ function Statement() {
     <section className={`kora-rx-statement kora-rx-reveal${cls}`} ref={ref}>
       <h1>This is Kora</h1>
       <p>
-        A global creative studio. Through strategic branding and storytelling,
-        we help businesses stand out, connect, and grow.
+        Kora is a global creative studio. We partner with founders and teams
+        building something worth paying attention to, and give them the brand,
+        the story, and the design system to back it up.
+      </p>
+      <p>
+        Brand strategy, identity, digital product, motion, and on every project
+        the same through-line: clarity first, craft always. Small team, senior
+        hands on every brief, and offices close to the markets we work in, from
+        fintech in Lagos to lifestyle brands in Abuja.
       </p>
     </section>
   )

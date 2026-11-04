@@ -52,6 +52,20 @@ export function Footer() {
 
       <div className="kora-footer-divider kora-container" aria-hidden="true" />
 
+      {/* The name, set like a dictionary entry under the links: how to say
+          it, and what it means. */}
+      <div className="kora-footer-name kora-container">
+        <p className="kora-footer-say">
+          <span className="kora-footer-ipa">/ˈkɔːrə/</span>
+          <span className="kora-footer-sound">KOR-uh</span>
+        </p>
+        <p className="kora-footer-pos">noun</p>
+        <p className="kora-footer-meaning">
+          Kora means harmony. It&rsquo;s what we bring to every brief:
+          harmonizing ideas, people and craft until they move as one.
+        </p>
+      </div>
+
       <KoraMark className="kora-footer-logo kora-mark-drop" />
 
       <div className="kora-footer-meta kora-container">
