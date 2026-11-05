@@ -1614,58 +1614,6 @@
   background: var(--border);
 }
 
-/* The name as a dictionary entry, on the same four columns as the links:
-   the pronunciation under Sitemap, the part of speech under Offices, the
-   meaning across the last two. */
-
-.kora-footer-name {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-items: baseline;
-  gap: 12px 32px;
-}
-
-.kora-footer-name p {
-  margin: 0;
-}
-
-.kora-footer-say {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.kora-footer-ipa {
-  font-size: clamp(24px, 2.2vw, 32px);
-  line-height: 1.1;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text-h);
-}
-
-.kora-footer-sound {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--text);
-}
-
-.kora-footer-pos {
-  font-size: 17px;
-  font-style: italic;
-  color: var(--text);
-}
-
-.kora-footer-meaning {
-  grid-column: 3 / -1;
-  max-width: 30ch;
-  font-size: clamp(20px, 1.7vw, 26px);
-  line-height: 1.25;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text-h);
-}
-
 .kora-footer-logo {
   /* Gutter to gutter, like every other block on the page. */
   width: 100%;
@@ -2660,17 +2608,6 @@
     min-width: 0;
   }
 
-  /* Two columns, matching the links: pronunciation and part of speech on
-     one line, the meaning across the full width under them. */
-  .kora-footer-name {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 20px;
-  }
-
-  .kora-footer-meaning {
-    grid-column: 1 / -1;
-  }
-
   /* The stacked notice is roughly 130px tall on a handset. */
 
   .kora-app:has(.kora-cookiebar) .kora-footer {
@@ -3316,29 +3253,22 @@
   padding: calc(var(--kora-strip) + 120px) var(--kora-gutter) clamp(72px, 8vw, 128px);
 }
 
-/* "This is Kora" is the small label; the copy under it is the statement,
-   in the bold weight, which is what gives it its personality. */
 .kora-rx-statement h1 {
-  margin: 0 0 24px;
-  font-size: 15px;
-  line-height: 1.2;
-  letter-spacing: 0;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.kora-rx-statement p {
-  max-width: 40ch;
-  margin: 0;
-  font-size: clamp(24px, 2.5vw, 38px);
-  line-height: 1.15;
+  margin: 0 0 14px;
+  font-size: clamp(28px, 2.6vw, 40px);
+  line-height: 1.1;
   letter-spacing: -0.02em;
   font-weight: 600;
   color: var(--text-h);
 }
 
-.kora-rx-statement p + p {
-  margin-top: 0.8em;
+.kora-rx-statement p {
+  max-width: 44ch;
+  font-size: clamp(22px, 2.3vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--text-h);
 }
 
 /* Reveal on scroll */
@@ -3435,45 +3365,35 @@
   color: var(--text-h);
 }
 
-/* The line and the number are set large and bold, as Ragged Edge sets
-   theirs: the line reads as a sentence, the number as the headline result.
-   Both stay in the text colour. */
 .kora-rx-row-detail {
-  max-width: 26ch;
-  font-size: clamp(18px, 1.55vw, 23px);
-  line-height: 1.25;
+  max-width: 30ch;
+  font-size: 15px;
+  line-height: 1.35;
 }
 
 .kora-rx-row-line {
-  margin: 0 0 20px;
+  margin-bottom: 14px;
   font-weight: 600;
-  letter-spacing: -0.01em;
   color: var(--text-h);
 }
 
 .kora-rx-row-stat {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 0 0 6px;
-  font-size: clamp(30px, 2.6vw, 40px);
-  line-height: 1;
+  gap: 7px;
   font-weight: 600;
-  letter-spacing: -0.02em;
   color: var(--text-h);
 }
 
 .kora-rx-dot {
   flex: none;
-  width: 0.3em;
-  height: 0.3em;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: currentColor;
 }
 
 .kora-rx-row-meta {
-  margin: 0;
-  font-size: 15px;
   color: var(--text);
 }
 
