@@ -16,10 +16,54 @@
   --text-h: #fff;
   --bg: #1e1e1e;
   --border: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.4);
   --code-bg: rgba(255, 255, 255, 0.08);
+  /* Raised panels: cards, image placeholders. */
+  --surface: #2a2a2a;
+  --surface-hover: #333;
+  /* The accent that reads on this ground. */
+  --accent-ink: var(--brand-bright);
 
   background: #1e1e1e;
   color: var(--text);
+}
+
+/* Light theme — the same tokens re-pointed, plus the few sections that paint
+   their own ground. */
+
+.kora-app.is-light {
+  --text: rgba(30, 30, 30, 0.62);
+  --text-h: #1e1e1e;
+  --bg: #f4f3ef;
+  --border: rgba(30, 30, 30, 0.14);
+  --border-strong: rgba(30, 30, 30, 0.4);
+  --code-bg: rgba(30, 30, 30, 0.06);
+  --surface: #e6e5e0;
+  --surface-hover: #dcdbd5;
+  --accent-ink: var(--brand);
+
+  background: var(--bg);
+  color: var(--text);
+}
+
+.kora-app.is-light .kora-announcement {
+  background: #e9e8e3;
+  color: rgba(30, 30, 30, 0.86);
+  border-bottom: 1px solid var(--border);
+}
+
+.kora-app.is-light .kora-footer {
+  background: var(--bg);
+}
+
+/* The client logos are drawn light for the dark ground. */
+.kora-app.is-light .kora-marquee-item img {
+  filter: invert(1);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  background: #f4f3ef;
 }
 
 /* The strip was a white band back when it sat above a light page. The site runs
@@ -1328,10 +1372,12 @@
 .kora-offices-grid {
   list-style: none;
   margin: 0;
-  padding: 0 28px;
+  padding: 0 24px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 64px 48px;
+  /* Two columns with the same gap as the footer's four, so each office lines
+     up with the first and third footer columns underneath. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 64px 32px;
 }
 
 .kora-office {
@@ -1525,10 +1571,9 @@
 }
 
 .kora-footer-top {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px 32px;
 }
 
 .kora-footer-col {
@@ -1570,7 +1615,9 @@
 }
 
 .kora-footer-logo {
-  width: min(100%, 1100px);
+  /* Gutter to gutter, like every other block on the page. */
+  width: 100%;
+  max-width: 1440px;
   height: auto;
   color: var(--text-h);
   overflow: visible;
@@ -1580,11 +1627,11 @@
 }
 
 .kora-footer-meta {
-  display: flex;
-  justify-content: space-between;
+  /* The same four columns as the links above, so each line sits under one. */
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  gap: 16px 32px;
   font-size: 13px;
   color: var(--text);
 }
@@ -1593,6 +1640,8 @@
    rather than as another line of small print. */
 
 .kora-footer-rc {
+  grid-column: 3;
+  justify-self: start;
   padding: 5px 12px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -2539,6 +2588,7 @@
   .kora-offices-grid {
     padding: 0 18px;
     gap: 48px;
+    grid-template-columns: 1fr;
   }
 
   /* Footer */
@@ -2791,8 +2841,13 @@
     font-size: 16px;
   }
 
+  .kora-footer-meta .kora-footer-rc {
+    grid-column: auto;
+  }
+
   .kora-footer-meta {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    justify-items: start;
     gap: 4px;
     font-size: 12px;
   }
@@ -2934,5 +2989,719 @@
 
   .kora-marquee-track[aria-hidden='true'] {
     display: none;
+  }
+}
+
+/* =========================================================================
+   Home
+   Laid out after the Ragged Edge homepage: a full-screen hero with the lockup
+   across it, which docks into a cropped strip at the top as the page scrolls
+   up over the hero; pill navigation; one client per row; news; newsletter;
+   contact. Offices and footer below come from Layout.
+   ========================================================================= */
+
+.kora-rx {
+  /* Page gutter, shared with the offices band and the footer. */
+  --kora-gutter: 24px;
+  /* How much of the docked lockup stays on screen. */
+  --kora-strip: 46px;
+  position: relative;
+}
+
+/* Pills — the navigation and every button on Home share this shape. */
+
+.kora-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.kora-pill:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.kora-pill.is-active,
+.kora-pill.is-solid {
+  background: var(--text-h);
+  color: var(--bg);
+}
+
+/* Over the hero gradient the pills are always light-on-colour, whatever the
+   theme. */
+.kora-pills.is-bottom .kora-pill.is-active,
+.kora-pills.is-bottom .kora-pill.is-solid {
+  background: #fff;
+  color: #1e1e1e;
+}
+
+.kora-pill.is-solid:hover {
+  background: var(--brand-bright);
+  color: #fff;
+}
+
+.kora-pill.is-large {
+  padding: 13px 26px;
+  font-size: 18px;
+}
+
+.kora-pills {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 130;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 24px;
+  pointer-events: none;
+  transition:
+    top 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    bottom 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-pills.is-bottom {
+  bottom: 24px;
+}
+
+.kora-pills.is-top {
+  /* Tucked under the docked lockup's visible strip. */
+  top: calc(var(--kora-strip) + 10px);
+}
+
+/* Over the page (not the hero) the frosted pills take the page's colours. */
+.kora-pills.is-top .kora-pill:not(.is-active):not(.is-solid) {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  color: var(--text-h);
+}
+
+.kora-pills.is-top .kora-pill:not(.is-active):not(.is-solid):hover {
+  background: var(--surface-hover);
+}
+
+/* Theme switch — a round pill in the floating nav, a plain icon in the header. */
+
+.kora-theme-toggle {
+  appearance: none;
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-h);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.kora-theme-toggle:hover {
+  background: var(--surface);
+}
+
+.kora-pills .kora-theme-toggle {
+  width: 33px;
+  height: 33px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.kora-pills.is-top .kora-theme-toggle {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  color: var(--text-h);
+}
+
+.kora-pills-group {
+  display: flex;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+/* Masthead — the lockup is fixed and glides from the middle of the hero to
+   the top of the screen as --kora-p runs 0 → 1, ending cropped so only the
+   bottom of the letters shows. The bar behind it fades in as it docks. */
+
+.kora-rx-masthead-bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 110;
+  height: calc(var(--kora-strip) + 10px + 34px + 12px);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.kora-rx.is-docked .kora-rx-masthead-bar {
+  opacity: 1;
+}
+
+.kora-rx-masthead-logo {
+  position: fixed;
+  left: var(--kora-gutter);
+  right: var(--kora-gutter);
+  top: 0;
+  z-index: 120;
+  display: block;
+  color: #fff;
+  /* The two end positions in terms of the lockup's own height (the box is
+     as tall as the lockup): centred in the viewport at 0, and at 1 lifted so
+     only --kora-strip of it is left showing. */
+  --kora-y0: calc(50svh - 50%);
+  --kora-y1: calc(var(--kora-strip) - 100%);
+  transform: translateY(
+    calc(var(--kora-y0) + (var(--kora-y1) - var(--kora-y0)) * var(--kora-p, 0))
+  );
+  transition: color 0.3s ease;
+}
+
+.kora-rx.is-docked .kora-rx-masthead-logo {
+  color: var(--text-h);
+}
+
+.kora-rx-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* The build-in: the halves of the mark slide together from opposite corners,
+   the letters rise out of a blur one after another, the ® pops in last. */
+
+.kora-rx-logo path {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateY(55%);
+  transition:
+    opacity 0.7s ease-out,
+    filter 0.9s ease-out,
+    transform 1.1s cubic-bezier(0.2, 1.1, 0.3, 1);
+}
+
+.kora-rx-logo path:nth-child(1) { transform: translate(-60%, 60%); transition-delay: 0.1s; }
+.kora-rx-logo path:nth-child(2) { transform: translate(60%, -60%); transition-delay: 0.1s; }
+.kora-rx-logo path:nth-child(4) { transition-delay: 0.45s; }
+.kora-rx-logo path:nth-child(5) { transition-delay: 0.55s; }
+.kora-rx-logo path:nth-child(6) { transition-delay: 0.65s; }
+.kora-rx-logo path:nth-child(7) { transition-delay: 0.75s; }
+.kora-rx-logo path:nth-child(3) {
+  transform: scale(0);
+  transition-delay: 1.2s;
+}
+
+.kora-rx-masthead-logo.is-ready .kora-rx-logo path {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+/* Hero — calm stills, held in place while the page slides up over them. */
+
+.kora-rx-hero {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  height: 100svh;
+  min-height: 480px;
+  overflow: hidden;
+  background: #101010;
+}
+
+.kora-rx-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.kora-rx-page {
+  position: relative;
+  z-index: 1;
+  background: var(--bg);
+}
+
+/* Statement */
+
+.kora-rx-statement {
+  /* Clears the docked masthead, so the heading is never tucked under it. */
+  padding: calc(var(--kora-strip) + 120px) var(--kora-gutter) clamp(72px, 8vw, 128px);
+}
+
+.kora-rx-statement h1 {
+  margin: 0 0 14px;
+  font-size: clamp(28px, 2.6vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-statement p {
+  max-width: 44ch;
+  font-size: clamp(22px, 2.3vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--text-h);
+}
+
+/* Reveal on scroll */
+
+.kora-rx-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-rx-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Images arrive with a curved leading edge: the corners on their left side
+   start deeply rounded and straighten out as the image scrolls up into
+   place, like a sheet being laid flat. Tied to scroll where the browser
+   supports it; elsewhere images simply sit square. */
+
+@supports (animation-timeline: view()) {
+  .kora-rx-curve {
+    animation: kora-rx-flatten linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+}
+
+@keyframes kora-rx-flatten {
+  from {
+    border-top-left-radius: 30% 60%;
+    border-bottom-left-radius: 30% 60%;
+    transform: translateX(4%);
+  }
+  to {
+    border-top-left-radius: 0 0;
+    border-bottom-left-radius: 0 0;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-rx-reveal,
+  .kora-rx-curve,
+  .kora-rx-logo path {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Partnerships — one client per row, hairlines between */
+
+.kora-rx-work {
+  padding: 0 var(--kora-gutter);
+}
+
+.kora-rx-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.kora-rx-row {
+  padding: 28px 0 64px;
+  border-top: 1px solid var(--border);
+}
+
+.kora-rx-row-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px var(--kora-gutter);
+  color: inherit;
+  text-decoration: none;
+}
+
+.kora-rx-row-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.kora-rx-row-text h2 {
+  margin: 0;
+  font-size: clamp(22px, 1.9vw, 28px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.kora-rx-row-detail {
+  max-width: 30ch;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.kora-rx-row-line {
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-row-stat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.kora-rx-row-meta {
+  color: var(--text);
+}
+
+.kora-rx-row-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.kora-rx-row-media img,
+.kora-rx-row-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kora-rx-center {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.kora-rx-work + .kora-brands {
+  margin-top: clamp(80px, 9vw, 140px);
+}
+
+/* Happenings */
+
+.kora-rx-news {
+  padding: clamp(56px, 7vw, 104px) var(--kora-gutter) clamp(80px, 9vw, 140px);
+}
+
+.kora-rx-news-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.kora-rx-news-head h2,
+.kora-rx-news-head p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--text-h);
+}
+
+.kora-rx-news-grid {
+  list-style: none;
+  margin: 0 0 48px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.kora-rx-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.25s ease;
+}
+
+.kora-rx-card:hover {
+  background: var(--surface-hover);
+}
+
+/* Blank until the posts have their own images — a deeper tone of the card,
+   so it still reads as a picture slot. */
+.kora-rx-card-media {
+  aspect-ratio: 1 / 1;
+  background: color-mix(in srgb, var(--surface) 82%, var(--text-h) 10%);
+}
+
+.kora-rx-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 28px 22px;
+  text-align: center;
+}
+
+.kora-rx-card-kind {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-card h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--text-h);
+  text-wrap: balance;
+}
+
+.kora-rx-card-by {
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* Newsletter */
+
+.kora-rx-newsletter {
+  padding: clamp(48px, 6vw, 88px) var(--kora-gutter);
+  border-top: 1px solid var(--border);
+}
+
+.kora-rx-newsletter h2,
+.kora-rx-contact h2 {
+  margin: 0;
+  font-size: clamp(34px, 3.6vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-newsletter h2 {
+  margin-bottom: 24px;
+}
+
+.kora-rx-newsletter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.kora-rx-newsletter-form input {
+  width: min(300px, 100%);
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 16px;
+  outline: none;
+}
+
+.kora-rx-newsletter-form input:focus-visible {
+  border-color: var(--text-h);
+}
+
+.kora-rx-newsletter small {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.kora-rx-newsletter-done {
+  margin-bottom: 14px;
+  font-size: 20px;
+  color: var(--text-h);
+}
+
+/* Contact — heading and rows on the left, a portrait slot top right. */
+
+.kora-rx-contact {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 32px var(--kora-gutter);
+  padding: clamp(48px, 6vw, 88px) var(--kora-gutter) clamp(80px, 9vw, 140px);
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 110px;
+}
+
+.kora-rx-contact-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.kora-rx-contact-rows {
+  margin: 0;
+  max-width: 640px;
+}
+
+.kora-rx-contact-rows > div {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 16px;
+  padding: 8px 0;
+  font-size: 15px;
+}
+
+.kora-rx-contact-rows dt {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-contact-rows dd {
+  margin: 0;
+}
+
+.kora-rx-contact-rows a {
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.kora-rx-contact-rows a:hover {
+  text-decoration: underline;
+}
+
+.kora-rx-copy {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.kora-rx-copy:hover {
+  color: var(--text-h);
+}
+
+.kora-rx-contact-photo {
+  align-self: start;
+  aspect-ratio: 4 / 5;
+  background: var(--surface);
+}
+
+/* Phone */
+
+@media (max-width: 760px) {
+  .kora-rx {
+    /* Matches the offices band and footer on a phone. */
+    --kora-gutter: 18px;
+    --kora-strip: 26px;
+  }
+
+  .kora-pills {
+    padding: 0 12px;
+    gap: 6px;
+  }
+
+  .kora-pills-group {
+    gap: 4px;
+  }
+
+  .kora-pill {
+    padding: 6px 11px;
+    font-size: 13px;
+  }
+
+  .kora-pills .kora-theme-toggle {
+    width: 29px;
+    height: 29px;
+  }
+
+  .kora-rx-masthead-bar {
+    height: calc(var(--kora-strip) + 10px + 29px + 10px);
+  }
+
+  /* Contact folds into Book A Call on a phone; there is no room for both. */
+  .kora-pills-group:last-child .kora-pill:not(.is-solid) {
+    display: none;
+  }
+
+  .kora-rx-row-link,
+  .kora-rx-contact {
+    grid-template-columns: 1fr;
+  }
+
+  .kora-rx-row-text {
+    gap: 14px;
+  }
+
+  .kora-rx-row-media {
+    order: 2;
+  }
+
+  .kora-rx-row-text h2 {
+    order: 0;
+  }
+
+  .kora-rx-news-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .kora-rx-contact-rows > div {
+    grid-template-columns: 1fr auto;
+  }
+
+  .kora-rx-contact-rows dt {
+    grid-column: 1 / -1;
+  }
+
+  .kora-rx-contact-photo {
+    max-width: 320px;
   }
 }
