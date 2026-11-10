@@ -133,10 +133,11 @@ function Statement() {
   const [ref, cls] = useReveal<HTMLElement>()
   return (
     <section className={`kora-rx-statement kora-rx-reveal${cls}`} ref={ref}>
-      <h1>
-        Kora helps ambitious startups and businesses build brands and digital
-        products that are ready to compete globally.
-      </h1>
+      <h1>This is Kora</h1>
+      <p>
+        A global creative studio. Through strategic branding and storytelling,
+        we help businesses stand out, connect, and grow.
+      </p>
     </section>
   )
 }
