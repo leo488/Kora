@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { THEME_KEY, ThemeContext, initialTheme } from '../theme/theme'
 import type { Theme } from '../theme/theme'
+import { Announcement } from './Announcement'
+import { Header } from './Header'
 import { Offices } from './Offices'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
-import { useFlareController } from './rx/useFlareController'
 
 export function Layout() {
   // Dark by default, with a light mode the visitor can switch to. The choice is
@@ -27,13 +28,19 @@ export function Layout() {
     }
   }, [theme])
 
-  // Every page carries the floating pill navigation and the docking lockup,
-  // so the old top bars are gone.
-  useFlareController()
+  // Home carries its own floating pill navigation over the hero, so
+  // the top bars are left off there. Every other route keeps them.
+  const isHome = useLocation().pathname === '/'
 
   return (
     <ThemeContext.Provider value={themeValue}>
       <main className={`kora-app is-${theme}`}>
+        {!isHome && (
+          <div className="kora-topbar">
+            <Announcement />
+            <Header />
+          </div>
+        )}
         <Outlet />
         <Offices />
         <Footer />

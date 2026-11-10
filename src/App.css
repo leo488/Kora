@@ -3045,8 +3045,8 @@
 
 /* Over the hero gradient the pills are always light-on-colour, whatever the
    theme. */
-.kora-rx:not(.is-calm) .kora-pills.is-bottom .kora-pill.is-active,
-.kora-rx:not(.is-calm) .kora-pills.is-bottom .kora-pill.is-solid {
+.kora-pills.is-bottom .kora-pill.is-active,
+.kora-pills.is-bottom .kora-pill.is-solid {
   background: #fff;
   color: #1e1e1e;
 }
@@ -3085,9 +3085,7 @@
   top: calc(var(--kora-strip) + 10px);
 }
 
-/* Over the page (not the hero) the frosted pills take the page's colours —
-   docked at the top, or still at the foot once the hero has faded. */
-.kora-rx.is-calm .kora-pill:not(.is-active):not(.is-solid),
+/* Over the page (not the hero) the frosted pills take the page's colours. */
 .kora-pills.is-top .kora-pill:not(.is-active):not(.is-solid) {
   background: color-mix(in srgb, var(--surface) 82%, transparent);
   color: var(--text-h);
@@ -3128,7 +3126,6 @@
   -webkit-backdrop-filter: blur(14px);
 }
 
-.kora-rx.is-calm .kora-pills .kora-theme-toggle,
 .kora-pills.is-top .kora-theme-toggle {
   background: color-mix(in srgb, var(--surface) 82%, transparent);
   color: var(--text-h);
@@ -3177,12 +3174,6 @@
     calc(var(--kora-y0) + (var(--kora-y1) - var(--kora-y0)) * var(--kora-p, 0))
   );
   transition: color 0.3s ease;
-}
-
-/* The lockup follows the hand-over: white over the hero, the text colour
-   once the hero has faded to the page. */
-.kora-rx-masthead-logo {
-  color: color-mix(in srgb, var(--text-h) calc(var(--kora-fade, 0) * 100%), #fff);
 }
 
 .kora-rx.is-docked .kora-rx-masthead-logo {
@@ -3249,83 +3240,41 @@
   pointer-events: none;
 }
 
-/* The hand-over, as on Ragged Edge: the page has no ground of its own over
-   the hero. As the statement rises over the hero, the hero fades to the page
-   colour (--kora-fade 0 → 1) and the statement's type turns from white to
-   the text colour. The hero stays pinned behind the page, by then a plain
-   field of the page colour. */
-.kora-rx-hero-fade {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: var(--bg);
-  opacity: var(--kora-fade, 0);
-  pointer-events: none;
-}
-
 .kora-rx-page {
   position: relative;
   z-index: 1;
-  /* The flare reaches past the image frames; keep that from widening the
-     page. */
-  overflow-x: clip;
-}
-
-/* Inner pages have no hero, so the page sits on its own ground. */
-.kora-rx.is-inner .kora-rx-page {
   background: var(--bg);
-}
-
-/* Shared column grid: a third for the label or text, two thirds for the
-   work. The statement, rows, page headings and services all use it, so
-   everything that starts "where the images start" lines up. */
-.kora-rx-statement,
-.kora-rx-row-link,
-.kora-rx-services,
-.kora-rx-services-list li {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  column-gap: var(--kora-gutter);
-}
-
-.kora-rx-label {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.3;
-  color: var(--text-h);
 }
 
 /* Statement */
 
 .kora-rx-statement {
   /* Clears the docked masthead, so the heading is never tucked under it. */
-  padding: calc(var(--kora-strip) + 120px) var(--kora-gutter) clamp(96px, 10vw, 160px);
+  padding: calc(var(--kora-strip) + 120px) var(--kora-gutter) clamp(72px, 8vw, 128px);
 }
 
-/* One bold line, in the second column, so it starts where the case-study
-   images start. */
+/* One line, bold and large. It starts where the case-study images start
+   and runs the full width of that column, set tight for display. */
+.kora-rx-statement {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  column-gap: var(--kora-gutter);
+}
+
 .kora-rx-statement h1 {
   grid-column: 2;
-  max-width: 24ch;
   margin: 0;
-  font-size: clamp(28px, 3.1vw, 46px);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  font-size: clamp(34px, 4.4vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  word-spacing: 0.02em;
   font-weight: 600;
-  text-wrap: balance;
-  color: color-mix(in srgb, var(--text-h) calc(var(--kora-fade, 1) * 100%), #fff);
-}
-
-/* Inner page heading: the label in the first column, the line beside it. */
-.kora-rx-page-head {
-  padding-top: calc(var(--kora-strip) + 150px);
-  padding-bottom: clamp(64px, 7vw, 112px);
-  align-items: baseline;
-}
-
-.kora-rx-page-head .kora-rx-label {
-  grid-column: 1;
+  font-kerning: normal;
+  font-feature-settings: 'kern' 1;
+  text-wrap: pretty;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-h);
 }
 
 /* Reveal on scroll */
@@ -3343,36 +3292,44 @@
   transform: none;
 }
 
-/* Flaring images (see components/rx/Flare.tsx). The frame holds the
-   space; inside it a layer reaches --kora-flare past each side and is clipped
-   back to the frame. Near the bottom of the screen a script swaps that clip
-   for one whose sides curve outward, so the image looks drawn up from under
-   the screen's edge. */
-.kora-rx-media {
-  --kora-flare: 64px;
-  position: relative;
+/* Images fold out from the bottom: each one arrives tipped back on its top
+   edge, its lower corners curled and flared, and swings down flat as it
+   scrolls into place, like a sheet of paper being unfolded. Tied to scroll
+   where the browser supports it; elsewhere images simply sit flat. */
+
+@supports (animation-timeline: view()) {
+  .kora-rx-curve {
+    transform-origin: 50% 0;
+    animation: kora-rx-unfold linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 70%;
+  }
 }
 
-.kora-flare {
-  position: absolute;
-  inset: 0 calc(-1 * var(--kora-flare));
-  overflow: hidden;
-  clip-path: inset(0 var(--kora-flare));
-  background: var(--surface);
-}
-
-.kora-flare > img,
-.kora-flare > video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+@keyframes kora-rx-unfold {
+  from {
+    transform: perspective(1600px) rotateX(34deg) scaleY(0.9);
+    border-bottom-left-radius: 50% 26%;
+    border-bottom-right-radius: 50% 26%;
+  }
+  /* Most of the swing is done by the time the bottom edge comes into view,
+     but the corners are still curled, and they're seen settling flat as the
+     bottom rises up the screen. */
+  50% {
+    transform: perspective(1600px) rotateX(8deg) scaleY(0.98);
+    border-bottom-left-radius: 46% 22%;
+    border-bottom-right-radius: 46% 22%;
+  }
+  to {
+    transform: perspective(1600px) rotateX(0) scaleY(1);
+    border-bottom-left-radius: 0 0;
+    border-bottom-right-radius: 0 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .kora-rx-reveal,
+  .kora-rx-curve,
   .kora-rx-logo path {
     opacity: 1;
     filter: none;
@@ -3395,12 +3352,14 @@
 }
 
 .kora-rx-row {
-  padding: 24px 0 clamp(80px, 8vw, 128px);
+  padding: 28px 0 64px;
   border-top: 1px solid var(--border);
 }
 
 .kora-rx-row-link {
-  row-gap: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px var(--kora-gutter);
   color: inherit;
   text-decoration: none;
 }
@@ -3412,79 +3371,62 @@
   gap: 32px;
 }
 
-/* Set as Ragged Edge sets theirs: the name large; at the foot, the line in
-   a medium weight, the result in the same size with a round marker, and a
-   quieter line under it. */
 .kora-rx-row-text h2 {
   margin: 0;
-  font-size: clamp(24px, 2.2vw, 32px);
+  font-size: clamp(22px, 1.9vw, 28px);
   line-height: 1.1;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
   font-weight: 500;
   color: var(--text-h);
 }
 
 .kora-rx-row-detail {
-  max-width: 340px;
-  font-size: 17px;
-  line-height: 1.25;
-}
-
-.kora-rx-row-detail p {
-  margin: 0;
+  max-width: 30ch;
+  font-size: 15px;
+  line-height: 1.35;
 }
 
 .kora-rx-row-line {
-  margin-bottom: 20px !important;
-  font-weight: 500;
+  margin-bottom: 14px;
+  font-weight: 600;
   color: var(--text-h);
 }
 
 .kora-rx-row-stat {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 4px !important;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
+  gap: 7px;
+  font-weight: 600;
   color: var(--text-h);
 }
 
-/* The marker: a filled circle with a plus knocked out of it. */
-.kora-rx-plus {
-  position: relative;
+.kora-rx-dot {
   flex: none;
-  width: 15px;
-  height: 15px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: var(--text-h);
-}
-
-.kora-rx-plus::before,
-.kora-rx-plus::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 7px;
-  height: 1.6px;
-  border-radius: 1px;
-  background: var(--bg);
-  transform: translate(-50%, -50%);
-}
-
-.kora-rx-plus::after {
-  transform: translate(-50%, -50%) rotate(90deg);
+  background: currentColor;
 }
 
 .kora-rx-row-meta {
-  font-size: 15px;
-  line-height: 1.35;
   color: var(--text);
 }
 
 .kora-rx-row-media {
-  aspect-ratio: 16 / 9;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.kora-rx-row-media img,
+.kora-rx-row-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .kora-rx-center {
@@ -3497,61 +3439,10 @@
   margin-top: clamp(80px, 9vw, 140px);
 }
 
-/* About — services, one per row */
-
-.kora-rx-services {
-  padding: 0 var(--kora-gutter) clamp(80px, 9vw, 140px);
-}
-
-.kora-rx-services-list {
-  grid-column: 2;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.kora-rx-services-list li {
-  /* Inside the two-thirds column: number and name, then the description. */
-  grid-template-columns: 48px minmax(0, 1fr) minmax(0, 1.2fr);
-  align-items: baseline;
-  padding: 18px 0 22px;
-  border-top: 1px solid var(--border);
-}
-
-.kora-rx-services-num {
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
-  color: var(--text);
-}
-
-.kora-rx-services-list h3 {
-  margin: 0;
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-.kora-rx-services-list p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.4;
-  color: var(--text);
-}
-
 /* Happenings */
 
 .kora-rx-news {
   padding: clamp(56px, 7vw, 104px) var(--kora-gutter) clamp(80px, 9vw, 140px);
-}
-
-.kora-rx-news.is-page {
-  padding-top: 0;
-}
-
-/* The full list on the Blog page, two to a row so four posts sit square. */
-.kora-rx-news.is-page .kora-rx-news-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .kora-rx-news-head {
@@ -3597,7 +3488,7 @@
 /* Blank until the posts have their own images — a deeper tone of the card,
    so it still reads as a picture slot. */
 .kora-rx-card-media {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   background: color-mix(in srgb, var(--surface) 82%, var(--text-h) 10%);
 }
 
@@ -3753,6 +3644,7 @@
 }
 
 .kora-rx-contact-photo {
+  align-self: start;
   aspect-ratio: 4 / 5;
   background: var(--surface);
 }
@@ -3796,35 +3688,12 @@
 
   .kora-rx-row-link,
   .kora-rx-contact,
-  .kora-rx-statement,
-  .kora-rx-services {
+  .kora-rx-statement {
     grid-template-columns: 1fr;
   }
 
-  .kora-rx-statement h1,
-  .kora-rx-services-list {
+  .kora-rx-statement h1 {
     grid-column: 1;
-  }
-
-  .kora-rx-page-head {
-    row-gap: 14px;
-  }
-
-  .kora-rx-services {
-    row-gap: 16px;
-  }
-
-  .kora-rx-services-list li {
-    grid-template-columns: 36px minmax(0, 1fr);
-    row-gap: 6px;
-  }
-
-  .kora-rx-services-list p {
-    grid-column: 2;
-  }
-
-  .kora-rx-media {
-    --kora-flare: 40px;
   }
 
   .kora-rx-row-text {

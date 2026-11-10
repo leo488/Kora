@@ -1,22 +1,27 @@
 import { POSTS } from '../data'
-import { InnerPage } from '../components/rx/InnerPage'
-import { PostCard } from '../components/rx/PostCard'
 
 export function Blog() {
   return (
-    <InnerPage
-      label="Happenings"
-      heading="Notes on branding, strategy, and building things that last."
-    >
-      <section className="kora-rx-news is-page" aria-label="All posts">
-        <ul className="kora-rx-news-grid">
-          {POSTS.map((post) => (
-            <li key={post.title}>
-              <PostCard post={post} />
-            </li>
-          ))}
-        </ul>
-      </section>
-    </InnerPage>
+    <section className="kora-page-blog kora-container">
+      <header className="kora-page-blog-header">
+        <h1>Blog</h1>
+        <p>Notes on branding, strategy, and building things that last.</p>
+      </header>
+
+      <ul className="kora-page-blog-list">
+        {POSTS.map((post) => (
+          <li key={post.title}>
+            <a href="#" className="kora-page-blog-post">
+              <div className="kora-page-blog-thumb" aria-hidden="true" />
+              <div className="kora-page-blog-meta">
+                <span>{post.category}</span>
+                <span>{post.date}</span>
+              </div>
+              <h2>{post.title}</h2>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }

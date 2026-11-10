@@ -1,35 +1,22 @@
-/* The earlier manifesto layout is kept, commented out, at the end of this
-   file, with the AboutMarks import and the `.kora-page-about*` rules. */
-
-import { SERVICES } from '../data'
-import { InnerPage } from '../components/rx/InnerPage'
-
-/* About — the studio in one line, then what we do, one service per row with
-   hairlines between, as Ragged Edge sets its Approach. */
+/* About — parked.
+   ----------------
+   The manifesto layout is commented out below rather than deleted: the copy and
+   the ornament placement are worth keeping, the composition is what is being
+   reconsidered. Delete the placeholder and uncomment to restore it, along with
+   the AboutMarks import and the `.kora-page-about*` rules in App.css. */
 
 export function About() {
   return (
-    <InnerPage
-      label="About"
-      heading="Kora is a global creative studio. We give founders and teams the brand, the story, and the design system to back it up."
-    >
-      <section className="kora-rx-services" aria-labelledby="kora-rx-services-heading">
-        <h2 id="kora-rx-services-heading" className="kora-rx-label">
-          What we do
-        </h2>
-        <ol className="kora-rx-services-list">
-          {SERVICES.map((service, i) => (
-            <li key={service.name}>
-              <span className="kora-rx-services-num">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <h3>{service.name}</h3>
-              <p>{service.description}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-    </InnerPage>
+    <section className="kora-page-soon">
+      <div className="kora-page-soon-inner kora-container">
+        <span className="kora-page-soon-label">About</span>
+        <h1>Coming soon</h1>
+        <p>
+          We are rebuilding this page. In the meantime, the work speaks for
+          itself.
+        </p>
+      </div>
+    </section>
   )
 }
 
