@@ -3292,38 +3292,29 @@
   transform: none;
 }
 
-/* Images fold out from the bottom: each one arrives tipped back on its top
-   edge, its lower corners curled and flared, and swings down flat as it
-   scrolls into place, like a sheet of paper being unfolded. Tied to scroll
-   where the browser supports it; elsewhere images simply sit flat. */
+/* Images arrive with a curved leading edge: the corners on their left side
+   start deeply rounded and straighten out as the image scrolls up into
+   place, like a sheet being laid flat. Tied to scroll where the browser
+   supports it; elsewhere images simply sit square. */
 
 @supports (animation-timeline: view()) {
   .kora-rx-curve {
-    transform-origin: 50% 0;
-    animation: kora-rx-unfold linear both;
+    animation: kora-rx-flatten linear both;
     animation-timeline: view();
-    animation-range: entry 0% cover 70%;
+    animation-range: entry 0% cover 45%;
   }
 }
 
-@keyframes kora-rx-unfold {
+@keyframes kora-rx-flatten {
   from {
-    transform: perspective(1600px) rotateX(34deg) scaleY(0.9);
-    border-bottom-left-radius: 50% 26%;
-    border-bottom-right-radius: 50% 26%;
-  }
-  /* Most of the swing is done by the time the bottom edge comes into view,
-     but the corners are still curled, and they're seen settling flat as the
-     bottom rises up the screen. */
-  50% {
-    transform: perspective(1600px) rotateX(8deg) scaleY(0.98);
-    border-bottom-left-radius: 46% 22%;
-    border-bottom-right-radius: 46% 22%;
+    border-top-left-radius: 30% 60%;
+    border-bottom-left-radius: 30% 60%;
+    transform: translateX(4%);
   }
   to {
-    transform: perspective(1600px) rotateX(0) scaleY(1);
+    border-top-left-radius: 0 0;
     border-bottom-left-radius: 0 0;
-    border-bottom-right-radius: 0 0;
+    transform: none;
   }
 }
 
