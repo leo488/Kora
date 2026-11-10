@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 import { useInView } from '../hooks/useInView'
 import { BrandMarquee } from '../components/BrandMarquee'
 import { HeroCarousel } from '../components/HeroCarousel'
-import { KoraMark } from '../components/KoraMark'
-import { PillNav } from '../components/PillNav'
-import { OFFICES, POSTS, PROJECTS, buildStillReel, srcSetFor } from '../data'
-import type { Project } from '../data'
+import { Masthead } from '../components/rx/Masthead'
+import { ClientRow } from '../components/rx/ClientRow'
+import { Contact } from '../components/rx/Contact'
+import { PostCard } from '../components/rx/PostCard'
+import { POSTS, PROJECTS, buildStillReel } from '../data'
 
 /* Home
    ----
@@ -23,8 +24,6 @@ import type { Project } from '../data'
    - Happenings, a newsletter sign-up and a contact block.
 
    The offices band and the footer come from Layout. */
-
-const NEW_BUSINESS_EMAIL = 'hello@kora.studio'
 
 /** The clients Home features, in order. The Work page still shows them all. */
 const HOME_PROJECTS = ['Ipaybtc', '3Projects', 'Refreeg', 'Tagmi']
@@ -60,11 +59,20 @@ export function Home() {
   }, [])
 
   const docked = progress >= 0.999
+  const fade = Math.min(Math.max((progress - 0.1) / 0.4, 0), 1)
 
   return (
     <div
-      className={`kora-rx${docked ? ' is-docked' : ''}`}
-      style={{ '--kora-p': progress } as CSSProperties}
+      className={`kora-rx${docked ? ' is-docked' : ''}${fade > 0.5 ? ' is-calm' : ''}`}
+      style={
+        {
+          '--kora-p': progress,
+          // The hero hands over to the page before the first case study arrives:
+          // it fades to the page colour while the statement over it turns
+          // from white to the text colour.
+          '--kora-fade': fade,
+        } as CSSProperties
+      }
     >
       <Masthead docked={docked} />
       <Hero />
@@ -80,33 +88,6 @@ export function Home() {
   )
 }
 
-/** The lockup and the pills, fixed over everything. Their positions are
- *  driven from --kora-p in CSS, so they glide with the scroll. */
-function Masthead({ docked }: { docked: boolean }) {
-  // One frame after mount, so the lockup's starting pose paints first and the
-  // build-in has something to run from.
-  const [ready, setReady] = useState(false)
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setReady(true))
-    return () => cancelAnimationFrame(id)
-  }, [])
-
-  return (
-    <>
-      <div className="kora-rx-masthead-bar" aria-hidden="true" />
-      <Link
-        to="/"
-        className={`kora-rx-masthead-logo${ready ? ' is-ready' : ''}`}
-        aria-label="Kora — home"
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      >
-        <KoraMark className="kora-rx-logo" />
-      </Link>
-      <PillNav docked={docked ? 'top' : 'bottom'} />
-    </>
-  )
-}
-
 function Hero() {
   const [slideIndex, setSlideIndex] = useState(0)
   const slides = useMemo(() => buildStillReel(HERO_STILLS), [])
@@ -119,6 +100,7 @@ function Hero() {
         onIndexChange={setSlideIndex}
         intervalMs={7000}
       />
+      <div className="kora-rx-hero-fade" aria-hidden="true" />
     </section>
   )
 }
@@ -129,15 +111,14 @@ function useReveal<T extends HTMLElement>() {
   return [ref, visible ? ' is-visible' : ''] as const
 }
 
+/* One line, bold, starting where the case-study images start. */
 function Statement() {
-  const [ref, cls] = useReveal<HTMLElement>()
   return (
-    <section className={`kora-rx-statement kora-rx-reveal${cls}`} ref={ref}>
-      <h1>This is Kora</h1>
-      <p>
-        A global creative studio. Through strategic branding and storytelling,
-        we help businesses stand out, connect, and grow.
-      </p>
+    <section className="kora-rx-statement">
+      <h1>
+        Kora helps ambitious startups and businesses build brands and digital
+        products that are ready to compete globally.
+      </h1>
     </section>
   )
 }
@@ -157,69 +138,6 @@ function Partnerships() {
         </Link>
       </div>
     </section>
-  )
-}
-
-/** "Brand — Line" headlines lose the brand, which the row already names. */
-function lineOf(project: Project) {
-  const [, rest] = project.headline.split(/\s+—\s+/)
-  return (rest ?? project.headline).replace(/\.$/, '')
-}
-
-/** One client: the name top left, the line and the result bottom left, the
- *  work large on the right. */
-function ClientRow({ project }: { project: Project }) {
-  const lead = project.images[0]
-  const hasStat = project.stat && project.stat !== '—'
-
-  return (
-    <li className="kora-rx-row">
-      <Link to="/work" className="kora-rx-row-link">
-        <div className="kora-rx-row-text">
-          <h2>{project.brand}</h2>
-
-          <div className="kora-rx-row-detail">
-            <p className="kora-rx-row-line">
-              {project.brand} — {lineOf(project)}.
-            </p>
-            {hasStat && (
-              <p className="kora-rx-row-stat">
-                <span className="kora-rx-dot" aria-hidden="true" />
-                {project.stat}
-              </p>
-            )}
-            <p className="kora-rx-row-meta">
-              {project.category}, {project.year}
-            </p>
-          </div>
-        </div>
-
-        <div className="kora-rx-row-media kora-rx-curve">
-          {project.film ? (
-            <video
-              src={project.film.src}
-              poster={project.film.poster.src}
-              muted
-              loop
-              autoPlay
-              playsInline
-              preload="metadata"
-              aria-label={project.brand}
-              disablePictureInPicture
-            />
-          ) : (
-            <img
-              src={lead.src}
-              srcSet={srcSetFor(lead)}
-              sizes="(max-width: 760px) 100vw, 66vw"
-              alt={project.brand}
-              loading="lazy"
-              draggable={false}
-            />
-          )}
-        </div>
-      </Link>
-    </li>
   )
 }
 
@@ -248,15 +166,7 @@ function Happenings() {
       <ul className="kora-rx-news-grid">
         {POSTS.slice(0, 3).map((post) => (
           <li key={post.title}>
-            <Link to="/blog" className="kora-rx-card">
-              {/* Left blank until the posts have art of their own. */}
-              <div className="kora-rx-card-media kora-rx-curve" aria-hidden="true" />
-              <div className="kora-rx-card-body">
-                <span className="kora-rx-card-kind">{post.category}</span>
-                <h3>{post.title}</h3>
-                <span className="kora-rx-card-by">Kora, {post.date}</span>
-              </div>
-            </Link>
+            <PostCard post={post} />
           </li>
         ))}
       </ul>
@@ -308,53 +218,5 @@ function Newsletter() {
       )}
       <small>We’ll never share your details anywhere else.</small>
     </section>
-  )
-}
-
-function Contact() {
-  const rows = [
-    { label: 'New business', value: NEW_BUSINESS_EMAIL },
-    ...OFFICES.map((office) => ({ label: office.city, value: office.email })),
-  ]
-
-  return (
-    <section className="kora-rx-contact" id="contact" aria-labelledby="kora-rx-contact-heading">
-      <div className="kora-rx-contact-text">
-        <h2 id="kora-rx-contact-heading">Ready to start?</h2>
-        <dl className="kora-rx-contact-rows">
-          {rows.map((row) => (
-            <div key={row.label}>
-              <dt>{row.label}</dt>
-              <dd>
-                <a href={`mailto:${row.value}`}>{row.value}</a>
-              </dd>
-              <CopyButton text={row.value} />
-            </div>
-          ))}
-        </dl>
-      </div>
-
-      {/* A portrait of the studio goes here, as on the reference. Left blank
-          until there is a photo. */}
-      <div className="kora-rx-contact-photo" aria-hidden="true" />
-    </section>
-  )
-}
-
-function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false)
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(text)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1800)
-    } catch {
-      // Clipboard blocked; the address is still a mailto link beside it.
-    }
-  }
-  return (
-    <button type="button" className="kora-rx-copy" onClick={copy}>
-      {copied ? 'Copied' : 'Copy'}
-    </button>
   )
 }

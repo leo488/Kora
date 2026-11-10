@@ -1,24 +1,22 @@
 import { PROJECTS } from '../data'
-import { WorkCard } from '../components/WorkCard'
+import { InnerPage } from '../components/rx/InnerPage'
+import { ClientRow } from '../components/rx/ClientRow'
 
-/* Work index — the whole portfolio, every project and every plate it has. The
-   home reel is a short cut of this; this is the full thing. */
+/* Work index — every client, one per row, in the Home layout. */
 
 export function Work() {
   return (
-    <section className="kora-page-work">
-      <header className="kora-page-work-intro kora-container">
-        <p>
-          Kora is a global creative studio that brings brands, stories, and
-          experiences to life through strategy, design, and motion.
-        </p>
-      </header>
-
-      <ul className="kora-work-grid">
-        {PROJECTS.map((project, i) => (
-          <WorkCard key={project.name} project={project} eager={i < 2} />
-        ))}
-      </ul>
-    </section>
+    <InnerPage
+      label="Work"
+      heading="Brands we’ve helped stand out, connect and grow, from fintech to culture."
+    >
+      <section className="kora-rx-work" aria-label="All work">
+        <ul className="kora-rx-rows">
+          {PROJECTS.map((project) => (
+            <ClientRow key={project.name} project={project} />
+          ))}
+        </ul>
+      </section>
+    </InnerPage>
   )
 }
