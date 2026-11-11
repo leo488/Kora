@@ -8,6 +8,7 @@ import { KoraMark } from '../components/KoraMark'
 import { PillNav } from '../components/PillNav'
 import { OFFICES, POSTS, PROJECTS, buildStillReel, srcSetFor } from '../data'
 import type { Project } from '../data'
+import { caseLinkFor } from '../caseStudies'
 
 /* Home
    ----
@@ -174,7 +175,7 @@ function ClientRow({ project }: { project: Project }) {
 
   return (
     <li className="kora-rx-row">
-      <Link to="/work" className="kora-rx-row-link">
+      <Link to={caseLinkFor(project.name) ?? '/work'} className="kora-rx-row-link">
         <div className="kora-rx-row-text">
           <h2>{project.brand}</h2>
 

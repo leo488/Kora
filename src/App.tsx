@@ -6,6 +6,7 @@ import { Home } from './pages/Home'
 import { Work } from './pages/Work'
 import { About } from './pages/About'
 import { Blog } from './pages/Blog'
+import { CaseStudy } from './pages/CaseStudy'
 
 function App() {
   // Home opens on its own logo animation, so the curtain is kept for the
@@ -22,6 +23,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/work" element={<Work />} />
+          <Route path="/work/:slug" element={<CaseStudy />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
         </Route>

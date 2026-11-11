@@ -14,17 +14,18 @@
 .kora-app.is-dark {
   --text: rgba(255, 255, 255, 0.62);
   --text-h: #fff;
-  --bg: #1e1e1e;
-  --border: rgba(255, 255, 255, 0.14);
+  /* Near-black, darker than the old #1e1e1e (Leo, 2026-11-11). */
+  --bg: #0b0b0b;
+  --border: rgba(255, 255, 255, 0.12);
   --border-strong: rgba(255, 255, 255, 0.4);
   --code-bg: rgba(255, 255, 255, 0.08);
   /* Raised panels: cards, image placeholders. */
-  --surface: #2a2a2a;
-  --surface-hover: #333;
+  --surface: #171717;
+  --surface-hover: #202020;
   /* The accent that reads on this ground. */
   --accent-ink: var(--brand-bright);
 
-  background: #1e1e1e;
+  background: var(--bg);
   color: var(--text);
 }
 
@@ -71,7 +72,7 @@
    not a bright bar across the top of every page. */
 
 .kora-app.is-dark .kora-announcement {
-  background: #262626;
+  background: #141414;
   color: rgba(255, 255, 255, 0.86);
   border-bottom: 1px solid var(--border);
 }
@@ -84,12 +85,12 @@
 
 .kora-app.is-dark .kora-showcase-media,
 .kora-app.is-dark .kora-about-photo {
-  background: #2a2a2a;
+  background: #171717;
 }
 
 .kora-app.is-dark .kora-about,
 .kora-app.is-dark .kora-footer {
-  background: #1e1e1e;
+  background: var(--bg);
 }
 
 .kora-announcement {
@@ -3703,5 +3704,457 @@
 
   .kora-rx-contact-photo {
     max-width: 320px;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Case study (/work/:slug)
+
+   Hero plate, then the intro (facts on the left, the story in a narrow
+   column), then the work as a run of full-width plates with thin gaps, then
+   the next project and a contact form. Until real assets land every plate is
+   a grey panel that names the shot it is waiting for.
+   ------------------------------------------------------------------------ */
+
+.kora-case {
+  --case-gutter: 24px;
+  --case-gap: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Plates */
+
+.kora-case-plate {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kora-case-plate img,
+.kora-case-plate video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The shot label: small, quiet, centred, so the grey reads as a deliberate
+   placeholder rather than a broken image. */
+.kora-case-plate figcaption {
+  max-width: 28ch;
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+/* Hero */
+
+.kora-case-hero {
+  padding: 0 var(--case-gutter);
+}
+
+.kora-case-hero .kora-case-plate {
+  max-height: 86svh;
+  width: 100%;
+}
+
+/* Intro */
+
+.kora-case-intro {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 32px;
+  padding: 120px var(--case-gutter) 140px;
+}
+
+.kora-case-facts {
+  grid-column: 1 / span 3;
+}
+
+.kora-case-facts dl {
+  margin: 0;
+  position: sticky;
+  top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kora-case-facts dt {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.kora-case-facts dd {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-h);
+}
+
+.kora-case-copy {
+  grid-column: 5 / span 6;
+  display: flex;
+  flex-direction: column;
+}
+
+.kora-case-copy h1 {
+  margin: 0 0 28px;
+  font-size: clamp(40px, 4.6vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.kora-case-summary {
+  font-size: clamp(20px, 1.7vw, 26px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text-h);
+}
+
+.kora-case-highlights {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.kora-case-highlights li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-h);
+  font-size: 16px;
+}
+
+.kora-case-section {
+  margin-top: 56px;
+}
+
+.kora-case-section h2 {
+  margin: 0 0 14px;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  color: var(--text-h);
+}
+
+.kora-case-section p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.kora-case-section p + p {
+  margin-top: 14px;
+}
+
+.kora-case-live {
+  align-self: flex-start;
+  margin-top: 48px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-h);
+  text-decoration: none;
+  font-size: 15px;
+  transition: background 0.2s ease;
+}
+
+.kora-case-live:hover {
+  background: var(--surface);
+}
+
+/* Gallery */
+
+.kora-case-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--case-gap);
+  padding: 0 var(--case-gutter);
+}
+
+/* Alternate the grey a touch so a run of placeholders reads as separate
+   plates rather than one long slab. */
+.kora-case-gallery > .kora-case-plate:nth-child(even) {
+  background: var(--surface-hover);
+}
+
+.kora-case-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--case-gap);
+}
+
+.kora-case-pair .kora-case-plate:last-child {
+  background: var(--surface-hover);
+}
+
+.kora-case-grid {
+  display: grid;
+  gap: var(--case-gap);
+}
+
+.kora-case-grid .kora-case-plate:nth-child(odd) {
+  background: var(--surface-hover);
+}
+
+.kora-case-grid figcaption {
+  font-size: 11px;
+}
+
+/* A loose mosaic: two portraits span two rows so the wall is not a plain
+   grid. Ten portraits plus two doubles fill four columns by three rows
+   exactly, with no holes. */
+.kora-case-collage {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: var(--case-gap);
+}
+
+.kora-case-collage .kora-case-plate {
+  aspect-ratio: 3 / 4 !important;
+}
+
+.kora-case-collage .kora-case-plate:nth-child(1),
+.kora-case-collage .kora-case-plate:nth-child(7) {
+  grid-row: span 2;
+  aspect-ratio: auto !important;
+  background: var(--surface-hover);
+}
+
+.kora-case-collage figcaption {
+  font-size: 11px;
+}
+
+/* Next project */
+
+.kora-case-next {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--case-gap);
+  margin-top: 140px;
+  padding: 0 var(--case-gutter);
+  color: inherit;
+  text-decoration: none;
+}
+
+.kora-case-next-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+}
+
+.kora-case-next-text span {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.kora-case-next-text strong {
+  font-weight: 500;
+  font-size: clamp(40px, 5vw, 80px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-h);
+}
+
+.kora-case-next-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.kora-case-next-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-case-next:hover .kora-case-next-media img {
+  transform: scale(1.03);
+}
+
+/* Contact */
+
+.kora-case-contact {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 32px;
+  padding: 140px var(--case-gutter);
+}
+
+.kora-case-contact-text {
+  grid-column: 1 / span 4;
+}
+
+.kora-case-contact-text h2 {
+  margin: 0 0 40px;
+  font-size: clamp(32px, 3.4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.kora-case-contact-text dl {
+  margin: 0;
+}
+
+.kora-case-contact-text dt {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.kora-case-contact-text dd {
+  margin: 0;
+}
+
+.kora-case-contact-text a {
+  color: var(--text-h);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.kora-case-form,
+.kora-case-contact-done {
+  grid-column: 7 / span 6;
+}
+
+.kora-case-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.kora-case-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kora-case-form label span {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.kora-case-form input,
+.kora-case-form textarea {
+  font: inherit;
+  font-size: 17px;
+  color: var(--text-h);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  padding: 8px 0 12px;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.kora-case-form input:focus,
+.kora-case-form textarea:focus {
+  outline: none;
+  border-bottom-color: var(--text-h);
+}
+
+.kora-case-form button {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 13px 28px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  background: var(--text-h);
+  color: var(--bg);
+  transition: opacity 0.2s ease;
+}
+
+.kora-case-form button:hover {
+  opacity: 0.85;
+}
+
+.kora-case-contact-done {
+  font-size: 20px;
+  color: var(--text-h);
+}
+
+/* Tablet and phone */
+
+@media (max-width: 900px) {
+  .kora-case {
+    --case-gutter: 16px;
+    --case-gap: 6px;
+  }
+
+  .kora-case-intro,
+  .kora-case-contact {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 72px;
+    padding-bottom: 88px;
+  }
+
+  .kora-case-facts,
+  .kora-case-copy,
+  .kora-case-contact-text,
+  .kora-case-form,
+  .kora-case-contact-done {
+    grid-column: 1 / -1;
+  }
+
+  .kora-case-facts {
+    order: 2;
+    margin-top: 56px;
+  }
+
+  .kora-case-facts dl {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 16px;
+  }
+
+  .kora-case-contact-text {
+    margin-bottom: 48px;
+  }
+
+  .kora-case-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .kora-case-collage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kora-case-next {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 88px;
+  }
+
+  .kora-case-next-text {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .kora-case-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .kora-case-plate figcaption {
+    font-size: 11px;
   }
 }
