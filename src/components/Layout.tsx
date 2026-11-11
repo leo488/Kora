@@ -2,8 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { THEME_KEY, ThemeContext, initialTheme } from '../theme/theme'
 import type { Theme } from '../theme/theme'
-import { Announcement } from './Announcement'
-import { Header } from './Header'
+import { DockedMasthead } from './Masthead'
 import { Offices } from './Offices'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
@@ -28,19 +27,14 @@ export function Layout() {
     }
   }, [theme])
 
-  // Home carries its own floating pill navigation over the hero, so
-  // the top bars are left off there. Every other route keeps them.
   const isHome = useLocation().pathname === '/'
 
   return (
     <ThemeContext.Provider value={themeValue}>
       <main className={`kora-app is-${theme}`}>
-        {!isHome && (
-          <div className="kora-topbar">
-            <Announcement />
-            <Header />
-          </div>
-        )}
+        {/* Every page wears the homepage masthead. Home drives it from its
+            own scroll; the rest show it docked at the top. */}
+        {!isHome && <DockedMasthead />}
         <Outlet />
         <Offices />
         <Footer />

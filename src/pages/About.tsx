@@ -1,3 +1,6 @@
+import { Contact } from '../components/Sections'
+import { PageStatement } from '../components/PageStatement'
+
 /* About — parked.
    ----------------
    The manifesto layout is commented out below rather than deleted: the copy and
@@ -7,16 +10,13 @@
 
 export function About() {
   return (
-    <section className="kora-page-soon">
-      <div className="kora-page-soon-inner kora-container">
-        <span className="kora-page-soon-label">About</span>
-        <h1>Coming soon</h1>
-        <p>
-          We are rebuilding this page. In the meantime, the work speaks for
-          itself.
-        </p>
-      </div>
-    </section>
+    <div className="kora-rx kora-rx-sub">
+      <PageStatement title="About">
+        Coming soon. We are rebuilding this page. In the meantime, the work
+        speaks for itself.
+      </PageStatement>
+      <Contact />
+    </div>
   )
 }
 

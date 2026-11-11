@@ -4158,3 +4158,27 @@
     font-size: 11px;
   }
 }
+
+/* Every page but Home: the homepage masthead, docked from the start. The
+   spacer is the height of the docked bar, so the page starts below it. */
+
+.kora-site-head-spacer {
+  height: calc(var(--kora-strip) + 10px + 34px + 12px);
+}
+
+@media (max-width: 760px) {
+  .kora-site-head-spacer {
+    height: calc(var(--kora-strip) + 10px + 29px + 10px);
+  }
+}
+
+/* Inner pages use Home's sections as they are. Their statement sits under the
+   spacer that already clears the docked masthead, so it needs less top room. */
+
+.kora-rx-sub .kora-rx-statement {
+  padding-top: clamp(56px, 7vw, 104px);
+}
+
+.kora-rx-news.is-page {
+  padding-top: 0;
+}
