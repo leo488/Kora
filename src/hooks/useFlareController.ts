@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 /* Drives the bottom-of-screen flare on every FlareMedia; see Flare.tsx. */
 
-const FLARE_MAX = 64
+const FLARE_MAX = 80
 
 /** One controller for the whole page, mounted once in Layout. */
 export function useFlareController() {

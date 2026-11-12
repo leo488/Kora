@@ -4313,7 +4313,7 @@
    --------------------------------------------------------------------------- */
 
 .kora-rx-media {
-  --kora-flare: 64px;
+  --kora-flare: 80px;
   position: relative;
 }
 
@@ -4373,7 +4373,7 @@
 
 @media (max-width: 760px) {
   .kora-rx-media {
-    --kora-flare: 40px;
+    --kora-flare: 48px;
   }
 }
 
@@ -4397,5 +4397,53 @@
   .kora-pills .kora-theme-toggle {
     width: 27px;
     height: 27px;
+  }
+}
+
+/* Cookie notice as a small card in the corner, as on the reference. Full
+   width along the bottom, it covered the exact strip where the images flare
+   as they cross the bottom of the screen. */
+.kora-cookiebar {
+  left: auto;
+  right: 24px;
+  bottom: 24px;
+  width: min(380px, calc(100vw - 48px));
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+}
+
+.kora-cookiebar p {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.kora-cookiebar button {
+  padding: 8px 18px;
+  font-size: 14px;
+}
+
+.kora-app:has(.kora-cookiebar) .kora-footer {
+  padding-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .kora-cookiebar {
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    width: min(250px, calc(100vw - 24px));
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .kora-cookiebar p {
+    font-size: 12px;
+  }
+
+  .kora-cookiebar button {
+    align-self: flex-start;
+    padding: 7px 14px;
+    font-size: 13px;
   }
 }
