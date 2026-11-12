@@ -7,7 +7,10 @@ import { LOGO } from '../brand/logoData'
    letters, the flying star in Plantain, and the star landing in the o as a
    true cut-out, so the gradient shows through it.
 
-   Plays once per visit. Under reduced motion it is skipped entirely and the
+   Plays on every full page load (a refresh included), never on moves between
+   pages inside the site, since this sits outside the routes. Setting
+   sessionStorage 'koraa-intro-played' to 'yes' skips it (used by screenshot
+   scripts). Under reduced motion it is skipped entirely and the
    page opens on the static logo. A click or a key skips it too. */
 
 const STORAGE_KEY = 'koraa-intro-played'
@@ -249,12 +252,6 @@ export function Intro() {
     const canvas = canvasRef.current
     const ctx = canvas?.getContext('2d')
     if (!canvas || !ctx) return
-
-    try {
-      sessionStorage.setItem(STORAGE_KEY, 'yes')
-    } catch {
-      // Not remembered; it plays again next load.
-    }
 
     const render = makeRenderer(ctx)
     let w = 0
