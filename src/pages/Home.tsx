@@ -26,10 +26,10 @@ import { ClientRow, Contact, NewsCard } from '../components/Sections'
 /** The clients Home features, in order. The Work page still shows them all. */
 const HOME_PROJECTS = ['Ipaybtc', '3Projects', 'Refreeg', 'Tagmi']
 
-/** The hero plates: the heads-together shot, then the 3PROJECTS billboard. */
+/** The hero plates: the heads-together shot, then the Tagmi 3D scene. */
 const HERO_STILLS: Array<[string, number]> = [
   ['Refreeg', 0],
-  ['3Projects', 0],
+  ['Tagmi', 0],
 ]
 
 export function Home() {
