@@ -12,10 +12,13 @@ export function Work() {
         experiences to life through strategy, design, and motion.
       </PageStatement>
 
-      <section className="kora-rx-work" aria-label="All work">
+      <section className="kora-rx-work" aria-labelledby="kora-rx-work-label">
+        <p className="kora-label kora-rx-work-label" id="kora-rx-work-label">
+          All work <sup>({PROJECTS.length})</sup>
+        </p>
         <ul className="kora-rx-rows">
-          {PROJECTS.map((project) => (
-            <ClientRow key={project.name} project={project} />
+          {PROJECTS.map((project, i) => (
+            <ClientRow key={project.name} project={project} index={i} />
           ))}
         </ul>
       </section>

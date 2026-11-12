@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import { Intro } from './components/Intro'
 import { Layout } from './components/Layout'
@@ -9,15 +9,12 @@ import { Blog } from './pages/Blog'
 import { CaseStudy } from './pages/CaseStudy'
 
 function App() {
-  // Home opens on its own logo animation, so the curtain is kept for the
-  // other routes only.
-  const isHome = useLocation().pathname === '/'
-
   return (
     <>
       {/* Outside the router and outside .kora-app: a sibling of the whole page,
           so no ancestor transform can trap its fixed positioning. */}
-      {!isHome && <Intro />}
+      {/* The Koraa’ logo animation, once per visit, whichever page it opens on. */}
+      <Intro />
 
       <Routes>
         <Route element={<Layout />}>

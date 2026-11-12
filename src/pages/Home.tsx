@@ -82,7 +82,7 @@ function Hero() {
   const slides = useMemo(() => buildStillReel(HERO_STILLS), [])
 
   return (
-    <section className="kora-rx-hero" aria-label="Kora">
+    <section className="kora-rx-hero" aria-label="Koraa’">
       <HeroCarousel
         slides={slides}
         index={slideIndex}
@@ -103,7 +103,7 @@ function Statement() {
   const [ref, cls] = useReveal<HTMLElement>()
   return (
     <section className={`kora-rx-statement kora-rx-reveal${cls}`} ref={ref}>
-      <h1>This is Kora</h1>
+      <h1>This is Koraa’</h1>
       <p>
         A global creative studio. Through strategic branding and storytelling,
         we help businesses stand out, connect, and grow.
@@ -114,11 +114,14 @@ function Statement() {
 
 function Partnerships() {
   return (
-    <section className="kora-rx-work" aria-label="Selected work">
+    <section className="kora-rx-work" aria-labelledby="kora-rx-work-label">
+      <p className="kora-label kora-rx-work-label" id="kora-rx-work-label">
+        Selected work <sup>({HOME_PROJECTS.length})</sup>
+      </p>
       <ul className="kora-rx-rows">
         {HOME_PROJECTS.map((name) => {
           const project = PROJECTS.find((p) => p.name === name)
-          return project && <ClientRow key={name} project={project} />
+          return project && <ClientRow key={name} project={project} index={HOME_PROJECTS.indexOf(name)} />
         })}
       </ul>
       <div className="kora-rx-center">
@@ -181,7 +184,7 @@ function Newsletter() {
 
   return (
     <section className="kora-rx-newsletter" aria-labelledby="kora-rx-newsletter-heading">
-      <h2 id="kora-rx-newsletter-heading">From Kora to your inbox</h2>
+      <h2 id="kora-rx-newsletter-heading">From Koraa’ to your inbox</h2>
 
       {sent ? (
         <p className="kora-rx-newsletter-done" role="status">

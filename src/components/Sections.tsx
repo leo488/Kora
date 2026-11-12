@@ -17,7 +17,7 @@ function lineOf(project: Project) {
 
 /** One client: the name top left, the line and the result bottom left, the
  *  work large on the right. */
-export function ClientRow({ project }: { project: Project }) {
+export function ClientRow({ project, index }: { project: Project; index?: number }) {
   const lead = project.images[0]
   const hasStat = project.stat && project.stat !== '—'
 
@@ -25,7 +25,14 @@ export function ClientRow({ project }: { project: Project }) {
     <li className="kora-rx-row">
       <Link to={caseLinkFor(project.name) ?? '/work'} className="kora-rx-row-link">
         <div className="kora-rx-row-text">
-          <h2>{project.brand}</h2>
+          <div className="kora-rx-row-head">
+            {index !== undefined && (
+              <span className="kora-rx-row-index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+            )}
+            <h2>{project.brand}</h2>
+          </div>
 
           <div className="kora-rx-row-detail">
             <p className="kora-rx-row-line">

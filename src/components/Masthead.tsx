@@ -22,7 +22,7 @@ export function Masthead({ docked }: { docked: boolean }) {
       <Link
         to="/"
         className={`kora-rx-masthead-logo${ready ? ' is-ready' : ''}`}
-        aria-label="Kora — home"
+        aria-label="Koraa’ — home"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
         <KoraMark className="kora-rx-logo" />

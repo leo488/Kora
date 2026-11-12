@@ -55,7 +55,7 @@ export function Footer() {
       <KoraMark className="kora-footer-logo kora-mark-drop" />
 
       <div className="kora-footer-meta kora-container">
-        <span>&copy; 2026 Kora. All rights reserved.</span>
+        <span>&copy; 2026 Koraa Studios Ltd. All rights reserved.</span>
         {/* TODO(kora): placeholder registration number — swap for the real RC. */}
         <span className="kora-footer-rc">RC 1234567</span>
         <span>Designed &amp; built with care.</span>

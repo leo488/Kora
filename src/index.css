@@ -8,8 +8,23 @@
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
-  --brand: #1a2db7;
-  --brand-dark: #052275;
+  /* Koraa’ brand colours (brand kit, colours/koraa-colours.css). Blue leads;
+     Plantain is the one thing to notice. */
+  --koraa-blue: #1a2db7;
+  --koraa-lagoon: #052275;
+  --koraa-ink: #0a0a0a;
+  --koraa-paper: #ffffff;
+  --koraa-harmattan: #e6e6e6;
+  --koraa-plantain: #d7f24b;
+  --koraa-jollof: #ff5a36;
+  --koraa-zobo: #ff8ec6;
+  --koraa-dusk: #b8a6ff;
+  --koraa-blue-light: #4456ff;
+  /* Blue Hour, the website hero gradient. Logo centred, no body text on it. */
+  --koraa-blue-hour: radial-gradient(110% 100% at 50% 0%, #4456ff 0%, #1a2db7 40%, #052275 75%, #0a0a0a 100%);
+
+  --brand: var(--koraa-blue);
+  --brand-dark: var(--koraa-lagoon);
   /* The brand blue is almost invisible against the near-black sections, so
      on-dark accents use this lighter tint of it instead. */
   --brand-bright: #4e62ff;
@@ -31,6 +46,8 @@
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
+  /* Host Grotesk 500 is the brand's body weight. */
+  font-weight: 500;
   letter-spacing: 0.18px;
   /* The whole site runs dark now, so the document ground is dark too — this is
      what shows during load and under an overscroll bounce, and a white flash
