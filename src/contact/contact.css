@@ -1,0 +1,438 @@
+/* ---------------------------------------------------------------------------
+   The project brief modal, and the form parts it shares with the brand test.
+   Everything paints from the theme tokens, so it follows light and dark.
+   --------------------------------------------------------------------------- */
+
+html.kora-modal-open {
+  overflow: hidden;
+}
+
+.kora-pill.is-outline {
+  background: transparent;
+  color: var(--text-h);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.kora-pill.is-outline:hover {
+  background: var(--surface-hover);
+}
+
+.kora-pill[aria-disabled='true'] {
+  cursor: progress;
+}
+
+.kora-dialog {
+  width: min(640px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+.kora-dialog[open] {
+  display: flex;
+  animation: kora-dialog-in 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.kora-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.74);
+  animation: kora-backdrop-in 0.3s ease both;
+}
+
+@keyframes kora-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@keyframes kora-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.kora-dialog-panel,
+.kora-dialog-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.kora-dialog-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.kora-dialog-count {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-h);
+  white-space: nowrap;
+}
+
+.kora-dialog-steps {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kora-dialog-steps li {
+  flex: 1;
+  max-width: 56px;
+  height: 3px;
+  background: var(--border-strong);
+  transition: background-color 0.3s ease;
+}
+
+.kora-dialog-steps li.is-on {
+  background: var(--accent-ink);
+}
+
+.kora-dialog-close {
+  appearance: none;
+  margin-left: auto;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.kora-dialog-close:hover {
+  color: var(--text-h);
+}
+
+.kora-dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  flex: 1;
+  min-height: 0;
+  padding: 30px 24px 26px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: kora-step-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes kora-step-in {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+}
+
+.kora-dialog-body h2 {
+  margin: 0;
+  font-size: clamp(28px, 4.4vw, 40px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--text-h);
+  outline: none;
+}
+
+.kora-dialog-lede {
+  margin: -12px 0 0;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.kora-dialog-lede a,
+.kora-dialog-error a {
+  color: var(--text-h);
+  text-underline-offset: 3px;
+}
+
+.kora-dialog-note {
+  font-size: 14px;
+  color: var(--text-h);
+}
+
+.kora-dialog-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.kora-dialog-time {
+  font-size: 14px;
+}
+
+.kora-dialog-error {
+  padding: 12px 14px;
+  border-left: 3px solid var(--koraa-jollof);
+  background: var(--surface);
+  color: var(--text-h);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.kora-dialog-trap {
+  position: absolute;
+  left: -200vw;
+  width: 1px;
+  height: 1px;
+}
+
+/* Fields */
+
+.kora-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.kora-field-label {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.kora-field input:not([type='checkbox']):not([type='radio']),
+.kora-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 0 12px;
+  border: 0;
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 18px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.kora-field input:not([type='checkbox']):not([type='radio']):focus,
+.kora-field textarea:focus {
+  border-bottom-color: var(--accent-ink);
+  box-shadow: 0 1px 0 0 var(--accent-ink);
+}
+
+.kora-field [aria-invalid='true'] {
+  border-bottom-color: var(--koraa-jollof) !important;
+}
+
+.kora-field-hint {
+  font-size: 13px;
+}
+
+.kora-field-error {
+  font-size: 14px;
+  color: var(--text-h);
+  padding-left: 10px;
+  border-left: 3px solid var(--koraa-jollof);
+}
+
+/* Chips: checkboxes and radios dressed as pills. */
+
+.kora-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.kora-chip {
+  position: relative;
+  cursor: pointer;
+}
+
+.kora-chip input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.kora-chip span {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  color: var(--text-h);
+  font-size: 16px;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.kora-chip:hover span {
+  background: var(--surface-hover);
+}
+
+.kora-chip input:checked + span {
+  background: var(--text-h);
+  color: var(--bg);
+  box-shadow: none;
+}
+
+.kora-chip input:focus-visible + span {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 3px;
+}
+
+/* Success */
+
+.kora-dialog-done {
+  gap: 20px;
+}
+
+.kora-dialog-star {
+  width: 56px;
+  height: 56px;
+  color: var(--accent-ink);
+  animation: kora-star-turn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
+@keyframes kora-star-turn {
+  from {
+    transform: rotate(-120deg) scale(0.4);
+  }
+}
+
+.kora-dialog-next {
+  display: flex;
+  flex-direction: column;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kora-dialog-next li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-h);
+  font-size: 17px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.kora-dialog-next span {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.85;
+  color: var(--text);
+}
+
+/* Phone: the modal becomes the whole screen, with the buttons in thumb reach. */
+
+@media (max-width: 640px) {
+  .kora-dialog {
+    width: 100vw;
+    height: 100dvh;
+    max-height: none;
+    border: 0;
+  }
+
+  .kora-dialog-head {
+    padding: 14px 18px;
+  }
+
+  .kora-dialog-body {
+    padding: 28px 18px 24px;
+  }
+
+  .kora-dialog-foot {
+    padding: 12px 18px calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .kora-dialog-foot .kora-pill {
+    padding: 13px 20px;
+    font-size: 16px;
+  }
+
+  .kora-dialog-time {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-dialog[open],
+  .kora-dialog::backdrop,
+  .kora-dialog-body,
+  .kora-dialog-star {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The contact block: the ask first, the inboxes second.
+   --------------------------------------------------------------------------- */
+
+.kora-rx-contact-ask {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 640px;
+}
+
+.kora-rx-contact-ask p {
+  max-width: 30em;
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.4;
+  color: var(--text-h);
+}
+
+.kora-rx-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.kora-rx-contact-or {
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+button.kora-cta {
+  font: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 420px) {
+  .kora-rx-contact-actions {
+    width: 100%;
+  }
+
+  .kora-rx-contact-actions .kora-pill {
+    flex: 1 1 100%;
+  }
+}

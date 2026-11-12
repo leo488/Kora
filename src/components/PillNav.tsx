@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { ThemeToggle } from './ThemeToggle'
+import { useContact } from '../contact/useContact'
 
 const LINKS = [
   { label: 'Home', to: '/' },
@@ -14,6 +15,7 @@ const LINKS = [
  * the top once the visitor scrolls into the page.
  */
 export function PillNav({ docked }: { docked: 'bottom' | 'top' }) {
+  const openContact = useContact()
   return (
     <nav className={`kora-pills is-${docked}`} aria-label="Main">
       <div className="kora-pills-group">
@@ -31,12 +33,25 @@ export function PillNav({ docked }: { docked: 'bottom' | 'top' }) {
 
       <div className="kora-pills-group">
         <ThemeToggle />
-        <a href="#contact" className="kora-pill">
+        <a
+          href="#contact"
+          className="kora-pill"
+          onClick={(event) => {
+            // A page without the contact block opens the brief instead.
+            if (document.getElementById('contact')) return
+            event.preventDefault()
+            openContact()
+          }}
+        >
           Contact
         </a>
-        <a href="#" className="kora-pill is-solid">
+        <button
+          type="button"
+          className="kora-pill is-solid"
+          onClick={() => openContact({ prefer: 'A call' })}
+        >
           Book A Call
-        </a>
+        </button>
       </div>
     </nav>
   )

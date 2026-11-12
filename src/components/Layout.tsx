@@ -7,6 +7,7 @@ import { useFlareController } from '../hooks/useFlareController'
 import { Offices } from './Offices'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
+import { ContactProvider } from '../contact/ContactContext'
 
 export function Layout() {
   // Dark by default, with a light mode the visitor can switch to. The choice is
@@ -37,11 +38,15 @@ export function Layout() {
       <main className={`kora-app is-${theme}`}>
         {/* Every page wears the homepage masthead. Home drives it from its
             own scroll; the rest show it docked at the top. */}
-        {!isHome && <DockedMasthead />}
-        <Outlet />
-        <Offices />
-        <Footer />
-        <CookieBar />
+        {/* The project brief modal lives here so every page can open it and
+            it inherits the theme. */}
+        <ContactProvider>
+          {!isHome && <DockedMasthead />}
+          <Outlet />
+          <Offices />
+          <Footer />
+          <CookieBar />
+        </ContactProvider>
       </main>
     </ThemeContext.Provider>
   )

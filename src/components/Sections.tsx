@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import { OFFICES, srcSetFor } from '../data'
 import type { Post, Project } from '../data'
 import { caseLinkFor } from '../caseStudies'
+import { useContact } from '../contact/useContact'
+import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
 
 /* The homepage's building blocks, shared so every page is made of the same
    parts: client rows, news cards and the contact block. */
-
-const NEW_BUSINESS_EMAIL = 'hello@kora.studio'
 
 /** "Brand — Line" headlines lose the brand, which the row already names. */
 function lineOf(project: Project) {
@@ -113,27 +113,48 @@ export function NewsCard({ post }: { post: Post }) {
   )
 }
 
+/** The closing block on every page: one clear ask, the brief one click away,
+ *  and the inboxes for anyone who would rather write. */
 export function Contact() {
+  const openContact = useContact()
   const rows = [
-    { label: 'New business', value: NEW_BUSINESS_EMAIL },
-    ...OFFICES.map((office) => ({ label: office.city, value: office.email })),
+    { label: 'New projects', value: NEW_BUSINESS_EMAIL },
+    ...OFFICES.map((office) => ({ label: `${office.city} studio`, value: office.email })),
   ]
 
   return (
     <section className="kora-rx-contact" id="contact" aria-labelledby="kora-rx-contact-heading">
       <div className="kora-rx-contact-text">
-        <h2 id="kora-rx-contact-heading">Ready to start?</h2>
-        <dl className="kora-rx-contact-rows">
-          {rows.map((row) => (
-            <div key={row.label}>
-              <dt>{row.label}</dt>
-              <dd>
-                <a href={`mailto:${row.value}`}>{row.value}</a>
-              </dd>
-              <CopyButton text={row.value} />
-            </div>
-          ))}
-        </dl>
+        <div className="kora-rx-contact-ask">
+          <h2 id="kora-rx-contact-heading">Tell us what you’re building.</h2>
+          <p>
+            Three short questions, about a minute. We reply within one working day
+            with how we would approach it.
+          </p>
+          <div className="kora-rx-contact-actions">
+            <button type="button" className="kora-pill is-solid is-large" onClick={() => openContact()}>
+              Start a project
+            </button>
+            <Link to="/brand-test" className="kora-pill is-outline is-large">
+              Take the brand test
+            </Link>
+          </div>
+        </div>
+
+        <div>
+          <p className="kora-rx-contact-or">Or write to us</p>
+          <dl className="kora-rx-contact-rows">
+            {rows.map((row) => (
+              <div key={row.label}>
+                <dt>{row.label}</dt>
+                <dd>
+                  <a href={`mailto:${row.value}`}>{row.value}</a>
+                </dd>
+                <CopyButton text={row.value} />
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
 
       {/* A portrait of the studio goes here, as on the reference. Left blank
