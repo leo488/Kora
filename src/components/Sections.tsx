@@ -60,31 +60,33 @@ export function ClientRow({ project, index }: { project: Project; index?: number
         </div>
 
         <div
-          className="kora-rx-row-media kora-rx-curve"
+          className="kora-rx-row-media kora-rx-media"
           onPointerMove={followCursor}
         >
-          {project.film ? (
-            <video
-              src={project.film.src}
-              poster={project.film.poster.src}
-              muted
-              loop
-              autoPlay
-              playsInline
-              preload="metadata"
-              aria-label={project.brand}
-              disablePictureInPicture
-            />
-          ) : (
-            <img
-              src={lead.src}
-              srcSet={srcSetFor(lead)}
-              sizes="(max-width: 760px) 100vw, 66vw"
-              alt={project.brand}
-              loading="lazy"
-              draggable={false}
-            />
-          )}
+          <div className="kora-flare">
+            {project.film ? (
+              <video
+                src={project.film.src}
+                poster={project.film.poster.src}
+                muted
+                loop
+                autoPlay
+                playsInline
+                preload="metadata"
+                aria-label={project.brand}
+                disablePictureInPicture
+              />
+            ) : (
+              <img
+                src={lead.src}
+                srcSet={srcSetFor(lead)}
+                sizes="(max-width: 760px) 100vw, 66vw"
+                alt={project.brand}
+                loading="lazy"
+                draggable={false}
+              />
+            )}
+          </div>
           <span className="kora-rx-view" aria-hidden="true">
             View
           </span>
@@ -99,7 +101,9 @@ export function NewsCard({ post }: { post: Post }) {
   return (
     <Link to="/blog" className="kora-rx-card">
       {/* Left blank until the posts have art of their own. */}
-      <div className="kora-rx-card-media kora-rx-curve" aria-hidden="true" />
+      <div className="kora-rx-card-media kora-rx-media" aria-hidden="true">
+        <div className="kora-flare" />
+      </div>
       <div className="kora-rx-card-body">
         <span className="kora-rx-card-kind">{post.category}</span>
         <h3>{post.title}</h3>

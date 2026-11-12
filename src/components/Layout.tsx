@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { THEME_KEY, ThemeContext, initialTheme } from '../theme/theme'
 import type { Theme } from '../theme/theme'
 import { DockedMasthead } from './Masthead'
+import { useFlareController } from '../hooks/useFlareController'
 import { Offices } from './Offices'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
@@ -28,6 +29,8 @@ export function Layout() {
   }, [theme])
 
   const isHome = useLocation().pathname === '/'
+  // The bottom-of-screen image flare, for every image on every page.
+  useFlareController()
 
   return (
     <ThemeContext.Provider value={themeValue}>

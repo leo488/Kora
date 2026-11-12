@@ -136,16 +136,18 @@ function Block({ block }: { block: CaseBlock }) {
  *  there. */
 function Plate({ slot, eager = false }: { slot: CaseSlot; eager?: boolean }) {
   return (
-    <figure className="kora-case-plate" style={{ aspectRatio: slot.ratio }}>
-      {slot.src ? (
-        slot.video ? (
-          <video src={slot.src} muted loop autoPlay playsInline aria-label={slot.label} />
+    <figure className="kora-case-plate kora-rx-media" style={{ aspectRatio: slot.ratio }}>
+      <div className="kora-flare">
+        {slot.src ? (
+          slot.video ? (
+            <video src={slot.src} muted loop autoPlay playsInline aria-label={slot.label} />
+          ) : (
+            <img src={slot.src} alt={slot.label} loading={eager ? 'eager' : 'lazy'} />
+          )
         ) : (
-          <img src={slot.src} alt={slot.label} loading={eager ? 'eager' : 'lazy'} />
-        )
-      ) : (
-        <figcaption>{slot.label}</figcaption>
-      )}
+          <figcaption>{slot.label}</figcaption>
+        )}
+      </div>
     </figure>
   )
 }
