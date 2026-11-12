@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { PointerEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { OFFICES, srcSetFor } from '../data'
 import type { Post, Project } from '../data'
@@ -17,6 +18,14 @@ function lineOf(project: Project) {
 
 /** One client: the name top left, the line and the result bottom left, the
  *  work large on the right. */
+/** Keeps the "View" pill under the pointer while it is over a project image. */
+function followCursor(event: PointerEvent<HTMLDivElement>) {
+  if (event.pointerType !== 'mouse') return
+  const box = event.currentTarget.getBoundingClientRect()
+  event.currentTarget.style.setProperty('--kora-vx', `${event.clientX - box.left}px`)
+  event.currentTarget.style.setProperty('--kora-vy', `${event.clientY - box.top}px`)
+}
+
 export function ClientRow({ project, index }: { project: Project; index?: number }) {
   const lead = project.images[0]
   const hasStat = project.stat && project.stat !== '—'
@@ -50,7 +59,10 @@ export function ClientRow({ project, index }: { project: Project; index?: number
           </div>
         </div>
 
-        <div className="kora-rx-row-media kora-rx-curve">
+        <div
+          className="kora-rx-row-media kora-rx-curve"
+          onPointerMove={followCursor}
+        >
           {project.film ? (
             <video
               src={project.film.src}
@@ -73,6 +85,9 @@ export function ClientRow({ project, index }: { project: Project; index?: number
               draggable={false}
             />
           )}
+          <span className="kora-rx-view" aria-hidden="true">
+            View
+          </span>
         </div>
       </Link>
     </li>

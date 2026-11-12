@@ -3217,7 +3217,34 @@
 .kora-rx-page {
   position: relative;
   z-index: 1;
+}
+
+.kora-rx-page-body {
   background: var(--bg);
+}
+
+/* Hero hand-over, after the reference: the page colour washes over the hero
+   as the statement rises across it, so the stills give way to the page
+   rather than being cut off by it. Driven by --kora-p (0 → 1 over the first
+   screen of scroll). */
+.kora-rx-hero-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--bg);
+  opacity: clamp(0, calc((var(--kora-p, 0) - 0.35) / 0.45), 1);
+  pointer-events: none;
+}
+
+/* The statement reads white over the photograph and settles into the
+   heading colour as the wash completes. */
+.kora-rx > .kora-rx-page > .kora-rx-statement h1,
+.kora-rx > .kora-rx-page > .kora-rx-statement p {
+  color: color-mix(
+    in srgb,
+    var(--text-h) calc(clamp(0, (var(--kora-p, 0) - 0.35) / 0.45, 1) * 100%),
+    #fff
+  );
 }
 
 /* Statement */
@@ -4221,4 +4248,56 @@
 
 .kora-rx-work-label {
   padding-bottom: 18px;
+}
+
+/* Project names light up as they reach their place: dim on entry, full
+   heading colour by the time the row is a third of the way up the screen. */
+@supports (animation-timeline: view()) {
+  .kora-rx-row-text h2 {
+    animation: kora-rx-title-lit linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+}
+
+@keyframes kora-rx-title-lit {
+  from {
+    color: color-mix(in srgb, var(--text-h) 28%, var(--bg));
+  }
+  to {
+    color: var(--text-h);
+  }
+}
+
+/* "View" pill that follows the pointer over a project image. */
+.kora-rx-view {
+  position: absolute;
+  left: var(--kora-vx, 50%);
+  top: var(--kora-vy, 50%);
+  z-index: 2;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+  font-size: 13px;
+  font-weight: 600;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kora-rx-row-link:hover .kora-rx-view {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .kora-rx-row-link:hover .kora-rx-row-media {
+    cursor: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-rx-row-text h2 {
+    animation: none;
+  }
 }

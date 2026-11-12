@@ -66,12 +66,16 @@ export function Home() {
       <Masthead docked={docked} />
       <Hero />
       <div className="kora-rx-page">
+        {/* The statement has no ground of its own: it rises over the hero
+            while the hero washes out to the page colour behind it. */}
         <Statement />
-        <Partnerships />
-        <Brands />
-        <Happenings />
-        <Newsletter />
-        <Contact />
+        <div className="kora-rx-page-body">
+          <Partnerships />
+          <Brands />
+          <Happenings />
+          <Newsletter />
+          <Contact />
+        </div>
       </div>
     </div>
   )
@@ -89,6 +93,8 @@ function Hero() {
         onIndexChange={setSlideIndex}
         intervalMs={7000}
       />
+      {/* The page colour, faded in by scroll as the statement rises over. */}
+      <div className="kora-rx-hero-wash" aria-hidden="true" />
     </section>
   )
 }
