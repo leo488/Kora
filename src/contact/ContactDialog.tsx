@@ -184,7 +184,7 @@ export function ContactDialog({
               </ol>
             </>
           )}
-          <button type="button" className="kora-dialog-close" onClick={onClose}>
+          <button type="button" className="kora-pill is-outline kora-dialog-close" onClick={onClose}>
             Close
           </button>
         </header>

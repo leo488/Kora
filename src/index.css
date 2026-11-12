@@ -48,7 +48,8 @@
   font: 18px/145% var(--sans);
   /* Host Grotesk 500 is the brand's body weight. */
   font-weight: 500;
-  letter-spacing: 0.18px;
+  /* Body copy carries the headings' tight tracking (Leo, 2026-11-12). */
+  letter-spacing: -0.015em;
   /* The whole site runs dark now, so the document ground is dark too — this is
      what shows during load and under an overscroll bounce, and a white flash
      there undoes the effect before the page has even painted. The tokens above

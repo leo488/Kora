@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import type { PointerEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { OFFICES, srcSetFor } from '../data'
+import { srcSetFor } from '../data'
 import type { Post, Project } from '../data'
 import { caseLinkFor } from '../caseStudies'
+import { CheckIcon, CopyIcon } from './icons'
 import { useContact } from '../contact/useContact'
 import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
 
@@ -114,13 +115,9 @@ export function NewsCard({ post }: { post: Post }) {
 }
 
 /** The closing block on every page: one clear ask, the brief one click away,
- *  and the inboxes for anyone who would rather write. */
+ *  and one inbox for anyone who would rather write. */
 export function Contact() {
   const openContact = useContact()
-  const rows = [
-    { label: 'New projects', value: NEW_BUSINESS_EMAIL },
-    ...OFFICES.map((office) => ({ label: `${office.city} studio`, value: office.email })),
-  ]
 
   return (
     <section className="kora-rx-contact" id="contact" aria-labelledby="kora-rx-contact-heading">
@@ -141,19 +138,9 @@ export function Contact() {
           </div>
         </div>
 
-        <div>
-          <p className="kora-rx-contact-or">Or write to us</p>
-          <dl className="kora-rx-contact-rows">
-            {rows.map((row) => (
-              <div key={row.label}>
-                <dt>{row.label}</dt>
-                <dd>
-                  <a href={`mailto:${row.value}`}>{row.value}</a>
-                </dd>
-                <CopyButton text={row.value} />
-              </div>
-            ))}
-          </dl>
+        <div className="kora-rx-contact-mail">
+          <a href={`mailto:${NEW_BUSINESS_EMAIL}`}>{NEW_BUSINESS_EMAIL}</a>
+          <CopyButton text={NEW_BUSINESS_EMAIL} />
         </div>
       </div>
 
@@ -176,8 +163,13 @@ function CopyButton({ text }: { text: string }) {
     }
   }
   return (
-    <button type="button" className="kora-rx-copy" onClick={copy}>
-      {copied ? 'Copied' : 'Copy'}
+    <button
+      type="button"
+      className={`kora-rx-copy${copied ? ' is-copied' : ''}`}
+      onClick={copy}
+      aria-label={copied ? 'Copied' : 'Copy email address'}
+    >
+      {copied ? <CheckIcon /> : <CopyIcon />}
     </button>
   )
 }

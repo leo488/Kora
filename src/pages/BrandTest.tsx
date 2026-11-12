@@ -187,7 +187,7 @@ export function BrandTest() {
                 ))}
               </ul>
               <div className="kora-bt-actions">
-                <button type="button" className="kora-bt-back" onClick={back}>
+                <button type="button" className="kora-pill is-outline is-large" onClick={back}>
                   Back
                 </button>
               </div>
@@ -237,7 +237,7 @@ export function BrandTest() {
                 <button type="button" className="kora-pill is-outline is-large" onClick={talk}>
                   Talk to us about it
                 </button>
-                <button type="button" className="kora-bt-back" onClick={restart}>
+                <button type="button" className="kora-pill is-outline is-large" onClick={restart}>
                   Take it again
                 </button>
               </div>

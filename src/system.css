@@ -1,0 +1,123 @@
+/* ---------------------------------------------------------------------------
+   The Koraa’ site system. See DESIGN.md at the repo root.
+   Loaded after every other stylesheet, so these are the rules that hold
+   wherever a component is used.
+   --------------------------------------------------------------------------- */
+
+/* 1. Buttons. One shape, the pill. Three kinds: solid (the main action),
+   outline (the second action) and the frosted nav pill. Two sizes: nav, and
+   one page size for every action in the page, the footer and the modals. */
+
+.kora-pill {
+  font-family: inherit;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.kora-pill.is-large {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.kora-pill.is-solid {
+  background: var(--text-h);
+  color: var(--bg);
+}
+
+.kora-pill.is-solid:hover {
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+}
+
+.kora-footer .kora-pill.kora-footer-cta {
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+.kora-cookiebar button.kora-pill {
+  border-radius: 999px;
+  background: var(--koraa-paper);
+  color: var(--koraa-ink);
+  font-weight: 500;
+}
+
+.kora-cookiebar button.kora-pill:hover {
+  background: var(--koraa-plantain);
+}
+
+/* 2. Type. Body copy uses the headings' tight tracking. Lead paragraphs are
+   set like headings: same tracking, heading colour. */
+
+.kora-rx-statement p,
+.kora-rx-contact-ask p,
+.kora-bt-lede,
+.kora-dialog-lede {
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+
+/* 3. The statement: one bold line, no title over it. */
+
+.kora-rx-statement h1.kora-rx-statement-line {
+  margin: 0;
+  max-width: 26ch;
+  font-size: clamp(30px, 3.6vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+/* 4. The contact block: the ask, then one bold address with a copy button. */
+
+.kora-rx-contact-mail {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.kora-rx-contact-mail a {
+  min-width: 0;
+  color: var(--text-h);
+  font-size: clamp(22px, 2.4vw, 36px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.kora-rx-contact-mail a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+  text-decoration-thickness: 2px;
+}
+
+.kora-rx-copy {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  color: var(--text-h);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.kora-rx-copy:hover {
+  background: var(--surface-hover);
+}
+
+.kora-rx-copy.is-copied {
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+  box-shadow: none;
+}
+
+/* The case study pages use the same contact block as everywhere else. */
+.kora-case {
+  --kora-gutter: var(--case-gutter);
+}

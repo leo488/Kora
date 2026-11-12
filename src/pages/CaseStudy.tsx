@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import type { FormEvent } from 'react'
+import { useEffect } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { PROJECTS } from '../data'
 import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
+import { Contact } from '../components/Sections'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
-   in images, then the next project and a contact form. */
+   in images, then the next project and the contact block. */
 
 export function CaseStudy() {
   const { slug } = useParams()
@@ -94,7 +94,7 @@ export function CaseStudy() {
         </Link>
       )}
 
-      <CaseContact />
+      <Contact />
     </article>
   )
 }
@@ -152,49 +152,3 @@ function Plate({ slot, eager = false }: { slot: CaseSlot; eager?: boolean }) {
   )
 }
 
-function CaseContact() {
-  const [sent, setSent] = useState(false)
-
-  // TODO(kora): wire this to the studio inbox. Until then the form only
-  // confirms on screen, and nothing is sent anywhere.
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setSent(true)
-  }
-
-  return (
-    <section className="kora-case-contact" id="contact" aria-labelledby="kora-case-contact-heading">
-      <div className="kora-case-contact-text">
-        <h2 id="kora-case-contact-heading">Let’s get in touch</h2>
-        <dl>
-          <dt>Email</dt>
-          <dd>
-            <a href="mailto:hello@kora.studio">hello@kora.studio</a>
-          </dd>
-        </dl>
-      </div>
-
-      {sent ? (
-        <p className="kora-case-contact-done" role="status">
-          Thanks. We’ll be in touch shortly.
-        </p>
-      ) : (
-        <form className="kora-case-form" onSubmit={onSubmit}>
-          <label>
-            <span>Name</span>
-            <input name="name" required autoComplete="name" />
-          </label>
-          <label>
-            <span>Email</span>
-            <input name="email" type="email" required autoComplete="email" />
-          </label>
-          <label>
-            <span>Message</span>
-            <textarea name="message" rows={5} required />
-          </label>
-          <button type="submit">Submit</button>
-        </form>
-      )}
-    </section>
-  )
-}

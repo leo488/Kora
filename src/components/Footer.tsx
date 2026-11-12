@@ -50,7 +50,7 @@ export function Footer() {
           <Link to="/brand-test">Take the brand test</Link>
           <button
             type="button"
-            className="kora-cta kora-footer-cta"
+            className="kora-pill is-solid is-large kora-footer-cta"
             onClick={() => openContact({ prefer: 'A call' })}
           >
             Book A Call
