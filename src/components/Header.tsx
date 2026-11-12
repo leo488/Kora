@@ -41,7 +41,7 @@ export function Header() {
       <header className="kora-header-wrap">
         <div className="kora-header kora-container">
           <Link to="/" className="kora-logo-link">
-            <img className="kora-logo" src="/logo.svg" alt="Kora" />
+            <img className="kora-logo" src="/logo.svg" alt="Koraa’" />
           </Link>
 
           <div className="kora-header-right">

@@ -34,7 +34,9 @@
    their own ground. */
 
 .kora-app.is-light {
-  --text: rgba(30, 30, 30, 0.62);
+  /* 0.72, not 0.62: at 0.62 small grey text fell to 4.2:1 on the grey
+     plates. 0.72 clears 4.5:1 on both the page and the plates. */
+  --text: rgba(30, 30, 30, 0.72);
   --text-h: #1e1e1e;
   --bg: #f4f3ef;
   --border: rgba(30, 30, 30, 0.14);
@@ -1586,7 +1588,7 @@
 
 .kora-footer-col h3 {
   margin: 0 0 2px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -3509,7 +3511,7 @@
 }
 
 .kora-rx-card-kind {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -3930,7 +3932,7 @@
 }
 
 .kora-case-grid figcaption {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* A loose mosaic: two portraits span two rows so the wall is not a plain
@@ -3955,7 +3957,7 @@
 }
 
 .kora-case-collage figcaption {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* Next project */
@@ -4177,7 +4179,7 @@
   }
 
   .kora-case-plate figcaption {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 
@@ -4240,8 +4242,9 @@
 }
 
 .kora-label sup {
-  font-size: 0.8em;
-  vertical-align: 0.4em;
+  /* Same size as the label: at 0.8em the count fell under 10px. */
+  font-size: 1em;
+  vertical-align: 0.3em;
 }
 
 .kora-rx-work-label {
@@ -4371,5 +4374,28 @@
 @media (max-width: 760px) {
   .kora-rx-media {
     --kora-flare: 40px;
+  }
+}
+
+/* Narrowest phones (320–374px): the pill nav needs about 60px back to keep
+   Book A Call on screen. */
+@media (max-width: 374px) {
+  .kora-pills {
+    padding: 0 8px;
+    gap: 4px;
+  }
+
+  .kora-pills-group {
+    gap: 2px;
+  }
+
+  .kora-pill {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .kora-pills .kora-theme-toggle {
+    width: 27px;
+    height: 27px;
   }
 }

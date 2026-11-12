@@ -8,7 +8,7 @@ export function Work() {
   return (
     <div className="kora-rx kora-rx-sub">
       <PageStatement title="Work">
-        Kora is a global creative studio that brings brands, stories, and
+        Koraa’ is a global creative studio that brings brands, stories, and
         experiences to life through strategy, design, and motion.
       </PageStatement>
 

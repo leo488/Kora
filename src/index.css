@@ -104,7 +104,9 @@ button,
    must not quietly take the focus ring with it. */
 
 :focus-visible {
-  outline: 2px solid var(--brand);
+  /* The accent for the ground: Plantain on dark, blue on light. A blue ring
+     on Ink was 1.98:1 and all but invisible. */
+  outline: 2px solid var(--accent-ink, var(--brand));
   outline-offset: 3px;
 }
 

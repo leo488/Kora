@@ -44,7 +44,7 @@ export function About() {
         <h1 className="kora-visually-hidden">About Kora</h1>
 
         <p className="kora-page-about-manifesto">
-          Kora is a global creative studio{' '}
+          Koraa’ is a global creative studio{' '}
           <Shape kind="blade" tone="blue" /> We partner with founders and teams
           building something worth paying attention to{' '}
           <Reveal src={thumbOf(ipaybtc.images[0])} /> and give them the brand, the

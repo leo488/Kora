@@ -107,7 +107,7 @@ export function NewsCard({ post }: { post: Post }) {
       <div className="kora-rx-card-body">
         <span className="kora-rx-card-kind">{post.category}</span>
         <h3>{post.title}</h3>
-        <span className="kora-rx-card-by">Kora, {post.date}</span>
+        <span className="kora-rx-card-by">Koraa’, {post.date}</span>
       </div>
     </Link>
   )
