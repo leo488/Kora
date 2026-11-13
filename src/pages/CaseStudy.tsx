@@ -6,6 +6,7 @@ import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
 import { AppScreen } from '../components/ipaybtc/AppScreen'
+import { Components, Headline, LogoCycle, Objects, Tiles, TypeSwap } from '../components/ipaybtc/Scenes'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -145,12 +146,17 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
     >
       <div className="kora-flare">
         {slot.art === 'ipaybtc-logo' ? (
-          <div
-            className="kora-case-art kora-case-art-ipaybtc"
-            role="img"
-            aria-label={slot.label}
-            dangerouslySetInnerHTML={{ __html: ipaybtcLogo }}
-          />
+          <LogoCycle />
+        ) : slot.art === 'ipaybtc-type' ? (
+          <TypeSwap />
+        ) : slot.art === 'ipaybtc-headline' ? (
+          <Headline />
+        ) : slot.art === 'ipaybtc-objects' ? (
+          <Objects />
+        ) : slot.art === 'ipaybtc-components' ? (
+          <Components />
+        ) : slot.art === 'ipaybtc-tiles' ? (
+          <Tiles />
         ) : slot.art === 'ipaybtc-ui' ? (
           <div className="kora-case-art kora-case-art-ui" role="img" aria-label={slot.label}>
             <div className="kora-ui-screen">
@@ -181,6 +187,11 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
                 loading={eager ? 'eager' : 'lazy'}
               />
               {slot.screen && <ScreenOverlay screen={slot.screen} />}
+              {slot.card && (
+                <div className={`ips-card is-${slot.card.side}`} aria-hidden>
+                  <img src={slot.card.src} alt="" loading="lazy" />
+                </div>
+              )}
             </>
           )
         ) : (

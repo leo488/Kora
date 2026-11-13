@@ -1,0 +1,321 @@
+/* Code-drawn scenes for the iPayBTC case study. Colours are the brand's
+   only: Deep Navy, Electric Blue, Sky, Milky Yellow and the gradient. */
+
+.ips {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  --ips-navy: #050e7f;
+  --ips-blue: #0a31f5;
+  --ips-sky: #88c2ed;
+  --ips-yellow: #fff778;
+  --ips-grad: linear-gradient(135deg, #050e7f 25%, #0a31f5 78%, #3ed4ff);
+  --ips-futura: 'Futura LT Condensed', 'Futura Condensed ExtraBold', 'Barlow Condensed', sans-serif;
+  --ips-haas: 'Neue Haas Grotesk Display Pro', 'Neue Haas Grotesk', 'Inter Tight', sans-serif;
+}
+
+/* Swapping campaign type */
+.ips-type {
+  background: var(--ips-navy);
+  color: var(--ips-yellow);
+}
+
+.ips-type-lines p {
+  position: absolute;
+  left: 7%;
+  top: 9%;
+  margin: 0;
+  font-family: var(--ips-futura);
+  font-weight: 800;
+  font-size: 19cqw;
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+}
+
+.ips-type-lines span {
+  display: block;
+  transform: translateY(110%);
+  clip-path: inset(0 0 100% 0);
+  transition:
+    transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+    clip-path 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ips-type-lines span + span {
+  transition-delay: 0.06s;
+}
+
+.ips-type-lines p.is-on span {
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+
+.ips-type-logo {
+  position: absolute;
+  left: 7%;
+  bottom: 8%;
+  width: 18%;
+  color: #fff;
+}
+
+.ips-type-logo svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Headline that builds */
+.ips-head {
+  background: #fff;
+  color: var(--ips-navy);
+  display: grid;
+  align-items: center;
+  padding: 0 7%;
+}
+
+.ips-head p {
+  margin: 0;
+  font-family: var(--ips-haas);
+  font-weight: 700;
+  font-size: 8.4cqw;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+.ips-head p > span {
+  display: inline-block;
+  margin-right: 0.22em;
+  opacity: 0;
+  transform: translateY(0.4em);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ips-head.is-in p > span {
+  opacity: 1;
+  transform: none;
+}
+
+/* Floating 3D objects */
+.ips-objects {
+  background: #f4f6fb;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  place-items: center;
+  padding: 7% 8%;
+  gap: 4%;
+}
+
+.ips-objects img {
+  width: 62%;
+  height: auto;
+  animation: ips-float 4.2s ease-in-out infinite;
+  filter: drop-shadow(0 2cqw 2cqw rgba(5, 14, 127, 0.16));
+}
+
+@keyframes ips-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-7%) rotate(3deg);
+  }
+}
+
+/* Logo through the brand colours */
+.ips-logo {
+  display: grid;
+  place-items: center;
+  animation: ips-colours 8s steps(1) infinite;
+}
+
+.ips-logo span {
+  width: 40%;
+}
+
+.ips-logo svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@keyframes ips-colours {
+  0% {
+    background: #0a31f5;
+    color: #fff;
+  }
+  25% {
+    background: #fff778;
+    color: #050e7f;
+  }
+  50% {
+    background: #050e7f;
+    color: #fff;
+  }
+  75% {
+    background: #88c2ed;
+    color: #050e7f;
+  }
+}
+
+/* Live motion components */
+.ips-components {
+  background: #e9eef8;
+}
+
+.ips-components iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  pointer-events: none;
+}
+
+/* Brand tiles */
+.ips-tiles {
+  background: #f4f6fb;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1.6cqw;
+  padding: 3cqw;
+}
+
+.ips-tile {
+  border-radius: 2.4cqw;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.ips-tile img {
+  width: 58%;
+  height: auto;
+  animation: ips-float 4.6s ease-in-out infinite;
+}
+
+.ips-tile p {
+  margin: 0;
+  padding: 0 10%;
+  font-family: var(--ips-futura);
+  font-weight: 800;
+  font-size: 5.4cqw;
+  line-height: 0.9;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ips-tile-icon {
+  background: var(--ips-grad);
+  color: #fff;
+}
+
+.ips-tile-icon span {
+  width: 56%;
+}
+
+.ips-tile-icon svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ips-tile-yellow {
+  background: var(--ips-yellow);
+  color: var(--ips-navy);
+}
+
+.ips-tile-sky {
+  background: var(--ips-sky);
+}
+
+.ips-tile-navy {
+  background: var(--ips-navy);
+  color: var(--ips-yellow);
+}
+
+.ips-tile-grad {
+  background: var(--ips-blue);
+}
+
+.ips-tile-white {
+  background: #fff;
+}
+
+/* A real app card floating beside a person in a photo */
+.ips-card {
+  position: absolute;
+  top: 50%;
+  width: 22%;
+  border-radius: 1.4cqw;
+  overflow: hidden;
+  box-shadow: 0 2cqw 4cqw -1cqw rgba(4, 2, 70, 0.45);
+  animation: ips-card-in 5s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.ips-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ips-card.is-right {
+  right: 5%;
+}
+
+.ips-card.is-left {
+  left: 5%;
+}
+
+@keyframes ips-card-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-40%) scale(0.94);
+  }
+  12%,
+  88% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ips *,
+  .ips {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.kora-case-plate {
+  container-type: inline-size;
+}
+
+/* Undo the plate's full-bleed picture rule for images inside scenes. */
+.kora-case-plate .ips img,
+.kora-case-plate .ips-card img {
+  position: static;
+  inset: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.kora-case-plate .ips-objects img {
+  width: 62%;
+}
+
+.kora-case-plate .ips-tile img {
+  width: 58%;
+}
+
+.kora-case-plate .ips-card img {
+  width: 100%;
+}
