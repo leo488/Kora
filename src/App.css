@@ -4447,3 +4447,34 @@
     font-size: 13px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Live app screens on still photos (components/ipaybtc/ScreenOverlay.tsx).
+   The overlay sits over the photo's layer; its one child is the 390 × 844
+   screen, moved onto the phone with a perspective transform.
+   --------------------------------------------------------------------------- */
+
+.kora-screen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.kora-screen-glass {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  backface-visibility: hidden;
+}
+
+.kora-screen-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glare, none);
+  pointer-events: none;
+}
