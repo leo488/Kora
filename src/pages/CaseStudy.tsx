@@ -5,7 +5,10 @@ import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
-import { PhotoCard, TypeSwap, UiBoard, ZoomImg } from '../components/ipaybtc/Scenes'
+import { GradientTile, PhonePlate, PhotoCard, TypeSpecimen, TypeSwap, UiBoard, WatchPlate, Website, YellowPoster, ZoomImg } from '../components/ipaybtc/Scenes'
+import watchImg from '../assets/figma/watch.webp'
+import webSun from '../assets/figma/web-sun.jpg'
+import webDesk from '../assets/figma/web-desk.jpg'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -155,6 +158,20 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
           <TypeSwap />
         ) : slot.art === 'ipaybtc-uiboard' ? (
           <UiBoard />
+        ) : slot.art === 'ipaybtc-phone' ? (
+          <PhonePlate />
+        ) : slot.art === 'ipaybtc-gtile' ? (
+          <GradientTile />
+        ) : slot.art === 'ipaybtc-poster' ? (
+          <YellowPoster />
+        ) : slot.art === 'ipaybtc-spec-blue' ? (
+          <TypeSpecimen tone="blue" />
+        ) : slot.art === 'ipaybtc-spec-yellow' ? (
+          <TypeSpecimen tone="yellow" />
+        ) : slot.art === 'ipaybtc-watch' ? (
+          <WatchPlate watch={watchImg} />
+        ) : slot.art === 'ipaybtc-web' ? (
+          <Website sun={webSun} desk={webDesk} />
         ) : slot.src ? (
           slot.video ? (
             <>

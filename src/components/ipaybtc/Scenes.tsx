@@ -52,10 +52,10 @@ function useCycle(length: number, every: number) {
 
 /* Each line comes with one of our 3D objects. */
 const LINES: Array<[string, string, string]> = [
-  ['MOVE', 'FREELY.', o8],
-  ['OWN', 'BITCOIN.', o1],
-  ['NAIRA', 'TO SATS.', o2],
-  ['GIFT', 'IN SATS.', o3],
+  ['YOUR BITCOIN', 'CAN TRAVEL.', o8],
+  ['BEFORE YOUR', 'TEA GETS COLD.', o1],
+  ['PAY NEPA', 'IN SATS.', o2],
+  ['NO BORDER.', 'NO PERMISSION.', o3],
 ]
 
 /** Campaign type whose words swap, like Wise's FULL SPEED / MIN FEES, with
@@ -128,5 +128,152 @@ export function ZoomImg({ slot, eager }: { slot: CaseSlot; eager?: boolean }) {
       alt={slot.label}
       loading={eager ? 'eager' : 'lazy'}
     />
+  )
+}
+
+/* ---------- Plates rebuilt from Leo's Figma layers ---------- */
+
+/** One phone on a light ground running the buy flow, like Wise's app screen
+    beside the building wrap. */
+export function PhonePlate({ flow = 'buy', ground = 'light' }: { flow?: 'buy' | 'send'; ground?: 'light' | 'blue' }) {
+  const [ref, on] = useInView<HTMLDivElement>(0.2, false)
+  useFit(ref, 0.5, 390)
+  return (
+    <div ref={ref} className={`ips ips-phoneplate is-${ground}`}>
+      <div className="ips-phone">
+        <AppScreen flow={flow} playing={on} />
+      </div>
+    </div>
+  )
+}
+
+/** The brand gradient with the wordmark: the pattern tile of the pair. */
+export function GradientTile() {
+  return (
+    <div className="ips ips-gtile" role="img" aria-label="iPayBTC wordmark on the brand gradient">
+      <span dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+    </div>
+  )
+}
+
+/** A Milky Yellow poster: one bold line and one 3D object. */
+export function YellowPoster() {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, true)
+  return (
+    <div ref={ref} className={`ips ips-poster${on ? ' is-in' : ''}`}>
+      <p>
+        NEVER MEANT
+        <br />
+        TO SIT STILL.
+      </p>
+      <img src={o8} alt="" />
+    </div>
+  )
+}
+
+/** Frames 31 and 32: the type specimens. */
+export function TypeSpecimen({ tone }: { tone: 'blue' | 'yellow' }) {
+  return (
+    <div className={`ips ips-spec is-${tone}`}>
+      <div className="ips-spec-card">
+        <p className="ips-spec-glyphs">
+          abcdefghijklmn
+          <br />
+          opqrstuvwxyz
+          <br />
+          ABCDEFGHIJKLMN
+          <br />
+          OPQRSTUVWXYZ 1234567890
+        </p>
+        <p className="ips-spec-note">
+          {tone === 'blue' ? 'Futura LT Condensed ExtraBold. Headlines and campaign lines.' : 'Neue Haas Grotesk. Body copy and the small print.'}
+          <br />
+          Built to communicate with both impact and clarity.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+/** Frame 29: the watch, with the Bitcoin balance on its face. */
+export function WatchPlate({ watch }: { watch: string }) {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, false)
+  const [n, setN] = useState(false)
+  useEffect(() => {
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t: number[] = []
+    const loop = () => {
+      setN(false)
+      t.push(window.setTimeout(() => setN(true), 1600))
+      t.push(window.setTimeout(loop, 5200))
+    }
+    loop()
+    return () => t.forEach(clearTimeout)
+  }, [on])
+  return (
+    <div ref={ref} className="ips ips-watch">
+      <div className="ips-watch-body">
+        <img src={watch} alt="" />
+        <div className="ips-watch-face">
+          <div className="ips-watch-top">
+            <span>Bitcoin</span>
+            <img src={o1} alt="" />
+          </div>
+          <strong>{n ? '118,559' : '87,719'}</strong>
+          <span className="ips-watch-unit">SATS</span>
+          <span className={`ips-watch-in${n ? ' is-on' : ''}`}>+30,840 from Ada</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** Frame 30: the iPayBTC website, rebuilt from its layers, in a browser. */
+export function Website({ sun, desk }: { sun: string; desk: string }) {
+  const [ref, on] = useInView<HTMLDivElement>(0.25, false)
+  useFit(ref, 0.86, 1440)
+  const words = 'Spend Bitcoin like money, for everyday use'.split(' ')
+  return (
+    <div ref={ref} className={`ips ips-web${on ? ' is-in' : ''}`}>
+      <div className="ips-web-window">
+        <div className="ips-web-inner">
+        <div className="ips-web-bar">
+          <i />
+          <i />
+          <i />
+          <span>ipaybtc.com</span>
+        </div>
+        <div className="ips-web-page">
+          <nav className="ips-web-nav">
+            <span className="ips-web-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+            <span className="ips-web-links">
+              <span>Home</span>
+              <span>About us</span>
+              <span>Contact us</span>
+              <span>More</span>
+            </span>
+            <span className="ips-web-cta">Get the app</span>
+          </nav>
+          <h3 className="ips-web-head">
+            {words.map((w, k) => (
+              <span key={k} style={{ transitionDelay: `${k * 70}ms` }}>
+                {w}
+              </span>
+            ))}
+          </h3>
+          <div className="ips-web-row">
+            <img className="ips-web-sun" src={sun} alt="" />
+            <div className="ips-web-panel" style={{ backgroundImage: `url(${desk})` }}>
+              <span className="ips-web-oval a" />
+              <span className="ips-web-oval b" />
+              <div className="ips-web-phone">
+                <AppScreen flow="buy" playing={on} />
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
   )
 }

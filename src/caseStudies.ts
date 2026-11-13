@@ -34,6 +34,14 @@ import figCrop1200 from './assets/figma/fig-crop-top-1200.jpg'
 import figCrop2400 from './assets/figma/fig-crop-top-2400.jpg'
 import figGuy1200 from './assets/figma/fig-buy-guy-1200.jpg'
 import figGuy2400 from './assets/figma/fig-buy-guy-2400.jpg'
+import figHanger600 from './assets/figma/fig-hanger-tee-600.jpg'
+import figHanger1200 from './assets/figma/fig-hanger-tee-1200.jpg'
+import figLanyard600 from './assets/figma/fig-lanyard-600.jpg'
+import figLanyard1200 from './assets/figma/fig-lanyard-1200.jpg'
+import wrap1200 from './assets/ipaybtc-wrap-1200.jpg'
+import wrap2400 from './assets/ipaybtc-wrap-2400.jpg'
+import stage1200 from './assets/ipaybtc-stage-1200.jpg'
+import stage2400 from './assets/ipaybtc-stage-2400.jpg'
 import figGuide1200 from './assets/figma/fig-brand-guide-1200.jpg'
 import figGuide2400 from './assets/figma/fig-brand-guide-2400.jpg'
 import borderless from './assets/ipaybtc-borderless.mp4'
@@ -72,6 +80,13 @@ export interface CaseSlot {
     | 'ipaybtc-headline'
     | 'ipaybtc-objects'
     | 'ipaybtc-uiboard'
+    | 'ipaybtc-phone'
+    | 'ipaybtc-gtile'
+    | 'ipaybtc-poster'
+    | 'ipaybtc-spec-blue'
+    | 'ipaybtc-spec-yellow'
+    | 'ipaybtc-watch'
+    | 'ipaybtc-web'
   /** A real app card floating beside the person in the photo. */
   card?: { kind: 'keypad' | 'received'; side: 'left' | 'right'; top?: boolean }
   /** The photo eases out from a slight zoom while it is on screen. */
@@ -208,6 +223,23 @@ const FIG_LADY: CaseSlot = {
 }
 const FIG_CROP = frame('Reimagining how money moves', [figCrop1200, figCrop2400])
 const FIG_GUY = frame('Buying Bitcoin under a blue sky', [figGuy1200, figGuy2400])
+const tile = (label: string, pair: [string, string]): CaseSlot => ({
+  label,
+  ratio: '1681 / 2043',
+  src: pair[1],
+  srcSet: set([[pair[0], 600], [pair[1], 1200]]),
+})
+const FIG_HANGER = tile('“Powering your everyday with Bitcoin” tee on Electric Blue', [figHanger600, figHanger1200])
+const FIG_LANYARD = tile('The iPayBTC lanyard and badge on Deep Navy', [figLanyard600, figLanyard1200])
+const IPAY_WRAP = plate('“We move in sats” wrapped on a building in Lagos', '4 / 5', [wrap1200, wrap2400])
+const IPAY_STAGE = plate('iPayBTC on the main stage screen', '4096 / 2842', [stage1200, stage2400])
+const IPAY_PHONE = art('The app buying sats', '4 / 5', 'ipaybtc-phone')
+const IPAY_GTILE = art('The wordmark on the brand gradient', '4 / 5', 'ipaybtc-gtile')
+const IPAY_POSTER = art('Sats for everyone poster', '4 / 5', 'ipaybtc-poster')
+const IPAY_SPEC_A = art('Futura LT Condensed ExtraBold specimen', '5064 / 3244', 'ipaybtc-spec-blue')
+const IPAY_SPEC_B = art('Neue Haas Grotesk specimen', '5064 / 3244', 'ipaybtc-spec-yellow')
+const IPAY_WATCH = art('Bitcoin balance on the watch', '5064 / 3244', 'ipaybtc-watch')
+const IPAY_WEB = art('The iPayBTC website', '16 / 10', 'ipaybtc-web')
 const FIG_GUIDE = frame('The iPayBTC brand guide', [figGuide1200, figGuide2400])
 const IPAY_BILLBOARD = plate('Naira → Sats on a sidewalk billboard, with the app in hand', '2400 / 1340', [billboard1200, billboard2400])
 
@@ -256,6 +288,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'pair', slots: [IPAY_TEE, FIG_TEE_YELLOW], inset: true },
       { kind: 'full', slot: IPAY_BILLBOARD },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
+      { kind: 'pair', slots: [IPAY_WRAP, IPAY_PHONE], inset: true },
       { kind: 'full', slot: FIG_LADY, inset: true },
       {
         kind: 'full',
@@ -270,10 +303,17 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       { kind: 'full', slot: withCard(SC_BEACH, 'received', 'right', true) },
       { kind: 'full', slot: IPAY_UIBOARD },
+      { kind: 'pair', slots: [IPAY_GTILE, IPAY_POSTER], inset: true },
       { kind: 'full', slot: FIG_CROP, inset: true },
+      { kind: 'full', slot: IPAY_WEB },
       { kind: 'full', slot: FIG_GUY, inset: true },
       { kind: 'full', slot: withCard(SC_ROADTRIP, 'keypad', 'left') },
       { kind: 'pair', slots: [FIG_TOTE_STREET, FIG_TOTE_BLUE], inset: true },
+      { kind: 'pair', slots: [FIG_HANGER, FIG_LANYARD], inset: true },
+      { kind: 'full', slot: IPAY_WATCH, inset: true },
+      { kind: 'full', slot: IPAY_STAGE, inset: true },
+      { kind: 'full', slot: IPAY_SPEC_A, inset: true },
+      { kind: 'full', slot: IPAY_SPEC_B, inset: true },
       { kind: 'full', slot: FIG_GUIDE, inset: true },
     ],
     next: '3Projects',

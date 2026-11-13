@@ -29,7 +29,7 @@
   margin: 0;
   font-family: var(--ips-futura);
   font-weight: 800;
-  font-size: 17cqw;
+  font-size: 11.5cqw;
   line-height: 0.86;
   letter-spacing: -0.01em;
 }
@@ -185,4 +185,368 @@
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* One phone on a ground */
+.ips-phoneplate {
+  display: grid;
+  place-items: center;
+  background: #eef0f4;
+}
+
+.ips-phoneplate.is-blue {
+  background: var(--ips-blue);
+}
+
+/* Gradient tile + yellow poster */
+.ips-gtile {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(150deg, #050e7f 25%, #0a31f5 78%, #3ed4ff 100%);
+  color: #fff;
+}
+
+.ips-gtile span {
+  width: 52%;
+}
+
+.ips-gtile svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ips-poster {
+  background: var(--ips-yellow);
+  color: var(--ips-navy);
+  text-align: center;
+}
+
+.ips-poster p {
+  margin: 9% 0 0;
+  font-family: var(--ips-futura);
+  font-weight: 800;
+  font-size: 12cqw;
+  line-height: 0.88;
+}
+
+.kora-case-plate .ips-poster img {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: 58%;
+  transform: translate(-50%, 8%) scale(0.92);
+  opacity: 0;
+  transition:
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.6s ease-out;
+}
+
+.kora-case-plate .ips-poster.is-in img {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+/* Type specimens */
+.ips-spec {
+  display: grid;
+  place-items: center;
+  background: #040246;
+}
+
+.ips-spec-card {
+  width: 49%;
+  aspect-ratio: 2477 / 1504;
+  padding: 3% 3.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--ips-blue);
+  color: #fff;
+}
+
+.ips-spec.is-yellow .ips-spec-card {
+  background: var(--ips-yellow);
+  color: var(--ips-blue);
+}
+
+.ips-spec-glyphs {
+  margin: 0;
+  font-family: var(--ips-futura);
+  font-weight: 800;
+  font-size: 3.2cqw;
+  line-height: 1;
+}
+
+.ips-spec.is-yellow .ips-spec-glyphs {
+  font-family: 'Neue Haas Grotesk Display Pro', 'Inter Tight', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ips-spec-note {
+  margin: 0;
+  font-family: 'DM Mono', ui-monospace, monospace;
+  font-size: 0.62cqw;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+.ips-spec.is-yellow .ips-spec-note {
+  color: #040246;
+}
+
+/* The watch */
+.ips-watch {
+  display: grid;
+  place-items: center;
+  background: #040246;
+}
+
+.ips-watch-body {
+  position: relative;
+  height: 86%;
+  aspect-ratio: 1680 / 2640;
+}
+
+.kora-case-plate .ips-watch-body > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ips-watch-face {
+  position: absolute;
+  left: 13%;
+  right: 13%;
+  top: 23%;
+  bottom: 22%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6%;
+  color: #fff;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+.ips-watch-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.5cqw;
+  font-weight: 600;
+  color: #88c2ed;
+}
+
+.kora-case-plate .ips-watch-top img {
+  width: 2.6cqw;
+}
+
+.ips-watch-face strong {
+  margin-top: 0.8cqw;
+  font-family: var(--ips-futura);
+  font-weight: 800;
+  font-size: 5.2cqw;
+  line-height: 0.9;
+}
+
+.ips-watch-unit {
+  font-family: var(--ips-futura);
+  font-weight: 800;
+  font-size: 2.2cqw;
+  color: #4d6bff;
+}
+
+.ips-watch-in {
+  margin-top: 1cqw;
+  font-size: 1.1cqw;
+  color: #88c2ed;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s ease-out;
+}
+
+.ips-watch-in.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+/* The website in a browser window, drawn at 1440 wide and scaled */
+.ips-web {
+  display: grid;
+  place-items: center;
+  background: #eef0f4;
+}
+
+.ips-web-window {
+  width: calc(1440px * var(--ips-s, 0.5));
+  height: calc(900px * var(--ips-s, 0.5));
+  overflow: hidden;
+  border-radius: calc(18px * var(--ips-s, 0.5));
+  background: #fff;
+}
+
+.ips-web-inner {
+  width: 1440px;
+  height: 900px;
+  transform: scale(var(--ips-s, 0.5));
+  transform-origin: 0 0;
+}
+
+.ips-web-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  background: #f2f3f6;
+  font: 500 13px/1 'DM Sans', sans-serif;
+  color: #555b70;
+}
+
+.ips-web-bar i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #d5d8e0;
+}
+
+.ips-web-bar span {
+  margin: 0 auto;
+  padding: 6px 60px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.ips-web-page {
+  position: relative;
+  height: 856px;
+  padding: 0 26px;
+  color: #050e7f;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.ips-web-nav {
+  display: flex;
+  align-items: center;
+  height: 96px;
+  padding: 0 64px;
+}
+
+.ips-web-logo {
+  width: 150px;
+  color: #050e7f;
+}
+
+.ips-web-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ips-web-links {
+  display: flex;
+  gap: 44px;
+  margin-left: auto;
+  margin-right: 60px;
+  font-size: 19px;
+  font-weight: 500;
+  color: #010532;
+}
+
+.ips-web-cta {
+  padding: 18px 34px;
+  border-radius: 6px;
+  background: #0a31f5;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.ips-web-head {
+  width: 760px;
+  margin: 46px auto 0;
+  text-align: center;
+  font-family: var(--ips-futura);
+  font-weight: 800;
+  font-size: 104px;
+  line-height: 0.92;
+  text-transform: none;
+}
+
+.ips-web-head span {
+  display: inline-block;
+  margin-right: 0.22em;
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ips-web.is-in .ips-web-head span {
+  opacity: 1;
+  transform: none;
+}
+
+.ips-web-row {
+  display: grid;
+  grid-template-columns: 1722fr 887fr;
+  gap: 24px;
+  margin-top: 56px;
+  height: 520px;
+}
+
+.kora-case-plate img.ips-web-sun {
+  width: 100%;
+  height: 520px;
+  min-height: 0;
+  object-fit: cover;
+  object-position: 50% 52%;
+  border-radius: 10px;
+}
+
+.ips-web-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+  background-color: #fff9e6;
+}
+
+.ips-web-oval {
+  position: absolute;
+  border-radius: 50%;
+  background: #0a31f5;
+}
+
+.ips-web-oval.a {
+  left: -10px;
+  top: 340px;
+  width: 260px;
+  height: 148px;
+}
+
+.ips-web-oval.b {
+  left: 196px;
+  top: 236px;
+  width: 96px;
+  height: 266px;
+}
+
+.ips-web-phone {
+  position: absolute;
+  left: 50%;
+  top: 70px;
+  width: 390px;
+  height: 844px;
+  margin-left: -117px;
+  border-radius: 54px;
+  overflow: hidden;
+  transform: scale(0.6);
+  transform-origin: 0 0;
 }
