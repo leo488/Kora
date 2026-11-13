@@ -4482,8 +4482,30 @@
 /* Centre-column blocks: the bento rhythm of the reference, where some plates
    run edge to edge and others sit in the middle of the page. */
 .kora-case-gallery > .is-inset {
-  width: 64.4%;
+  width: min(64.4%, 1080px);
   align-self: center;
+}
+
+/* Keep edge-to-edge plates from growing past a comfortable size on wide
+   screens (a 16" MacBook and up). */
+.kora-case-gallery > * {
+  max-width: 1680px;
+  width: 100%;
+  align-self: center;
+}
+
+/* The live app on a card of its own. */
+.kora-case-art-ui {
+  background: #88c2ed;
+}
+
+.kora-ui-screen {
+  position: relative;
+  height: 82%;
+  aspect-ratio: 390 / 844;
+  border-radius: 7% / 3.2%;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -30px rgba(4, 2, 70, 0.45);
 }
 
 .kora-case-art {

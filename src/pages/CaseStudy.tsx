@@ -5,6 +5,7 @@ import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
+import { AppScreen } from '../components/ipaybtc/AppScreen'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -150,6 +151,12 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
             aria-label={slot.label}
             dangerouslySetInnerHTML={{ __html: ipaybtcLogo }}
           />
+        ) : slot.art === 'ipaybtc-ui' ? (
+          <div className="kora-case-art kora-case-art-ui" role="img" aria-label={slot.label}>
+            <div className="kora-ui-screen">
+              <AppScreen flow="buy" />
+            </div>
+          </div>
         ) : slot.src ? (
           slot.video ? (
             <>

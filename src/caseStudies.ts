@@ -22,10 +22,6 @@ import iconFull from './assets/ipaybtc-icon-full.jpg'
 import hand1000 from './assets/ipaybtc-hand-1000.jpg'
 import hand1800 from './assets/ipaybtc-hand-1800.jpg'
 import handFull from './assets/ipaybtc-hand-full.jpg'
-import woman1200 from './assets/ipaybtc-woman-1200.jpg'
-import woman2400 from './assets/ipaybtc-woman-2400.jpg'
-import selfie1200 from './assets/ipaybtc-selfie-1200.jpg'
-import selfie2400 from './assets/ipaybtc-selfie-2400.jpg'
 import roadtrip1200 from './assets/ipaybtc-roadtrip-1200.jpg'
 import roadtrip2400 from './assets/ipaybtc-roadtrip-2400.jpg'
 import beach1200 from './assets/ipaybtc-beach-1200.jpg'
@@ -46,8 +42,6 @@ import borderless from './assets/ipaybtc-borderless.mp4'
 import borderlessPoster from './assets/ipaybtc-borderless-poster.jpg'
 import poster1200 from './assets/ipaybtc-poster-1200.jpg'
 import poster2400 from './assets/ipaybtc-poster-2400.jpg'
-import phone1200 from './assets/ipaybtc-phone-1200.jpg'
-import phone2400 from './assets/ipaybtc-phone-2400.jpg'
 import lanyard1200 from './assets/ipaybtc-lanyard-1200.jpg'
 import lanyard2400 from './assets/ipaybtc-lanyard-2400.jpg'
 import busstop1200 from './assets/ipaybtc-busstop-1200.jpg'
@@ -60,6 +54,17 @@ import stage1200 from './assets/ipaybtc-stage-1200.jpg'
 import stage2400 from './assets/ipaybtc-stage-2400.jpg'
 import billboard1200 from './assets/ipaybtc-billboard-1200.jpg'
 import billboard2400 from './assets/ipaybtc-billboard-2400.jpg'
+
+import scBeach1200 from './assets/ipaybtc-scene-beach-1200.jpg'
+import scBeach2400 from './assets/ipaybtc-scene-beach-2400.jpg'
+import scBusstop1200 from './assets/ipaybtc-scene-busstop-1200.jpg'
+import scBusstop2400 from './assets/ipaybtc-scene-busstop-2400.jpg'
+import scRoadtrip1200 from './assets/ipaybtc-scene-roadtrip-1200.jpg'
+import scRoadtrip2400 from './assets/ipaybtc-scene-roadtrip-2400.jpg'
+import scTote1200 from './assets/ipaybtc-scene-tote-1200.jpg'
+import scTote2400 from './assets/ipaybtc-scene-tote-2400.jpg'
+import scWoman1200 from './assets/ipaybtc-scene-woman-1200.jpg'
+import scWoman2400 from './assets/ipaybtc-scene-woman-2400.jpg'
 
 export interface CaseSlot {
   /** What goes here — shown on the placeholder until `src` is set. */
@@ -77,7 +82,7 @@ export interface CaseSlot {
   /** The live app, mapped onto the phone screen in the photo. */
   screen?: PhoneScreen
   /** A plate drawn in code instead of a photo. */
-  art?: 'ipaybtc-logo'
+  art?: 'ipaybtc-logo' | 'ipaybtc-ui'
 }
 
 export type CaseBlock =
@@ -178,18 +183,21 @@ const plate = (label: string, ratio: string, name: [string, string]): CaseSlot =
 })
 
 const IPAY_POSTER = plate('“We move in sats” in campaign type on Deep Navy', '5 / 4', [poster1200, poster2400])
-const IPAY_PHONE = plate('The v4 welcome screen with the Bitcoin, Naira and Tether coins', '4 / 5', [phone1200, phone2400])
 const IPAY_LANYARD = plate('iPayBTC lanyard and staff pass', '4 / 5', [lanyard1200, lanyard2400])
 const IPAY_BUSSTOP = plate('iPayBTC posters along a bus shelter', '3 / 2', [busstop1200, busstop2400])
 const IPAY_TEE = plate('iPayBTC tee on a tennis court', '4 / 5', [tee1200, tee2400])
 const IPAY_TOTE = plate('“We Move In Sats” tote on concrete', '3 / 2', [tote1200, tote2400])
 const IPAY_STAGE = plate('iPayBTC on the main stage screen', '4096 / 2842', [stage1200, stage2400])
-const IPAY_WOMAN = plate('Woman paying with a card and her phone', '2500 / 3235', [woman1200, woman2400])
-const IPAY_SELFIE = plate('Friends taking a selfie', '3 / 2', [selfie1200, selfie2400])
 const IPAY_ROADTRIP = plate('Friends on a road trip', '1 / 1', [roadtrip1200, roadtrip2400])
 const IPAY_BEACH = plate('Friends at the beach at sunset', '2500 / 3235', [beach1200, beach2400])
 const IPAY_ICONS = plate('The iPayBTC 3D icon family', '5504 / 3072', [icons3d1200, icons3d2400])
 const IPAY_WRAP = plate('“We move in sats” wrapped on a building in Lagos', '4 / 5', [wrap1200, wrap2400])
+const IPAY_UI: CaseSlot = { label: 'The v3 app buying sats, screen by screen', ratio: '4 / 3', art: 'ipaybtc-ui' }
+const SC_WOMAN = plate('Paying with the iPayBTC card in the studio', '1200 / 1490', [scWoman1200, scWoman2400])
+const SC_TOTE = plate('“We Move In Sats” tote on the street', '1200 / 1490', [scTote1200, scTote2400])
+const SC_BEACH = plate('Friends at the beach in iPayBTC blue', '1200 / 670', [scBeach1200, scBeach2400])
+const SC_ROADTRIP = plate('Road trip, paying from the phone', '1200 / 670', [scRoadtrip1200, scRoadtrip2400])
+const SC_BUSSTOP = plate('“Move freely. Own Bitcoin.” at a bus shelter', '1200 / 1490', [scBusstop1200, scBusstop2400])
 const IPAY_ILL = [
   plate('Character illustration: verifying a code', '5683 / 4000', [ill11200, ill12400]),
   plate('Character illustration: paying from the app', '5683 / 4000', [ill21200, ill22400]),
@@ -239,9 +247,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     gallery: [
       { kind: 'full', slot: IPAY_CARD },
       { kind: 'full', slot: IPAY_LOGO, inset: true },
+      { kind: 'full', slot: IPAY_BILLBOARD },
       { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true },
-      { kind: 'full', slot: IPAY_POSTER, inset: true },
-      { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
+      { kind: 'full', slot: IPAY_UI, inset: true },
       {
         kind: 'full',
         slot: {
@@ -253,16 +261,18 @@ export const CASE_STUDIES: CaseStudy[] = [
           overlay: 'ipaybtc-card',
         },
       },
-      { kind: 'full', slot: IPAY_BUSSTOP },
+      { kind: 'full', slot: IPAY_POSTER, inset: true },
+      { kind: 'pair', slots: [SC_WOMAN, SC_TOTE] },
       { kind: 'full', slot: IPAY_ICONS, inset: true },
-      { kind: 'full', slot: IPAY_TOTE, inset: true },
-      { kind: 'pair', slots: [IPAY_WOMAN, IPAY_BEACH] },
-      { kind: 'pair', slots: [IPAY_WRAP, IPAY_PHONE], inset: true },
+      { kind: 'full', slot: SC_BEACH },
+      { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE], inset: true },
+      { kind: 'full', slot: IPAY_BUSSTOP },
+      { kind: 'pair', slots: [IPAY_WRAP, SC_BUSSTOP], inset: true },
+      { kind: 'full', slot: IPAY_TOTE },
       { kind: 'grid', columns: 2, slots: IPAY_ILL },
-      { kind: 'full', slot: IPAY_SELFIE },
+      { kind: 'full', slot: SC_ROADTRIP },
+      { kind: 'pair', slots: [IPAY_ROADTRIP, IPAY_BEACH], inset: true },
       { kind: 'full', slot: IPAY_STAGE },
-      { kind: 'full', slot: IPAY_ROADTRIP, inset: true },
-      { kind: 'full', slot: IPAY_BILLBOARD },
     ],
     next: '3Projects',
   },
