@@ -152,7 +152,18 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
           />
         ) : slot.src ? (
           slot.video ? (
-            <video src={slot.src} muted loop autoPlay playsInline aria-label={slot.label} />
+            <>
+              <video src={slot.src} poster={slot.poster} muted loop autoPlay playsInline aria-label={slot.label} />
+              {slot.overlay === 'ipaybtc-card' && (
+                <div className="kora-paycard" aria-hidden>
+                  <span className="kora-paycard-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+                  <span className="kora-paycard-chip" />
+                  <svg className="kora-paycard-tap" viewBox="0 0 24 24">
+                    <path d="M8 7.5a6.5 6.5 0 0 1 0 9M11.5 5a10 10 0 0 1 0 14M15 2.8a13 13 0 0 1 0 18.4" />
+                  </svg>
+                </div>
+              )}
+            </>
           ) : (
             <>
               <img
