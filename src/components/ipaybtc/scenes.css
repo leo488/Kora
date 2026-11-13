@@ -1,109 +1,114 @@
-/* Code-drawn scenes for the iPayBTC case study. Colours are the brand's
-   only: Deep Navy, Electric Blue, Sky, Milky Yellow. No shadows. */
+/* Code-drawn plates for the iPayBTC case study. Brand colours only:
+   Deep Navy, Electric Blue, Sky, Milky Yellow. No shadows. */
 
 .ips {
   position: absolute;
   inset: 0;
   overflow: hidden;
+}
+
+.ips,
+.ips-kcard {
   --ips-navy: #050e7f;
   --ips-blue: #0a31f5;
   --ips-sky: #88c2ed;
   --ips-yellow: #fff778;
-  --ips-futura: 'Futura LT Condensed', 'Futura Condensed ExtraBold', 'Barlow Condensed', sans-serif;
+  --ips-bold: 'Futura LT Condensed', 'Futura Condensed ExtraBold', 'Barlow Condensed', sans-serif;
 }
 
 .kora-case-plate {
   container-type: inline-size;
 }
 
-/* Swapping campaign type, one 3D object per line */
-.ips-type {
+/* Campaign poster */
+.ips-poster {
   background: var(--ips-navy);
   color: var(--ips-yellow);
 }
 
-.ips-type-lines p {
+.ips-poster.is-yellow {
+  background: var(--ips-yellow);
+  color: var(--ips-navy);
+}
+
+.ips-poster.is-blue {
+  background: var(--ips-blue);
+  color: var(--ips-yellow);
+}
+
+.ips-poster p {
   position: absolute;
-  left: calc(var(--kora-flare, 0px) + 7%);
-  top: 9%;
-  margin: 0;
-  font-family: var(--ips-futura);
-  font-weight: 800;
-  font-size: 11.5cqw;
-  line-height: 0.86;
-  letter-spacing: -0.01em;
-}
-
-.ips-type-lines span {
-  display: block;
-  transform: translateY(110%);
-  clip-path: inset(0 0 100% 0);
-  transition:
-    transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
-    clip-path 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.ips-type-lines span + span {
-  transition-delay: 0.06s;
-}
-
-.ips-type-lines p.is-on span {
-  transform: none;
-  clip-path: inset(0 0 0 0);
-}
-
-.ips-type-objs {
-  position: absolute;
+  left: calc(var(--kora-flare, 0px) + 6%);
   right: calc(var(--kora-flare, 0px) + 6%);
-  bottom: 9%;
-  width: 30%;
-  aspect-ratio: 1;
+  top: 7%;
+  margin: 0;
+  font-family: var(--ips-bold);
+  font-weight: 800;
+  font-size: 13.5cqw;
+  line-height: 0.86;
+  text-transform: uppercase;
 }
 
-.kora-case-plate .ips-type-objs img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.ips-poster p span {
+  display: block;
+  transform: translateY(40%);
   opacity: 0;
-  transform: translateY(14%) scale(0.86);
   transition:
-    opacity 0.35s ease-out,
-    transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.5s ease-out;
 }
 
-.kora-case-plate .ips-type-objs img.is-on {
-  opacity: 1;
+.ips-poster.is-in p span {
   transform: none;
-  transition-delay: 0.08s;
+  opacity: 1;
 }
 
-.ips-type-logo {
+.ips-poster-logo {
   position: absolute;
-  left: calc(var(--kora-flare, 0px) + 7%);
-  bottom: 8%;
-  width: 18%;
+  left: calc(var(--kora-flare, 0px) + 6%);
+  bottom: 7%;
+  width: 16%;
+  color: currentColor;
+}
+
+.ips-poster.is-yellow .ips-poster-logo {
+  color: var(--ips-blue);
+}
+
+.ips-poster-logo svg,
+.ips-logotile svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The wordmark alone */
+.ips-logotile {
+  display: grid;
+  place-items: center;
+  background: var(--ips-navy);
   color: #fff;
 }
 
-.ips-type-logo svg {
-  width: 100%;
-  height: auto;
-  display: block;
+.ips-logotile.is-blue {
+  background: var(--ips-blue);
 }
 
-/* The app on Electric Blue, three phones, the middle one moving */
-.ips-uiboard {
-  background: var(--ips-blue);
+.ips-logotile span {
+  width: 56%;
+}
+
+/* Phones on a light ground */
+.ips-phoneplate {
   display: grid;
   place-items: center;
+  background: #eef0f4;
 }
 
 .ips-phones {
   display: flex;
   align-items: center;
-  gap: 2.4cqw;
+  gap: 3cqw;
 }
 
 .ips-phone {
@@ -114,6 +119,7 @@
   border-radius: calc(54px * var(--ips-s, 0.5));
   overflow: hidden;
   background: #fff;
+  outline: calc(10px * var(--ips-s, 0.5)) solid #fff;
 }
 
 .ips-phone > .ias {
@@ -121,10 +127,11 @@
   transform-origin: 0 0;
 }
 
-/* A component resting beside the people in a photo */
-.ips-card {
+/* The keypad card on a photo */
+.ips-kcard {
   position: absolute;
-  top: 60%;
+  top: 50%;
+  left: calc(var(--kora-flare, 0px) + 4%);
   width: calc(360px * var(--ips-s, 0.6));
   opacity: 0;
   transform: translateY(-46%);
@@ -133,41 +140,82 @@
     transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.ips-card.is-in {
+.ips-kcard.is-in {
   opacity: 1;
   transform: translateY(-50%);
 }
 
-.ips-card.is-top {
-  top: 5%;
-  transform: translateY(6%);
-}
-
-.ips-card.is-top.is-in {
-  transform: none;
-}
-
-.ips-card.is-top .ips-card-scale {
-  transform-origin: 0 0;
-}
-
-.ips-card.is-right {
-  right: calc(var(--kora-flare, 0px) + 4%);
-}
-
-.ips-card.is-left {
-  left: calc(var(--kora-flare, 0px) + 6%);
-}
-
-.ips-card-scale {
+.ips-kcard-scale {
   width: 360px;
+  padding: 12px;
+  border-radius: 34px;
+  background: #fff;
+  border: 8px solid #eef0f4;
   transform: scale(var(--ips-s, 0.6));
   transform-origin: 0 50%;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: #0b0f2e;
+}
+
+.ips-kcard-panel {
+  padding: 18px 20px 20px;
+  border-radius: 22px;
+  background: var(--ips-blue);
+  color: #fff;
+}
+
+.ips-kcard-panel div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.ips-kcard-panel strong {
+  display: block;
+  margin-top: 14px;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ips-kcard-panel strong.is-empty {
+  opacity: 0.45;
+}
+
+.ips-kcard-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 18px 10px 8px;
+}
+
+.ips-kcard-keys span {
+  display: grid;
+  place-items: center;
+  height: 78px;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  justify-self: center;
+  background: #f4f5f9;
+  font-size: 30px;
+  font-weight: 500;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.ips-kcard-keys span.is-pressed,
+.ips-kcard-keys span.is-go {
+  background: var(--ips-blue);
+  color: #fff;
 }
 
 /* A photo that eases out of a slight zoom */
 .kora-case-plate img.ips-zoom {
-  transform: scale(1.12);
+  transform: scale(1.1);
   transition: transform 9s cubic-bezier(0.2, 0.6, 0.2, 1);
 }
 
@@ -175,378 +223,191 @@
   transform: scale(1);
 }
 
+/* iPayBTC on the web, 1440 × 900 */
+.ips-dash {
+  position: absolute;
+  inset: 0;
+  padding: 0 64px;
+  background: #f4f5f9;
+  color: #0b0f2e;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  text-align: left;
+}
+
+.ips-dash-nav {
+  display: flex;
+  align-items: center;
+  height: 104px;
+}
+
+.ips-dash-logo {
+  width: 150px;
+  color: var(--ips-blue, #0a31f5);
+}
+
+.ips-dash-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ips-dash-nav nav {
+  display: flex;
+  gap: 10px;
+  margin-left: 64px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #555b70;
+}
+
+.ips-dash-nav nav span {
+  padding: 12px 22px;
+  border-radius: 999px;
+}
+
+.ips-dash-nav nav .is-on {
+  background: #fff;
+  color: #0b0f2e;
+}
+
+.ips-dash-me {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: #0a31f5;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ips-dash h3 {
+  margin: 34px 0 34px;
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.ips-dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 28px;
+}
+
+.ips-dash-card {
+  padding: 40px;
+  border-radius: 28px;
+  background: #fff;
+}
+
+.ips-dash-label {
+  display: block;
+  font-size: 20px;
+  color: #555b70;
+}
+
+.ips-dash-big {
+  display: block;
+  margin: 14px 0 10px;
+  font-size: 88px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.ips-dash-faint {
+  font-size: 18px;
+  color: #8a8fa3;
+}
+
+.ips-dash-btns {
+  display: flex;
+  gap: 14px;
+  margin-top: 56px;
+}
+
+.ips-dash-btns span {
+  flex: 1;
+  padding: 22px 0;
+  border-radius: 16px;
+  background: #f4f5f9;
+  text-align: center;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.ips-dash-btns .is-primary {
+  background: #0a31f5;
+  color: #fff;
+}
+
+.ips-dash-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+.ips-dash-head span {
+  color: #0a31f5;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.ips-dash-rows {
+  height: 330px;
+  overflow: hidden;
+}
+
+.ips-dash-rows > div:first-child {
+  margin-top: -82px;
+  opacity: 0;
+  transition:
+    margin 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.5s ease-out;
+}
+
+.ips-dash-rows.has-new > div:first-child {
+  margin-top: 0;
+  opacity: 1;
+}
+
+.ips-dash-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  height: 82px;
+  align-content: center;
+  border-bottom: 1px solid #eceef4;
+  font-size: 21px;
+}
+
+.ips-dash-row em {
+  grid-row: 2;
+  font-style: normal;
+  font-size: 17px;
+  color: #0d8a5f;
+}
+
+.ips-dash-row strong {
+  grid-row: 1 / 3;
+  grid-column: 2;
+  align-self: center;
+  font-size: 22px;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .ips *,
-  .ips,
-  .ips-card,
+  .ips-poster p span,
+  .ips-kcard,
   .kora-case-plate img.ips-zoom {
-    animation: none !important;
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
-}
 
-/* One phone on a ground */
-.ips-phoneplate {
-  display: grid;
-  place-items: center;
-  background: #eef0f4;
-}
-
-.ips-phoneplate.is-blue {
-  background: var(--ips-blue);
-}
-
-/* Gradient tile + yellow poster */
-.ips-gtile {
-  display: grid;
-  place-items: center;
-  background: linear-gradient(150deg, #050e7f 25%, #0a31f5 78%, #3ed4ff 100%);
-  color: #fff;
-}
-
-.ips-gtile span {
-  width: 52%;
-}
-
-.ips-gtile svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.ips-poster {
-  background: var(--ips-yellow);
-  color: var(--ips-navy);
-  text-align: center;
-}
-
-.ips-poster p {
-  margin: 9% 0 0;
-  font-family: var(--ips-futura);
-  font-weight: 800;
-  font-size: 12cqw;
-  line-height: 0.88;
-}
-
-.kora-case-plate .ips-poster img {
-  position: absolute;
-  left: 50%;
-  bottom: 8%;
-  width: 58%;
-  transform: translate(-50%, 8%) scale(0.92);
-  opacity: 0;
-  transition:
-    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
-    opacity 0.6s ease-out;
-}
-
-.kora-case-plate .ips-poster.is-in img {
-  transform: translate(-50%, 0);
-  opacity: 1;
-}
-
-/* Type specimens */
-.ips-spec {
-  display: grid;
-  place-items: center;
-  background: #040246;
-}
-
-.ips-spec-card {
-  width: 49%;
-  aspect-ratio: 2477 / 1504;
-  padding: 3% 3.5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: var(--ips-blue);
-  color: #fff;
-}
-
-.ips-spec.is-yellow .ips-spec-card {
-  background: var(--ips-yellow);
-  color: var(--ips-blue);
-}
-
-.ips-spec-glyphs {
-  margin: 0;
-  font-family: var(--ips-futura);
-  font-weight: 800;
-  font-size: 3.2cqw;
-  line-height: 1;
-}
-
-.ips-spec.is-yellow .ips-spec-glyphs {
-  font-family: 'Neue Haas Grotesk Display Pro', 'Inter Tight', sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.ips-spec-note {
-  margin: 0;
-  font-family: 'DM Mono', ui-monospace, monospace;
-  font-size: 0.62cqw;
-  line-height: 1.4;
-  opacity: 0.85;
-}
-
-.ips-spec.is-yellow .ips-spec-note {
-  color: #040246;
-}
-
-/* The watch */
-.ips-watch {
-  display: grid;
-  place-items: center;
-  background: #040246;
-}
-
-.ips-watch-body {
-  position: relative;
-  height: 86%;
-  aspect-ratio: 1680 / 2640;
-}
-
-.kora-case-plate .ips-watch-body > img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.ips-watch-face {
-  position: absolute;
-  left: 13%;
-  right: 13%;
-  top: 23%;
-  bottom: 22%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 6%;
-  color: #fff;
-  font-family: 'DM Sans', system-ui, sans-serif;
-}
-
-.ips-watch-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 1.5cqw;
-  font-weight: 600;
-  color: #88c2ed;
-}
-
-.kora-case-plate .ips-watch-top img {
-  width: 2.6cqw;
-}
-
-.ips-watch-face strong {
-  margin-top: 0.8cqw;
-  font-family: var(--ips-futura);
-  font-weight: 800;
-  font-size: 5.2cqw;
-  line-height: 0.9;
-}
-
-.ips-watch-unit {
-  font-family: var(--ips-futura);
-  font-weight: 800;
-  font-size: 2.2cqw;
-  color: #4d6bff;
-}
-
-.ips-watch-in {
-  margin-top: 1cqw;
-  font-size: 1.1cqw;
-  color: #88c2ed;
-  opacity: 0;
-  transform: translateY(6px);
-  transition:
-    opacity 0.4s ease-out,
-    transform 0.4s ease-out;
-}
-
-.ips-watch-in.is-on {
-  opacity: 1;
-  transform: none;
-}
-
-/* The website in a browser window, drawn at 1440 wide and scaled */
-.ips-web {
-  display: grid;
-  place-items: center;
-  background: #eef0f4;
-}
-
-.ips-web-window {
-  width: calc(1440px * var(--ips-s, 0.5));
-  height: calc(900px * var(--ips-s, 0.5));
-  overflow: hidden;
-  border-radius: calc(18px * var(--ips-s, 0.5));
-  background: #fff;
-}
-
-.ips-web-inner {
-  width: 1440px;
-  height: 900px;
-  transform: scale(var(--ips-s, 0.5));
-  transform-origin: 0 0;
-}
-
-.ips-web-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 44px;
-  padding: 0 18px;
-  background: #f2f3f6;
-  font: 500 13px/1 'DM Sans', sans-serif;
-  color: #555b70;
-}
-
-.ips-web-bar i {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #d5d8e0;
-}
-
-.ips-web-bar span {
-  margin: 0 auto;
-  padding: 6px 60px;
-  border-radius: 8px;
-  background: #fff;
-}
-
-.ips-web-page {
-  position: relative;
-  height: 856px;
-  padding: 0 26px;
-  color: #050e7f;
-  font-family: 'DM Sans', sans-serif;
-}
-
-.ips-web-nav {
-  display: flex;
-  align-items: center;
-  height: 96px;
-  padding: 0 64px;
-}
-
-.ips-web-logo {
-  width: 150px;
-  color: #050e7f;
-}
-
-.ips-web-logo svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.ips-web-links {
-  display: flex;
-  gap: 44px;
-  margin-left: auto;
-  margin-right: 60px;
-  font-size: 19px;
-  font-weight: 500;
-  color: #010532;
-}
-
-.ips-web-cta {
-  padding: 18px 34px;
-  border-radius: 6px;
-  background: #0a31f5;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.ips-web-head {
-  width: 760px;
-  margin: 46px auto 0;
-  text-align: center;
-  font-family: var(--ips-futura);
-  font-weight: 800;
-  font-size: 104px;
-  line-height: 0.92;
-  text-transform: none;
-}
-
-.ips-web-head span {
-  display: inline-block;
-  margin-right: 0.22em;
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 0.5s ease-out,
-    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.ips-web.is-in .ips-web-head span {
-  opacity: 1;
-  transform: none;
-}
-
-.ips-web-row {
-  display: grid;
-  grid-template-columns: 1722fr 887fr;
-  gap: 24px;
-  margin-top: 56px;
-  height: 520px;
-}
-
-.kora-case-plate img.ips-web-sun {
-  width: 100%;
-  height: 520px;
-  min-height: 0;
-  object-fit: cover;
-  object-position: 50% 52%;
-  border-radius: 10px;
-}
-
-.ips-web-panel {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  background-size: cover;
-  background-position: center;
-  background-color: #fff9e6;
-}
-
-.ips-web-oval {
-  position: absolute;
-  border-radius: 50%;
-  background: #0a31f5;
-}
-
-.ips-web-oval.a {
-  left: -10px;
-  top: 340px;
-  width: 260px;
-  height: 148px;
-}
-
-.ips-web-oval.b {
-  left: 196px;
-  top: 236px;
-  width: 96px;
-  height: 266px;
-}
-
-.ips-web-phone {
-  position: absolute;
-  left: 50%;
-  top: 70px;
-  width: 390px;
-  height: 844px;
-  margin-left: -117px;
-  border-radius: 54px;
-  overflow: hidden;
-  transform: scale(0.6);
-  transform-origin: 0 0;
+  .ips-kcard {
+    transform: translateY(-50%) !important;
+  }
 }

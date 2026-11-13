@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AppScreen } from './AppScreen'
+import { WebDash } from './Scenes'
 import type { AppFlow } from './AppScreen'
 
 /* Puts the live app screen onto the phone in a still photo.
@@ -19,10 +20,10 @@ export interface PhoneScreen {
   radius?: number
   /** Light falling across the glass, as a CSS background. */
   glare?: string
+  /** A laptop: the web app at 1440 × 900 instead of the phone app. */
+  web?: boolean
 }
 
-const W = 390
-const H = 844
 
 export function ScreenOverlay({ screen }: { screen: PhoneScreen }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -52,23 +53,28 @@ export function ScreenOverlay({ screen }: { screen: PhoneScreen }) {
     const ox = (lw - iw * s) / 2
     const oy = (lh - ih * s) / 2
     const pts = screen.corners.map(([x, y]) => [ox + x * s, oy + y * s] as [number, number])
-    transform = matrix3d(pts)
+    transform = screen.web ? matrix3d(pts, 1440, 900) : matrix3d(pts, 390, 844)
   }
 
   return (
     <div ref={ref} className="kora-screen" aria-hidden>
       <div
         className="kora-screen-glass"
-        style={{ transform, borderRadius: screen.radius ?? 52, ['--glare' as string]: screen.glare }}
+        style={{
+          transform,
+          borderRadius: screen.radius ?? 52,
+          ['--glare' as string]: screen.glare,
+          ...(screen.web ? { width: 1440, height: 900 } : null),
+        }}
       >
-        <AppScreen flow={screen.flow} playing={playing} />
+        {screen.web ? <WebDash playing={playing} /> : <AppScreen flow={screen.flow} playing={playing} />}
       </div>
     </div>
   )
 }
 
 /** The matrix3d that sends the W × H box to the quad p0..p3. */
-function matrix3d(p: [number, number][]) {
+function matrix3d(p: [number, number][], W: number, H: number) {
   const [[x0, y0], [x1, y1], [x2, y2], [x3, y3]] = p
   // Unit square -> quad (Heckbert).
   const dx1 = x1 - x2

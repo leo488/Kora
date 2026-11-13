@@ -5,10 +5,7 @@ import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
-import { GradientTile, PhonePlate, PhotoCard, TypeSpecimen, TypeSwap, UiBoard, WatchPlate, Website, YellowPoster, ZoomImg } from '../components/ipaybtc/Scenes'
-import watchImg from '../assets/figma/watch.webp'
-import webSun from '../assets/figma/web-sun.jpg'
-import webDesk from '../assets/figma/web-desk.jpg'
+import { KeypadCard, LogoTile, PhoneBoard, PhonePlate, TypePoster, ZoomImg } from '../components/ipaybtc/Scenes'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -154,24 +151,18 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
             aria-label={slot.label}
             dangerouslySetInnerHTML={{ __html: ipaybtcLogo }}
           />
-        ) : slot.art === 'ipaybtc-type' ? (
-          <TypeSwap />
-        ) : slot.art === 'ipaybtc-uiboard' ? (
-          <UiBoard />
+        ) : slot.art === 'ipaybtc-logo-navy' ? (
+          <LogoTile tone="navy" />
         ) : slot.art === 'ipaybtc-phone' ? (
-          <PhonePlate />
-        ) : slot.art === 'ipaybtc-gtile' ? (
-          <GradientTile />
-        ) : slot.art === 'ipaybtc-poster' ? (
-          <YellowPoster />
-        ) : slot.art === 'ipaybtc-spec-blue' ? (
-          <TypeSpecimen tone="blue" />
-        ) : slot.art === 'ipaybtc-spec-yellow' ? (
-          <TypeSpecimen tone="yellow" />
-        ) : slot.art === 'ipaybtc-watch' ? (
-          <WatchPlate watch={watchImg} />
-        ) : slot.art === 'ipaybtc-web' ? (
-          <Website sun={webSun} desk={webDesk} />
+          <PhonePlate flow="buy" />
+        ) : slot.art === 'ipaybtc-phones' ? (
+          <PhoneBoard />
+        ) : slot.art === 'ipaybtc-poster-border' ? (
+          <TypePoster tone="navy" size={9} lines={['No bank opening hours.', 'No border.', 'No permission.']} />
+        ) : slot.art === 'ipaybtc-poster-tea' ? (
+          <TypePoster tone="yellow" lines={['Buy Bitcoin', 'before your', 'tea gets cold.']} />
+        ) : slot.art === 'ipaybtc-poster-spend' ? (
+          <TypePoster tone="blue" lines={['Bitcoin was', 'never meant', 'to sit still.', 'Spend it.']} />
         ) : slot.src ? (
           slot.video ? (
             <>
@@ -189,7 +180,7 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
           ) : (
             <>
               {slot.zoom ? (
-                <ZoomImg slot={slot} eager={eager} />
+                <ZoomImg src={slot.src} srcSet={slot.srcSet} alt={slot.label} eager={eager} />
               ) : (
                 <img
                   src={slot.src}
@@ -200,7 +191,7 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
                 />
               )}
               {slot.screen && <ScreenOverlay screen={slot.screen} />}
-              {slot.card && <PhotoCard kind={slot.card.kind} side={slot.card.side} top={slot.card.top} />}
+              {slot.keypad && <KeypadCard />}
             </>
           )
         ) : (
