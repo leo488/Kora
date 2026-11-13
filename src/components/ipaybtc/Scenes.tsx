@@ -9,26 +9,29 @@ import o6 from '../../assets/ipaybtc3d/o6.webp'
 import o7 from '../../assets/ipaybtc3d/o7.webp'
 import o8 from '../../assets/ipaybtc3d/o8.webp'
 import o9 from '../../assets/ipaybtc3d/o9.webp'
+import cardReceipt from '../../assets/v3/card-receipt.webp'
+import cardBtc from '../../assets/v3/card-btc.webp'
+import cardNaira from '../../assets/v3/card-naira.webp'
+import cardWallets from '../../assets/v3/card-wallets.webp'
 
-/* Scenes for the iPayBTC case study that are drawn in code, after the
-   Ragged Edge Wise page: swapping campaign type, a headline that builds,
-   floating 3D objects, brand tiles and the live motion components. */
+/* Scenes for the iPayBTC case study drawn in code, after the Ragged Edge
+   Wise page: campaign type, a headline that builds, the 3D object set,
+   the logo plate and a board of the app's UI. All light, all calm. */
 
 /** True once the element has scrolled into view. */
-function useInView<T extends Element>() {
+export function useInView<T extends Element>(threshold = 0.3) {
   const ref = useRef<T>(null)
   const [seen, setSeen] = useState(false)
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && setSeen(true), { threshold: 0.35 })
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && setSeen(true), { threshold })
     io.observe(el)
     return () => io.disconnect()
-  }, [])
+  }, [threshold])
   return [ref, seen] as const
 }
 
-/** Steps through a list on a timer (paused when reduced motion is on). */
 function useCycle(length: number, every: number) {
   const [i, setI] = useState(0)
   useEffect(() => {
@@ -44,12 +47,11 @@ const LINES = [
   ['OWN', 'BITCOIN.'],
   ['NAIRA', 'TO SATS.'],
   ['SEND IN', 'SECONDS.'],
-  ['WE MOVE', 'IN SATS.'],
 ]
 
 /** Campaign type whose words swap, like Wise's FULL SPEED / MIN FEES. */
 export function TypeSwap() {
-  const i = useCycle(LINES.length, 1700)
+  const i = useCycle(LINES.length, 1800)
   return (
     <div className="ips ips-type">
       <div className="ips-type-lines" aria-live="off">
@@ -67,13 +69,13 @@ export function TypeSwap() {
 
 /** A big statement that builds word by word when it scrolls in. */
 export function Headline() {
-  const [ref, seen] = useInView<HTMLDivElement>()
+  const [ref, seen] = useInView<HTMLDivElement>(0.4)
   const words = 'Bitcoin, made for everyday life.'.split(' ')
   return (
     <div ref={ref} className={`ips ips-head${seen ? ' is-in' : ''}`}>
       <p>
         {words.map((w, k) => (
-          <span key={k} style={{ transitionDelay: `${k * 90}ms` }}>
+          <span key={k} style={{ transitionDelay: `${k * 110}ms` }}>
             {w}
           </span>
         ))}
@@ -84,106 +86,61 @@ export function Headline() {
 
 const OBJECTS = [o1, o3, o6, o8, o2, o7, o4, o9]
 
-/** The 3D object family, each one drifting on its own beat. */
+/** The 3D object set, laid out like Wise's: a clean grid on white. Each
+    object settles in as the board scrolls into view. */
 export function Objects() {
+  const [ref, seen] = useInView<HTMLDivElement>(0.3)
   return (
-    <div className="ips ips-objects">
+    <div ref={ref} className={`ips ips-objects${seen ? ' is-in' : ''}`}>
       {OBJECTS.map((src, k) => (
-        <img key={k} src={src} alt="" style={{ animationDelay: `${-k * 0.7}s` }} />
+        <div key={k} className="ips-object" style={{ transitionDelay: `${k * 70}ms` }}>
+          <img src={src} alt="" />
+        </div>
       ))}
     </div>
   )
 }
 
-/** The logo on a plate that moves through the brand colours. */
+/** The logo on Electric Blue. */
 export function LogoCycle() {
   return (
-    <div className="ips ips-logo" role="img" aria-label="iPayBTC logo in the brand colours">
+    <div className="ips ips-logo" role="img" aria-label="iPayBTC logo">
       <span dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
     </div>
   )
 }
 
-/** The v4 motion components, running live. */
-export function Components() {
+/** A board of the app's UI, card by card, on a light ground. The cards rise
+    in one after another and then rest. */
+export function UiBoard() {
+  const [ref, seen] = useInView<HTMLDivElement>(0.25)
   return (
-    <div className="ips ips-components">
-      <iframe src={`${import.meta.env.BASE_URL}ipaybtc/motion-board.html`} title="iPayBTC motion components" loading="lazy" tabIndex={-1} />
-    </div>
-  )
-}
-
-/** A bento of brand tiles: icon, type, object, colour. */
-export function Tiles() {
-  return (
-    <div className="ips ips-tiles">
-      <div className="ips-tile ips-tile-icon">
-        <span dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+    <div ref={ref} className={`ips ips-uiboard${seen ? ' is-in' : ''}`}>
+      <div className="ips-ui-tile ips-ui-a" style={{ transitionDelay: '0ms' }}>
+        <img src={cardWallets} alt="" />
       </div>
-      <div className="ips-tile ips-tile-yellow">
-        <p>ALL YOUR MONEY IN SATS</p>
+      <div className="ips-ui-tile ips-ui-b ips-ui-blue" style={{ transitionDelay: '90ms' }}>
+        <img className="ips-ui-3d" src={o2} alt="" />
       </div>
-      <div className="ips-tile ips-tile-sky">
-        <img src={o1} alt="" />
+      <div className="ips-ui-tile ips-ui-c" style={{ transitionDelay: '180ms' }}>
+        <img src={cardBtc} alt="" />
       </div>
-      <div className="ips-tile ips-tile-navy">
-        <p>
-          NAIRA
-          <br />
-          TO SATS
-        </p>
+      <div className="ips-ui-tile ips-ui-d" style={{ transitionDelay: '270ms' }}>
+        <img src={cardReceipt} alt="" />
       </div>
-      <div className="ips-tile ips-tile-grad">
-        <img src={o8} alt="" />
-      </div>
-      <div className="ips-tile ips-tile-white">
-        <img src={o7} alt="" />
+      <div className="ips-ui-tile ips-ui-e" style={{ transitionDelay: '360ms' }}>
+        <img src={cardNaira} alt="" />
       </div>
     </div>
   )
 }
 
-/** The brand shape: two tilted coins merged into one form. */
-export function BrandShape({ className }: { className?: string }) {
+/** A real app card that rises in beside the people in a photo, then rests. */
+export function PhotoCard({ src, side, top }: { src: string; side: 'left' | 'right'; top?: boolean }) {
+  const [ref, seen] = useInView<HTMLDivElement>(0.5)
   return (
-    <svg className={className} viewBox="0 0 100 100" aria-hidden>
-      <g fill="currentColor" transform="rotate(-18 50 50)">
-        <ellipse cx="43" cy="62" rx="36" ry="25" />
-        <ellipse cx="60" cy="36" rx="27" ry="19" />
-      </g>
-    </svg>
-  )
-}
-
-/** The Naira → Sats billboard's pill, redrawn in the brand gradient with
-    the brand shape running through it as a pattern. Sits on the photo in
-    the photo's own coordinates. */
-export function BillboardPill() {
-  return (
-    <div className="ips-bb" aria-hidden>
-      <div className="ips-bb-pill">
-        <div className="ips-bb-run">
-          {Array.from({ length: 12 }, (_, k) => (
-            <BrandShape key={k} />
-          ))}
-        </div>
-        <svg className="ips-bb-arrow" viewBox="0 0 48 24">
-          <path d="M4 12h36M30 3l10 9-10 9" />
-        </svg>
-      </div>
-    </div>
-  )
-}
-
-/** The character illustrations on one board, each drifting on its own beat. */
-export function Illustrations({ srcs }: { srcs: string[] }) {
-  return (
-    <div className="ips ips-ills">
-      {srcs.map((src, k) => (
-        <div key={k} className="ips-ill">
-          <img src={src} alt="" loading="lazy" style={{ animationDelay: `${-k * 1.1}s` }} />
-        </div>
-      ))}
+    <div ref={ref} className={`ips-card is-${side}${top ? ' is-top' : ''}${seen ? ' is-in' : ''}`} aria-hidden>
+      <img src={src} alt="" loading="lazy" />
     </div>
   )
 }

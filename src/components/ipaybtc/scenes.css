@@ -70,14 +70,14 @@
   color: var(--ips-navy);
   display: grid;
   align-items: center;
-  padding: 0 7%;
+  padding: 0 calc(var(--kora-flare, 0px) + 6%);
 }
 
 .ips-head p {
   margin: 0;
   font-family: var(--ips-haas);
   font-weight: 700;
-  font-size: 8.4cqw;
+  font-size: 7.2cqw;
   line-height: 0.98;
   letter-spacing: -0.035em;
 }
@@ -97,196 +97,6 @@
   transform: none;
 }
 
-/* Floating 3D objects */
-.ips-objects {
-  background: #f4f6fb;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  place-items: center;
-  padding: 7% 8%;
-  gap: 4%;
-}
-
-.ips-objects img {
-  width: 62%;
-  height: auto;
-  animation: ips-float 4.2s ease-in-out infinite;
-  filter: drop-shadow(0 2cqw 2cqw rgba(5, 14, 127, 0.16));
-}
-
-@keyframes ips-float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-2deg);
-  }
-  50% {
-    transform: translateY(-7%) rotate(3deg);
-  }
-}
-
-/* Logo through the brand colours */
-.ips-logo {
-  display: grid;
-  place-items: center;
-  animation: ips-colours 8s steps(1) infinite;
-}
-
-.ips-logo span {
-  width: 40%;
-}
-
-.ips-logo svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-@keyframes ips-colours {
-  0% {
-    background: #0a31f5;
-    color: #fff;
-  }
-  25% {
-    background: #fff778;
-    color: #050e7f;
-  }
-  50% {
-    background: #050e7f;
-    color: #fff;
-  }
-  75% {
-    background: #88c2ed;
-    color: #050e7f;
-  }
-}
-
-/* Live motion components */
-.ips-components {
-  background: #e9eef8;
-}
-
-.ips-components iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  display: block;
-  pointer-events: none;
-}
-
-/* Brand tiles */
-.ips-tiles {
-  background: #f4f6fb;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 1.6cqw;
-  padding: 3cqw;
-}
-
-.ips-tile {
-  border-radius: 2.4cqw;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.ips-tile img {
-  width: 58%;
-  height: auto;
-  animation: ips-float 4.6s ease-in-out infinite;
-}
-
-.ips-tile p {
-  margin: 0;
-  padding: 0 10%;
-  font-family: var(--ips-futura);
-  font-weight: 800;
-  font-size: 5.4cqw;
-  line-height: 0.9;
-  text-align: left;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.ips-tile-icon {
-  background: var(--ips-grad);
-  color: #fff;
-}
-
-.ips-tile-icon span {
-  width: 56%;
-}
-
-.ips-tile-icon svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.ips-tile-yellow {
-  background: var(--ips-yellow);
-  color: var(--ips-navy);
-}
-
-.ips-tile-sky {
-  background: var(--ips-sky);
-}
-
-.ips-tile-navy {
-  background: var(--ips-navy);
-  color: var(--ips-yellow);
-}
-
-.ips-tile-grad {
-  background: var(--ips-blue);
-}
-
-.ips-tile-white {
-  background: #fff;
-}
-
-/* A real app card floating beside a person in a photo */
-.ips-card {
-  position: absolute;
-  top: 50%;
-  width: 22%;
-  border-radius: 1.4cqw;
-  overflow: hidden;
-  box-shadow: 0 2cqw 4cqw -1cqw rgba(4, 2, 70, 0.45);
-  animation: ips-card-in 5s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-}
-
-.ips-card img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.ips-card.is-right {
-  right: 5%;
-}
-
-.ips-card.is-left {
-  left: 5%;
-}
-
-@keyframes ips-card-in {
-  0% {
-    opacity: 0;
-    transform: translateY(-40%) scale(0.94);
-  }
-  12%,
-  88% {
-    opacity: 1;
-    transform: translateY(-50%) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-50%) scale(1);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .ips *,
   .ips {
@@ -304,128 +114,155 @@
 .kora-case-plate .ips-card img {
   position: static;
   inset: auto;
+  width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-.kora-case-plate .ips-objects img {
-  width: 62%;
-}
-
-.kora-case-plate .ips-tile img {
-  width: 58%;
-}
-
-.kora-case-plate .ips-card img {
-  width: 100%;
-}
-
-/* Billboard pill, placed in the photo's own coordinates (2400 × 1340). */
-.ips-bb {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  aspect-ratio: 2400 / 1340;
-  pointer-events: none;
-}
-
-.ips-bb-pill {
-  position: absolute;
-  left: 32.4%;
-  top: 35.7%;
-  width: 15.2%;
-  height: 12.7%;
-  border-radius: 999px;
-  overflow: hidden;
-  background: linear-gradient(100deg, #050e7f 20%, #0a31f5 70%, #3ed4ff);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-}
-
-.ips-bb-run {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  gap: 4%;
-  width: 200%;
-  color: rgba(136, 194, 237, 0.28);
-  animation: ips-run 6s linear infinite;
-}
-
-.ips-bb-run svg {
-  flex: 0 0 auto;
-  height: 78%;
-  width: auto;
-  aspect-ratio: 1;
-}
-
-@keyframes ips-run {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.ips-bb-arrow {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 40%;
-  transform: translate(-50%, -50%);
-  fill: none;
-  stroke: #fff778;
-  stroke-width: 3.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  animation: ips-nudge 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-}
-
-@keyframes ips-nudge {
-  0%,
-  60%,
-  100% {
-    transform: translate(-50%, -50%);
-  }
-  30% {
-    transform: translate(-38%, -50%);
-  }
-}
-
-/* Illustration board */
-.ips-ills {
-  background: #fff;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 2cqw;
-  padding: 4cqw;
-}
-
-.ips-ill {
+/* Logo plate */
+.ips-logo {
+  background: var(--ips-blue);
+  color: #fff;
   display: grid;
   place-items: center;
-  overflow: hidden;
 }
 
-.kora-case-plate .ips-ill img {
+.ips-logo span {
+  width: 36%;
+}
+
+.ips-logo svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* The 3D set: a calm grid on white, like Wise's */
+.ips-objects {
+  background: #fff;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  place-items: center;
+  padding: 9% 11%;
+  gap: 6% 8%;
+}
+
+.ips-object {
+  width: 72%;
+  opacity: 0;
+  transform: translateY(14%) scale(0.96);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ips-objects.is-in .ips-object {
+  opacity: 1;
+  transform: none;
+}
+
+/* The app's UI, card by card */
+.ips-uiboard {
+  background: #f1f3f7;
+  display: grid;
+  grid-template-columns: 1fr 0.9fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.6cqw;
+  padding: 3.2cqw calc(var(--kora-flare, 0px) + 3.2cqw);
+}
+
+.ips-ui-tile {
+  background: #fff;
+  border-radius: 2cqw;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 1.6cqw;
+  min-height: 0;
+  min-width: 0;
+  opacity: 0;
+  transform: translateY(6%);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ips-uiboard.is-in .ips-ui-tile {
+  opacity: 1;
+  transform: none;
+}
+
+.kora-case-plate .ips-ui-tile img {
+  border-radius: 1.2cqw;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  animation: ips-ill 5.2s ease-in-out infinite;
 }
 
-@keyframes ips-ill {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
+.ips-ui-a {
+  grid-row: span 2;
+}
+
+.ips-ui-blue {
+  background: var(--ips-grad);
+}
+
+.kora-case-plate .ips-ui-blue .ips-ui-3d {
+  width: 56%;
+  height: auto;
+  border-radius: 0;
+}
+
+/* A real app card resting beside the people in a photo */
+.ips-card {
+  position: absolute;
+  top: 50%;
+  width: 21%;
+  border-radius: 1.2cqw;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1.6cqw 3.6cqw -1cqw rgba(5, 14, 127, 0.28);
+  opacity: 0;
+  transform: translateY(-42%);
+  transition:
+    opacity 0.7s ease-out,
+    transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ips-card.is-in {
+  opacity: 1;
+  transform: translateY(-50%);
+}
+
+.ips-card.is-top {
+  top: 7%;
+  transform: translateY(8%);
+}
+
+.ips-card.is-top.is-in {
+  transform: none;
+}
+
+.ips-card.is-right {
+  right: calc(var(--kora-flare, 0px) + 5%);
+}
+
+.ips-card.is-left {
+  left: calc(var(--kora-flare, 0px) + 5%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ips *,
+  .ips,
+  .ips-card {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
-  50% {
-    transform: translateY(-2.5%) scale(1.015);
-  }
+}
+
+.kora-case-plate {
+  container-type: inline-size;
 }
