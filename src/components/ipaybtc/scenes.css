@@ -1,5 +1,5 @@
 /* Code-drawn scenes for the iPayBTC case study. Colours are the brand's
-   only: Deep Navy, Electric Blue, Sky, Milky Yellow and the gradient. */
+   only: Deep Navy, Electric Blue, Sky, Milky Yellow. No shadows. */
 
 .ips {
   position: absolute;
@@ -9,12 +9,14 @@
   --ips-blue: #0a31f5;
   --ips-sky: #88c2ed;
   --ips-yellow: #fff778;
-  --ips-grad: linear-gradient(135deg, #050e7f 25%, #0a31f5 78%, #3ed4ff);
   --ips-futura: 'Futura LT Condensed', 'Futura Condensed ExtraBold', 'Barlow Condensed', sans-serif;
-  --ips-haas: 'Neue Haas Grotesk Display Pro', 'Neue Haas Grotesk', 'Inter Tight', sans-serif;
 }
 
-/* Swapping campaign type */
+.kora-case-plate {
+  container-type: inline-size;
+}
+
+/* Swapping campaign type, one 3D object per line */
 .ips-type {
   background: var(--ips-navy);
   color: var(--ips-yellow);
@@ -22,12 +24,12 @@
 
 .ips-type-lines p {
   position: absolute;
-  left: 7%;
+  left: calc(var(--kora-flare, 0px) + 7%);
   top: 9%;
   margin: 0;
   font-family: var(--ips-futura);
   font-weight: 800;
-  font-size: 19cqw;
+  font-size: 17cqw;
   line-height: 0.86;
   letter-spacing: -0.01em;
 }
@@ -50,9 +52,36 @@
   clip-path: inset(0 0 0 0);
 }
 
+.ips-type-objs {
+  position: absolute;
+  right: calc(var(--kora-flare, 0px) + 6%);
+  bottom: 9%;
+  width: 30%;
+  aspect-ratio: 1;
+}
+
+.kora-case-plate .ips-type-objs img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transform: translateY(14%) scale(0.86);
+  transition:
+    opacity 0.35s ease-out,
+    transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.kora-case-plate .ips-type-objs img.is-on {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.08s;
+}
+
 .ips-type-logo {
   position: absolute;
-  left: 7%;
+  left: calc(var(--kora-flare, 0px) + 7%);
   bottom: 8%;
   width: 18%;
   color: #fff;
@@ -64,170 +93,44 @@
   display: block;
 }
 
-/* Headline that builds */
-.ips-head {
-  background: #fff;
-  color: var(--ips-navy);
-  display: grid;
-  align-items: center;
-  padding: 0 calc(var(--kora-flare, 0px) + 6%);
-}
-
-.ips-head p {
-  margin: 0;
-  font-family: var(--ips-haas);
-  font-weight: 700;
-  font-size: 7.2cqw;
-  line-height: 0.98;
-  letter-spacing: -0.035em;
-}
-
-.ips-head p > span {
-  display: inline-block;
-  margin-right: 0.22em;
-  opacity: 0;
-  transform: translateY(0.4em);
-  transition:
-    opacity 0.5s ease-out,
-    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.ips-head.is-in p > span {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ips *,
-  .ips {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-.kora-case-plate {
-  container-type: inline-size;
-}
-
-/* Undo the plate's full-bleed picture rule for images inside scenes. */
-.kora-case-plate .ips img,
-.kora-case-plate .ips-card img {
-  position: static;
-  inset: auto;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Logo plate */
-.ips-logo {
-  background: var(--ips-blue);
-  color: #fff;
-  display: grid;
-  place-items: center;
-}
-
-.ips-logo span {
-  width: 36%;
-}
-
-.ips-logo svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* The 3D set: a calm grid on white, like Wise's */
-.ips-objects {
-  background: #fff;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  place-items: center;
-  padding: 9% 11%;
-  gap: 6% 8%;
-}
-
-.ips-object {
-  width: 72%;
-  opacity: 0;
-  transform: translateY(14%) scale(0.96);
-  transition:
-    opacity 0.7s ease-out,
-    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.ips-objects.is-in .ips-object {
-  opacity: 1;
-  transform: none;
-}
-
-/* The app's UI, card by card */
+/* The app on Electric Blue, three phones, the middle one moving */
 .ips-uiboard {
-  background: #f1f3f7;
-  display: grid;
-  grid-template-columns: 1fr 0.9fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1.6cqw;
-  padding: 3.2cqw calc(var(--kora-flare, 0px) + 3.2cqw);
-}
-
-.ips-ui-tile {
-  background: #fff;
-  border-radius: 2cqw;
-  overflow: hidden;
+  background: var(--ips-blue);
   display: grid;
   place-items: center;
-  padding: 1.6cqw;
-  min-height: 0;
-  min-width: 0;
-  opacity: 0;
-  transform: translateY(6%);
-  transition:
-    opacity 0.7s ease-out,
-    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.ips-uiboard.is-in .ips-ui-tile {
-  opacity: 1;
-  transform: none;
+.ips-phones {
+  display: flex;
+  align-items: center;
+  gap: 2.4cqw;
 }
 
-.kora-case-plate .ips-ui-tile img {
-  border-radius: 1.2cqw;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.ips-phone {
+  position: relative;
+  flex: none;
+  width: calc(390px * var(--ips-s, 0.5));
+  height: calc(844px * var(--ips-s, 0.5));
+  border-radius: calc(54px * var(--ips-s, 0.5));
+  overflow: hidden;
+  background: #fff;
 }
 
-.ips-ui-a {
-  grid-row: span 2;
+.ips-phone > .ias {
+  transform: scale(var(--ips-s, 0.5));
+  transform-origin: 0 0;
 }
 
-.ips-ui-blue {
-  background: var(--ips-grad);
-}
-
-.kora-case-plate .ips-ui-blue .ips-ui-3d {
-  width: 56%;
-  height: auto;
-  border-radius: 0;
-}
-
-/* A real app card resting beside the people in a photo */
+/* A component resting beside the people in a photo */
 .ips-card {
   position: absolute;
-  top: 50%;
-  width: 21%;
-  border-radius: 1.2cqw;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 1.6cqw 3.6cqw -1cqw rgba(5, 14, 127, 0.28);
+  top: 60%;
+  width: calc(360px * var(--ips-s, 0.6));
   opacity: 0;
-  transform: translateY(-42%);
+  transform: translateY(-46%);
   transition:
-    opacity 0.7s ease-out,
-    transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity 0.6s ease-out,
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .ips-card.is-in {
@@ -236,33 +139,50 @@
 }
 
 .ips-card.is-top {
-  top: 7%;
-  transform: translateY(8%);
+  top: 5%;
+  transform: translateY(6%);
 }
 
 .ips-card.is-top.is-in {
   transform: none;
 }
 
+.ips-card.is-top .ips-card-scale {
+  transform-origin: 0 0;
+}
+
 .ips-card.is-right {
-  right: calc(var(--kora-flare, 0px) + 5%);
+  right: calc(var(--kora-flare, 0px) + 4%);
 }
 
 .ips-card.is-left {
-  left: calc(var(--kora-flare, 0px) + 5%);
+  left: calc(var(--kora-flare, 0px) + 6%);
+}
+
+.ips-card-scale {
+  width: 360px;
+  transform: scale(var(--ips-s, 0.6));
+  transform-origin: 0 50%;
+}
+
+/* A photo that eases out of a slight zoom */
+.kora-case-plate img.ips-zoom {
+  transform: scale(1.12);
+  transition: transform 9s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+.kora-case-plate img.ips-zoom.is-in {
+  transform: scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ips *,
   .ips,
-  .ips-card {
+  .ips-card,
+  .kora-case-plate img.ips-zoom {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
-}
-
-.kora-case-plate {
-  container-type: inline-size;
 }

@@ -4,32 +4,40 @@ import ipaybtcLogo from '../../assets/ipaybtc-logo.svg?raw'
 import o1 from '../../assets/ipaybtc3d/o1.webp'
 import o2 from '../../assets/ipaybtc3d/o2.webp'
 import o3 from '../../assets/ipaybtc3d/o3.webp'
-import o4 from '../../assets/ipaybtc3d/o4.webp'
-import o6 from '../../assets/ipaybtc3d/o6.webp'
-import o7 from '../../assets/ipaybtc3d/o7.webp'
 import o8 from '../../assets/ipaybtc3d/o8.webp'
-import o9 from '../../assets/ipaybtc3d/o9.webp'
-import cardReceipt from '../../assets/v3/card-receipt.webp'
-import cardBtc from '../../assets/v3/card-btc.webp'
-import cardNaira from '../../assets/v3/card-naira.webp'
-import cardWallets from '../../assets/v3/card-wallets.webp'
+import type { CaseSlot } from '../../caseStudies'
+import { AppScreen, KeypadCard, ReceivedCard } from './AppScreen'
 
 /* Scenes for the iPayBTC case study drawn in code, after the Ragged Edge
-   Wise page: campaign type, a headline that builds, the 3D object set,
-   the logo plate and a board of the app's UI. All light, all calm. */
+   Wise page. Light, calm, brand colours only, no shadows. */
 
-/** True once the element has scrolled into view. */
-export function useInView<T extends Element>(threshold = 0.3) {
+/** True while the element is on screen (or once, with `once`). */
+export function useInView<T extends Element>(threshold = 0.3, once = true) {
   const ref = useRef<T>(null)
   const [seen, setSeen] = useState(false)
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && setSeen(true), { threshold })
+    const io = new IntersectionObserver(([e]) => (once ? e.isIntersecting && setSeen(true) : setSeen(e.isIntersecting)), { threshold })
     io.observe(el)
     return () => io.disconnect()
-  }, [threshold])
+  }, [threshold, once])
   return [ref, seen] as const
+}
+
+/** Scale for content drawn at a fixed size: `frac` of the plate's width
+    divided by the drawn width. Written to --ips-s on the element. */
+function useFit<T extends HTMLElement>(ref: React.RefObject<T | null>, frac: number, drawn: number) {
+  useEffect(() => {
+    const el = ref.current
+    const plate = el?.closest('.kora-case-plate') as HTMLElement | null
+    if (!el || !plate) return
+    const set = () => el.style.setProperty('--ips-s', String((plate.clientWidth * frac) / drawn))
+    set()
+    const ro = new ResizeObserver(set)
+    ro.observe(plate)
+    return () => ro.disconnect()
+  }, [ref, frac, drawn])
 }
 
 function useCycle(length: number, every: number) {
@@ -42,16 +50,18 @@ function useCycle(length: number, every: number) {
   return i
 }
 
-const LINES = [
-  ['MOVE', 'FREELY.'],
-  ['OWN', 'BITCOIN.'],
-  ['NAIRA', 'TO SATS.'],
-  ['SEND IN', 'SECONDS.'],
+/* Each line comes with one of our 3D objects. */
+const LINES: Array<[string, string, string]> = [
+  ['MOVE', 'FREELY.', o8],
+  ['OWN', 'BITCOIN.', o1],
+  ['NAIRA', 'TO SATS.', o2],
+  ['GIFT', 'IN SATS.', o3],
 ]
 
-/** Campaign type whose words swap, like Wise's FULL SPEED / MIN FEES. */
+/** Campaign type whose words swap, like Wise's FULL SPEED / MIN FEES, with
+    one 3D object per line. */
 export function TypeSwap() {
-  const i = useCycle(LINES.length, 1800)
+  const i = useCycle(LINES.length, 2000)
   return (
     <div className="ips ips-type">
       <div className="ips-type-lines" aria-live="off">
@@ -62,85 +72,61 @@ export function TypeSwap() {
           </p>
         ))}
       </div>
+      <div className="ips-type-objs" aria-hidden>
+        {LINES.map((l, k) => (
+          <img key={k} src={l[2]} alt="" className={k === i ? 'is-on' : ''} />
+        ))}
+      </div>
       <span className="ips-type-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
     </div>
   )
 }
 
-/** A big statement that builds word by word when it scrolls in. */
-export function Headline() {
-  const [ref, seen] = useInView<HTMLDivElement>(0.4)
-  const words = 'Bitcoin, made for everyday life.'.split(' ')
-  return (
-    <div ref={ref} className={`ips ips-head${seen ? ' is-in' : ''}`}>
-      <p>
-        {words.map((w, k) => (
-          <span key={k} style={{ transitionDelay: `${k * 110}ms` }}>
-            {w}
-          </span>
-        ))}
-      </p>
-    </div>
-  )
-}
-
-const OBJECTS = [o1, o3, o6, o8, o2, o7, o4, o9]
-
-/** The 3D object set, laid out like Wise's: a clean grid on white. Each
-    object settles in as the board scrolls into view. */
-export function Objects() {
-  const [ref, seen] = useInView<HTMLDivElement>(0.3)
-  return (
-    <div ref={ref} className={`ips ips-objects${seen ? ' is-in' : ''}`}>
-      {OBJECTS.map((src, k) => (
-        <div key={k} className="ips-object" style={{ transitionDelay: `${k * 70}ms` }}>
-          <img src={src} alt="" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
-/** The logo on Electric Blue. */
-export function LogoCycle() {
-  return (
-    <div className="ips ips-logo" role="img" aria-label="iPayBTC logo">
-      <span dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
-    </div>
-  )
-}
-
-/** A board of the app's UI, card by card, on a light ground. The cards rise
-    in one after another and then rest. */
+/** The app on a full-width Electric Blue ground: three phones, the middle
+    one sending sats, the others resting on the wallet and the done screen. */
 export function UiBoard() {
-  const [ref, seen] = useInView<HTMLDivElement>(0.25)
+  const [ref, on] = useInView<HTMLDivElement>(0.2, false)
+  useFit(ref, 0.2, 390)
   return (
-    <div ref={ref} className={`ips ips-uiboard${seen ? ' is-in' : ''}`}>
-      <div className="ips-ui-tile ips-ui-a" style={{ transitionDelay: '0ms' }}>
-        <img src={cardWallets} alt="" />
-      </div>
-      <div className="ips-ui-tile ips-ui-b ips-ui-blue" style={{ transitionDelay: '90ms' }}>
-        <img className="ips-ui-3d" src={o2} alt="" />
-      </div>
-      <div className="ips-ui-tile ips-ui-c" style={{ transitionDelay: '180ms' }}>
-        <img src={cardBtc} alt="" />
-      </div>
-      <div className="ips-ui-tile ips-ui-d" style={{ transitionDelay: '270ms' }}>
-        <img src={cardReceipt} alt="" />
-      </div>
-      <div className="ips-ui-tile ips-ui-e" style={{ transitionDelay: '360ms' }}>
-        <img src={cardNaira} alt="" />
+    <div ref={ref} className="ips ips-uiboard">
+      <div className="ips-phones">
+        <div className="ips-phone is-side">
+          <AppScreen flow="wallet" playing={on} />
+        </div>
+        <div className="ips-phone">
+          <AppScreen flow="send" playing={on} />
+        </div>
+        <div className="ips-phone is-side">
+          <AppScreen flow="done" playing={on} />
+        </div>
       </div>
     </div>
   )
 }
 
-/** A real app card that rises in beside the people in a photo, then rests. */
-export function PhotoCard({ src, side, top }: { src: string; side: 'left' | 'right'; top?: boolean }) {
-  const [ref, seen] = useInView<HTMLDivElement>(0.5)
+/** A component lifted out of the app, resting beside the people in a photo. */
+export function PhotoCard({ kind, side, top = false }: { kind: 'keypad' | 'received'; side: 'left' | 'right'; top?: boolean }) {
+  const [ref, on] = useInView<HTMLDivElement>(0.4, false)
+  useFit(ref, 0.19, 360)
   return (
-    <div ref={ref} className={`ips-card is-${side}${top ? ' is-top' : ''}${seen ? ' is-in' : ''}`} aria-hidden>
-      <img src={src} alt="" loading="lazy" />
+    <div ref={ref} className={`ips-card is-${side}${top ? ' is-top' : ''}${on ? ' is-in' : ''}`} aria-hidden>
+      <div className="ips-card-scale">{kind === 'keypad' ? <KeypadCard playing={on} /> : <ReceivedCard playing={on} />}</div>
     </div>
+  )
+}
+
+/** A photo that eases out from a slight zoom while it is on screen. */
+export function ZoomImg({ slot, eager }: { slot: CaseSlot; eager?: boolean }) {
+  const [ref, on] = useInView<HTMLImageElement>(0.25, true)
+  return (
+    <img
+      ref={ref}
+      className={`ips-zoom${on ? ' is-in' : ''}`}
+      src={slot.src}
+      srcSet={slot.srcSet}
+      sizes="100vw"
+      alt={slot.label}
+      loading={eager ? 'eager' : 'lazy'}
+    />
   )
 }

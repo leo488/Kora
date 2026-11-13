@@ -5,8 +5,7 @@ import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
-import { AppScreen } from '../components/ipaybtc/AppScreen'
-import { Headline, LogoCycle, Objects, PhotoCard, TypeSwap, UiBoard } from '../components/ipaybtc/Scenes'
+import { PhotoCard, TypeSwap, UiBoard, ZoomImg } from '../components/ipaybtc/Scenes'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -146,21 +145,16 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
     >
       <div className="kora-flare">
         {slot.art === 'ipaybtc-logo' ? (
-          <LogoCycle />
+          <div
+            className="kora-case-art kora-case-art-ipaybtc"
+            role="img"
+            aria-label={slot.label}
+            dangerouslySetInnerHTML={{ __html: ipaybtcLogo }}
+          />
         ) : slot.art === 'ipaybtc-type' ? (
           <TypeSwap />
-        ) : slot.art === 'ipaybtc-headline' ? (
-          <Headline />
-        ) : slot.art === 'ipaybtc-objects' ? (
-          <Objects />
         ) : slot.art === 'ipaybtc-uiboard' ? (
           <UiBoard />
-        ) : slot.art === 'ipaybtc-ui' ? (
-          <div className="kora-case-art kora-case-art-ui" role="img" aria-label={slot.label}>
-            <div className="kora-ui-screen">
-              <AppScreen flow="buy" />
-            </div>
-          </div>
         ) : slot.src ? (
           slot.video ? (
             <>
@@ -177,15 +171,19 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
             </>
           ) : (
             <>
-              <img
-                src={slot.src}
-                srcSet={slot.srcSet}
-                sizes="(max-width: 760px) 100vw, 100vw"
-                alt={slot.label}
-                loading={eager ? 'eager' : 'lazy'}
-              />
+              {slot.zoom ? (
+                <ZoomImg slot={slot} eager={eager} />
+              ) : (
+                <img
+                  src={slot.src}
+                  srcSet={slot.srcSet}
+                  sizes="(max-width: 760px) 100vw, 100vw"
+                  alt={slot.label}
+                  loading={eager ? 'eager' : 'lazy'}
+                />
+              )}
               {slot.screen && <ScreenOverlay screen={slot.screen} />}
-                            {slot.card && <PhotoCard src={slot.card.src} side={slot.card.side} top={slot.card.top} />}
+              {slot.card && <PhotoCard kind={slot.card.kind} side={slot.card.side} top={slot.card.top} />}
             </>
           )
         ) : (

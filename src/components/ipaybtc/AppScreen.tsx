@@ -1,24 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import logo from '../../assets/ipaybtc-logo.svg?raw'
+import coin from '../../assets/ipaybtc3d/o1.webp'
+import coins from '../../assets/ipaybtc3d/o2.webp'
+import plane from '../../assets/ipaybtc3d/o8.webp'
 import './app-screen.css'
-import A1 from '../../assets/v3/A1.jpg'
-import A2 from '../../assets/v3/A2.jpg'
-import A3 from '../../assets/v3/A3.jpg'
-import A4 from '../../assets/v3/A4.jpg'
-import A5 from '../../assets/v3/A5.jpg'
-import A6 from '../../assets/v3/A6.jpg'
-import C1 from '../../assets/v3/C1.jpg'
-import C2 from '../../assets/v3/C2.jpg'
-import C3 from '../../assets/v3/C3.jpg'
-import C5 from '../../assets/v3/C5.jpg'
-import C6 from '../../assets/v3/C6.jpg'
 
-/* The iPayBTC app (v3, light mode) running on a phone in a still photo.
-   Everything is drawn at the phone's own size, 390 × 844, and the plate that
-   holds it maps that box onto the screen in the photo. A short script steps
-   through one transaction and loops; CSS transitions do the moving. */
+/* The iPayBTC app running on a phone. Drawn at the phone's own size,
+   390 × 844; whatever holds it scales or maps that box onto a screen.
+   Clean, light wallet screens after the Wise app: one big bold number per
+   screen, round keys, our 3D coin, real transactions only. A short script
+   steps through one transaction and loops; CSS transitions do the moving. */
 
-export type AppFlow = 'send' | 'buy' | 'launch'
+export type AppFlow = 'send' | 'buy' | 'launch' | 'wallet' | 'done'
 
 type Screen = 'home' | 'amount' | 'done' | 'icons' | 'splash'
 
@@ -29,62 +22,88 @@ interface State {
   done: boolean
 }
 
+const BASE: State = { screen: 'home', press: null, digits: 0, done: false }
 const START: Record<AppFlow, State> = {
-  send: { screen: 'home', press: null, digits: 0, done: false },
-  buy: { screen: 'home', press: null, digits: 0, done: false },
-  launch: { screen: 'icons', press: null, digits: 0, done: false },
+  send: BASE,
+  buy: BASE,
+  wallet: BASE,
+  done: { ...BASE, screen: 'done', digits: 5 },
+  launch: { ...BASE, screen: 'icons' },
 }
 
-/** [time in ms, change] — the loop restarts after the last step. */
+/** [time in ms, change]. The loop restarts after the last step. */
 type Step = [number, Partial<State>]
 
+const typing = (keys: string[], from: number): Step[] =>
+  keys.flatMap((k, i): Step[] => [
+    [from + i * 380, { digits: i + 1, press: `k${k}` }],
+    [from + i * 380 + 150, { press: null }],
+  ])
+
+const txn = (keys: string[], action: string): Step[] => [
+  [1500, { press: action }],
+  [1750, { press: null, screen: 'amount' }],
+  ...typing(keys, 2400),
+  [4500, { press: 'cta' }],
+  [4750, { press: null, screen: 'done' }],
+  [7200, { press: 'close' }],
+  [7400, { press: null, screen: 'home', done: true }],
+  [10600, {}],
+]
+
 const SCRIPT: Record<AppFlow, Step[]> = {
-  send: [
-    [1700, { press: 'send' }],
-    [1950, { press: null, screen: 'amount' }],
-    [2700, { digits: 1, press: 'k2' }],
-    [2850, { press: null }],
-    [3100, { digits: 2, press: 'k0' }],
-    [3250, { press: null }],
-    [3500, { digits: 3, press: 'k0' }],
-    [3650, { press: null }],
-    [3900, { digits: 4, press: 'k0' }],
-    [4050, { press: null }],
-    [4300, { digits: 5, press: 'k0' }],
-    [4450, { press: null }],
-    [5000, { press: 'cta' }],
-    [5250, { press: null, screen: 'done' }],
-    [7400, { press: 'close' }],
-    [7600, { press: null, screen: 'home', done: true }],
-    [11000, {}],
+  send: txn(['2', '0', '0', '0', '0'], 'send'),
+  buy: txn(['5', '0', '0', '0', '0'], 'buy'),
+  wallet: [
+    [2600, { done: true }],
+    [6000, {}],
   ],
-  buy: [
-    [1700, { press: 'buy' }],
-    [1950, { press: null, screen: 'amount' }],
-    [2700, { digits: 1, press: 'k3' }],
-    [2850, { press: null }],
-    [3100, { digits: 2, press: 'k4' }],
-    [3250, { press: null }],
-    [3500, { digits: 3, press: 'k2' }],
-    [3650, { press: null }],
-    [3900, { digits: 4, press: 'k0' }],
-    [4050, { press: null }],
-    [4300, { digits: 5, press: 'k0' }],
-    [4450, { press: null }],
-    [5000, { press: 'cta' }],
-    [5250, { press: null, screen: 'done' }],
-    [7400, { press: 'close' }],
-    [7600, { press: null, screen: 'home', done: true }],
-    [11000, {}],
-  ],
+  done: [[6000, {}]],
   launch: [
-    [1600, { press: 'icon' }],
-    [1850, { press: null, screen: 'splash' }],
-    [3000, { screen: 'home' }],
-    [6800, { screen: 'icons' }],
-    [8600, {}],
+    [1500, { press: 'icon' }],
+    [1750, { press: null, screen: 'splash' }],
+    [2900, { screen: 'home' }],
+    [6600, { screen: 'icons' }],
+    [8400, {}],
   ],
 }
+
+/* What the keypad shows after each key. */
+const TYPED: Record<'send' | 'buy', string[]> = {
+  send: ['0', '2', '20', '200', '2,000', '20,000'],
+  buy: ['0', '5', '50', '500', '5,000', '50,000'],
+}
+
+const COPY = {
+  send: {
+    head: 'Send to Tolu',
+    unit: 'SATS',
+    prefix: '',
+    note: (full: boolean) => (full ? '≈ ₦32,400 · Fee 0 sats' : 'You have 87,719 sats'),
+    cta: 'Send',
+    art: plane,
+    title: ['SENT IN', 'SECONDS'],
+    body: '20,000 sats are on their way to Tolu. Lightning fast, no fees.',
+    row: { title: 'Tolu Adeyemi', sub: 'Sent · Lightning', amount: '−20,000 sats', kind: 'out' },
+  },
+  buy: {
+    head: 'Buy Bitcoin',
+    unit: 'NGN',
+    prefix: '₦',
+    note: (full: boolean) => (full ? 'You get 30,840 sats · Fee ₦0' : '1 BTC = ₦162,120,000'),
+    cta: 'Buy',
+    art: coins,
+    title: ['SATS', 'ARE IN'],
+    body: '30,840 sats just landed in your Bitcoin wallet. Just like that.',
+    row: { title: 'Bought Bitcoin', sub: 'From Naira wallet', amount: '+30,840 sats', kind: 'buy' },
+  },
+} as const
+
+const ACTIVITY = [
+  { title: 'Ada Okafor', sub: 'Received · Lightning', amount: '+12,500 sats', kind: 'in' },
+  { title: 'Bought Bitcoin', sub: 'From Naira wallet', amount: '+61,200 sats', kind: 'buy' },
+  { title: 'MTN Airtime', sub: 'Paid · Naira', amount: '−₦2,000', kind: 'out' },
+] as const
 
 export function AppScreen({ flow, playing = true }: { flow: AppFlow; playing?: boolean }) {
   const [s, setS] = useState<State>(START[flow])
@@ -109,52 +128,20 @@ export function AppScreen({ flow, playing = true }: { flow: AppFlow; playing?: b
     }
   }, [flow, playing])
 
-  if (flow === 'launch') return <Launch s={s} playing={playing} />
-  return <Reel frames={REELS[flow]} playing={playing} />
-}
-
-/* ---------- The real v3 screens ---------- */
-
-/* Each phone steps through screens captured from the v3 design file, pushed
-   in from the right the way iOS moves between screens. */
-const REELS: Record<'send' | 'buy' | 'launched', string[]> = {
-  send: [C1, C2, C3, C6, C5],
-  buy: [A2, A3, A4, A5, A6, C1],
-  launched: [A1, C1],
-}
-
-function Reel({ frames, playing, hold = 1900 }: { frames: string[]; playing: boolean; hold?: number }) {
-  const [i, setI] = useState(0)
-  const [snap, setSnap] = useState(false)
-  useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!playing || reduce) return
-    const t = window.setInterval(() => {
-      setI((v) => {
-        if (v + 1 < frames.length) {
-          setSnap(false)
-          return v + 1
-        }
-        setSnap(true)
-        return 0
-      })
-    }, hold)
-    return () => clearInterval(t)
-  }, [frames, playing, hold])
-  return (
-    <div className={`ias ias-reel${snap ? ' is-snap' : ''}`}>
-      {frames.map((src, n) => (
-        <img
-          key={n}
-          src={src}
-          alt=""
-          className={n === i ? 'is-on' : n < i ? 'is-past' : ''}
-          loading="lazy"
-          decoding="async"
-        />
-      ))}
-    </div>
-  )
+  if (flow === 'launch') return <Launch s={s} />
+  if (flow === 'wallet')
+    return (
+      <div className="ias" data-screen="home">
+        <Home s={s} flow="buy" />
+      </div>
+    )
+  if (flow === 'done')
+    return (
+      <div className="ias" data-screen="done">
+        <Done flow="buy" s={s} />
+      </div>
+    )
+  return <Transaction flow={flow} s={s} />
 }
 
 /* ---------- Pieces ---------- */
@@ -181,6 +168,191 @@ function StatusBar({ light = false }: { light?: boolean }) {
   )
 }
 
+const ICON: Record<string, string> = {
+  out: 'M10 16V4M5 9l5-5 5 5',
+  in: 'M10 4v12M5 11l5 5 5-5',
+  buy: 'M10 4v12M4 10h12',
+  swap: 'M4 7h12l-3-3M16 13H4l3 3',
+  home: 'M3 9l7-6 7 6v8H3z',
+  wallet: 'M3 6h14v11H3zM3 9h14M13 13h1',
+  card: 'M2 5h16v10H2zM2 8h16',
+  more: 'M4 4h5v5H4zM11 4h5v5h-5zM4 11h5v5H4zM11 11h5v5h-5z',
+  bell: 'M5 14V9a5 5 0 0 1 10 0v5l1.5 2h-13zM8 18a2 2 0 0 0 4 0',
+  back: 'M12 4l-6 6 6 6',
+  close: 'M5 5l10 10M15 5L5 15',
+}
+
+function Icon({ name, size = 20 }: { name: string; size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" aria-hidden>
+      <path d={ICON[name]} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function Row({ r, className = '' }: { r: { title: string; sub: string; amount: string; kind: string }; className?: string }) {
+  return (
+    <div className={`ias-row ${className}`}>
+      <span className={`ias-glyph is-${r.kind}`}>
+        {r.kind === 'buy' ? <img src={coin} alt="" /> : <Icon name={r.kind} size={18} />}
+      </span>
+      <div className="ias-row-main">
+        <strong>{r.title}</strong>
+        <span>{r.sub}</span>
+      </div>
+      <strong className={`ias-row-amount${r.amount.startsWith('+') ? ' is-plus' : ''}`}>{r.amount}</strong>
+    </div>
+  )
+}
+
+function Home({ s, flow }: { s: State; flow: 'send' | 'buy' | 'launch' }) {
+  const newRow = flow === 'launch' ? null : COPY[flow].row
+  const sats = !s.done ? '87,719' : flow === 'send' ? '67,719' : '118,559'
+  return (
+    <div className="ias-page ias-home">
+      <StatusBar />
+      <div className="ias-home-head">
+        <span className="ias-avatar">TA</span>
+        <span className="ias-hi">Hi, Tolu</span>
+        <span className="ias-round">
+          <Icon name="bell" />
+        </span>
+      </div>
+      <div className="ias-balance">
+        <span className="ias-label">Bitcoin balance</span>
+        <strong key={sats} className="ias-balance-num">
+          {sats} <small>SATS</small>
+        </strong>
+        <span className="ias-faint">≈ ₦{!s.done ? '142,210' : flow === 'send' ? '109,790' : '192,210'}</span>
+      </div>
+      <div className="ias-wallets">
+        <div className="ias-wallet is-btc">
+          <img src={coin} alt="" />
+          <span>Bitcoin</span>
+          <strong>{sats} sats</strong>
+        </div>
+        <div className="ias-wallet">
+          <span className="ias-naira">₦</span>
+          <span>Naira</span>
+          <strong>{s.done && flow === 'buy' ? '₦45,000.00' : '₦95,000.00'}</strong>
+        </div>
+      </div>
+      <div className="ias-actions">
+        {[
+          ['buy', 'Buy'],
+          ['out', 'Send'],
+          ['in', 'Receive'],
+          ['swap', 'Swap'],
+        ].map(([k, label]) => {
+          const key = k === 'out' ? 'send' : k
+          return (
+            <span key={k} className={`ias-action${s.press === key ? ' is-pressed' : ''}`}>
+              <i>
+                <Icon name={k} size={22} />
+              </i>
+              {label}
+            </span>
+          )
+        })}
+      </div>
+      <div className="ias-section-head">
+        <strong>Activity</strong>
+        <span>See all</span>
+      </div>
+      <div className={`ias-list${s.done ? ' has-new' : ''}`}>
+        {newRow && <Row r={newRow} className="ias-row-new" />}
+        {ACTIVITY.map((r) => (
+          <Row key={r.title} r={r} />
+        ))}
+      </div>
+      <nav className="ias-tabs" aria-hidden>
+        {[
+          ['home', 'Home'],
+          ['wallet', 'Wallets'],
+          ['out', 'Send'],
+          ['card', 'Card'],
+          ['more', 'More'],
+        ].map(([k, t], i) => (
+          <span key={t} className={`${i === 0 ? 'is-on' : ''}${k === 'out' ? ' is-send' : ''}`}>
+            <i>
+              <Icon name={k} size={k === 'out' ? 20 : 22} />
+            </i>
+            {t}
+          </span>
+        ))}
+      </nav>
+      <span className="ias-homebar" />
+    </div>
+  )
+}
+
+function Done({ flow, s }: { flow: 'send' | 'buy'; s: State }) {
+  const c = COPY[flow]
+  return (
+    <div className="ias-page ias-done">
+      <StatusBar />
+      <span className="ias-round ias-close">
+        <Icon name="close" size={18} />
+      </span>
+      <div className="ias-done-body">
+        <img className="ias-done-art" src={c.art} alt="" />
+        <strong className="ias-display">
+          {c.title[0]}
+          <br />
+          {c.title[1]}
+        </strong>
+        <p>{c.body}</p>
+      </div>
+      <button className={`ias-btn is-primary ias-cta${s.press === 'close' ? ' is-pressed' : ''}`}>Done</button>
+      <span className="ias-homebar" />
+    </div>
+  )
+}
+
+function Transaction({ flow, s }: { flow: 'send' | 'buy'; s: State }) {
+  const c = COPY[flow]
+  const typed = TYPED[flow][s.digits]
+  const full = s.digits === 5
+  return (
+    <div className={`ias is-${flow}`} data-screen={s.screen}>
+      <Home s={s} flow={flow} />
+
+      <div className="ias-page ias-amount">
+        <StatusBar />
+        <div className="ias-bar">
+          <span className="ias-round">
+            <Icon name="back" size={18} />
+          </span>
+        </div>
+        <div className="ias-panel">
+          <div className="ias-panel-head">
+            <span>{c.head}</span>
+            <span>{c.unit}</span>
+          </div>
+          <strong className={`ias-panel-num${s.digits === 0 ? ' is-empty' : ''}`}>
+            {c.prefix}
+            {typed}
+          </strong>
+          <span className="ias-panel-note">{c.note(full)}</span>
+        </div>
+        <div className="ias-keys">
+          {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '→'].map((k) => (
+            <span
+              key={k}
+              className={`${s.press === `k${k}` ? 'is-pressed' : ''}${k === '→' ? ' is-go' : ''}${k === '→' && full ? ' is-ready' : ''}${k === '→' && s.press === 'cta' ? ' is-pressed' : ''}`}
+            >
+              {k === '→' ? <Icon name="out" size={26} /> : k}
+            </span>
+          ))}
+        </div>
+        <span className="ias-homebar" />
+      </div>
+
+      <Done flow={flow} s={s} />
+    </div>
+  )
+}
+
 const ICONS: Array<{ name: string; bg: string; fg: string; d: string }> = [
   { name: 'Camera', bg: '#2B2F3A', fg: '#E9EAEE', d: 'M8 13h24v16H8zM15 13l2-3h6l2 3M20 25a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z' },
   { name: 'Photos', bg: '#FFFFFF', fg: '#F5BF0F', d: 'M20 9v22M9 20h22M12 12l16 16M28 12 12 28' },
@@ -199,7 +371,7 @@ const ICONS: Array<{ name: string; bg: string; fg: string; d: string }> = [
   { name: 'Books', bg: '#FF8A00', fg: '#FFFFFF', d: 'M11 12h8v17h-8zM21 12h8v17h-8z' },
 ]
 
-function Launch({ s, playing }: { s: State; playing: boolean }) {
+function Launch({ s }: { s: State }) {
   return (
     <div className="ias ias-launch" data-screen={s.screen}>
       <div className="ias-page ias-springboard">
@@ -230,8 +402,100 @@ function Launch({ s, playing }: { s: State; playing: boolean }) {
           ))}
         </div>
       </div>
-      <div className="ias-page ias-splash ias-splash-real">
-        {s.screen !== 'icons' && <Reel frames={REELS.launched} playing={playing} hold={1500} />}
+      <div className="ias-page ias-splash">
+        <i dangerouslySetInnerHTML={{ __html: logo }} />
+      </div>
+      <Home s={s} flow="launch" />
+    </div>
+  )
+}
+
+/* ---------- Floating components for photos and the UI board ---------- */
+
+/** The send keypad on its own, typing an amount, like a card lifted out of the app. */
+export function KeypadCard({ playing = true }: { playing?: boolean }) {
+  const [d, setD] = useState(0)
+  const [press, setPress] = useState<string | null>(null)
+  useEffect(() => {
+    if (!playing || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setD(5)
+      return
+    }
+    const keys = ['2', '0', '0', '0', '0']
+    const t: number[] = []
+    const loop = () => {
+      setD(0)
+      keys.forEach((k, i) => {
+        t.push(window.setTimeout(() => (setD(i + 1), setPress(k + i)), 900 + i * 420))
+        t.push(window.setTimeout(() => setPress(null), 900 + i * 420 + 160))
+      })
+      t.push(window.setTimeout(() => setPress('go'), 3600))
+      t.push(window.setTimeout(() => setPress(null), 3800))
+      t.push(window.setTimeout(loop, 6200))
+    }
+    loop()
+    return () => t.forEach(clearTimeout)
+  }, [playing])
+  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '→']
+  const typedKeys = ['2', '0', '0', '0', '0']
+  return (
+    <div className="ias-kcard">
+      <div className="ias-panel">
+        <div className="ias-panel-head">
+          <span>Send to Tolu</span>
+          <span>SATS</span>
+        </div>
+        <strong className={`ias-panel-num${d === 0 ? ' is-empty' : ''}`}>{TYPED.send[d]}</strong>
+      </div>
+      <div className="ias-keys">
+        {keys.map((k) => {
+          const hit = press !== null && press.startsWith(k) && typedKeys[Number(press.slice(1))] === k
+          return (
+            <span key={k} className={`${hit ? 'is-pressed' : ''}${k === '→' ? ' is-go' : ''}${k === '→' && d === 5 ? ' is-ready' : ''}${k === '→' && press === 'go' ? ' is-pressed' : ''}`}>
+              {k === '→' ? <Icon name="out" size={24} /> : k}
+            </span>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+/** A wallet card whose balance counts up as sats arrive. */
+export function ReceivedCard({ playing = true }: { playing?: boolean }) {
+  const [on, setOn] = useState(false)
+  useEffect(() => {
+    if (!playing || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setOn(true)
+      return
+    }
+    const t: number[] = []
+    const loop = () => {
+      setOn(false)
+      t.push(window.setTimeout(() => setOn(true), 1200))
+      t.push(window.setTimeout(loop, 6000))
+    }
+    loop()
+    return () => t.forEach(clearTimeout)
+  }, [playing])
+  return (
+    <div className={`ias-rcard${on ? ' is-on' : ''}`}>
+      <div className="ias-rcard-top">
+        <img src={coin} alt="" />
+        <div>
+          <span>Bitcoin wallet</span>
+          <strong>{on ? '118,559' : '87,719'} sats</strong>
+        </div>
+      </div>
+      <div className="ias-rcard-row">
+        <span className="ias-glyph is-in">
+          <Icon name="in" size={18} />
+        </span>
+        <div className="ias-row-main">
+          <strong>From Ada Okafor</strong>
+          <span>Lightning · Just now</span>
+        </div>
+        <strong className="ias-row-amount is-plus">+30,840 sats</strong>
       </div>
     </div>
   )
