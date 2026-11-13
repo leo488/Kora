@@ -81,7 +81,7 @@ export interface CaseSlot {
   /** First frame shown while a video loads. */
   poster?: string
   /** Something drawn in code on top of the photo or video. */
-  overlay?: 'ipaybtc-card'
+  overlay?: 'ipaybtc-card' | 'ipaybtc-pill'
   /** The live app, mapped onto the phone screen in the photo. */
   screen?: PhoneScreen
   /** A plate drawn in code instead of a photo. */
@@ -93,6 +93,9 @@ export interface CaseSlot {
     | 'ipaybtc-objects'
     | 'ipaybtc-components'
     | 'ipaybtc-tiles'
+    | 'ipaybtc-ills'
+  /** Pictures a code-drawn scene arranges. */
+  srcs?: string[]
   /** A real app card floating beside the person in the photo. */
   card?: { src: string; side: 'left' | 'right' }
 }
@@ -222,7 +225,10 @@ const IPAY_ILL = [
   plate('Character illustration: a receipt and a coin', '5683 / 4000', [ill31200, ill32400]),
   plate('Character illustration: banking done', '5683 / 4000', [ill41200, ill42400]),
 ]
-const IPAY_BILLBOARD = plate('Naira → Sats on a sidewalk billboard', '2400 / 1340', [billboard1200, billboard2400])
+const IPAY_BILLBOARD: CaseSlot = {
+  ...plate('Naira → Sats on a sidewalk billboard', '2400 / 1340', [billboard1200, billboard2400]),
+  overlay: 'ipaybtc-pill',
+}
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
@@ -291,7 +297,10 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_BUSSTOP },
       { kind: 'pair', slots: [withCard(IPAY_BEACH, cardWallets, 'left'), IPAY_ROADTRIP], inset: true },
       { kind: 'full', slot: IPAY_TOTE },
-      { kind: 'grid', columns: 2, slots: IPAY_ILL },
+      {
+        kind: 'full',
+        slot: { label: 'Character illustrations', ratio: '16 / 11', art: 'ipaybtc-ills', srcs: IPAY_ILL.map((s) => s.src!) },
+      },
       { kind: 'full', slot: IPAY_STAGE },
       { kind: 'full', slot: IPAY_COMPONENTS },
     ],

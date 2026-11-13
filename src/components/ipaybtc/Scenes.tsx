@@ -142,3 +142,48 @@ export function Tiles() {
     </div>
   )
 }
+
+/** The brand shape: two tilted coins merged into one form. */
+export function BrandShape({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 100 100" aria-hidden>
+      <g fill="currentColor" transform="rotate(-18 50 50)">
+        <ellipse cx="43" cy="62" rx="36" ry="25" />
+        <ellipse cx="60" cy="36" rx="27" ry="19" />
+      </g>
+    </svg>
+  )
+}
+
+/** The Naira → Sats billboard's pill, redrawn in the brand gradient with
+    the brand shape running through it as a pattern. Sits on the photo in
+    the photo's own coordinates. */
+export function BillboardPill() {
+  return (
+    <div className="ips-bb" aria-hidden>
+      <div className="ips-bb-pill">
+        <div className="ips-bb-run">
+          {Array.from({ length: 12 }, (_, k) => (
+            <BrandShape key={k} />
+          ))}
+        </div>
+        <svg className="ips-bb-arrow" viewBox="0 0 48 24">
+          <path d="M4 12h36M30 3l10 9-10 9" />
+        </svg>
+      </div>
+    </div>
+  )
+}
+
+/** The character illustrations on one board, each drifting on its own beat. */
+export function Illustrations({ srcs }: { srcs: string[] }) {
+  return (
+    <div className="ips ips-ills">
+      {srcs.map((src, k) => (
+        <div key={k} className="ips-ill">
+          <img src={src} alt="" loading="lazy" style={{ animationDelay: `${-k * 1.1}s` }} />
+        </div>
+      ))}
+    </div>
+  )
+}

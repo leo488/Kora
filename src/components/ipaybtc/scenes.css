@@ -319,3 +319,113 @@
 .kora-case-plate .ips-card img {
   width: 100%;
 }
+
+/* Billboard pill, placed in the photo's own coordinates (2400 × 1340). */
+.ips-bb {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  aspect-ratio: 2400 / 1340;
+  pointer-events: none;
+}
+
+.ips-bb-pill {
+  position: absolute;
+  left: 32.4%;
+  top: 35.7%;
+  width: 15.2%;
+  height: 12.7%;
+  border-radius: 999px;
+  overflow: hidden;
+  background: linear-gradient(100deg, #050e7f 20%, #0a31f5 70%, #3ed4ff);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.ips-bb-run {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 4%;
+  width: 200%;
+  color: rgba(136, 194, 237, 0.28);
+  animation: ips-run 6s linear infinite;
+}
+
+.ips-bb-run svg {
+  flex: 0 0 auto;
+  height: 78%;
+  width: auto;
+  aspect-ratio: 1;
+}
+
+@keyframes ips-run {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ips-bb-arrow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  transform: translate(-50%, -50%);
+  fill: none;
+  stroke: #fff778;
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: ips-nudge 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+@keyframes ips-nudge {
+  0%,
+  60%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  30% {
+    transform: translate(-38%, -50%);
+  }
+}
+
+/* Illustration board */
+.ips-ills {
+  background: #fff;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2cqw;
+  padding: 4cqw;
+}
+
+.ips-ill {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.kora-case-plate .ips-ill img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: ips-ill 5.2s ease-in-out infinite;
+}
+
+@keyframes ips-ill {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-2.5%) scale(1.015);
+  }
+}
