@@ -4,6 +4,7 @@ import { PROJECTS } from '../data'
 import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
+import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
    in images, then the next project and the contact block. */
@@ -142,7 +143,16 @@ function Plate({ slot, eager = false }: { slot: CaseSlot; eager?: boolean }) {
           slot.video ? (
             <video src={slot.src} muted loop autoPlay playsInline aria-label={slot.label} />
           ) : (
-            <img src={slot.src} alt={slot.label} loading={eager ? 'eager' : 'lazy'} />
+            <>
+              <img
+                src={slot.src}
+                srcSet={slot.srcSet}
+                sizes="(max-width: 760px) 100vw, 100vw"
+                alt={slot.label}
+                loading={eager ? 'eager' : 'lazy'}
+              />
+              {slot.screen && <ScreenOverlay screen={slot.screen} />}
+            </>
           )
         ) : (
           <figcaption>{slot.label}</figcaption>

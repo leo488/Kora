@@ -6,7 +6,22 @@
    Each image slot carries a `label` saying what belongs there. Until the art
    is made the page shows the slot as a grey panel with that label, so the
    page doubles as the shot list. When a plate is ready, give the slot its
-   `src` (and `video: true` for a loop). */
+   `src` (and `video: true` for a loop). A plate with `screen` also runs the
+   app on the phone in the photo (components/ipaybtc/ScreenOverlay.tsx). */
+
+import type { PhoneScreen } from './components/ipaybtc/ScreenOverlay'
+import table1600 from './assets/ipaybtc-table-1600.jpg'
+import table2800 from './assets/ipaybtc-table-2800.jpg'
+import tableFull from './assets/ipaybtc-table-full.jpg'
+import card1600 from './assets/ipaybtc-card-1600.jpg'
+import card2800 from './assets/ipaybtc-card-2800.jpg'
+import cardFull from './assets/ipaybtc-card-full.jpg'
+import icon1000 from './assets/ipaybtc-icon-1000.jpg'
+import icon1800 from './assets/ipaybtc-icon-1800.jpg'
+import iconFull from './assets/ipaybtc-icon-full.jpg'
+import hand1000 from './assets/ipaybtc-hand-1000.jpg'
+import hand1800 from './assets/ipaybtc-hand-1800.jpg'
+import handFull from './assets/ipaybtc-hand-full.jpg'
 
 export interface CaseSlot {
   /** What goes here — shown on the placeholder until `src` is set. */
@@ -14,7 +29,11 @@ export interface CaseSlot {
   /** Width / height, e.g. '16 / 9'. */
   ratio: string
   src?: string
+  /** Responsive sources for `src`, as an img srcset. */
+  srcSet?: string
   video?: boolean
+  /** The live app, mapped onto the phone screen in the photo. */
+  screen?: PhoneScreen
 }
 
 export type CaseBlock =
@@ -46,6 +65,58 @@ export interface CaseStudy {
 }
 
 const slot = (label: string, ratio = '16 / 9'): CaseSlot => ({ label, ratio })
+
+const set = (pairs: Array<[string, number]>) => pairs.map(([src, w]) => `${src} ${w}w`).join(', ')
+
+/* iPayBTC stills (4K, made in Magnific from Leo's reference scenes), each
+   with the light-mode v3 app placed on its phone. */
+const IPAY_TABLE: CaseSlot = {
+  label: 'iPayBTC on a walnut table with coffee, Bitcoin coins and notebooks',
+  ratio: '5504 / 3072',
+  src: tableFull,
+  srcSet: set([[table1600, 1600], [table2800, 2800], [tableFull, 5504]]),
+  screen: {
+    flow: 'send',
+    size: [5504, 3072],
+    corners: [[2318.9, 702.5], [3138.4, 876.4], [2655, 2607.5], [1801, 2404.3]],
+    radius: 50,
+    glare: 'linear-gradient(115deg, rgba(255,240,220,0.10) 0%, rgba(255,255,255,0) 45%, rgba(60,30,0,0.06) 100%)',
+  },
+}
+
+const IPAY_CARD: CaseSlot = {
+  label: 'The iPayBTC card going into a pink shirt pocket',
+  ratio: '5504 / 3072',
+  src: cardFull,
+  srcSet: set([[card1600, 1600], [card2800, 2800], [cardFull, 5504]]),
+}
+
+const IPAY_ICON: CaseSlot = {
+  label: 'The iPayBTC app icon on a phone home screen',
+  ratio: '3 / 4',
+  src: iconFull,
+  srcSet: set([[icon1000, 1000], [icon1800, 1800], [iconFull, 3584]]),
+  screen: {
+    flow: 'launch',
+    size: [3584, 4800],
+    corners: [[470, 400], [3124, 400], [3124, 6143], [470, 6143]],
+    radius: 50,
+  },
+}
+
+const IPAY_HAND: CaseSlot = {
+  label: 'A hand holding a phone, buying Bitcoin in iPayBTC',
+  ratio: '3 / 4',
+  src: handFull,
+  srcSet: set([[hand1000, 1000], [hand1800, 1800], [handFull, 3584]]),
+  screen: {
+    flow: 'buy',
+    size: [3584, 4800],
+    corners: [[580.6, 901.8], [1799.2, 530.1], [2713.9, 3195.1], [1518, 3646]],
+    radius: 50,
+    glare: 'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%)',
+  },
+}
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
@@ -84,20 +155,15 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
     ],
     // TODO(kora): add liveUrl once the site address is confirmed.
-    hero: slot('Hero — 3D iPayBTC mark floating on a soft brand-colour field (looping animation)', '16 / 10'),
+    hero: IPAY_TABLE,
     gallery: [
+      { kind: 'full', slot: IPAY_CARD },
+      { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND] },
       { kind: 'full', slot: slot('Brand colour composition — big flat colour blocks (animated)') },
       { kind: 'full', slot: slot('Hero 3D object — e.g. a Bitcoin vault or wallet, on a brand colour') },
       { kind: 'full', slot: slot('Colour band transition — thin stripes of the palette', '21 / 9') },
       { kind: 'full', slot: slot('Logo lockup — full wordmark on the primary brand colour') },
       { kind: 'full', slot: slot('Browser close-up — the iPayBTC website and address bar') },
-      {
-        kind: 'pair',
-        slots: [
-          slot('Phone — home screen with the iPayBTC app icon', '4 / 5'),
-          slot('Hand holding a phone — the pay or QR flow', '4 / 5'),
-        ],
-      },
       { kind: 'full', slot: slot('3D icon family over a large brand line (supergraphic)') },
       { kind: 'full', slot: slot('Brand colour composition 2 (animated)') },
       { kind: 'full', slot: slot('3D icon family — six icons on a light ground') },
