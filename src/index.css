@@ -8,8 +8,23 @@
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
-  --brand: #1a2db7;
-  --brand-dark: #052275;
+  /* Koraa’ brand colours (brand kit, colours/koraa-colours.css). Blue leads;
+     Plantain is the one thing to notice. */
+  --koraa-blue: #1a2db7;
+  --koraa-lagoon: #052275;
+  --koraa-ink: #0a0a0a;
+  --koraa-paper: #ffffff;
+  --koraa-harmattan: #e6e6e6;
+  --koraa-plantain: #d7f24b;
+  --koraa-jollof: #ff5a36;
+  --koraa-zobo: #ff8ec6;
+  --koraa-dusk: #b8a6ff;
+  --koraa-blue-light: #4456ff;
+  /* Blue Hour, the website hero gradient. Logo centred, no body text on it. */
+  --koraa-blue-hour: radial-gradient(110% 100% at 50% 0%, #4456ff 0%, #1a2db7 40%, #052275 75%, #0a0a0a 100%);
+
+  --brand: var(--koraa-blue);
+  --brand-dark: var(--koraa-lagoon);
   /* The brand blue is almost invisible against the near-black sections, so
      on-dark accents use this lighter tint of it instead. */
   --brand-bright: #4e62ff;
@@ -22,7 +37,7 @@
   --ornament-amber: #ffb020;
   --ornament-coral: #ff5a3d;
   /* The ground the arrows are knocked out of. */
-  --ornament-knockout: #1e1e1e;
+  --ornament-knockout: #0b0b0b;
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
@@ -31,14 +46,17 @@
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
+  /* Host Grotesk 500 is the brand's body weight. */
+  font-weight: 500;
+  /* Body copy carries the headings' tight tracking (Leo, 2026-11-12). */
+  letter-spacing: -0.015em;
   /* The whole site runs dark now, so the document ground is dark too — this is
      what shows during load and under an overscroll bounce, and a white flash
      there undoes the effect before the page has even painted. The tokens above
      stay light; `.kora-app.is-dark` re-points them for the components. */
   color-scheme: dark;
   color: var(--text);
-  background: #1e1e1e;
+  background: #0b0b0b;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -87,7 +105,9 @@ button,
    must not quietly take the focus ring with it. */
 
 :focus-visible {
-  outline: 2px solid var(--brand);
+  /* The accent for the ground: Plantain on dark, blue on light. A blue ring
+     on Ink was 1.98:1 and all but invisible. */
+  outline: 2px solid var(--accent-ink, var(--brand));
   outline-offset: 3px;
 }
 
