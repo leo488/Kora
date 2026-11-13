@@ -4478,3 +4478,33 @@
   background: var(--glare, none);
   pointer-events: none;
 }
+
+/* Centre-column blocks: the bento rhythm of the reference, where some plates
+   run edge to edge and others sit in the middle of the page. */
+.kora-case-gallery > .is-inset {
+  width: 64.4%;
+  align-self: center;
+}
+
+.kora-case-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.kora-case-art-ipaybtc {
+  background: #0a31f5;
+  color: #ffffff;
+}
+
+.kora-case-art-ipaybtc svg {
+  width: 44%;
+  height: auto;
+}
+
+@media (max-width: 760px) {
+  .kora-case-gallery > .is-inset {
+    width: 100%;
+  }
+}

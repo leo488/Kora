@@ -5,6 +5,7 @@ import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
+import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
    in images, then the next project and the contact block. */
@@ -103,10 +104,10 @@ export function CaseStudy() {
 function Block({ block }: { block: CaseBlock }) {
   switch (block.kind) {
     case 'full':
-      return <Plate slot={block.slot} />
+      return <Plate slot={block.slot} inset={block.inset} />
     case 'pair':
       return (
-        <div className="kora-case-pair">
+        <div className={`kora-case-pair${block.inset ? ' is-inset' : ''}`}>
           <Plate slot={block.slots[0]} />
           <Plate slot={block.slots[1]} />
         </div>
@@ -135,11 +136,21 @@ function Block({ block }: { block: CaseBlock }) {
 
 /** An image or loop — or, until it exists, a grey panel naming what goes
  *  there. */
-function Plate({ slot, eager = false }: { slot: CaseSlot; eager?: boolean }) {
+function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean }) {
   return (
-    <figure className="kora-case-plate kora-rx-media" style={{ aspectRatio: slot.ratio }}>
+    <figure
+      className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}`}
+      style={{ aspectRatio: slot.ratio }}
+    >
       <div className="kora-flare">
-        {slot.src ? (
+        {slot.art === 'ipaybtc-logo' ? (
+          <div
+            className="kora-case-art kora-case-art-ipaybtc"
+            role="img"
+            aria-label={slot.label}
+            dangerouslySetInnerHTML={{ __html: ipaybtcLogo }}
+          />
+        ) : slot.src ? (
           slot.video ? (
             <video src={slot.src} muted loop autoPlay playsInline aria-label={slot.label} />
           ) : (

@@ -34,11 +34,14 @@ export interface CaseSlot {
   video?: boolean
   /** The live app, mapped onto the phone screen in the photo. */
   screen?: PhoneScreen
+  /** A plate drawn in code instead of a photo. */
+  art?: 'ipaybtc-logo'
 }
 
 export type CaseBlock =
-  | { kind: 'full'; slot: CaseSlot }
-  | { kind: 'pair'; slots: [CaseSlot, CaseSlot] }
+  /** `inset` sits the block in the centre column instead of edge to edge. */
+  | { kind: 'full'; slot: CaseSlot; inset?: boolean }
+  | { kind: 'pair'; slots: [CaseSlot, CaseSlot]; inset?: boolean }
   | { kind: 'grid'; columns: number; slots: CaseSlot[] }
   | { kind: 'collage'; slots: CaseSlot[] }
 
@@ -91,9 +94,15 @@ const IPAY_CARD: CaseSlot = {
   srcSet: set([[card1600, 1600], [card2800, 2800], [cardFull, 5504]]),
 }
 
+const IPAY_LOGO: CaseSlot = {
+  label: 'The iPayBTC wordmark on Electric Blue',
+  ratio: '16 / 9',
+  art: 'ipaybtc-logo',
+}
+
 const IPAY_ICON: CaseSlot = {
   label: 'The iPayBTC app icon on a phone home screen',
-  ratio: '3 / 4',
+  ratio: '4 / 5',
   src: iconFull,
   srcSet: set([[icon1000, 1000], [icon1800, 1800], [iconFull, 3584]]),
   screen: {
@@ -106,7 +115,7 @@ const IPAY_ICON: CaseSlot = {
 
 const IPAY_HAND: CaseSlot = {
   label: 'A hand holding a phone, buying Bitcoin in iPayBTC',
-  ratio: '3 / 4',
+  ratio: '4 / 5',
   src: handFull,
   srcSet: set([[hand1000, 1000], [hand1800, 1800], [handFull, 3584]]),
   screen: {
@@ -158,7 +167,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     hero: IPAY_TABLE,
     gallery: [
       { kind: 'full', slot: IPAY_CARD },
-      { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND] },
+      { kind: 'full', slot: IPAY_LOGO, inset: true },
+      { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true },
       { kind: 'full', slot: slot('Brand colour composition — big flat colour blocks (animated)') },
       { kind: 'full', slot: slot('Hero 3D object — e.g. a Bitcoin vault or wallet, on a brand colour') },
       { kind: 'full', slot: slot('Colour band transition — thin stripes of the palette', '21 / 9') },
