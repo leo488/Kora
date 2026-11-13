@@ -22,6 +22,22 @@ import iconFull from './assets/ipaybtc-icon-full.jpg'
 import hand1000 from './assets/ipaybtc-hand-1000.jpg'
 import hand1800 from './assets/ipaybtc-hand-1800.jpg'
 import handFull from './assets/ipaybtc-hand-full.jpg'
+import scene_woman_1200 from './assets/ipaybtc-scene-woman-1200.jpg'
+import scene_woman_2400 from './assets/ipaybtc-scene-woman-2400.jpg'
+import scene_selfie_1200 from './assets/ipaybtc-scene-selfie-1200.jpg'
+import scene_selfie_2400 from './assets/ipaybtc-scene-selfie-2400.jpg'
+import scene_roadtrip_1200 from './assets/ipaybtc-scene-roadtrip-1200.jpg'
+import scene_roadtrip_2400 from './assets/ipaybtc-scene-roadtrip-2400.jpg'
+import scene_beach_1200 from './assets/ipaybtc-scene-beach-1200.jpg'
+import scene_beach_2400 from './assets/ipaybtc-scene-beach-2400.jpg'
+import scene_billboard_1200 from './assets/ipaybtc-scene-billboard-1200.jpg'
+import scene_billboard_2400 from './assets/ipaybtc-scene-billboard-2400.jpg'
+import scene_tote_1200 from './assets/ipaybtc-scene-tote-1200.jpg'
+import scene_tote_2400 from './assets/ipaybtc-scene-tote-2400.jpg'
+import scene_busstop_1200 from './assets/ipaybtc-scene-busstop-1200.jpg'
+import scene_busstop_2400 from './assets/ipaybtc-scene-busstop-2400.jpg'
+import scene_otp_1200 from './assets/ipaybtc-scene-otp-1200.jpg'
+import scene_otp_2400 from './assets/ipaybtc-scene-otp-2400.jpg'
 
 export interface CaseSlot {
   /** What goes here — shown on the placeholder until `src` is set. */
@@ -93,6 +109,22 @@ const IPAY_CARD: CaseSlot = {
   src: cardFull,
   srcSet: set([[card1600, 1600], [card2800, 2800], [cardFull, 5504]]),
 }
+
+/* iPayBTC campaign scenes (4K, made in Magnific with the brand artwork). */
+const scene = (label: string, ratio: string, s1200: string, s2400: string): CaseSlot => ({
+  label,
+  ratio,
+  src: s2400,
+  srcSet: set([[s1200, 1200], [s2400, 2400]]),
+})
+const IPAY_BILLBOARD = scene('A Naira to Sats billboard on a city sidewalk with a bench', '16 / 9', scene_billboard_1200, scene_billboard_2400)
+const IPAY_WOMAN = scene('A woman with the iPayBTC card and her phone', '4 / 5', scene_woman_1200, scene_woman_2400)
+const IPAY_TOTE = scene('A woman carrying the We Move In Sats tote', '4 / 5', scene_tote_1200, scene_tote_2400)
+const IPAY_ROADTRIP = scene('Two friends on a road trip, one with her phone', '16 / 9', scene_roadtrip_1200, scene_roadtrip_2400)
+const IPAY_SELFIE = scene('Three friends taking a selfie on a Lagos street', '4 / 5', scene_selfie_1200, scene_selfie_2400)
+const IPAY_BUSSTOP = scene('A Move Freely, Own Bitcoin poster at a bus shelter', '4 / 5', scene_busstop_1200, scene_busstop_2400)
+const IPAY_BEACH = scene('Friends on a beach at sunset', '16 / 9', scene_beach_1200, scene_beach_2400)
+const IPAY_OTP = scene('Illustration of a one-time code keeping an account safe', '1 / 1', scene_otp_1200, scene_otp_2400)
 
 const IPAY_LOGO: CaseSlot = {
   label: 'The iPayBTC wordmark on Electric Blue',
@@ -169,6 +201,12 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_CARD },
       { kind: 'full', slot: IPAY_LOGO, inset: true },
       { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true },
+      { kind: 'full', slot: IPAY_BILLBOARD },
+      { kind: 'pair', slots: [IPAY_WOMAN, IPAY_TOTE], inset: true },
+      { kind: 'full', slot: IPAY_ROADTRIP, inset: true },
+      { kind: 'pair', slots: [IPAY_SELFIE, IPAY_BUSSTOP], inset: true },
+      { kind: 'full', slot: IPAY_BEACH },
+      { kind: 'full', slot: IPAY_OTP, inset: true },
       { kind: 'full', slot: slot('Brand colour composition — big flat colour blocks (animated)') },
       { kind: 'full', slot: slot('Hero 3D object — e.g. a Bitcoin vault or wallet, on a brand colour') },
       { kind: 'full', slot: slot('Colour band transition — thin stripes of the palette', '21 / 9') },
@@ -177,33 +215,17 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: slot('3D icon family over a large brand line (supergraphic)') },
       { kind: 'full', slot: slot('Brand colour composition 2 (animated)') },
       { kind: 'full', slot: slot('3D icon family — six icons on a light ground') },
-      {
-        kind: 'pair',
-        slots: [
-          slot('Lifestyle photo — a customer with the app', '4 / 5'),
-          slot('Product detail — the iPayBTC card or a key screen', '4 / 5'),
-        ],
-      },
       { kind: 'full', slot: slot('Still life — phone on a desk with everyday objects') },
-      {
-        kind: 'pair',
-        slots: [
-          slot('Merch — cap', '1 / 1'),
-          slot('Merch — tote bag', '1 / 1'),
-        ],
-      },
       {
         kind: 'grid',
         columns: 5,
         slots: Array.from({ length: 10 }, (_, i) => slot(`Social post ${i + 1}`, '4 / 5')),
       },
       { kind: 'full', slot: slot('Web banner — lifestyle photo with headline panel') },
-      { kind: 'full', slot: slot('Out of home — three posters at a bus shelter') },
       {
         kind: 'collage',
         slots: Array.from({ length: 10 }, (_, i) => slot(`Portrait ${i + 1}`, '4 / 5')),
       },
-      { kind: 'full', slot: slot('Billboard — the campaign line in the city') },
       { kind: 'full', slot: slot('Logo sting — the mark animating on brand colour (video)') },
     ],
     next: '3Projects',
