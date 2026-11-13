@@ -108,7 +108,7 @@ export function LogoCycle() {
 export function Components() {
   return (
     <div className="ips ips-components">
-      <iframe src="/ipaybtc/motion-board.html" title="iPayBTC motion components" loading="lazy" tabIndex={-1} />
+      <iframe src={`${import.meta.env.BASE_URL}ipaybtc/motion-board.html`} title="iPayBTC motion components" loading="lazy" tabIndex={-1} />
     </div>
   )
 }
