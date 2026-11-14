@@ -1,37 +1,59 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import { Announcement } from './Announcement'
-import { Header } from './Header'
+import { THEME_KEY, ThemeContext, initialTheme } from '../theme/theme'
+import type { Theme } from '../theme/theme'
+import { DockedMasthead } from './Masthead'
+import { useFlareController } from '../hooks/useFlareController'
 import { Offices } from './Offices'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
+import { ContactProvider } from '../contact/ContactContext'
+import '../system.css'
 
 export function Layout() {
+  // Dark by default, with a light mode the visitor can switch to. The choice is
+  // remembered, and mirrored onto <html> so the document ground (what shows
+  // during load and under an overscroll bounce) matches the page.
+  const [theme, setTheme] = useState<Theme>(initialTheme)
+  const toggle = useCallback(
+    () => setTheme((current) => (current === 'dark' ? 'light' : 'dark')),
+    [],
+  )
   const { pathname } = useLocation()
+  const shown: Theme = theme
+  const themeValue = useMemo(() => ({ theme: shown, toggle }), [shown, toggle])
 
-  // Every route runs dark now — the light shell is gone. Kept as a class rather
-  // than folded into the base styles so the sections that are deliberately not
-  // black (the contact band, for one) still have something to opt out of.
-  const isDark = true
+  useEffect(() => {
+    document.documentElement.dataset.theme = shown
+  }, [shown])
 
-  // Home also runs its hero full-bleed, which means the two bars at the top of
-  // the page float over the film instead of stacking above it. Every other
-  // route keeps them in normal flow.
-  const isImmersive = pathname === '/'
+  useEffect(() => {
+    try {
+      localStorage.setItem(THEME_KEY, theme)
+    } catch {
+      // Not remembered across visits; the switch still works.
+    }
+  }, [theme])
+
+  const isHome = pathname === '/'
+  // The bottom-of-screen image flare, for every image on every page.
+  useFlareController()
 
   return (
-    <main
-      className={`kora-app${isDark ? ' is-dark' : ''}${
-        isImmersive ? ' is-immersive' : ''
-      }`}
-    >
-      <div className="kora-topbar">
-        <Announcement />
-        <Header />
-      </div>
-      <Outlet />
-      <Offices />
-      <Footer />
-      <CookieBar />
-    </main>
+    <ThemeContext.Provider value={themeValue}>
+      <main className={`kora-app is-${shown}`}>
+        {/* Every page wears the homepage masthead. Home drives it from its
+            own scroll; the rest show it docked at the top. */}
+        {/* The project brief modal lives here so every page can open it and
+            it inherits the theme. */}
+        <ContactProvider>
+          {!isHome && <DockedMasthead />}
+          <Outlet />
+          <Offices />
+          <Footer />
+          <CookieBar />
+        </ContactProvider>
+      </main>
+    </ThemeContext.Provider>
   )
 }

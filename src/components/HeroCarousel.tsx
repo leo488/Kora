@@ -153,7 +153,7 @@ export function HeroCarousel({
           .join(' ')
         const label = slide.caption
           ? `${slide.caption.brand} — frame ${slide.frame} of ${slide.frameCount}`
-          : `Kora — frame ${slide.frame} of ${slide.frameCount}`
+          : `Koraa’ — frame ${slide.frame} of ${slide.frameCount}`
 
         // A film already carries its own camera move, so it gets no pan and no
         // srcSet — just the poster underneath it until the first frame paints.

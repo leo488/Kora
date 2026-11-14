@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useInView } from '../hooks/useInView'
 import { ArrowIcon } from './icons'
 import { srcSetFor } from '../data'
 import type { Project } from '../data'
+import { caseLinkFor } from '../caseStudies'
 
 /** How long each plate holds before a multi-frame card moves on. */
 const HOLD_MS = 2800
@@ -36,7 +38,7 @@ export function WorkCard({ project, eager }: WorkCardProps) {
 
   return (
     <li ref={ref} className={`kora-work-item${visible ? ' is-visible' : ''}`}>
-      <a href="#" className="kora-work-card">
+      <Link to={caseLinkFor(project.name) ?? '/work'} className="kora-work-card">
         <div className="kora-work-thumb">
           {frames.map((image, i) => (
             <img
@@ -79,7 +81,7 @@ export function WorkCard({ project, eager }: WorkCardProps) {
 
           <ArrowIcon className="kora-work-arrow" />
         </div>
-      </a>
+      </Link>
     </li>
   )
 }

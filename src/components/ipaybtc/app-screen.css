@@ -1,0 +1,643 @@
+/* iPayBTC app v3, light mode. Drawn at 390 × 844 (the phone's own points). */
+
+.ias {
+  --ias-bg: #ffffff;
+  --ias-surface: #f4f5f9;
+  --ias-line: #eceef4;
+  --ias-text: #0b0f2e;
+  --ias-muted: #555b70;
+  --ias-faint: #8a8fa3;
+  --ias-blue: #0a31f5;
+  --ias-blue-down: #0727c4;
+  --ias-green: #0d8a5f;
+  --ias-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: absolute;
+  inset: 0;
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+  background: var(--ias-bg);
+  color: var(--ias-text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+  user-select: none;
+}
+
+.ias * {
+  box-sizing: border-box;
+}
+
+.ias-page {
+  position: absolute;
+  inset: 0;
+  background: var(--ias-bg);
+  transition:
+    transform 0.55s var(--ias-ease),
+    opacity 0.55s var(--ias-ease);
+  will-change: transform;
+}
+
+/* Status bar */
+
+.ias-status {
+  position: relative;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 30px 0 44px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ias-text);
+}
+
+.ias-status.is-light {
+  color: #fff;
+}
+
+.ias-island {
+  position: absolute;
+  left: 50%;
+  top: 11px;
+  width: 124px;
+  height: 36px;
+  margin-left: -62px;
+  border-radius: 20px;
+  background: #000;
+}
+
+.ias-status-icons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.ias-status-icons svg {
+  fill: currentColor;
+}
+
+/* Buttons */
+
+.ias-btn {
+  appearance: none;
+  border: 0;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--ias-surface);
+  color: var(--ias-text);
+  font: 600 15px/1 'DM Sans', system-ui, sans-serif;
+  transition:
+    transform 0.18s ease-out,
+    background-color 0.18s ease-out,
+    opacity 0.3s ease-out;
+}
+
+.ias-btn.is-primary {
+  background: var(--ias-blue);
+  color: #fff;
+}
+
+.ias-btn.is-pressed {
+  transform: scale(0.96);
+  background: var(--ias-blue-down);
+}
+
+.ias-btn.is-off {
+  opacity: 0.35;
+}
+
+.ias-homebar {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 134px;
+  height: 5px;
+  margin-left: -67px;
+  border-radius: 3px;
+  background: var(--ias-text);
+}
+
+/* Home */
+
+.ias-home-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px 0;
+  font-size: 18px;
+}
+
+.ias-head-icons {
+  display: flex;
+  gap: 14px;
+  color: var(--ias-text);
+}
+
+.ias-balance {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 26px 20px 0;
+}
+
+.ias-label {
+  font-size: 13px;
+  color: var(--ias-muted);
+}
+
+.ias-faint {
+  font-size: 12px;
+  color: var(--ias-faint);
+}
+
+.ias-balance-num {
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  animation: ias-rise 0.6s var(--ias-ease);
+}
+
+@keyframes ias-rise {
+  from {
+    transform: translateY(40%);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.ias-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 26px 20px 0;
+}
+
+.ias-section-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 20px 4px;
+  font-size: 15px;
+}
+
+.ias-section-head span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ias-blue);
+}
+
+.ias-list {
+  position: relative;
+  padding: 0 20px;
+}
+
+.ias-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 64px;
+  border-bottom: 1px solid var(--ias-line);
+  transition: transform 0.55s var(--ias-ease);
+}
+
+.ias-row-new {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 0;
+  transform: translateX(110%);
+}
+
+.ias-list.has-new .ias-row {
+  transform: translateY(64px);
+}
+
+.ias-list.has-new .ias-row-new {
+  transform: none;
+  transition-delay: 0.35s;
+}
+
+.ias-glyph {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--ias-surface);
+  color: var(--ias-text);
+}
+
+.ias-row-main,
+.ias-row-end {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ias-row-main {
+  flex: 1;
+}
+
+.ias-row-end {
+  align-items: flex-end;
+}
+
+.ias-row strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ias-row span {
+  font-size: 12px;
+  color: var(--ias-faint);
+}
+
+.ias-row em {
+  font-style: normal;
+  color: var(--ias-green);
+}
+
+.ias-tabs {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 86px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 10px 8px 0;
+  border-top: 1px solid var(--ias-line);
+  background: var(--ias-bg);
+}
+
+.ias-tabs span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ias-faint);
+}
+
+.ias-tabs i {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 1.6px solid currentColor;
+}
+
+.ias-tabs .is-on {
+  color: var(--ias-blue);
+}
+
+.ias-tabs .is-on i {
+  background: var(--ias-blue);
+}
+
+/* Amount */
+
+.ias-amount {
+  transform: translateX(100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.ias-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  font-size: 17px;
+}
+
+.ias-back {
+  position: absolute;
+  left: 20px;
+  font-size: 22px;
+}
+
+.ias-to {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 20px 0;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--ias-surface);
+}
+
+.ias-to .ias-glyph {
+  background: var(--ias-bg);
+}
+
+.ias-to div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ias-to strong {
+  font-size: 14px;
+}
+
+.ias-to span {
+  font-size: 12px;
+  color: var(--ias-faint);
+}
+
+.ias-amount-big {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 46px 20px 0;
+  height: 190px;
+}
+
+.ias-amount-big strong {
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.ias-amount-big strong small {
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  color: var(--ias-muted);
+}
+
+.ias-amount-big strong.is-empty {
+  color: var(--ias-faint);
+}
+
+.ias-amount-big span {
+  font-size: 13px;
+  color: var(--ias-muted);
+}
+
+.ias-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 4px;
+  padding: 0 28px;
+  margin-top: auto;
+}
+
+.ias-keys span {
+  display: grid;
+  place-items: center;
+  height: 58px;
+  border-radius: 16px;
+  font-size: 26px;
+  font-weight: 500;
+  transition: background-color 0.2s ease-out;
+}
+
+.ias-keys span.is-pressed {
+  background: var(--ias-surface);
+}
+
+.ias-cta {
+  margin: 14px 20px 42px;
+  height: 54px;
+  width: auto;
+}
+
+/* Done */
+
+.ias-done {
+  transform: translateY(100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.ias-done-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120px 20px 0;
+  flex: 1;
+}
+
+.ias-check {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--ias-green);
+  color: #fff;
+}
+
+.ias-check path {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+}
+
+.ias-done-label {
+  margin-top: 22px;
+  font-size: 15px;
+  color: var(--ias-muted);
+}
+
+.ias-done-amount {
+  margin-top: 6px;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.ias-sheet {
+  align-self: stretch;
+  margin-top: 34px;
+  padding: 4px 16px;
+  border-radius: 16px;
+  background: var(--ias-surface);
+}
+
+.ias-sheet div {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--ias-line);
+}
+
+.ias-sheet div:last-child {
+  border-bottom: 0;
+}
+
+.ias-sheet span {
+  color: var(--ias-muted);
+}
+
+/* Transaction states */
+
+.ias[data-screen='amount'] .ias-home,
+.ias[data-screen='done'] .ias-home {
+  transform: translateX(-28%);
+}
+
+.ias[data-screen='amount'] .ias-amount,
+.ias[data-screen='done'] .ias-amount {
+  transform: none;
+}
+
+.ias[data-screen='done'] .ias-done {
+  transform: none;
+}
+
+.ias[data-screen='done'] .ias-check path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.5s 0.35s var(--ias-ease);
+}
+
+/* Launch: the home screen, the app icon, the app opening */
+
+.ias-launch {
+  background: #050e7f;
+}
+
+.ias-springboard {
+  background:
+    radial-gradient(120% 70% at 20% 10%, #4da3ff 0%, rgba(77, 163, 255, 0) 60%),
+    radial-gradient(100% 60% at 90% 90%, #0a31f5 0%, rgba(10, 49, 245, 0) 70%),
+    #050e7f;
+}
+
+.ias-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 64px);
+  justify-content: space-between;
+  row-gap: 26px;
+  padding: 26px 27px 0;
+}
+
+.ias-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  transition: transform 0.2s ease-out;
+}
+
+.ias-app i {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 15px;
+}
+
+.ias-app i svg {
+  width: 40px;
+  height: 40px;
+}
+
+.ias-app-ipay i {
+  background: #0a31f5;
+  color: #fff;
+}
+
+.ias-app-ipay i svg {
+  width: 50px;
+  height: auto;
+}
+
+.ias-app.is-pressed {
+  transform: scale(0.9);
+}
+
+.ias-dock {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  height: 92px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.ias-dock i {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 15px;
+}
+
+.ias-dock svg {
+  width: 40px;
+  height: 40px;
+}
+
+.ias-splash {
+  display: grid;
+  place-items: center;
+  background: #0a31f5;
+  color: #fff;
+  transform-origin: 59px 113px;
+}
+
+.ias-splash i {
+  display: block;
+  width: 190px;
+}
+
+.ias-splash i svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ias-launch .ias-home {
+  transform-origin: 59px 113px;
+}
+
+.ias-launch[data-screen='icons'] .ias-splash,
+.ias-launch[data-screen='icons'] .ias-home {
+  transform: scale(0.16);
+  opacity: 0;
+  border-radius: 80px;
+}
+
+.ias-launch[data-screen='splash'] .ias-home {
+  transform: none;
+  opacity: 0;
+  transition: none;
+}
+
+.ias-launch[data-screen='home'] .ias-home {
+  transform: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ias-page,
+  .ias-row,
+  .ias-btn {
+    transition: none;
+  }
+  .ias-balance-num {
+    animation: none;
+  }
+}

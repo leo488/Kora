@@ -14,12 +14,60 @@
 .kora-app.is-dark {
   --text: rgba(255, 255, 255, 0.62);
   --text-h: #fff;
-  --bg: #1e1e1e;
-  --border: rgba(255, 255, 255, 0.14);
+  /* Near-black, darker than the old #1e1e1e (Leo, 2026-11-11). */
+  --bg: #0b0b0b;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.4);
   --code-bg: rgba(255, 255, 255, 0.08);
+  /* Raised panels: cards, image placeholders. */
+  --surface: #171717;
+  --surface-hover: #202020;
+  /* The accent that reads on this ground. Blue on Ink fails contrast (1.98:1),
+     so on dark the accent is Plantain. */
+  --accent-ink: var(--koraa-plantain);
 
-  background: #1e1e1e;
+  background: var(--bg);
   color: var(--text);
+}
+
+/* Light theme — the same tokens re-pointed, plus the few sections that paint
+   their own ground. */
+
+.kora-app.is-light {
+  /* 0.72, not 0.62: at 0.62 small grey text fell to 4.2:1 on the grey
+     plates. 0.72 clears 4.5:1 on both the page and the plates. */
+  --text: rgba(30, 30, 30, 0.72);
+  --text-h: #1e1e1e;
+  --bg: #f4f3ef;
+  --border: rgba(30, 30, 30, 0.14);
+  --border-strong: rgba(30, 30, 30, 0.4);
+  --code-bg: rgba(30, 30, 30, 0.06);
+  --surface: #e6e5e0;
+  --surface-hover: #dcdbd5;
+  --accent-ink: var(--brand);
+
+  background: var(--bg);
+  color: var(--text);
+}
+
+.kora-app.is-light .kora-announcement {
+  background: #e9e8e3;
+  color: rgba(30, 30, 30, 0.86);
+  border-bottom: 1px solid var(--border);
+}
+
+.kora-app.is-light .kora-footer {
+  background: var(--bg);
+}
+
+/* The client logos are drawn light for the dark ground. */
+.kora-app.is-light .kora-marquee-item img {
+  filter: invert(1);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  background: #f4f3ef;
 }
 
 /* The strip was a white band back when it sat above a light page. The site runs
@@ -27,7 +75,7 @@
    not a bright bar across the top of every page. */
 
 .kora-app.is-dark .kora-announcement {
-  background: #262626;
+  background: #141414;
   color: rgba(255, 255, 255, 0.86);
   border-bottom: 1px solid var(--border);
 }
@@ -40,12 +88,12 @@
 
 .kora-app.is-dark .kora-showcase-media,
 .kora-app.is-dark .kora-about-photo {
-  background: #2a2a2a;
+  background: #171717;
 }
 
 .kora-app.is-dark .kora-about,
 .kora-app.is-dark .kora-footer {
-  background: #1e1e1e;
+  background: var(--bg);
 }
 
 .kora-announcement {
@@ -216,7 +264,7 @@
 
 .kora-logo {
   height: 32px;
-  width: auto;
+  width: calc(100% - 2 * var(--kora-flare));
   display: block;
 }
 
@@ -1166,7 +1214,7 @@
 
 .kora-marquee-item img {
   display: block;
-  width: auto;
+  width: calc(100% - 2 * var(--kora-flare));
   /* Base height times the per-logo optical multiplier from the data. */
   height: calc(var(--kora-logo-h, 46px) * var(--kora-logo-scale, 1));
   opacity: 0.75;
@@ -1195,7 +1243,7 @@
 
 .kora-about-mark {
   height: 34px;
-  width: auto;
+  width: calc(100% - 2 * var(--kora-flare));
   /* Inline SVG now, so it paints from the section's own colour. */
   color: var(--text-h);
   overflow: visible;
@@ -1215,36 +1263,35 @@
   --kora-drop-step: 0.06s;
 }
 
-.kora-mark-drop path {
+/* No fades on the logo (brand rule): each glyph drops in from above the
+   viewBox, which the SVG clips, so it is hidden without any transparency. */
+/* `translate`, not `transform`: each glyph keeps its own spacing in its SVG
+   transform attribute, which a CSS transform would replace. */
+.kora-mark-drop > path {
   transform-box: fill-box;
-  transform-origin: center;
-  opacity: 0;
-  transform: translateY(-180%);
+  translate: 0 -180%;
 }
 
-.is-visible .kora-mark-drop path {
-  opacity: 1;
-  transform: translateY(0);
+.is-visible .kora-mark-drop > path {
+  translate: 0 0;
   transition:
-    opacity 0.34s ease-out,
     /* A touch of overshoot at the end, so each glyph lands rather than
        arriving — that settle is what makes it read as a drop. */
-    transform 0.72s cubic-bezier(0.2, 1.24, 0.36, 1);
+    translate 0.72s cubic-bezier(0.2, 1.24, 0.36, 1);
 }
 
-.kora-mark-drop path:nth-child(1) { transition-delay: calc(var(--kora-drop-step) * 0); }
-.kora-mark-drop path:nth-child(2) { transition-delay: calc(var(--kora-drop-step) * 1); }
-.kora-mark-drop path:nth-child(3) { transition-delay: calc(var(--kora-drop-step) * 2); }
-.kora-mark-drop path:nth-child(4) { transition-delay: calc(var(--kora-drop-step) * 3); }
-.kora-mark-drop path:nth-child(5) { transition-delay: calc(var(--kora-drop-step) * 4); }
-.kora-mark-drop path:nth-child(6) { transition-delay: calc(var(--kora-drop-step) * 5); }
-.kora-mark-drop path:nth-child(7) { transition-delay: calc(var(--kora-drop-step) * 6); }
+.kora-mark-drop > path:nth-child(2) { transition-delay: calc(var(--kora-drop-step) * 0); }
+.kora-mark-drop > path:nth-child(3) { transition-delay: calc(var(--kora-drop-step) * 1); }
+.kora-mark-drop > path:nth-child(4) { transition-delay: calc(var(--kora-drop-step) * 2); }
+.kora-mark-drop > path:nth-child(5) { transition-delay: calc(var(--kora-drop-step) * 3); }
+.kora-mark-drop > path:nth-child(6) { transition-delay: calc(var(--kora-drop-step) * 4); }
+.kora-mark-drop > path:nth-child(7) { transition-delay: calc(var(--kora-drop-step) * 5); }
+
 
 @media (prefers-reduced-motion: reduce) {
-  .kora-mark-drop path,
-  .is-visible .kora-mark-drop path {
-    opacity: 1;
-    transform: none;
+  .kora-mark-drop > path,
+  .is-visible .kora-mark-drop > path {
+    translate: none;
     transition: none;
   }
 }
@@ -1328,10 +1375,12 @@
 .kora-offices-grid {
   list-style: none;
   margin: 0;
-  padding: 0 28px;
+  padding: 0 24px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 64px 48px;
+  /* Two columns with the same gap as the footer's four, so each office lines
+     up with the first and third footer columns underneath. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 64px 32px;
 }
 
 .kora-office {
@@ -1525,10 +1574,9 @@
 }
 
 .kora-footer-top {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px 32px;
 }
 
 .kora-footer-col {
@@ -1540,7 +1588,7 @@
 
 .kora-footer-col h3 {
   margin: 0 0 2px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1570,7 +1618,9 @@
 }
 
 .kora-footer-logo {
-  width: min(100%, 1100px);
+  /* Gutter to gutter, like every other block on the page. */
+  width: 100%;
+  max-width: 1440px;
   height: auto;
   color: var(--text-h);
   overflow: visible;
@@ -1580,11 +1630,11 @@
 }
 
 .kora-footer-meta {
-  display: flex;
-  justify-content: space-between;
+  /* The same four columns as the links above, so each line sits under one. */
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  gap: 16px 32px;
   font-size: 13px;
   color: var(--text);
 }
@@ -1593,6 +1643,8 @@
    rather than as another line of small print. */
 
 .kora-footer-rc {
+  grid-column: 3;
+  justify-self: start;
   padding: 5px 12px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -1944,7 +1996,7 @@
 
 .kora-shape svg {
   display: block;
-  width: auto;
+  width: calc(100% - 2 * var(--kora-flare));
 }
 
 .kora-shape.is-blue {
@@ -2157,7 +2209,7 @@
 
 .kora-intro-mark {
   height: 46px;
-  width: auto;
+  width: calc(100% - 2 * var(--kora-flare));
   margin-bottom: 40px;
   filter: brightness(0) invert(1);
   animation:
@@ -2539,6 +2591,7 @@
   .kora-offices-grid {
     padding: 0 18px;
     gap: 48px;
+    grid-template-columns: 1fr;
   }
 
   /* Footer */
@@ -2791,8 +2844,13 @@
     font-size: 16px;
   }
 
+  .kora-footer-meta .kora-footer-rc {
+    grid-column: auto;
+  }
+
   .kora-footer-meta {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    justify-items: start;
     gap: 4px;
     font-size: 12px;
   }
@@ -2936,3 +2994,1671 @@
     display: none;
   }
 }
+
+/* =========================================================================
+   Home
+   Laid out after the Ragged Edge homepage: a full-screen hero with the lockup
+   across it, which docks into a cropped strip at the top as the page scrolls
+   up over the hero; pill navigation; one client per row; news; newsletter;
+   contact. Offices and footer below come from Layout.
+   ========================================================================= */
+
+.kora-rx {
+  /* Page gutter, shared with the offices band and the footer. */
+  --kora-gutter: 24px;
+  /* How much of the docked lockup stays on screen. */
+  --kora-strip: 46px;
+  position: relative;
+}
+
+/* Pills — the navigation and every button on Home share this shape. */
+
+.kora-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.kora-pill:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.kora-pill.is-active,
+.kora-pill.is-solid {
+  background: var(--text-h);
+  color: var(--bg);
+}
+
+/* Over the hero gradient the pills are always light-on-colour, whatever the
+   theme. */
+.kora-pills.is-bottom .kora-pill.is-active,
+.kora-pills.is-bottom .kora-pill.is-solid {
+  background: #fff;
+  color: #1e1e1e;
+}
+
+/* Plantain is the brand's "one thing to notice": the call to action lights
+   up in it. Ink on Plantain is 15.7:1. */
+.kora-pill.is-solid:hover {
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+}
+
+.kora-pill.is-large {
+  padding: 13px 26px;
+  font-size: 18px;
+}
+
+.kora-pills {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 130;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 24px;
+  pointer-events: none;
+  transition:
+    top 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    bottom 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-pills.is-bottom {
+  bottom: 24px;
+}
+
+.kora-pills.is-top {
+  /* Tucked under the docked lockup's visible strip. */
+  top: calc(var(--kora-strip) + 10px);
+}
+
+/* Over the page (not the hero) the frosted pills take the page's colours. */
+.kora-pills.is-top .kora-pill:not(.is-active):not(.is-solid) {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  color: var(--text-h);
+}
+
+.kora-pills.is-top .kora-pill:not(.is-active):not(.is-solid):hover {
+  background: var(--surface-hover);
+}
+
+/* Theme switch — a round pill in the floating nav, a plain icon in the header. */
+
+.kora-theme-toggle {
+  appearance: none;
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-h);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.kora-theme-toggle:hover {
+  background: var(--surface);
+}
+
+.kora-pills .kora-theme-toggle {
+  width: 33px;
+  height: 33px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.kora-pills.is-top .kora-theme-toggle {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  color: var(--text-h);
+}
+
+.kora-pills-group {
+  display: flex;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+/* Masthead — the lockup is fixed and glides from the middle of the hero to
+   the top of the screen as --kora-p runs 0 → 1, ending cropped so only the
+   bottom of the letters shows. The bar behind it fades in as it docks. */
+
+.kora-rx-masthead-bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 110;
+  height: calc(var(--kora-strip) + 10px + 34px + 12px);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.kora-rx.is-docked .kora-rx-masthead-bar {
+  opacity: 1;
+}
+
+.kora-rx-masthead-logo {
+  position: fixed;
+  left: var(--kora-gutter);
+  right: var(--kora-gutter);
+  top: 0;
+  z-index: 120;
+  display: block;
+  color: #fff;
+  /* The two end positions in terms of the lockup's own height (the box is
+     as tall as the lockup): centred in the viewport at 0, and at 1 lifted so
+     only --kora-strip of it is left showing. */
+  --kora-y0: calc(50svh - 50%);
+  --kora-y1: calc(var(--kora-strip) - 100%);
+  transform: translateY(
+    calc(var(--kora-y0) + (var(--kora-y1) - var(--kora-y0)) * var(--kora-p, 0))
+  );
+  transition: color 0.3s ease;
+}
+
+.kora-rx.is-docked .kora-rx-masthead-logo {
+  color: var(--text-h);
+}
+
+.kora-rx-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* The lockup sits still: the brand's own logo animation plays in the intro
+   curtain (Intro.tsx), once per visit. */
+
+/* Hero — calm stills, held in place while the page slides up over them. */
+
+.kora-rx-hero {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  height: 100svh;
+  min-height: 480px;
+  overflow: hidden;
+  background: #101010;
+}
+
+.kora-rx-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.kora-rx-page {
+  position: relative;
+  z-index: 1;
+}
+
+.kora-rx-page-body {
+  background: var(--bg);
+}
+
+/* Hero hand-over, after the reference: the page colour washes over the hero
+   as the statement rises across it, so the stills give way to the page
+   rather than being cut off by it. Driven by --kora-p (0 → 1 over the first
+   screen of scroll). */
+.kora-rx-hero-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--bg);
+  opacity: clamp(0, calc((var(--kora-p, 0) - 0.35) / 0.45), 1);
+  pointer-events: none;
+}
+
+/* The statement reads white over the photograph and settles into the
+   heading colour as the wash completes. */
+.kora-rx > .kora-rx-page > .kora-rx-statement h1,
+.kora-rx > .kora-rx-page > .kora-rx-statement p {
+  color: color-mix(
+    in srgb,
+    var(--text-h) calc(clamp(0, (var(--kora-p, 0) - 0.35) / 0.45, 1) * 100%),
+    #fff
+  );
+}
+
+/* Statement */
+
+.kora-rx-statement {
+  /* Clears the docked masthead, so the heading is never tucked under it. */
+  padding: calc(var(--kora-strip) + 120px) var(--kora-gutter) clamp(72px, 8vw, 128px);
+}
+
+.kora-rx-statement h1 {
+  margin: 0 0 14px;
+  font-size: clamp(28px, 2.6vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  color: var(--text-h);
+}
+
+.kora-rx-statement p {
+  max-width: 44ch;
+  font-size: clamp(22px, 2.3vw, 36px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+/* Reveal on scroll */
+
+/* Rises from behind a mask rather than fading in (brand rule: no fades). The
+   clip opens from the bottom edge up while the block slides into place. */
+.kora-rx-reveal {
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(32px);
+  transition:
+    clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kora-rx-reveal.is-visible {
+  clip-path: inset(0 0 0 0);
+  transform: none;
+}
+
+/* Images arrive with a curved leading edge: the corners on their left side
+   start deeply rounded and straighten out as the image scrolls up into
+   place, like a sheet being laid flat. Tied to scroll where the browser
+   supports it; elsewhere images simply sit square. */
+
+@supports (animation-timeline: view()) {
+  .kora-rx-curve {
+    animation: kora-rx-flatten linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+}
+
+@keyframes kora-rx-flatten {
+  from {
+    border-top-left-radius: 30% 60%;
+    border-bottom-left-radius: 30% 60%;
+    transform: translateX(4%);
+  }
+  to {
+    border-top-left-radius: 0 0;
+    border-bottom-left-radius: 0 0;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-rx-reveal,
+  .kora-rx-curve {
+    opacity: 1;
+    filter: none;
+    clip-path: none;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Partnerships — one client per row, hairlines between */
+
+.kora-rx-work {
+  padding: 0 var(--kora-gutter);
+}
+
+.kora-rx-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.kora-rx-row {
+  padding: 28px 0 64px;
+  border-top: 1px solid var(--border);
+}
+
+.kora-rx-row-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px var(--kora-gutter);
+  color: inherit;
+  text-decoration: none;
+}
+
+.kora-rx-row-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.kora-rx-row-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+/* Project number, set like a label so the list reads as an index. */
+.kora-rx-row-index {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.kora-rx-row-text h2 {
+  margin: 0;
+  font-size: clamp(24px, 2.1vw, 32px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.kora-rx-row-detail {
+  max-width: 30ch;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.kora-rx-row-line {
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-row-stat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.kora-rx-row-meta {
+  color: var(--text);
+}
+
+.kora-rx-row-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+}
+
+.kora-rx-row-media img,
+.kora-rx-row-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kora-rx-center {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.kora-rx-work + .kora-brands {
+  margin-top: clamp(80px, 9vw, 140px);
+}
+
+/* Happenings */
+
+.kora-rx-news {
+  padding: clamp(56px, 7vw, 104px) var(--kora-gutter) clamp(80px, 9vw, 140px);
+}
+
+.kora-rx-news-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.kora-rx-news-head h2,
+.kora-rx-news-head p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-h);
+}
+
+.kora-rx-news-head p {
+  color: var(--text);
+}
+
+.kora-rx-news-grid {
+  list-style: none;
+  margin: 0 0 48px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.kora-rx-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.25s ease;
+}
+
+.kora-rx-card:hover {
+  background: var(--surface-hover);
+}
+
+/* Blank until the posts have their own images — a deeper tone of the card,
+   so it still reads as a picture slot. */
+.kora-rx-card-media {
+  aspect-ratio: 1 / 1;
+  background: color-mix(in srgb, var(--surface) 82%, var(--text-h) 10%);
+}
+
+.kora-rx-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 28px 22px;
+  text-align: center;
+}
+
+.kora-rx-card-kind {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-h);
+}
+
+.kora-rx-card h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--text-h);
+  text-wrap: balance;
+}
+
+.kora-rx-card-by {
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* Newsletter */
+
+.kora-rx-newsletter {
+  padding: clamp(48px, 6vw, 88px) var(--kora-gutter);
+  border-top: 1px solid var(--border);
+}
+
+.kora-rx-newsletter h2,
+.kora-rx-contact h2 {
+  margin: 0;
+  font-size: clamp(34px, 3.6vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-newsletter h2 {
+  margin-bottom: 24px;
+}
+
+.kora-rx-newsletter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.kora-rx-newsletter-form input {
+  width: min(300px, 100%);
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 16px;
+  outline: none;
+}
+
+.kora-rx-newsletter-form input:focus-visible {
+  border-color: var(--text-h);
+}
+
+.kora-rx-newsletter small {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.kora-rx-newsletter-done {
+  margin-bottom: 14px;
+  font-size: 20px;
+  color: var(--text-h);
+}
+
+/* Contact — heading and rows on the left, a portrait slot top right. */
+
+.kora-rx-contact {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 32px var(--kora-gutter);
+  padding: clamp(48px, 6vw, 88px) var(--kora-gutter) clamp(80px, 9vw, 140px);
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 110px;
+}
+
+.kora-rx-contact-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.kora-rx-contact-rows {
+  margin: 0;
+  max-width: 640px;
+}
+
+.kora-rx-contact-rows > div {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 16px;
+  padding: 8px 0;
+  font-size: 15px;
+}
+
+.kora-rx-contact-rows dt {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.kora-rx-contact-rows dd {
+  margin: 0;
+}
+
+.kora-rx-contact-rows a {
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.kora-rx-contact-rows a:hover {
+  text-decoration: underline;
+}
+
+.kora-rx-copy {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.kora-rx-copy:hover {
+  color: var(--text-h);
+}
+
+.kora-rx-contact-photo {
+  align-self: start;
+  aspect-ratio: 4 / 5;
+  background: var(--surface);
+}
+
+/* Phone */
+
+@media (max-width: 760px) {
+  .kora-rx {
+    /* Matches the offices band and footer on a phone. */
+    --kora-gutter: 18px;
+    --kora-strip: 26px;
+  }
+
+  .kora-pills {
+    padding: 0 12px;
+    gap: 6px;
+  }
+
+  .kora-pills-group {
+    gap: 4px;
+  }
+
+  .kora-pill {
+    padding: 6px 11px;
+    font-size: 13px;
+  }
+
+  .kora-pills .kora-theme-toggle {
+    width: 29px;
+    height: 29px;
+  }
+
+  .kora-rx-masthead-bar {
+    height: calc(var(--kora-strip) + 10px + 29px + 10px);
+  }
+
+  /* Contact folds into Book A Call on a phone; there is no room for both. */
+  .kora-pills-group:last-child .kora-pill:not(.is-solid) {
+    display: none;
+  }
+
+  .kora-rx-row-link,
+  .kora-rx-contact {
+    grid-template-columns: 1fr;
+  }
+
+  .kora-rx-row-text {
+    gap: 14px;
+  }
+
+  .kora-rx-row-media {
+    order: 2;
+  }
+
+  .kora-rx-row-text h2 {
+    order: 0;
+  }
+
+  .kora-rx-news-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .kora-rx-contact-rows > div {
+    grid-template-columns: 1fr auto;
+  }
+
+  .kora-rx-contact-rows dt {
+    grid-column: 1 / -1;
+  }
+
+  .kora-rx-contact-photo {
+    max-width: 320px;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Case study (/work/:slug)
+
+   Hero plate, then the intro (facts on the left, the story in a narrow
+   column), then the work as a run of full-width plates with thin gaps, then
+   the next project and a contact form. Until real assets land every plate is
+   a grey panel that names the shot it is waiting for.
+   ------------------------------------------------------------------------ */
+
+.kora-case {
+  --case-gutter: 24px;
+  --case-gap: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Plates */
+
+.kora-case-plate {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kora-case-plate > img,
+.kora-case-plate > video,
+.kora-case-plate .kora-flare > img,
+.kora-case-plate .kora-flare > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The shot label: small, quiet, centred, so the grey reads as a deliberate
+   placeholder rather than a broken image. */
+.kora-case-plate figcaption {
+  max-width: 28ch;
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+/* Hero */
+
+.kora-case-hero {
+  padding: 0 var(--case-gutter);
+}
+
+.kora-case-hero .kora-case-plate {
+  max-height: 86svh;
+  width: 100%;
+}
+
+/* Intro */
+
+.kora-case-intro {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 32px;
+  padding: 120px var(--case-gutter) 140px;
+}
+
+.kora-case-facts {
+  grid-column: 1 / span 3;
+}
+
+.kora-case-facts dl {
+  margin: 0;
+  position: sticky;
+  top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kora-case-facts dt {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.kora-case-facts dd {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-h);
+}
+
+.kora-case-copy {
+  grid-column: 5 / span 6;
+  display: flex;
+  flex-direction: column;
+}
+
+.kora-case-copy h1 {
+  margin: 0 0 28px;
+  font-size: clamp(40px, 4.6vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.kora-case-summary {
+  font-size: clamp(20px, 1.7vw, 26px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text-h);
+}
+
+.kora-case-highlights {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.kora-case-highlights li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-h);
+  font-size: 16px;
+}
+
+.kora-case-section {
+  margin-top: 56px;
+}
+
+.kora-case-section h2 {
+  margin: 0 0 14px;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  color: var(--text-h);
+}
+
+.kora-case-section p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.kora-case-section p + p {
+  margin-top: 14px;
+}
+
+.kora-case-live {
+  align-self: flex-start;
+  margin-top: 48px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-h);
+  text-decoration: none;
+  font-size: 15px;
+  transition: background 0.2s ease;
+}
+
+.kora-case-live:hover {
+  background: var(--surface);
+}
+
+/* Gallery */
+
+.kora-case-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--case-gap);
+  padding: 0 var(--case-gutter);
+}
+
+/* Alternate the grey a touch so a run of placeholders reads as separate
+   plates rather than one long slab. */
+.kora-case-gallery > .kora-case-plate:nth-child(even) {
+  background: var(--surface-hover);
+}
+
+.kora-case-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--case-gap);
+}
+
+.kora-case-pair .kora-case-plate:last-child {
+  background: var(--surface-hover);
+}
+
+.kora-case-grid {
+  display: grid;
+  gap: var(--case-gap);
+}
+
+.kora-case-grid .kora-case-plate:nth-child(odd) {
+  background: var(--surface-hover);
+}
+
+.kora-case-grid figcaption {
+  font-size: 12px;
+}
+
+/* A loose mosaic: two portraits span two rows so the wall is not a plain
+   grid. Ten portraits plus two doubles fill four columns by three rows
+   exactly, with no holes. */
+.kora-case-collage {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: var(--case-gap);
+}
+
+.kora-case-collage .kora-case-plate {
+  aspect-ratio: 3 / 4 !important;
+}
+
+.kora-case-collage .kora-case-plate:nth-child(1),
+.kora-case-collage .kora-case-plate:nth-child(7) {
+  grid-row: span 2;
+  aspect-ratio: auto !important;
+  background: var(--surface-hover);
+}
+
+.kora-case-collage figcaption {
+  font-size: 12px;
+}
+
+/* Next project */
+
+.kora-case-next {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--case-gap);
+  margin-top: 140px;
+  padding: 0 var(--case-gutter);
+  color: inherit;
+  text-decoration: none;
+}
+
+.kora-case-next-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+}
+
+.kora-case-next-text span {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.kora-case-next-text strong {
+  font-weight: 500;
+  font-size: clamp(40px, 5vw, 80px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-h);
+}
+
+.kora-case-next-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.kora-case-next-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.kora-case-next:hover .kora-case-next-media img {
+  transform: scale(1.03);
+}
+
+/* Contact */
+
+.kora-case-contact {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 32px;
+  padding: 140px var(--case-gutter);
+}
+
+.kora-case-contact-text {
+  grid-column: 1 / span 4;
+}
+
+.kora-case-contact-text h2 {
+  margin: 0 0 40px;
+  font-size: clamp(32px, 3.4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.kora-case-contact-text dl {
+  margin: 0;
+}
+
+.kora-case-contact-text dt {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.kora-case-contact-text dd {
+  margin: 0;
+}
+
+.kora-case-contact-text a {
+  color: var(--text-h);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.kora-case-form,
+.kora-case-contact-done {
+  grid-column: 7 / span 6;
+}
+
+.kora-case-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.kora-case-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kora-case-form label span {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.kora-case-form input,
+.kora-case-form textarea {
+  font: inherit;
+  font-size: 17px;
+  color: var(--text-h);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  padding: 8px 0 12px;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.kora-case-form input:focus,
+.kora-case-form textarea:focus {
+  outline: none;
+  border-bottom-color: var(--text-h);
+}
+
+.kora-case-form button {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 13px 28px;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  background: var(--text-h);
+  color: var(--bg);
+  transition: opacity 0.2s ease;
+}
+
+.kora-case-form button:hover {
+  opacity: 0.85;
+}
+
+.kora-case-contact-done {
+  font-size: 20px;
+  color: var(--text-h);
+}
+
+/* Tablet and phone */
+
+@media (max-width: 900px) {
+  .kora-case {
+    --case-gutter: 16px;
+    --case-gap: 6px;
+  }
+
+  .kora-case-intro,
+  .kora-case-contact {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 72px;
+    padding-bottom: 88px;
+  }
+
+  .kora-case-facts,
+  .kora-case-copy,
+  .kora-case-contact-text,
+  .kora-case-form,
+  .kora-case-contact-done {
+    grid-column: 1 / -1;
+  }
+
+  .kora-case-facts {
+    order: 2;
+    margin-top: 56px;
+  }
+
+  .kora-case-facts dl {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 16px;
+  }
+
+  .kora-case-contact-text {
+    margin-bottom: 48px;
+  }
+
+  .kora-case-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .kora-case-collage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kora-case-next {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 88px;
+  }
+
+  .kora-case-next-text {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .kora-case-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .kora-case-plate figcaption {
+    font-size: 12px;
+  }
+}
+
+/* Every page but Home: the homepage masthead, docked from the start. The
+   spacer is the height of the docked bar, so the page starts below it. */
+
+.kora-site-head-spacer {
+  height: calc(var(--kora-strip) + 10px + 34px + 12px);
+}
+
+@media (max-width: 760px) {
+  .kora-site-head-spacer {
+    height: calc(var(--kora-strip) + 10px + 29px + 10px);
+  }
+}
+
+/* Inner pages use Home's sections as they are. Their statement sits under the
+   spacer that already clears the docked masthead, so it needs less top room. */
+
+.kora-rx-sub .kora-rx-statement {
+  padding-top: clamp(56px, 7vw, 104px);
+}
+
+.kora-rx-news.is-page {
+  padding-top: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Koraa’ intro: the brand's logo animation over the Blue Hour gradient, once
+   per visit. The curtain lifts away (no fades, per the brand rules).
+   --------------------------------------------------------------------------- */
+
+.koraa-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--koraa-blue-hour);
+  cursor: pointer;
+  will-change: transform;
+}
+
+.koraa-intro-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.koraa-intro.is-leaving {
+  animation: kora-intro-lift 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* Labels: the brand's label style (Host Grotesk 600, uppercase, tracked). */
+.kora-label {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.kora-label sup {
+  /* Same size as the label: at 0.8em the count fell under 10px. */
+  font-size: 1em;
+  vertical-align: 0.3em;
+}
+
+.kora-rx-work-label {
+  padding-bottom: 18px;
+}
+
+/* Project names light up as they reach their place: dim on entry, full
+   heading colour by the time the row is a third of the way up the screen. */
+@supports (animation-timeline: view()) {
+  .kora-rx-row-text h2 {
+    animation: kora-rx-title-lit linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+}
+
+@keyframes kora-rx-title-lit {
+  from {
+    color: color-mix(in srgb, var(--text-h) 28%, var(--bg));
+  }
+  to {
+    color: var(--text-h);
+  }
+}
+
+/* "View" pill that follows the pointer over a project image. */
+.kora-rx-view {
+  position: absolute;
+  left: var(--kora-vx, 50%);
+  top: var(--kora-vy, 50%);
+  z-index: 2;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+  font-size: 13px;
+  font-weight: 600;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kora-rx-row-link:hover .kora-rx-view {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .kora-rx-row-link:hover .kora-rx-row-media {
+    cursor: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-rx-row-text h2 {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The image animation, after Ragged Edge: where an image crosses the bottom
+   of the screen its sides flare outward in a quarter curve, as if the picture
+   is being drawn up from under the screen's edge. The frame (.kora-rx-media)
+   holds the space; inside it a layer reaches --kora-flare past each side and
+   is clipped back to the frame. Near the bottom of the screen a script
+   (hooks/useFlareController.ts) swaps that clip for the curved one.
+   --------------------------------------------------------------------------- */
+
+.kora-rx-media {
+  --kora-flare: 80px;
+  position: relative;
+}
+
+.kora-flare {
+  position: absolute;
+  inset: 0 calc(-1 * var(--kora-flare));
+  overflow: hidden;
+  clip-path: inset(0 var(--kora-flare));
+  background: var(--surface);
+}
+
+/* The picture fills the whole layer, flare reach included, so the curve
+   uncovers more of the picture rather than an empty edge. */
+.kora-flare > img,
+.kora-flare > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The flare reaches past the frames; it must not widen the page. */
+.kora-rx-page-body,
+.kora-rx-sub,
+.kora-case {
+  overflow-x: clip;
+}
+
+.kora-rx-card-media.kora-rx-media {
+  background: none;
+}
+
+.kora-rx-card-media .kora-flare {
+  background: color-mix(in srgb, var(--surface) 82%, var(--text-h) 10%);
+}
+
+.kora-case-plate.kora-rx-media {
+  overflow: visible;
+  background: none;
+}
+
+.kora-case-plate .kora-flare {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kora-case-gallery > .kora-case-plate:nth-child(even) .kora-flare,
+.kora-case-pair .kora-case-plate:last-child .kora-flare,
+.kora-case-grid .kora-case-plate:nth-child(odd) .kora-flare,
+.kora-case-collage .kora-case-plate:nth-child(1) .kora-flare,
+.kora-case-collage .kora-case-plate:nth-child(7) .kora-flare {
+  background: var(--surface-hover);
+}
+
+@media (max-width: 760px) {
+  .kora-rx-media {
+    --kora-flare: 48px;
+  }
+}
+
+/* Narrowest phones (320–374px): the pill nav needs about 60px back to keep
+   Book A Call on screen. */
+@media (max-width: 374px) {
+  .kora-pills {
+    padding: 0 8px;
+    gap: 4px;
+  }
+
+  .kora-pills-group {
+    gap: 2px;
+  }
+
+  .kora-pill {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .kora-pills .kora-theme-toggle {
+    width: 27px;
+    height: 27px;
+  }
+}
+
+/* Cookie notice as a small card in the corner, as on the reference. Full
+   width along the bottom, it covered the exact strip where the images flare
+   as they cross the bottom of the screen. */
+.kora-cookiebar {
+  left: auto;
+  right: 24px;
+  bottom: 24px;
+  width: min(380px, calc(100vw - 48px));
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+}
+
+.kora-cookiebar p {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.kora-cookiebar button {
+  padding: 8px 18px;
+  font-size: 14px;
+}
+
+.kora-app:has(.kora-cookiebar) .kora-footer {
+  padding-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .kora-cookiebar {
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    width: min(250px, calc(100vw - 24px));
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .kora-cookiebar p {
+    font-size: 12px;
+  }
+
+  .kora-cookiebar button {
+    align-self: flex-start;
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Live app screens on still photos (components/ipaybtc/ScreenOverlay.tsx).
+   The overlay sits over the photo's layer; its one child is the 390 × 844
+   screen, moved onto the phone with a perspective transform.
+   --------------------------------------------------------------------------- */
+
+.kora-screen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.kora-screen-glass {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  backface-visibility: hidden;
+}
+
+.kora-screen-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glare, none);
+  pointer-events: none;
+}
+
+/* Centre-column blocks: the bento rhythm of the reference, where some plates
+   run edge to edge and others sit in the middle of the page. */
+.kora-case-gallery > .is-inset {
+  width: min(64.4%, 1080px);
+  align-self: center;
+}
+
+/* Keep edge-to-edge plates from growing past a comfortable size on wide
+   screens (a 16" MacBook and up). */
+.kora-case-gallery > * {
+  max-width: 1680px;
+  width: 100%;
+  align-self: center;
+}
+
+/* The live app on a card of its own. */
+.kora-case-art-ui {
+  background: #eef0f4;
+}
+
+.kora-ui-screen {
+  position: relative;
+  height: 82%;
+  aspect-ratio: 390 / 844;
+  border-radius: 7% / 3.2%;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -30px rgba(4, 2, 70, 0.45);
+}
+
+.kora-case-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.kora-case-art-ipaybtc {
+  background: #0a31f5;
+  color: #ffffff;
+}
+
+.kora-case-art-ipaybtc svg {
+  width: 44%;
+  height: auto;
+}
+
+@media (max-width: 760px) {
+  .kora-case-gallery > .is-inset {
+    width: 100%;
+  }
+}
+
+/* The iPayBTC card, drawn in code over the borderless video. */
+.kora-paycard {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  aspect-ratio: 1.586;
+  transform: translate(-50%, -50%);
+  border-radius: 4.6% / 7.3%;
+  background: linear-gradient(135deg, #050e7f 0%, #050e7f 25%, #0a31f5 78%, #3ed4ff 100%);
+  box-shadow: 0 2.4vw 5vw rgba(4, 2, 70, 0.35);
+}
+.kora-paycard-logo {
+  position: absolute;
+  right: 7%;
+  top: 9%;
+  width: 34%;
+  color: #fff;
+}
+.kora-paycard-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: currentColor;
+}
+.kora-paycard-chip {
+  position: absolute;
+  left: 8%;
+  top: 40%;
+  width: 13%;
+  aspect-ratio: 1.3;
+  border-radius: 14%;
+  background: linear-gradient(135deg, #f4f1e6, #c9c3ad);
+}
+.kora-paycard-tap {
+  position: absolute;
+  left: 24%;
+  top: 41.5%;
+  width: 7%;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.kora-ui-screen .ias {
+  width: 100%;
+  height: 100%;
+}
+
+/* Artwork that runs to its edges (posters, palettes, construction boards)
+   sits inside the plate itself rather than across the flare reach. */
+.kora-case-plate .kora-flare > img.kora-case-fit {
+  left: var(--kora-flare);
+  right: var(--kora-flare);
+  width: calc(100% - 2 * var(--kora-flare));
+}
+
+/* Refreeg: notification pills over the photos */
+.rf-chip {
+  position: absolute;
+  z-index: 3;
+  container-type: inline-size;
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+  transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.15);
+  transition-delay: 0.25s;
+}
+.rf-chip.is-in {
+  opacity: 1;
+  transform: none;
+}
+.rf-chip-pill {
+  display: flex;
+  align-items: center;
+  gap: 4.5cqw;
+  padding: 3.2cqw 7cqw 3.2cqw 3.2cqw;
+  border-radius: 999px;
+  background: #fff;
+  color: #0e1b14;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+}
+.rf-chip-icon {
+  flex: none;
+  width: 15cqw;
+  height: 15cqw;
+  border-radius: 50%;
+  background: #0e1b14;
+  display: grid;
+  place-items: center;
+}
+.rf-chip-icon img {
+  width: 64%;
+  height: 64%;
+  display: block;
+}
+.rf-chip-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6cqw;
+  line-height: 1.2;
+}
+.rf-chip-text strong {
+  font-weight: 500;
+  font-size: 5cqw;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rf-chip-text span {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 4.7cqw;
+  color: #4a554e;
+}
+.rf-chip-text em {
+  font-style: normal;
+  font-size: 3.8cqw;
+  color: #7a837d;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rf-chip { transition: none; opacity: 1; transform: none; }
+}
+@font-face { font-family: 'Geist'; src: url('./assets/fonts/Geist-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('./assets/fonts/Geist-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }

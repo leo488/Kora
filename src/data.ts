@@ -523,3 +523,53 @@ export const PARTNERS: Partner[] = [
   { name: 'FourStrides', logo: logoFourStrides, scale: 0.90 },
   { name: '3PROJECTS', logo: logoThreeProjects, scale: 0.74 },
 ]
+
+/* Posts — shared by the Blog index and the Happenings strip on Home.
+   TODO(kora): placeholder posts — swap for real articles (and their images)
+   when they exist. */
+
+export interface Post {
+  title: string
+  category: string
+  date: string
+}
+
+export const POSTS: Post[] = [
+  {
+    title: 'Why Bold Branding Wins in Fintech',
+    category: 'Branding',
+    date: 'Jun 2026',
+  },
+  {
+    title: 'Designing for Trust: Lessons From iPayBTC',
+    category: 'Case Study',
+    date: 'May 2026',
+  },
+  {
+    title: 'The Future of Visual Identity in Web3',
+    category: 'Insights',
+    date: 'Apr 2026',
+  },
+  {
+    title: 'What a Global Studio Learns From Local Markets',
+    category: 'Studio Notes',
+    date: 'Mar 2026',
+  },
+]
+
+/** A reel of stills only — no films — for a calmer hero. Each entry names a
+    project and which of its plates to show. */
+export function buildStillReel(entries: Array<[string, number]>): HeroSlide[] {
+  return entries.map(([name, index], i): HeroSlide => {
+    const project = PROJECTS.find((p) => p.name === name)
+    const image = project?.images[index]
+    if (!project || !image) throw new Error(`No plate ${index} for ${name}`)
+    return {
+      key: `${name}-${index}`,
+      src: image.src,
+      srcSet: srcSetFor(image),
+      frame: i + 1,
+      frameCount: entries.length,
+    }
+  })
+}

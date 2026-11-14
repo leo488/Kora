@@ -2,9 +2,12 @@ import { Link } from 'react-router-dom'
 import { NAV_LINKS, OFFICES } from '../data'
 import { useInView } from '../hooks/useInView'
 import { KoraMark } from './KoraMark'
+import { useContact } from '../contact/useContact'
+import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
 
 export function Footer() {
   const [footerRef, footerVisible] = useInView<HTMLElement>()
+  const openContact = useContact()
 
   return (
     <footer
@@ -43,10 +46,15 @@ export function Footer() {
 
         <div className="kora-footer-col">
           <h3>Get In Touch</h3>
-          <a href="mailto:hello@kora.studio">hello@kora.studio</a>
-          <a href="#" className="kora-cta kora-footer-cta">
+          <a href={`mailto:${NEW_BUSINESS_EMAIL}`}>{NEW_BUSINESS_EMAIL}</a>
+          <Link to="/brand-test">Take the brand test</Link>
+          <button
+            type="button"
+            className="kora-pill is-solid is-large kora-footer-cta"
+            onClick={() => openContact({ prefer: 'A call' })}
+          >
             Book A Call
-          </a>
+          </button>
         </div>
       </div>
 
@@ -55,7 +63,7 @@ export function Footer() {
       <KoraMark className="kora-footer-logo kora-mark-drop" />
 
       <div className="kora-footer-meta kora-container">
-        <span>&copy; 2026 Kora. All rights reserved.</span>
+        <span>&copy; 2026 Koraa Studios Ltd. All rights reserved.</span>
         {/* TODO(kora): placeholder registration number — swap for the real RC. */}
         <span className="kora-footer-rc">RC 1234567</span>
         <span>Designed &amp; built with care.</span>

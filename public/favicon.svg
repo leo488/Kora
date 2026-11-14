@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <title>Kora</title>
-  <!--
-    The Kora mark lifted from logo.svg (its first two paths — the wordmark is
-    dropped, since nothing is legible at 16px). It is knocked out in white on a
-    brand-blue tile rather than left as the near-black original, so it holds up
-    against a dark browser chrome as well as a light one.
-  -->
-  <rect width="64" height="64" rx="14" fill="#1A2DB7"/>
-  <svg x="15" y="10" width="34" height="44" viewBox="0 11.3252 33.6849 42.5528" preserveAspectRatio="xMidYMid meet">
-    <path fill="#fff" d="M33.6809 30.4894V52.5046C33.6809 53.2636 33.0665 53.878 32.3075 53.878H2.14404C1.20432 53.878 0.276648 53.2194 0.0517578 52.1311C0.12806 51.854 0.300744 51.5889 0.577841 51.3881L8.56546 45.7056L31.5163 29.373C32.4239 28.7264 33.6849 29.381 33.6849 30.4894H33.6809Z"/>
-    <path fill="#fff" d="M28.6474 14.8753C28.6462 14.8753 28.645 14.8759 28.6443 14.877L3.87936 52.8938C3.43761 53.5765 2.79105 53.8777 2.14449 53.8777C1.20477 53.8777 0.277097 53.2191 0.0522067 52.1308C0.0160636 51.9742 0 51.7934 0 51.6127V12.269C0 11.7429 0.397574 11.3252 0.887514 11.3252H26.9025C28.6207 11.3252 29.6326 13.3718 28.6505 14.8736C28.6498 14.8746 28.6487 14.8753 28.6474 14.8753Z"/>
-  </svg>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50.43 -50.43 100.85 100.85" width="400" height="400" fill="#1A2DB7"><g transform="translate(-0.76 -0.08)"><path d="M-7.98 -43H25.00L4.83 43H-21.95Z" transform="rotate(0)"/><path d="M-7.98 -43H25.00L4.83 43H-21.95Z" transform="rotate(60)"/><path d="M-7.98 -43H25.00L4.83 43H-21.95Z" transform="rotate(120)"/></g></svg>

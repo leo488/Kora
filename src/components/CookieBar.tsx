@@ -46,7 +46,7 @@ export function CookieBar() {
         identifiable information is stored or shared.
       </p>
 
-      <button type="button" onClick={dismiss}>
+      <button type="button" className="kora-pill is-solid" onClick={dismiss}>
         Got it!
       </button>
     </div>
