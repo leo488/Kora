@@ -299,28 +299,21 @@ const IPAY_POSTER_SPEND = art('Bitcoin was never meant to sit still. Spend it.',
 
 /* 3PROJECTS: assets cut from the brand guidelines and pitch deck exports
    (Leo's Figma), laid out as plates rather than pasted guideline pages. */
-const P3 = import.meta.glob('./assets/3p/*.jpg', { eager: true, import: 'default' }) as Record<string, string>
+const P3 = import.meta.glob('./assets/3p/billboard-*.jpg', { eager: true, import: 'default' }) as Record<string, string>
 const p3 = (label: string, ratio: string, name: string, fit = false): CaseSlot => ({
   ...plate(label, ratio, [P3[`./assets/3p/${name}-1200.jpg`], P3[`./assets/3p/${name}-2400.jpg`]]),
   fit,
 })
-const P3_HERO = p3('The 3PROJECTS mark in 3D on Electric Cobalt', '16 / 9', 'hero')
-const P3_GRADIENT = p3('The gradient mark on Deep Enterprise', '16 / 9', 'gradient')
-const P3_CONSTRUCTION = p3('How the mark is built: three blocks, three angles', '16 / 9', 'construction', true)
-const P3_LOCKUP = p3('The lockup on its grid', '2464 / 1520', 'lockup', true)
-const P3_ICON = p3('Icon construction', '2803 / 1822', 'icon', true)
-const P3_WORDMARK = p3('Wordmark construction', '2803 / 1822', 'wordmark', true)
-const P3_MARK = p3('The mark on Electric Cobalt', '4 / 5', 'mark')
-const P3_LOCKUP_DEEP = p3('The lockup on Deep Enterprise', '4 / 5', 'lockup-deep')
 const P3_BILLBOARD = p3('“Complexity isn’t a hurdle. It’s an asset.” on a street billboard', '3 / 2', 'billboard')
-const P3_TOTE = p3('The 3PROJECTS tote', '4 / 5', 'tote')
-const P3_PORTRAIT = p3('Portrait with the pixel pattern', '4 / 5', 'portrait')
-const P3_PALETTE = p3('The full palette', '2889 / 1901', 'palette', true)
-const P3_FIGURES = p3('Figures set in Bitroad', '2882 / 1690', 'figures', true)
-const P3_POSTER_APRON = p3('Campaign layout: Electric Cobalt', '2764 / 1774', 'poster-apron', true)
-const P3_POSTER_PURPLE = p3('Campaign layout: the pattern', '2764 / 1774', 'poster-purple', true)
-const P3_POSTER_97 = p3('“97% of projects don’t make it in.”', '2784 / 1744', 'poster-97', true)
-const P3_F1 = p3('3PROJECTS × Formula 1: “Not just faster. Smarter.”', '3444 / 1414', 'f1', true)
+import p3Film from './assets/3p/3projects-brand-film.mp4'
+import p3FilmPoster from './assets/3p/film-poster.jpg'
+const P3_FILM: CaseSlot = {
+  label: 'The 3PROJECTS brand guide, animated',
+  ratio: '16 / 9',
+  src: p3Film,
+  poster: p3FilmPoster,
+  video: true,
+}
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
@@ -400,31 +393,40 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: '3projects',
     title: '3PROJECTS',
-    // TODO(kora): Leo to confirm the summary, facts and write-up. The line
-    // below is 3PROJECTS' own positioning statement from their guidelines.
-    summary: 'We do not deliver technology. We architect transformation.',
+    // Copy taken from the 3PROJECTS Visual Identity Guidelines.
+    summary:
+      '3PROJECTS operates at the intersection of enterprise transformation and technology-driven business optimization, working with organizations between $50M and $1B in revenue.',
     facts: [
       { label: 'Client', value: '3PROJECTS' },
       { label: 'Services', value: 'Brand identity, Logo system, Campaign' },
       { label: 'Year', value: '2026' },
     ],
-    highlights: [],
-    sections: [],
-    hero: P3_HERO,
-    gallery: [
-      { kind: 'full', slot: P3_GRADIENT },
-      { kind: 'full', slot: P3_CONSTRUCTION, inset: true },
-      { kind: 'full', slot: P3_LOCKUP, inset: true },
-      { kind: 'pair', slots: [P3_ICON, P3_WORDMARK] },
-      { kind: 'pair', slots: [P3_MARK, P3_LOCKUP_DEEP], inset: true },
-      { kind: 'full', slot: P3_BILLBOARD },
-      { kind: 'pair', slots: [P3_TOTE, P3_PORTRAIT], inset: true },
-      { kind: 'full', slot: P3_PALETTE },
-      { kind: 'full', slot: P3_FIGURES, inset: true },
-      { kind: 'pair', slots: [P3_POSTER_APRON, P3_POSTER_PURPLE] },
-      { kind: 'full', slot: P3_POSTER_97, inset: true },
-      { kind: 'full', slot: P3_F1 },
+    highlights: ['We do not deliver technology. We architect transformation.'],
+    sections: [
+      {
+        heading: 'Positioning',
+        paragraphs: [
+          'The transformation architect for large enterprises. Not a vendor of solutions but a partner in redesigning how an organization grows and operates.',
+          'We help enterprises grow revenue and optimize operational cost by uncovering the inefficiencies they have stopped seeing. We identify hidden inefficiencies before they escalate, rather than waiting for a problem to be defined for us.',
+        ],
+      },
+      {
+        heading: 'The mark',
+        paragraphs: [
+          'The 3Projects logo is a precise geometric construct designed to reflect the brand’s core identity as a Transformation Architect. The mark consists of three distinct, layered blocks that represent the fundamental phases of our strategic process: Discover, Design and Transform.',
+          'These forms are arranged in an ascending, upward trajectory to symbolize continuous growth and the reclamation of lost revenue. The flat vertical edge on the left creates a structural lock-up with the typography, giving the mark stability and order.',
+        ],
+      },
+      {
+        heading: 'The promise',
+        paragraphs: [
+          'We do the right things, properly. Less work. Better outcomes.',
+          'These guidelines are the single source of truth for the identity. They exist so that any document, screen or post is recognisably ours before a word is read.',
+        ],
+      },
     ],
+    hero: P3_BILLBOARD,
+    gallery: [{ kind: 'full', slot: P3_FILM }],
     next: 'Ipaybtc',
   },
 ]
