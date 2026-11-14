@@ -114,6 +114,9 @@ export interface CaseSlot {
   keypad?: boolean
   /** The photo eases out from a slight zoom while it is on screen. */
   zoom?: boolean
+  /** Show the whole picture inside the plate: the flare reach is not
+   *  filled, so artwork that runs to its edges is not cropped. */
+  fit?: boolean
 }
 
 export type CaseBlock =
@@ -294,6 +297,24 @@ const IPAY_WALLPOSTER = art('An iPayBTC poster on a wall', '4 / 5', 'ipaybtc-wal
 const IPAY_POSTER_TEA = art('Buy Bitcoin before your tea gets cold.', '4 / 5', 'ipaybtc-poster-tea')
 const IPAY_POSTER_SPEND = art('Bitcoin was never meant to sit still. Spend it.', '4 / 5', 'ipaybtc-poster-spend')
 
+/* 3PROJECTS: assets cut from the brand guidelines and pitch deck exports
+   (Leo's Figma), laid out as plates rather than pasted guideline pages. */
+const P3 = import.meta.glob('./assets/3p/billboard-*.jpg', { eager: true, import: 'default' }) as Record<string, string>
+const p3 = (label: string, ratio: string, name: string, fit = false): CaseSlot => ({
+  ...plate(label, ratio, [P3[`./assets/3p/${name}-1200.jpg`], P3[`./assets/3p/${name}-2400.jpg`]]),
+  fit,
+})
+const P3_BILLBOARD = p3('“Complexity isn’t a hurdle. It’s an asset.” on a street billboard', '3 / 2', 'billboard')
+import p3Film from './assets/3p/3projects-brand-film.mp4'
+import p3FilmPoster from './assets/3p/film-poster.jpg'
+const P3_FILM: CaseSlot = {
+  label: 'The 3PROJECTS brand guide, slide by slide',
+  ratio: '16 / 9',
+  src: p3Film,
+  poster: p3FilmPoster,
+  video: true,
+}
+
 export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: 'ipaybtc',
@@ -368,6 +389,45 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: FX20, inset: true },
     ],
     next: '3Projects',
+  },
+  {
+    slug: '3projects',
+    title: '3PROJECTS',
+    // Copy taken from the 3PROJECTS Visual Identity Guidelines.
+    summary:
+      '3PROJECTS operates at the intersection of enterprise transformation and technology-driven business optimization, working with organizations between $50M and $1B in revenue.',
+    facts: [
+      { label: 'Client', value: '3PROJECTS' },
+      { label: 'Services', value: 'Brand identity, Logo system, Campaign' },
+      { label: 'Year', value: '2026' },
+    ],
+    highlights: ['We do not deliver technology. We architect transformation.'],
+    sections: [
+      {
+        heading: 'Positioning',
+        paragraphs: [
+          'The transformation architect for large enterprises. Not a vendor of solutions but a partner in redesigning how an organization grows and operates.',
+          'We help enterprises grow revenue and optimize operational cost by uncovering the inefficiencies they have stopped seeing. We identify hidden inefficiencies before they escalate, rather than waiting for a problem to be defined for us.',
+        ],
+      },
+      {
+        heading: 'The mark',
+        paragraphs: [
+          'The 3Projects logo is a precise geometric construct designed to reflect the brand’s core identity as a Transformation Architect. The mark consists of three distinct, layered blocks that represent the fundamental phases of our strategic process: Discover, Design and Transform.',
+          'These forms are arranged in an ascending, upward trajectory to symbolize continuous growth and the reclamation of lost revenue. The flat vertical edge on the left creates a structural lock-up with the typography, giving the mark stability and order.',
+        ],
+      },
+      {
+        heading: 'The promise',
+        paragraphs: [
+          'We do the right things, properly. Less work. Better outcomes.',
+          'These guidelines are the single source of truth for the identity. They exist so that any document, screen or post is recognisably ours before a word is read.',
+        ],
+      },
+    ],
+    hero: P3_BILLBOARD,
+    gallery: [{ kind: 'full', slot: P3_FILM }],
+    next: 'Ipaybtc',
   },
 ]
 
