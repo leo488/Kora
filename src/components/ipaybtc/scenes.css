@@ -729,3 +729,116 @@
     transition: none;
   }
 }
+
+/* The 3D set on a pastel board */
+.ips-icons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  place-items: center;
+  padding: 6% calc(var(--kora-flare, 0px) + 10%);
+  background: #e4f1fb;
+}
+
+.kora-case-plate .ips-icons img {
+  width: 62%;
+  height: 80%;
+  object-fit: contain;
+  opacity: 0;
+  transform: translateY(10%) scale(0.9);
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.kora-case-plate .ips-icons.is-in img {
+  opacity: 1;
+  transform: none;
+}
+
+.ips-icontile {
+  display: grid;
+  place-items: center;
+}
+
+.kora-case-plate .ips-icontile img {
+  width: 58%;
+  height: 70%;
+  object-fit: contain;
+}
+
+/* Merch and wall: the photo keeps its own shape, centred on its ground */
+.ips-merch,
+.ips-wallposter {
+  display: grid;
+  place-items: center;
+}
+
+.ips-wallposter {
+  background: #7a7e75;
+}
+
+.ips-merch-box {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 3712 / 4608;
+  max-width: 100%;
+}
+
+.kora-case-plate .ips-merch-box > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ips-merch-logo {
+  position: absolute;
+  color: #fff778;
+}
+
+.ips-merch-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ips-merch.is-cap .ips-merch-logo {
+  left: 35%;
+  top: 22.5%;
+  width: 22%;
+  transform: rotate(-6deg) skewY(-4deg);
+  opacity: 0.94;
+}
+
+.ips-merch.is-tote .ips-merch-logo {
+  left: 31%;
+  top: 50%;
+  width: 36%;
+  opacity: 0.94;
+}
+
+.ips-wallposter-paper {
+  position: absolute;
+  left: 18.4%;
+  top: 13.2%;
+  width: 62.7%;
+  height: 70.9%;
+  transform: rotate(-0.45deg);
+  mix-blend-mode: multiply;
+}
+
+.ips-wallposter-paper .ips-post {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-case-plate .ips-icons img {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

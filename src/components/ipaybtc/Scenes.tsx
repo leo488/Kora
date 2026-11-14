@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import './scenes.css'
 import ipaybtcLogo from '../../assets/ipaybtc-logo.svg?raw'
-import o1 from '../../assets/ipaybtc3d/o1.webp'
-import o2 from '../../assets/ipaybtc3d/o2.webp'
-import o3 from '../../assets/ipaybtc3d/o3.webp'
-import o8 from '../../assets/ipaybtc3d/o8.webp'
+import d3coin from '../../assets/ipaybtc-3d/coin.webp'
+import d3ring from '../../assets/ipaybtc-3d/ring.webp'
+import d3gift from '../../assets/ipaybtc-3d/gift.webp'
+import d3bank from '../../assets/ipaybtc-3d/bank.webp'
+import d3check from '../../assets/ipaybtc-3d/check.webp'
+import d3swap from '../../assets/ipaybtc-3d/swap.webp'
+import capImg from '../../assets/ipaybtc-cap-2400.jpg'
+import toteImg from '../../assets/ipaybtc-tote-2400.jpg'
+import wallImg from '../../assets/ipaybtc-wall-2400.jpg'
 import { AppScreen } from './AppScreen'
 import type { AppFlow, Screen } from './AppScreen'
 
@@ -53,10 +58,10 @@ function useCycle(length: number, every: number) {
 
 /* Each line comes with one of our 3D objects. */
 const LINES: Array<[string, string, string]> = [
-  ['YOUR BITCOIN', 'CAN TRAVEL.', o8],
-  ['BEFORE YOUR', 'TEA GETS COLD.', o1],
-  ['PAY NEPA', 'IN SATS.', o2],
-  ['NO BORDER.', 'NO PERMISSION.', o3],
+  ['YOUR BITCOIN', 'CAN TRAVEL.', d3swap],
+  ['BEFORE YOUR', 'TEA GETS COLD.', d3coin],
+  ['PAY NEPA', 'IN SATS.', d3check],
+  ['NO BORDER.', 'NO PERMISSION.', d3bank],
 ]
 
 /** Campaign type whose words swap, like Wise's FULL SPEED / MIN FEES, with
@@ -277,11 +282,11 @@ export function WebDash({ playing }: { playing: boolean }) {
 type Post = { bg: string; fg: string; lines: string[]; sub?: string; obj: string }
 
 export const POSTS: Post[] = [
-  { bg: '#0a31f5', fg: '#fff778', lines: ['Your Naira', 'can’t travel.', 'Your Bitcoin can.'], obj: o8 },
-  { bg: '#fff778', fg: '#050e7f', lines: ['Buy Bitcoin', 'before your', 'tea gets cold.'], obj: o1 },
-  { bg: '#050e7f', fg: '#fff778', lines: ['Pay NEPA', 'in sats.'], sub: 'Airtime, data and light bills, straight from your Bitcoin.', obj: o2 },
-  { bg: '#88c2ed', fg: '#050e7f', lines: ['No bank opening hours.', 'No border.', 'No permission.'], obj: o3 },
-  { bg: '#0a31f5', fg: '#fff', lines: ['Bitcoin was', 'never meant', 'to sit still.'], sub: 'Spend it.', obj: o1 },
+  { bg: '#0a31f5', fg: '#fff778', lines: ['Your Naira', 'can’t travel.', 'Your Bitcoin can.'], obj: d3swap },
+  { bg: '#fff778', fg: '#050e7f', lines: ['Buy Bitcoin', 'before your', 'tea gets cold.'], obj: d3coin },
+  { bg: '#050e7f', fg: '#fff778', lines: ['Pay NEPA', 'in sats.'], sub: 'Airtime, data and light bills, straight from your Bitcoin.', obj: d3check },
+  { bg: '#88c2ed', fg: '#050e7f', lines: ['No bank opening hours.', 'No border.', 'No permission.'], obj: d3bank },
+  { bg: '#0a31f5', fg: '#fff', lines: ['Bitcoin was', 'never meant', 'to sit still.'], sub: 'Spend it.', obj: d3ring },
 ]
 
 /** One 4:5 social post. */
@@ -362,6 +367,63 @@ export function PostWall() {
         {[...row2, ...row2, ...row2, ...row2].map((p, k) => (
           <SocialPost key={k} p={p} />
         ))}
+      </div>
+    </div>
+  )
+}
+
+const ICONS: [string, string][] = [
+  [d3coin, 'The iPayBTC coin'],
+  [d3ring, 'A ring of iPayBTC coins'],
+  [d3swap, 'Swap arrows with a coin'],
+  [d3gift, 'A gift box'],
+  [d3check, 'A tick'],
+  [d3bank, 'A bank'],
+]
+
+/** The 3D set on a pastel board, like Surgepay's icon grid. */
+export function IconGrid() {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, true)
+  return (
+    <div ref={ref} className={`ips ips-icons${on ? ' is-in' : ''}`}>
+      {ICONS.map(([src, alt], k) => (
+        <img key={src} src={src} alt={alt} style={{ transitionDelay: `${k * 80}ms` }} />
+      ))}
+    </div>
+  )
+}
+
+/** One 3D object alone on a flat colour. */
+export function IconTile({ icon = 'coin', bg = '#fff9c4' }: { icon?: 'coin' | 'ring'; bg?: string }) {
+  return (
+    <div className="ips ips-icontile" style={{ background: bg }}>
+      <img src={icon === 'ring' ? d3ring : d3coin} alt={icon === 'ring' ? 'A ring of iPayBTC coins' : 'The iPayBTC coin'} />
+    </div>
+  )
+}
+
+/** Cap or tote on pastel, with the real wordmark placed on the fabric. */
+export function Merch({ kind }: { kind: 'cap' | 'tote' }) {
+  const cap = kind === 'cap'
+  return (
+    <div className={`ips ips-merch is-${kind}`} style={{ background: cap ? '#c5e4fa' : '#fcf8a8' }}>
+      <div className="ips-merch-box">
+        <img src={cap ? capImg : toteImg} alt={cap ? 'An iPayBTC cap' : 'An iPayBTC tote bag'} />
+        <span className="ips-merch-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+      </div>
+    </div>
+  )
+}
+
+/** A post pasted on a concrete wall. */
+export function WallPoster({ post = 1 }: { post?: number }) {
+  return (
+    <div className="ips ips-wallposter">
+      <div className="ips-merch-box">
+        <img src={wallImg} alt="An iPayBTC poster taped to a wall" />
+        <div className="ips-wallposter-paper">
+          <SocialPost p={POSTS[post]} />
+        </div>
       </div>
     </div>
   )

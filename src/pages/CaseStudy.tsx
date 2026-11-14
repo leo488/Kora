@@ -5,7 +5,7 @@ import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
-import { KeypadCard, LogoTile, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg } from '../components/ipaybtc/Scenes'
+import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg } from '../components/ipaybtc/Scenes'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -157,6 +157,16 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
           <SocialCarousel />
         ) : slot.art === 'ipaybtc-wall' ? (
           <PostWall />
+        ) : slot.art === 'ipaybtc-icons' ? (
+          <IconGrid />
+        ) : slot.art === 'ipaybtc-coin' ? (
+          <IconTile icon="coin" bg="#fff9c4" />
+        ) : slot.art === 'ipaybtc-cap' ? (
+          <Merch kind="cap" />
+        ) : slot.art === 'ipaybtc-tote' ? (
+          <Merch kind="tote" />
+        ) : slot.art === 'ipaybtc-wallposter' ? (
+          <WallPoster post={1} />
         ) : slot.art === 'ipaybtc-logo-navy' ? (
           <LogoTile tone="navy" />
         ) : slot.art === 'ipaybtc-phone' ? (
