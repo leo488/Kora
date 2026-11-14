@@ -254,7 +254,7 @@ const IPAY_LANDSCAPE: CaseSlot = {
   },
 }
 /* Leo's Figma frames, exported from Figma as they are. */
-const fig = (n: string, label: string, pair: [string, string]): CaseSlot => plate(label, '10130 / 6488', pair)
+const fig = (_n: string, label: string, pair: [string, string]): CaseSlot => plate(label, '10130 / 6488', pair)
 const FX05: CaseSlot = {
   ...fig('05', 'Holding up iPayBTC on Electric Blue', [fx05a, fx05b]),
   screen: {
