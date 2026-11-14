@@ -75,44 +75,59 @@ import fx33b from './assets/figx/f33-2400.jpg'
 import fx05top from './assets/figx/f05-fingers.webp'
 import teeClose1200 from './assets/ipaybtc-w-tee-1200.jpg'
 import teeClose2400 from './assets/ipaybtc-w-tee-2400.jpg'
-import rf_logoA from './assets/refreeg/rf-logo-1200.jpg'
-import rf_logoB from './assets/refreeg/rf-logo-2400.jpg'
-import rf_billboardA from './assets/refreeg/rf-billboard-1200.jpg'
-import rf_billboardB from './assets/refreeg/rf-billboard-2400.jpg'
-import rf_iconA from './assets/refreeg/rf-icon-1200.jpg'
-import rf_iconB from './assets/refreeg/rf-icon-2400.jpg'
-import rf_cardA from './assets/refreeg/rf-card-1200.jpg'
-import rf_cardB from './assets/refreeg/rf-card-2400.jpg'
-import rf_webA from './assets/refreeg/rf-web-1200.jpg'
-import rf_webB from './assets/refreeg/rf-web-2400.jpg'
-import rf_tabletA from './assets/refreeg/rf-tablet-1200.jpg'
-import rf_tabletB from './assets/refreeg/rf-tablet-2400.jpg'
-import rf_foldersA from './assets/refreeg/rf-folders-1200.jpg'
-import rf_foldersB from './assets/refreeg/rf-folders-2400.jpg'
-import rf_receiptA from './assets/refreeg/rf-receipt-1200.jpg'
-import rf_receiptB from './assets/refreeg/rf-receipt-2400.jpg'
-import rf_subwayA from './assets/refreeg/rf-subway-1200.jpg'
-import rf_subwayB from './assets/refreeg/rf-subway-2400.jpg'
-import rf_pocketA from './assets/refreeg/rf-pocket-1200.jpg'
-import rf_pocketB from './assets/refreeg/rf-pocket-2400.jpg'
-import rf_socialA from './assets/refreeg/rf-social-1200.jpg'
-import rf_socialB from './assets/refreeg/rf-social-2400.jpg'
-import rf_lunchA from './assets/refreeg/rf-lunch-1200.jpg'
-import rf_lunchB from './assets/refreeg/rf-lunch-2400.jpg'
-import rf_scooterA from './assets/refreeg/rf-scooter-1200.jpg'
-import rf_scooterB from './assets/refreeg/rf-scooter-2400.jpg'
-import rf_toteA from './assets/refreeg/rf-tote-1200.jpg'
-import rf_toteB from './assets/refreeg/rf-tote-2400.jpg'
-import rf_groceriesA from './assets/refreeg/rf-groceries-1200.jpg'
-import rf_groceriesB from './assets/refreeg/rf-groceries-2400.jpg'
-import rf_pledgeA from './assets/refreeg/rf-pledge-1200.jpg'
-import rf_pledgeB from './assets/refreeg/rf-pledge-2400.jpg'
-import rf_postersA from './assets/refreeg/rf-posters-1200.jpg'
-import rf_postersB from './assets/refreeg/rf-posters-2400.jpg'
-import rf_familyA from './assets/refreeg/rf-family-1200.jpg'
-import rf_familyB from './assets/refreeg/rf-family-2400.jpg'
-import rf_typeA from './assets/refreeg/rf-type-1200.jpg'
-import rf_typeB from './assets/refreeg/rf-type-2400.jpg'
+import rf_logo_1600 from './assets/refreeg/rf-logo-1600.jpg'
+import rf_logo_2800 from './assets/refreeg/rf-logo-2800.jpg'
+import rf_logo_full from './assets/refreeg/rf-logo-full.jpg'
+import rf_billboard_1600 from './assets/refreeg/rf-billboard-1600.jpg'
+import rf_billboard_2800 from './assets/refreeg/rf-billboard-2800.jpg'
+import rf_billboard_full from './assets/refreeg/rf-billboard-full.jpg'
+import rf_icon_1600 from './assets/refreeg/rf-icon-1600.jpg'
+import rf_icon_2800 from './assets/refreeg/rf-icon-2800.jpg'
+import rf_icon_full from './assets/refreeg/rf-icon-full.jpg'
+import rf_card_1600 from './assets/refreeg/rf-card-1600.jpg'
+import rf_card_full from './assets/refreeg/rf-card-full.jpg'
+import rf_web_1600 from './assets/refreeg/rf-web-1600.jpg'
+import rf_web_2800 from './assets/refreeg/rf-web-2800.jpg'
+import rf_web_full from './assets/refreeg/rf-web-full.jpg'
+import rf_tablet_1600 from './assets/refreeg/rf-tablet-1600.jpg'
+import rf_tablet_2800 from './assets/refreeg/rf-tablet-2800.jpg'
+import rf_tablet_full from './assets/refreeg/rf-tablet-full.jpg'
+import rf_folders_1600 from './assets/refreeg/rf-folders-1600.jpg'
+import rf_folders_2800 from './assets/refreeg/rf-folders-2800.jpg'
+import rf_folders_full from './assets/refreeg/rf-folders-full.jpg'
+import rf_receipt_1600 from './assets/refreeg/rf-receipt-1600.jpg'
+import rf_receipt_full from './assets/refreeg/rf-receipt-full.jpg'
+import rf_subway_1600 from './assets/refreeg/rf-subway-1600.jpg'
+import rf_subway_2800 from './assets/refreeg/rf-subway-2800.jpg'
+import rf_subway_full from './assets/refreeg/rf-subway-full.jpg'
+import rf_pocket_1600 from './assets/refreeg/rf-pocket-1600.jpg'
+import rf_pocket_2800 from './assets/refreeg/rf-pocket-2800.jpg'
+import rf_pocket_full from './assets/refreeg/rf-pocket-full.jpg'
+import rf_social_1600 from './assets/refreeg/rf-social-1600.jpg'
+import rf_social_full from './assets/refreeg/rf-social-full.jpg'
+import rf_lunch_1600 from './assets/refreeg/rf-lunch-1600.jpg'
+import rf_lunch_2800 from './assets/refreeg/rf-lunch-2800.jpg'
+import rf_lunch_full from './assets/refreeg/rf-lunch-full.jpg'
+import rf_scooter_1600 from './assets/refreeg/rf-scooter-1600.jpg'
+import rf_scooter_2800 from './assets/refreeg/rf-scooter-2800.jpg'
+import rf_scooter_full from './assets/refreeg/rf-scooter-full.jpg'
+import rf_tote_1600 from './assets/refreeg/rf-tote-1600.jpg'
+import rf_tote_2800 from './assets/refreeg/rf-tote-2800.jpg'
+import rf_tote_full from './assets/refreeg/rf-tote-full.jpg'
+import rf_groceries_1600 from './assets/refreeg/rf-groceries-1600.jpg'
+import rf_groceries_2800 from './assets/refreeg/rf-groceries-2800.jpg'
+import rf_groceries_full from './assets/refreeg/rf-groceries-full.jpg'
+import rf_pledge_1600 from './assets/refreeg/rf-pledge-1600.jpg'
+import rf_pledge_full from './assets/refreeg/rf-pledge-full.jpg'
+import rf_posters_1600 from './assets/refreeg/rf-posters-1600.jpg'
+import rf_posters_2800 from './assets/refreeg/rf-posters-2800.jpg'
+import rf_posters_full from './assets/refreeg/rf-posters-full.jpg'
+import rf_family_1600 from './assets/refreeg/rf-family-1600.jpg'
+import rf_family_2800 from './assets/refreeg/rf-family-2800.jpg'
+import rf_family_full from './assets/refreeg/rf-family-full.jpg'
+import rf_type_1600 from './assets/refreeg/rf-type-1600.jpg'
+import rf_type_2800 from './assets/refreeg/rf-type-2800.jpg'
+import rf_type_full from './assets/refreeg/rf-type-full.jpg'
 
 export interface CaseSlot {
   /** What goes here — shown on the placeholder until `src` is set. */
@@ -357,26 +372,25 @@ const P3_FILM: CaseSlot = {
 /* Refreeg: the image run follows Leo's reference presentation plate for
    plate. Mockups are Magnific blanks with the real logo, posters and Figma
    screens placed in them; the rest are Refreeg's own brand-book exports. */
-const rf = (label: string, ratio: string, a: string, b: string) => plate(label, ratio, [a, b])
-const RF_LOGO = rf('The Refreeg logo on Refreeg Blue', '3838 / 1961', rf_logoA, rf_logoB)
-const RF_BILLBOARD = rf('“Give where you can see.” on a city billboard', '3840 / 2304', rf_billboardA, rf_billboardB)
-const RF_ICON = rf('The Refreeg app on a home screen', '3838 / 4096', rf_iconA, rf_iconB)
-const RF_CARD = rf('Refreeg in hand', '2400 / 2560', rf_cardA, rf_cardB)
-const RF_WEB = rf('Writing help, the AI in Create a campaign', '3840 / 2651', rf_webA, rf_webB)
-const RF_TABLET = rf('Create a campaign on a tablet', '3840 / 2535', rf_tabletA, rf_tabletB)
-const RF_FOLDERS = rf('Restock 600 market stalls', '3712 / 4166', rf_foldersA, rf_foldersB)
-const RF_RECEIPT = rf('“Every naira, receipted.”', '2400 / 2693', rf_receiptA, rf_receiptB)
-const RF_SUBWAY = rf('Campaigns, petitions, bounties, wallet, writer on a subway poster', '3840 / 2106', rf_subwayA, rf_subwayB)
-const RF_POCKET = rf('The Refreeg mark on a phone', '3840 / 2119', rf_pocketA, rf_pocketB)
-const RF_SOCIAL = rf('Refreeg social post', '2399 / 2444', rf_socialA, rf_socialB)
-const RF_LUNCH = rf('Fire safety kits for Balogun traders', '3840 / 3911', rf_lunchA, rf_lunchB)
-const RF_SCOOTER = rf('Pledge, in the Refreeg app', '3840 / 2106', rf_scooterA, rf_scooterB)
-const RF_TOTE = rf('“Every kobo. Accounted for.” tote', '3840 / 2651', rf_toteA, rf_toteB)
-const RF_GROCERIES = rf('School fees for 90 girls in Ikorodu', '3712 / 3849', rf_groceriesA, rf_groceriesB)
-const RF_PLEDGE = rf('The Pledge screen on Lime', '2400 / 2488', rf_pledgeA, rf_pledgeB)
-const RF_POSTERS = rf('Three Refreeg posters', '3840 / 1851', rf_postersA, rf_postersB)
-const RF_FAMILY = rf('Refreeg at home', '3840 / 1956', rf_familyA, rf_familyB)
-const RF_TYPE = rf('“Give where you can see.” in Recoleta', '3839 / 2137', rf_typeA, rf_typeB)
+const RF_LOGO: CaseSlot = { label: 'The Refreeg logo on Refreeg Blue', ratio: '3838 / 1961', src: rf_logo_full, srcSet: set([[rf_logo_1600, 1600], [rf_logo_2800, 2800], [rf_logo_full, 3838]]) }
+const RF_BILLBOARD: CaseSlot = { label: '“Give where you can see.” on a city billboard', ratio: '5120 / 2560', src: rf_billboard_full, srcSet: set([[rf_billboard_1600, 1600], [rf_billboard_2800, 2800], [rf_billboard_full, 5120]]) }
+const RF_ICON: CaseSlot = { label: 'The Refreeg app on a home screen', ratio: '3276 / 4096', src: rf_icon_full, srcSet: set([[rf_icon_1600, 1600], [rf_icon_2800, 2800], [rf_icon_full, 3276]]) }
+const RF_CARD: CaseSlot = { label: 'Refreeg in hand', ratio: '2048 / 2561', src: rf_card_full, srcSet: set([[rf_card_1600, 1600], [rf_card_full, 2048]]) }
+const RF_WEB: CaseSlot = { label: 'Writing help, the AI in Create a campaign', ratio: '4915 / 2764', src: rf_web_full, srcSet: set([[rf_web_1600, 1600], [rf_web_2800, 2800], [rf_web_full, 4915]]) }
+const RF_TABLET: CaseSlot = { label: 'Create a campaign on a tablet', ratio: '5056 / 3370', src: rf_tablet_full, srcSet: set([[rf_tablet_1600, 1600], [rf_tablet_2800, 2800], [rf_tablet_full, 5056]]) }
+const RF_FOLDERS: CaseSlot = { label: 'Restock 600 market stalls', ratio: '3686 / 4608', src: rf_folders_full, srcSet: set([[rf_folders_1600, 1600], [rf_folders_2800, 2800], [rf_folders_full, 3686]]) }
+const RF_RECEIPT: CaseSlot = { label: '“Every naira, receipted.”', ratio: '2155 / 2694', src: rf_receipt_full, srcSet: set([[rf_receipt_1600, 1600], [rf_receipt_full, 2155]]) }
+const RF_SUBWAY: CaseSlot = { label: 'Campaigns, petitions, bounties, wallet, writer on a subway poster', ratio: '5504 / 2752', src: rf_subway_full, srcSet: set([[rf_subway_1600, 1600], [rf_subway_2800, 2800], [rf_subway_full, 5504]]) }
+const RF_POCKET: CaseSlot = { label: 'The Refreeg mark on a phone', ratio: '5461 / 3072', src: rf_pocket_full, srcSet: set([[rf_pocket_1600, 1600], [rf_pocket_2800, 2800], [rf_pocket_full, 5461]]) }
+const RF_SOCIAL: CaseSlot = { label: 'Refreeg social post', ratio: '1955 / 2444', src: rf_social_full, srcSet: set([[rf_social_1600, 1600], [rf_social_full, 1955]]) }
+const RF_LUNCH: CaseSlot = { label: 'Fire safety kits for Balogun traders', ratio: '3276 / 4096', src: rf_lunch_full, srcSet: set([[rf_lunch_1600, 1600], [rf_lunch_2800, 2800], [rf_lunch_full, 3276]]) }
+const RF_SCOOTER: CaseSlot = { label: 'Pledge, in the Refreeg app', ratio: '5504 / 2752', src: rf_scooter_full, srcSet: set([[rf_scooter_1600, 1600], [rf_scooter_2800, 2800], [rf_scooter_full, 5504]]) }
+const RF_TOTE: CaseSlot = { label: '“Every kobo. Accounted for.” tote', ratio: '4915 / 3276', src: rf_tote_full, srcSet: set([[rf_tote_1600, 1600], [rf_tote_2800, 2800], [rf_tote_full, 4915]]) }
+const RF_GROCERIES: CaseSlot = { label: 'School fees for 90 girls in Ikorodu', ratio: '3686 / 4608', src: rf_groceries_full, srcSet: set([[rf_groceries_1600, 1600], [rf_groceries_2800, 2800], [rf_groceries_full, 3686]]) }
+const RF_PLEDGE: CaseSlot = { label: 'The Pledge screen on Lime', ratio: '1991 / 2489', src: rf_pledge_full, srcSet: set([[rf_pledge_1600, 1600], [rf_pledge_full, 1991]]) }
+const RF_POSTERS: CaseSlot = { label: 'Three Refreeg posters', ratio: '5504 / 2501', src: rf_posters_full, srcSet: set([[rf_posters_1600, 1600], [rf_posters_2800, 2800], [rf_posters_full, 5504]]) }
+const RF_FAMILY: CaseSlot = { label: 'Refreeg at home', ratio: '5461 / 3072', src: rf_family_full, srcSet: set([[rf_family_1600, 1600], [rf_family_2800, 2800], [rf_family_full, 5461]]) }
+const RF_TYPE: CaseSlot = { label: '“Give where you can see.” in Recoleta', ratio: '3840 / 1920', src: rf_type_full, srcSet: set([[rf_type_1600, 1600], [rf_type_2800, 2800], [rf_type_full, 3840]]) }
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
@@ -529,18 +543,18 @@ export const CASE_STUDIES: CaseStudy[] = [
     hero: RF_LOGO,
     gallery: [
       { kind: 'full', slot: RF_BILLBOARD },
-      { kind: 'pair', slots: [RF_ICON, RF_CARD] },
+      { kind: 'pair', slots: [RF_ICON, RF_CARD], inset: true },
       { kind: 'full', slot: RF_WEB },
-      { kind: 'full', slot: RF_TABLET },
-      { kind: 'pair', slots: [RF_FOLDERS, RF_RECEIPT] },
+      { kind: 'full', slot: RF_TABLET, inset: true },
+      { kind: 'pair', slots: [RF_FOLDERS, RF_RECEIPT], inset: true },
       { kind: 'full', slot: RF_SUBWAY },
-      { kind: 'full', slot: RF_POCKET },
-      { kind: 'pair', slots: [RF_SOCIAL, RF_LUNCH] },
+      { kind: 'full', slot: RF_POCKET, inset: true },
+      { kind: 'pair', slots: [RF_SOCIAL, RF_LUNCH], inset: true },
       { kind: 'full', slot: RF_SCOOTER },
-      { kind: 'full', slot: RF_TOTE },
-      { kind: 'pair', slots: [RF_GROCERIES, RF_PLEDGE] },
+      { kind: 'full', slot: RF_TOTE, inset: true },
+      { kind: 'pair', slots: [RF_GROCERIES, RF_PLEDGE], inset: true },
       { kind: 'full', slot: RF_POSTERS },
-      { kind: 'full', slot: RF_FAMILY },
+      { kind: 'full', slot: RF_FAMILY, inset: true },
       { kind: 'full', slot: RF_TYPE },
     ],
     next: 'Ipaybtc',
