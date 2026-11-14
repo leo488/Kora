@@ -199,6 +199,7 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
                 <ZoomImg src={slot.src} srcSet={slot.srcSet} alt={slot.label} eager={eager} />
               ) : (
                 <img
+                  className={slot.fit ? 'kora-case-fit' : undefined}
                   src={slot.src}
                   srcSet={slot.srcSet}
                   sizes="(max-width: 760px) 100vw, 100vw"
