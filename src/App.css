@@ -3759,8 +3759,10 @@
   justify-content: center;
 }
 
-.kora-case-plate img,
-.kora-case-plate video {
+.kora-case-plate > img,
+.kora-case-plate > video,
+.kora-case-plate .kora-flare > img,
+.kora-case-plate .kora-flare > video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -4446,4 +4448,137 @@
     padding: 7px 14px;
     font-size: 13px;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Live app screens on still photos (components/ipaybtc/ScreenOverlay.tsx).
+   The overlay sits over the photo's layer; its one child is the 390 × 844
+   screen, moved onto the phone with a perspective transform.
+   --------------------------------------------------------------------------- */
+
+.kora-screen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.kora-screen-glass {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  backface-visibility: hidden;
+}
+
+.kora-screen-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glare, none);
+  pointer-events: none;
+}
+
+/* Centre-column blocks: the bento rhythm of the reference, where some plates
+   run edge to edge and others sit in the middle of the page. */
+.kora-case-gallery > .is-inset {
+  width: min(64.4%, 1080px);
+  align-self: center;
+}
+
+/* Keep edge-to-edge plates from growing past a comfortable size on wide
+   screens (a 16" MacBook and up). */
+.kora-case-gallery > * {
+  max-width: 1680px;
+  width: 100%;
+  align-self: center;
+}
+
+/* The live app on a card of its own. */
+.kora-case-art-ui {
+  background: #eef0f4;
+}
+
+.kora-ui-screen {
+  position: relative;
+  height: 82%;
+  aspect-ratio: 390 / 844;
+  border-radius: 7% / 3.2%;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -30px rgba(4, 2, 70, 0.45);
+}
+
+.kora-case-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.kora-case-art-ipaybtc {
+  background: #0a31f5;
+  color: #ffffff;
+}
+
+.kora-case-art-ipaybtc svg {
+  width: 44%;
+  height: auto;
+}
+
+@media (max-width: 760px) {
+  .kora-case-gallery > .is-inset {
+    width: 100%;
+  }
+}
+
+/* The iPayBTC card, drawn in code over the borderless video. */
+.kora-paycard {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  aspect-ratio: 1.586;
+  transform: translate(-50%, -50%);
+  border-radius: 4.6% / 7.3%;
+  background: linear-gradient(135deg, #050e7f 0%, #050e7f 25%, #0a31f5 78%, #3ed4ff 100%);
+  box-shadow: 0 2.4vw 5vw rgba(4, 2, 70, 0.35);
+}
+.kora-paycard-logo {
+  position: absolute;
+  right: 7%;
+  top: 9%;
+  width: 34%;
+  color: #fff;
+}
+.kora-paycard-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: currentColor;
+}
+.kora-paycard-chip {
+  position: absolute;
+  left: 8%;
+  top: 40%;
+  width: 13%;
+  aspect-ratio: 1.3;
+  border-radius: 14%;
+  background: linear-gradient(135deg, #f4f1e6, #c9c3ad);
+}
+.kora-paycard-tap {
+  position: absolute;
+  left: 24%;
+  top: 41.5%;
+  width: 7%;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.kora-ui-screen .ias {
+  width: 100%;
+  height: 100%;
 }

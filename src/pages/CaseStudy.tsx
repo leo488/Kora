@@ -4,6 +4,9 @@ import { PROJECTS } from '../data'
 import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
+import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
+import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg } from '../components/ipaybtc/Scenes'
+import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
    in images, then the next project and the contact block. */
@@ -102,10 +105,10 @@ export function CaseStudy() {
 function Block({ block }: { block: CaseBlock }) {
   switch (block.kind) {
     case 'full':
-      return <Plate slot={block.slot} />
+      return <Plate slot={block.slot} inset={block.inset} />
     case 'pair':
       return (
-        <div className="kora-case-pair">
+        <div className={`kora-case-pair${block.inset ? ' is-inset' : ''}`}>
           <Plate slot={block.slots[0]} />
           <Plate slot={block.slots[1]} />
         </div>
@@ -134,15 +137,79 @@ function Block({ block }: { block: CaseBlock }) {
 
 /** An image or loop — or, until it exists, a grey panel naming what goes
  *  there. */
-function Plate({ slot, eager = false }: { slot: CaseSlot; eager?: boolean }) {
+function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean }) {
   return (
-    <figure className="kora-case-plate kora-rx-media" style={{ aspectRatio: slot.ratio }}>
+    <figure
+      className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}`}
+      style={{ aspectRatio: slot.ratio }}
+    >
       <div className="kora-flare">
-        {slot.src ? (
+        {slot.art === 'ipaybtc-logo' ? (
+          <div
+            className="kora-case-art kora-case-art-ipaybtc"
+            role="img"
+            aria-label={slot.label}
+            dangerouslySetInnerHTML={{ __html: ipaybtcLogo }}
+          />
+        ) : slot.art === 'ipaybtc-type' ? (
+          <TypeSwap />
+        ) : slot.art === 'ipaybtc-social' ? (
+          <SocialCarousel />
+        ) : slot.art === 'ipaybtc-wall' ? (
+          <PostWall />
+        ) : slot.art === 'ipaybtc-icons' ? (
+          <IconGrid />
+        ) : slot.art === 'ipaybtc-coin' ? (
+          <IconTile icon="coin" bg="#fff9c4" />
+        ) : slot.art === 'ipaybtc-cap' ? (
+          <Merch kind="cap" />
+        ) : slot.art === 'ipaybtc-tote' ? (
+          <Merch kind="tote" />
+        ) : slot.art === 'ipaybtc-wallposter' ? (
+          <WallPoster post={1} />
+        ) : slot.art === 'ipaybtc-logo-navy' ? (
+          <LogoTile tone="navy" />
+        ) : slot.art === 'ipaybtc-phone' ? (
+          <PhonePlate flow="buy" />
+        ) : slot.art === 'ipaybtc-phones' ? (
+          <PhoneBoard />
+        ) : slot.art === 'ipaybtc-poster-border' ? (
+          <TypePoster tone="navy" size={9} lines={['No bank opening hours.', 'No border.', 'No permission.']} />
+        ) : slot.art === 'ipaybtc-poster-tea' ? (
+          <TypePoster tone="yellow" lines={['Buy Bitcoin', 'before your', 'tea gets cold.']} />
+        ) : slot.art === 'ipaybtc-poster-spend' ? (
+          <TypePoster tone="blue" lines={['Bitcoin was', 'never meant', 'to sit still.', 'Spend it.']} />
+        ) : slot.src ? (
           slot.video ? (
-            <video src={slot.src} muted loop autoPlay playsInline aria-label={slot.label} />
+            <>
+              <video src={slot.src} poster={slot.poster} muted loop autoPlay playsInline aria-label={slot.label} />
+              {slot.overlay === 'ipaybtc-card' && (
+                <div className="kora-paycard" aria-hidden>
+                  <span className="kora-paycard-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+                  <span className="kora-paycard-chip" />
+                  <svg className="kora-paycard-tap" viewBox="0 0 24 24">
+                    <path d="M8 7.5a6.5 6.5 0 0 1 0 9M11.5 5a10 10 0 0 1 0 14M15 2.8a13 13 0 0 1 0 18.4" />
+                  </svg>
+                </div>
+              )}
+            </>
           ) : (
-            <img src={slot.src} alt={slot.label} loading={eager ? 'eager' : 'lazy'} />
+            <>
+              {slot.zoom ? (
+                <ZoomImg src={slot.src} srcSet={slot.srcSet} alt={slot.label} eager={eager} />
+              ) : (
+                <img
+                  src={slot.src}
+                  srcSet={slot.srcSet}
+                  sizes="(max-width: 760px) 100vw, 100vw"
+                  alt={slot.label}
+                  loading={eager ? 'eager' : 'lazy'}
+                />
+              )}
+              {slot.screen && <ScreenOverlay screen={slot.screen} />}
+              {slot.top && <img className="kora-case-top" src={slot.top} alt="" aria-hidden />}
+              {slot.keypad && <KeypadCard />}
+            </>
           )
         ) : (
           <figcaption>{slot.label}</figcaption>

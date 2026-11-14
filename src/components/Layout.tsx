@@ -19,10 +19,15 @@ export function Layout() {
     () => setTheme((current) => (current === 'dark' ? 'light' : 'dark')),
     [],
   )
-  const themeValue = useMemo(() => ({ theme, toggle }), [theme, toggle])
+  const { pathname } = useLocation()
+  const shown: Theme = theme
+  const themeValue = useMemo(() => ({ theme: shown, toggle }), [shown, toggle])
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme
+    document.documentElement.dataset.theme = shown
+  }, [shown])
+
+  useEffect(() => {
     try {
       localStorage.setItem(THEME_KEY, theme)
     } catch {
@@ -30,13 +35,13 @@ export function Layout() {
     }
   }, [theme])
 
-  const isHome = useLocation().pathname === '/'
+  const isHome = pathname === '/'
   // The bottom-of-screen image flare, for every image on every page.
   useFlareController()
 
   return (
     <ThemeContext.Provider value={themeValue}>
-      <main className={`kora-app is-${theme}`}>
+      <main className={`kora-app is-${shown}`}>
         {/* Every page wears the homepage masthead. Home drives it from its
             own scroll; the rest show it docked at the top. */}
         {/* The project brief modal lives here so every page can open it and
