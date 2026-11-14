@@ -394,6 +394,15 @@ const RF_GROCERIES: CaseSlot = { label: 'School fees for 90 girls in Ikorodu', r
 const RF_PLEDGE: CaseSlot = { label: 'The Pledge screen on Lime', ratio: '1991 / 2489', src: rf_pledge_full, srcSet: set([[rf_pledge_1600, 1600], [rf_pledge_full, 1991]]) }
 const RF_POSTERS: CaseSlot = { label: 'Three Refreeg posters', ratio: '5504 / 2501', src: rf_posters_full, srcSet: set([[rf_posters_1600, 1600], [rf_posters_2800, 2800], [rf_posters_full, 5504]]) }
 const RF_FAMILY: CaseSlot = { label: 'Refreeg at home', ratio: '5461 / 3072', src: rf_family_full, srcSet: set([[rf_family_1600, 1600], [rf_family_2800, 2800], [rf_family_full, 5461]]) }
+import rf_beanie_1600 from './assets/refreeg/rf-beanie-1600.jpg'
+import rf_beanie_2800 from './assets/refreeg/rf-beanie-2800.jpg'
+import rf_beanie_full from './assets/refreeg/rf-beanie-full.jpg'
+import rf_totecopy_1600 from './assets/refreeg/rf-totecopy-1600.jpg'
+import rf_totecopy_2800 from './assets/refreeg/rf-totecopy-2800.jpg'
+import rf_totecopy_full from './assets/refreeg/rf-totecopy-full.jpg'
+import rf_lanyard_1600 from './assets/refreeg/rf-lanyard-1600.jpg'
+import rf_lanyard_2800 from './assets/refreeg/rf-lanyard-2800.jpg'
+import rf_lanyard_full from './assets/refreeg/rf-lanyard-full.jpg'
 import rf_film from './assets/refreeg/refreeg-film.mp4'
 import rf_film_poster from './assets/refreeg/film-poster.jpg'
 const RF_FILM: CaseSlot = {
@@ -403,6 +412,9 @@ const RF_FILM: CaseSlot = {
   poster: rf_film_poster,
   video: true,
 }
+const RF_BEANIE: CaseSlot = { label: 'White beanie with the Refreeg mark on a lime rubber patch', ratio: '5504 / 3072', src: rf_beanie_full, srcSet: set([[rf_beanie_1600, 1600], [rf_beanie_2800, 2800], [rf_beanie_full, 5504]]) }
+const RF_TOTECOPY: CaseSlot = { label: '“Give where you can see.” and the refreeg wordmark on a canvas tote', ratio: '4096 / 4096', src: rf_totecopy_full, srcSet: set([[rf_totecopy_1600, 1600], [rf_totecopy_2800, 2800], [rf_totecopy_full, 4096]]) }
+const RF_LANYARD: CaseSlot = { label: 'Ask Refreeg on a phone hanging from a lanyard', ratio: '4096 / 4096', src: rf_lanyard_full, srcSet: set([[rf_lanyard_1600, 1600], [rf_lanyard_2800, 2800], [rf_lanyard_full, 4096]]) }
 const RF_TYPE: CaseSlot = { label: '“Give where you can see.” in Recoleta', ratio: '3840 / 1920', src: rf_type_full, srcSet: set([[rf_type_1600, 1600], [rf_type_2800, 2800], [rf_type_full, 3840]]) }
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -570,6 +582,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: RF_FAMILY, inset: true },
       { kind: 'full', slot: RF_TYPE },
       { kind: 'full', slot: RF_FILM },
+      { kind: 'full', slot: RF_BEANIE },
+      { kind: 'pair', slots: [RF_TOTECOPY, RF_LANYARD] },
     ],
     next: 'Ipaybtc',
   },
