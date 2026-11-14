@@ -19,10 +19,8 @@ export function Layout() {
     () => setTheme((current) => (current === 'dark' ? 'light' : 'dark')),
     [],
   )
-  // Case study pages always show in light mode, whatever the visitor picked.
   const { pathname } = useLocation()
-  const isCaseStudy = /^\/work\/[^/]+/.test(pathname)
-  const shown: Theme = isCaseStudy ? 'light' : theme
+  const shown: Theme = theme
   const themeValue = useMemo(() => ({ theme: shown, toggle }), [shown, toggle])
 
   useEffect(() => {

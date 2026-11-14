@@ -36,6 +36,12 @@ import laptop1200 from './assets/ipaybtc-w-laptop-1200.jpg'
 import laptop2400 from './assets/ipaybtc-w-laptop-2400.jpg'
 import landscape1200 from './assets/ipaybtc-w-landscape-1200.jpg'
 import landscape2400 from './assets/ipaybtc-w-landscape-2400.jpg'
+import lanyard1200 from './assets/ipaybtc-lanyard-1200.jpg'
+import lanyard2400 from './assets/ipaybtc-lanyard-2400.jpg'
+import tee1200 from './assets/ipaybtc-tee-1200.jpg'
+import tee2400 from './assets/ipaybtc-tee-2400.jpg'
+import borderless from './assets/ipaybtc-borderless.mp4'
+import borderlessPoster from './assets/ipaybtc-borderless-poster.jpg'
 import teeClose1200 from './assets/ipaybtc-w-tee-1200.jpg'
 import teeClose2400 from './assets/ipaybtc-w-tee-2400.jpg'
 
@@ -170,6 +176,16 @@ const IPAY_BILLBOARD = plate('Naira → Sats on a sidewalk billboard, with the a
 /* The scenes of the Ragged Edge Wise page, made our own. */
 const IPAY_LOGO_NAVY = art('The iPayBTC wordmark on Deep Navy', '4 / 5', 'ipaybtc-logo-navy')
 const IPAY_TEE_CLOSE = plate('The iPayBTC wordmark on a white tee', '4 / 5', [teeClose1200, teeClose2400])
+const IPAY_LANYARD = plate('iPayBTC lanyard and staff pass', '4 / 5', [lanyard1200, lanyard2400])
+const IPAY_TEE = plate('iPayBTC tee on a tennis court', '4 / 5', [tee1200, tee2400])
+const IPAY_CARD_VIDEO: CaseSlot = {
+  label: 'The iPayBTC card over clips that cut from a road trip to Lagos',
+  ratio: '16 / 9',
+  src: borderless,
+  poster: borderlessPoster,
+  video: true,
+  overlay: 'ipaybtc-card',
+}
 const IPAY_POSTER_BORDER = art('No bank opening hours. No border. No permission.', '16 / 10', 'ipaybtc-poster-border')
 const IPAY_WRAP = plate('“We move in sats” wrapped on a building in Lagos', '4 / 5', [wrap1200, wrap2400])
 const IPAY_PHONE = art('The app buying Bitcoin', '4 / 5', 'ipaybtc-phone')
@@ -247,6 +263,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true },
       { kind: 'full', slot: IPAY_BILLBOARD },
       { kind: 'pair', slots: [IPAY_LOGO_NAVY, IPAY_TEE_CLOSE], inset: true },
+      { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
+      { kind: 'full', slot: IPAY_CARD_VIDEO },
       { kind: 'full', slot: IPAY_POSTER_BORDER, inset: true },
       { kind: 'pair', slots: [IPAY_WRAP, IPAY_PHONE], inset: true },
       { kind: 'full', slot: IPAY_UNDER },
