@@ -20,6 +20,83 @@
   container-type: inline-size;
 }
 
+/* Swapping campaign type, one 3D object per line */
+.ips-type {
+  background: var(--ips-navy);
+  color: var(--ips-yellow);
+}
+
+.ips-type-lines p {
+  position: absolute;
+  left: calc(var(--kora-flare, 0px) + 7%);
+  top: 9%;
+  margin: 0;
+  font-family: var(--ips-bold);
+  font-weight: 800;
+  font-size: 11.5cqw;
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+}
+
+.ips-type-lines span {
+  display: block;
+  transform: translateY(110%);
+  clip-path: inset(0 0 100% 0);
+  transition:
+    transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+    clip-path 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ips-type-lines span + span {
+  transition-delay: 0.06s;
+}
+
+.ips-type-lines p.is-on span {
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+
+.ips-type-objs {
+  position: absolute;
+  right: calc(var(--kora-flare, 0px) + 6%);
+  bottom: 9%;
+  width: 30%;
+  aspect-ratio: 1;
+}
+
+.kora-case-plate .ips-type-objs img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transform: translateY(14%) scale(0.86);
+  transition:
+    opacity 0.35s ease-out,
+    transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.kora-case-plate .ips-type-objs img.is-on {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.08s;
+}
+
+.ips-type-logo {
+  position: absolute;
+  left: calc(var(--kora-flare, 0px) + 7%);
+  bottom: 8%;
+  width: 18%;
+  color: #fff;
+}
+
+.ips-type-logo svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* Campaign poster */
 .ips-poster {
   background: var(--ips-navy);
@@ -400,6 +477,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ips-poster p span,
+  .ips-type-lines span,
+  .ips-type-objs img,
   .ips-kcard,
   .kora-case-plate img.ips-zoom {
     transition: none !important;

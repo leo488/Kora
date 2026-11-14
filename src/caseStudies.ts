@@ -64,6 +64,7 @@ export interface CaseSlot {
   art?:
     | 'ipaybtc-logo'
     | 'ipaybtc-logo-navy'
+    | 'ipaybtc-type'
     | 'ipaybtc-phone'
     | 'ipaybtc-phones'
     | 'ipaybtc-poster-border'
@@ -174,6 +175,7 @@ const art = (label: string, ratio: string, kind: NonNullable<CaseSlot['art']>): 
 const IPAY_BILLBOARD = plate('Naira → Sats on a sidewalk billboard, with the app in hand', '2400 / 1340', [billboard1200, billboard2400])
 
 /* The scenes of the Ragged Edge Wise page, made our own. */
+const IPAY_TYPE = art('Campaign lines swapping, one 3D icon each', '5 / 4', 'ipaybtc-type')
 const IPAY_LOGO_NAVY = art('The iPayBTC wordmark on Deep Navy', '4 / 5', 'ipaybtc-logo-navy')
 const IPAY_TEE_CLOSE = plate('The iPayBTC wordmark on a white tee', '4 / 5', [teeClose1200, teeClose2400])
 const IPAY_LANYARD = plate('iPayBTC lanyard and staff pass', '4 / 5', [lanyard1200, lanyard2400])
@@ -262,6 +264,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_LOGO, inset: true },
       { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true },
       { kind: 'full', slot: IPAY_BILLBOARD },
+      { kind: 'full', slot: IPAY_TYPE, inset: true },
       { kind: 'pair', slots: [IPAY_LOGO_NAVY, IPAY_TEE_CLOSE], inset: true },
       { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
