@@ -75,6 +75,44 @@ import fx33b from './assets/figx/f33-2400.jpg'
 import fx05top from './assets/figx/f05-fingers.webp'
 import teeClose1200 from './assets/ipaybtc-w-tee-1200.jpg'
 import teeClose2400 from './assets/ipaybtc-w-tee-2400.jpg'
+import rf_logoA from './assets/refreeg/rf-logo-1200.jpg'
+import rf_logoB from './assets/refreeg/rf-logo-2400.jpg'
+import rf_billboardA from './assets/refreeg/rf-billboard-1200.jpg'
+import rf_billboardB from './assets/refreeg/rf-billboard-2400.jpg'
+import rf_iconA from './assets/refreeg/rf-icon-1200.jpg'
+import rf_iconB from './assets/refreeg/rf-icon-2400.jpg'
+import rf_pledge_handA from './assets/refreeg/rf-pledge-hand-1200.jpg'
+import rf_pledge_handB from './assets/refreeg/rf-pledge-hand-2400.jpg'
+import rf_cityA from './assets/refreeg/rf-city-1200.jpg'
+import rf_cityB from './assets/refreeg/rf-city-2400.jpg'
+import rf_tabletA from './assets/refreeg/rf-tablet-1200.jpg'
+import rf_tabletB from './assets/refreeg/rf-tablet-2400.jpg'
+import rf_huddleA from './assets/refreeg/rf-huddle-1200.jpg'
+import rf_huddleB from './assets/refreeg/rf-huddle-2400.jpg'
+import rf_receiptA from './assets/refreeg/rf-receipt-1200.jpg'
+import rf_receiptB from './assets/refreeg/rf-receipt-2400.jpg'
+import rf_metroA from './assets/refreeg/rf-metro-1200.jpg'
+import rf_metroB from './assets/refreeg/rf-metro-2400.jpg'
+import rf_pocketA from './assets/refreeg/rf-pocket-1200.jpg'
+import rf_pocketB from './assets/refreeg/rf-pocket-2400.jpg'
+import rf_sweatshirtA from './assets/refreeg/rf-sweatshirt-1200.jpg'
+import rf_sweatshirtB from './assets/refreeg/rf-sweatshirt-2400.jpg'
+import rf_coupleA from './assets/refreeg/rf-couple-1200.jpg'
+import rf_coupleB from './assets/refreeg/rf-couple-2400.jpg'
+import rf_handA from './assets/refreeg/rf-hand-1200.jpg'
+import rf_handB from './assets/refreeg/rf-hand-2400.jpg'
+import rf_toteA from './assets/refreeg/rf-tote-1200.jpg'
+import rf_toteB from './assets/refreeg/rf-tote-2400.jpg'
+import rf_capA from './assets/refreeg/rf-cap-1200.jpg'
+import rf_capB from './assets/refreeg/rf-cap-2400.jpg'
+import rf_greenA from './assets/refreeg/rf-green-1200.jpg'
+import rf_greenB from './assets/refreeg/rf-green-2400.jpg'
+import rf_wallA from './assets/refreeg/rf-wall-1200.jpg'
+import rf_wallB from './assets/refreeg/rf-wall-2400.jpg'
+import rf_socialA from './assets/refreeg/rf-social-1200.jpg'
+import rf_socialB from './assets/refreeg/rf-social-2400.jpg'
+import rf_typeA from './assets/refreeg/rf-type-1200.jpg'
+import rf_typeB from './assets/refreeg/rf-type-2400.jpg'
 
 export interface CaseSlot {
   /** What goes here — shown on the placeholder until `src` is set. */
@@ -315,6 +353,31 @@ const P3_FILM: CaseSlot = {
   video: true,
 }
 
+
+/* Refreeg: the image run follows Leo's reference presentation plate for
+   plate. Mockups are Magnific blanks with the real logo, posters and Figma
+   screens placed in them; the rest are Refreeg's own brand-book exports. */
+const rf = (label: string, ratio: string, a: string, b: string) => plate(label, ratio, [a, b])
+const RF_LOGO = rf('The Refreeg logo on Refreeg Blue', '16 / 9', rf_logoA, rf_logoB)
+const RF_BILLBOARD = rf('“Give where you can see.” on a street hoarding', '16 / 9', rf_billboardA, rf_billboardB)
+const RF_ICON = rf('The Refreeg app icon on a home screen', '4 / 5', rf_iconA, rf_iconB)
+const RF_PLEDGE_HAND = rf('Pledging ₦50,000 in the app', '4 / 5', rf_pledge_handA, rf_pledge_handB)
+const RF_CITY = rf('The Refreeg dashboard on a city screen', '16 / 9', rf_cityA, rf_cityB)
+const RF_TABLET = rf('Campaigns to fund, on a tablet', '16 / 9', rf_tabletA, rf_tabletB)
+const RF_HUDDLE = rf('Givers in a huddle', '4 / 5', rf_huddleA, rf_huddleB)
+const RF_RECEIPT = rf('A donation receipt on Lime', '4 / 5', rf_receiptA, rf_receiptB)
+const RF_METRO = rf('“Giving you can see, from the first naira to the last.” on a metro platform', '16 / 9', rf_metroA, rf_metroB)
+const RF_POCKET = rf('The Refreeg mark on a phone case', '16 / 9', rf_pocketA, rf_pocketB)
+const RF_SWEATSHIRT = rf('“Every naira, receipted.” sweatshirt', '4 / 5', rf_sweatshirtA, rf_sweatshirtB)
+const RF_COUPLE = rf('Refreeg campaign portrait', '4 / 5', rf_coupleA, rf_coupleB)
+const RF_HAND = rf('A pledge in hand', '16 / 9', rf_handA, rf_handB)
+const RF_TOTE = rf('“Every kobo. Accounted for.” tote', '4 / 3', rf_toteA, rf_toteB)
+const RF_CAP = rf('Refreeg cap', '4 / 3', rf_capA, rf_capB)
+const RF_GREEN = rf('Refreeg givers', '4 / 3', rf_greenA, rf_greenB)
+const RF_WALL = rf('Three Refreeg posters', '16 / 9', rf_wallA, rf_wallB)
+const RF_SOCIAL = rf('Refreeg social post', '16 / 9', rf_socialA, rf_socialB)
+const RF_TYPE = rf('“Every naira, receipted.” in Recoleta', '16 / 10', rf_typeA, rf_typeB)
+
 export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: 'ipaybtc',
@@ -427,6 +490,59 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     hero: P3_BILLBOARD,
     gallery: [{ kind: 'full', slot: P3_FILM }],
+    next: 'Refreeg',
+  },
+  {
+    slug: 'refreeg',
+    title: 'Refreeg',
+    // Copy taken from the Refreeg brand book.
+    summary: 'Giving you can see, from the first naira to the last.',
+    facts: [
+      { label: 'Client', value: 'Refreeg' },
+      { label: 'Services', value: 'Brand identity, Product design, Web app, Campaign' },
+      { label: 'Year', value: '2025' },
+    ],
+    highlights: [],
+    sections: [
+      {
+        heading: 'Proof, not trust',
+        paragraphs: [
+          'Most people who want to help have no way of knowing where their money went. A transfer leaves, a thank-you arrives, and the rest is trust. Refreeg exists to replace that trust with proof.',
+          'Every campaign on Refreeg is verified before it goes live, every gift is receipted, and every release of funds is tied to a spend report the donor can open. Money is held until it is needed and moves only against evidence.',
+        ],
+      },
+      {
+        heading: 'More than giving',
+        paragraphs: [
+          'Around giving sit the other ways people take part: petitions that put a cause in front of the people who can act on it, bounties that pay for real work like photography and translation, and EIZA, the reward that comes back to anyone who shows up.',
+          'All of it rests on one idea: that doing good should be as clear as it is generous. Refreeg makes sure everyone who gives can see what their giving did.',
+        ],
+      },
+      {
+        heading: 'The mark',
+        paragraphs: [
+          'The Refreeg symbol is two strokes that bow toward each other and meet at the centre. One is the person who gives, the other is the person who receives.',
+          'The gap between them never closes. That space is where the receipt lives: the proof that travels from one side to the other.',
+        ],
+      },
+    ],
+    hero: RF_LOGO,
+    gallery: [
+      { kind: 'full', slot: RF_BILLBOARD },
+      { kind: 'pair', slots: [RF_ICON, RF_PLEDGE_HAND], inset: true },
+      { kind: 'full', slot: RF_CITY },
+      { kind: 'full', slot: RF_TABLET },
+      { kind: 'pair', slots: [RF_HUDDLE, RF_RECEIPT], inset: true },
+      { kind: 'full', slot: RF_METRO },
+      { kind: 'full', slot: RF_POCKET },
+      { kind: 'pair', slots: [RF_SWEATSHIRT, RF_COUPLE], inset: true },
+      { kind: 'full', slot: RF_HAND },
+      { kind: 'full', slot: RF_TOTE, inset: true },
+      { kind: 'pair', slots: [RF_CAP, RF_GREEN], inset: true },
+      { kind: 'full', slot: RF_WALL },
+      { kind: 'full', slot: RF_SOCIAL, inset: true },
+      { kind: 'full', slot: RF_TYPE },
+    ],
     next: 'Ipaybtc',
   },
 ]
