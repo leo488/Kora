@@ -6,6 +6,7 @@ import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
 import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg } from '../components/ipaybtc/Scenes'
+import { Chip } from '../components/refreeg/Chip'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -216,6 +217,7 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
           <figcaption>{slot.label}</figcaption>
         )}
       </div>
+      {slot.chip && <Chip chip={slot.chip} />}
     </figure>
   )
 }

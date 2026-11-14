@@ -129,6 +129,8 @@ import rf_type_1600 from './assets/refreeg/rf-type-1600.jpg'
 import rf_type_2800 from './assets/refreeg/rf-type-2800.jpg'
 import rf_type_full from './assets/refreeg/rf-type-full.jpg'
 
+import type { ChipSpec } from './components/refreeg/Chip'
+
 export interface CaseSlot {
   /** What goes here — shown on the placeholder until `src` is set. */
   label: string
@@ -165,6 +167,8 @@ export interface CaseSlot {
   top?: string
   /** The app's amount keypad resting beside the people in the photo. */
   keypad?: boolean
+  /** Refreeg notification pill, live over the photo. */
+  chip?: ChipSpec
   /** The photo eases out from a slight zoom while it is on screen. */
   zoom?: boolean
   /** Show the whole picture inside the plate: the flare reach is not
@@ -378,15 +382,15 @@ const RF_ICON: CaseSlot = { label: 'The Refreeg app on a home screen', ratio: '3
 const RF_CARD: CaseSlot = { label: 'Refreeg in hand', ratio: '2048 / 2561', src: rf_card_full, srcSet: set([[rf_card_1600, 1600], [rf_card_full, 2048]]) }
 const RF_WEB: CaseSlot = { label: 'Writing help, the AI in Create a campaign', ratio: '4915 / 2764', src: rf_web_full, srcSet: set([[rf_web_1600, 1600], [rf_web_2800, 2800], [rf_web_full, 4915]]) }
 const RF_TABLET: CaseSlot = { label: 'Create a campaign on a tablet', ratio: '5056 / 3370', src: rf_tablet_full, srcSet: set([[rf_tablet_1600, 1600], [rf_tablet_2800, 2800], [rf_tablet_full, 5056]]) }
-const RF_FOLDERS: CaseSlot = { label: 'Restock 600 market stalls', ratio: '3686 / 4608', src: rf_folders_full, srcSet: set([[rf_folders_1600, 1600], [rf_folders_2800, 2800], [rf_folders_full, 3686]]) }
+const RF_FOLDERS: CaseSlot = { label: 'Restock 600 market stalls', ratio: '3686 / 4608', src: rf_folders_full, srcSet: set([[rf_folders_1600, 1600], [rf_folders_2800, 2800], [rf_folders_full, 3686]]), chip: { icon: 'heart', title: 'Restock 600 market stalls', amount: '₦12.4M of ₦20M', time: '10:23', x: 5, y: 40, w: 66 } }
 const RF_RECEIPT: CaseSlot = { label: '“Every naira, receipted.”', ratio: '2155 / 2694', src: rf_receipt_full, srcSet: set([[rf_receipt_1600, 1600], [rf_receipt_full, 2155]]) }
 const RF_SUBWAY: CaseSlot = { label: 'Campaigns, petitions, bounties, wallet, writer on a subway poster', ratio: '5504 / 2752', src: rf_subway_full, srcSet: set([[rf_subway_1600, 1600], [rf_subway_2800, 2800], [rf_subway_full, 5504]]) }
 const RF_POCKET: CaseSlot = { label: 'The Refreeg mark on a phone', ratio: '5461 / 3072', src: rf_pocket_full, srcSet: set([[rf_pocket_1600, 1600], [rf_pocket_2800, 2800], [rf_pocket_full, 5461]]) }
 const RF_SOCIAL: CaseSlot = { label: 'Refreeg social post', ratio: '1955 / 2444', src: rf_social_full, srcSet: set([[rf_social_1600, 1600], [rf_social_full, 1955]]) }
-const RF_LUNCH: CaseSlot = { label: 'Fire safety kits for Balogun traders', ratio: '3276 / 4096', src: rf_lunch_full, srcSet: set([[rf_lunch_1600, 1600], [rf_lunch_2800, 2800], [rf_lunch_full, 3276]]) }
+const RF_LUNCH: CaseSlot = { label: 'Fire safety kits for Balogun traders', ratio: '3276 / 4096', src: rf_lunch_full, srcSet: set([[rf_lunch_1600, 1600], [rf_lunch_2800, 2800], [rf_lunch_full, 3276]]), chip: { icon: 'coin', title: 'Fire safety kits, Balogun', amount: '₦1.4M of ₦4M', time: '13:41', x: 33, y: 55, w: 66 } }
 const RF_SCOOTER: CaseSlot = { label: 'Pledge, in the Refreeg app', ratio: '5504 / 2752', src: rf_scooter_full, srcSet: set([[rf_scooter_1600, 1600], [rf_scooter_2800, 2800], [rf_scooter_full, 5504]]) }
 const RF_TOTE: CaseSlot = { label: '“Every kobo. Accounted for.” tote', ratio: '4915 / 3276', src: rf_tote_full, srcSet: set([[rf_tote_1600, 1600], [rf_tote_2800, 2800], [rf_tote_full, 4915]]) }
-const RF_GROCERIES: CaseSlot = { label: 'School fees for 90 girls in Ikorodu', ratio: '3686 / 4608', src: rf_groceries_full, srcSet: set([[rf_groceries_1600, 1600], [rf_groceries_2800, 2800], [rf_groceries_full, 3686]]) }
+const RF_GROCERIES: CaseSlot = { label: 'School fees for 90 girls in Ikorodu', ratio: '3686 / 4608', src: rf_groceries_full, srcSet: set([[rf_groceries_1600, 1600], [rf_groceries_2800, 2800], [rf_groceries_full, 3686]]), chip: { icon: 'flag', title: 'School fees for 90 girls', amount: '₦5.5M of ₦5.8M', time: '14:55', x: 5, y: 24, w: 66 } }
 const RF_PLEDGE: CaseSlot = { label: 'The Pledge screen on Lime', ratio: '1991 / 2489', src: rf_pledge_full, srcSet: set([[rf_pledge_1600, 1600], [rf_pledge_full, 1991]]) }
 const RF_POSTERS: CaseSlot = { label: 'Three Refreeg posters', ratio: '5504 / 2501', src: rf_posters_full, srcSet: set([[rf_posters_1600, 1600], [rf_posters_2800, 2800], [rf_posters_full, 5504]]) }
 const RF_FAMILY: CaseSlot = { label: 'Refreeg at home', ratio: '5461 / 3072', src: rf_family_full, srcSet: set([[rf_family_1600, 1600], [rf_family_2800, 2800], [rf_family_full, 5461]]) }
@@ -540,19 +544,19 @@ export const CASE_STUDIES: CaseStudy[] = [
         ],
       },
     ],
-    hero: RF_LOGO,
+    hero: RF_BILLBOARD,
     gallery: [
-      { kind: 'full', slot: RF_BILLBOARD },
+      { kind: 'full', slot: RF_LOGO, inset: true },
       { kind: 'pair', slots: [RF_ICON, RF_CARD], inset: true },
       { kind: 'full', slot: RF_WEB },
-      { kind: 'full', slot: RF_TABLET, inset: true },
       { kind: 'pair', slots: [RF_FOLDERS, RF_RECEIPT], inset: true },
+      { kind: 'full', slot: RF_TABLET, inset: true },
       { kind: 'full', slot: RF_SUBWAY },
-      { kind: 'full', slot: RF_POCKET, inset: true },
       { kind: 'pair', slots: [RF_SOCIAL, RF_LUNCH], inset: true },
+      { kind: 'full', slot: RF_POCKET, inset: true },
       { kind: 'full', slot: RF_SCOOTER },
-      { kind: 'full', slot: RF_TOTE, inset: true },
       { kind: 'pair', slots: [RF_GROCERIES, RF_PLEDGE], inset: true },
+      { kind: 'full', slot: RF_TOTE, inset: true },
       { kind: 'full', slot: RF_POSTERS },
       { kind: 'full', slot: RF_FAMILY, inset: true },
       { kind: 'full', slot: RF_TYPE },
