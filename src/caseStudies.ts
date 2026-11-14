@@ -308,7 +308,7 @@ const P3_BILLBOARD = p3('“Complexity isn’t a hurdle. It’s an asset.” on 
 import p3Film from './assets/3p/3projects-brand-film.mp4'
 import p3FilmPoster from './assets/3p/film-poster.jpg'
 const P3_FILM: CaseSlot = {
-  label: 'The 3PROJECTS brand guide, animated',
+  label: 'The 3PROJECTS brand guide, slide by slide',
   ratio: '16 / 9',
   src: p3Film,
   poster: p3FilmPoster,
