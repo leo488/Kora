@@ -96,6 +96,8 @@ export interface CaseSlot {
     | 'ipaybtc-logo'
     | 'ipaybtc-logo-navy'
     | 'ipaybtc-type'
+    | 'ipaybtc-social'
+    | 'ipaybtc-wall'
     | 'ipaybtc-phone'
     | 'ipaybtc-phones'
     | 'ipaybtc-poster-border'
@@ -277,6 +279,8 @@ const FX30 = fig('30', 'The iPayBTC website', [fx30a, fx30b])
 const FX31 = fig('31', 'Futura LT Condensed ExtraBold', [fx31a, fx31b])
 const FX32 = fig('32', 'Neue Haas Grotesk', [fx32a, fx32b])
 const FX33 = fig('33', 'Friends in the sun', [fx33a, fx33b])
+const IPAY_SOCIAL = art('Posts sliding through the iPayBTC feed', '16 / 9', 'ipaybtc-social')
+const IPAY_WALL = art('The campaign as social posts', '16 / 9', 'ipaybtc-wall')
 const IPAY_POSTER_TEA = art('Buy Bitcoin before your tea gets cold.', '4 / 5', 'ipaybtc-poster-tea')
 const IPAY_POSTER_SPEND = art('Bitcoin was never meant to sit still. Spend it.', '4 / 5', 'ipaybtc-poster-spend')
 
@@ -333,6 +337,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_KEYPAD, inset: true },
       { kind: 'full', slot: IPAY_POLE },
       { kind: 'full', slot: IPAY_PHONES, inset: true },
+      { kind: 'full', slot: IPAY_SOCIAL },
+      { kind: 'full', slot: IPAY_WALL },
       { kind: 'full', slot: IPAY_LAPTOP },
       { kind: 'full', slot: IPAY_LANDSCAPE },
       { kind: 'pair', slots: [IPAY_POSTER_TEA, IPAY_POSTER_SPEND], inset: true },

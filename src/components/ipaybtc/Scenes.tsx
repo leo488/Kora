@@ -271,3 +271,98 @@ export function WebDash({ playing }: { playing: boolean }) {
     </div>
   )
 }
+
+/* ---------- Social posts, after the Surgepay campaign pages ---------- */
+
+type Post = { bg: string; fg: string; lines: string[]; sub?: string; obj: string }
+
+export const POSTS: Post[] = [
+  { bg: '#0a31f5', fg: '#fff778', lines: ['Your Naira', 'can’t travel.', 'Your Bitcoin can.'], obj: o8 },
+  { bg: '#fff778', fg: '#050e7f', lines: ['Buy Bitcoin', 'before your', 'tea gets cold.'], obj: o1 },
+  { bg: '#050e7f', fg: '#fff778', lines: ['Pay NEPA', 'in sats.'], sub: 'Airtime, data and light bills, straight from your Bitcoin.', obj: o2 },
+  { bg: '#88c2ed', fg: '#050e7f', lines: ['No bank opening hours.', 'No border.', 'No permission.'], obj: o3 },
+  { bg: '#0a31f5', fg: '#fff', lines: ['Bitcoin was', 'never meant', 'to sit still.'], sub: 'Spend it.', obj: o1 },
+]
+
+/** One 4:5 social post. */
+export function SocialPost({ p }: { p: Post }) {
+  return (
+    <div className="ips-post" style={{ background: p.bg, color: p.fg }}>
+      <p className="ips-post-head">
+        {p.lines.map((l) => (
+          <span key={l}>{l}</span>
+        ))}
+      </p>
+      {p.sub && <p className="ips-post-sub">{p.sub}</p>}
+      <img className="ips-post-obj" src={p.obj} alt="" />
+      <div className="ips-post-foot">
+        <span className="ips-post-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+        <span className="ips-post-stores">iOS · Android</span>
+      </div>
+    </div>
+  )
+}
+
+/** The posts sliding through an Instagram-style frame. */
+export function SocialCarousel() {
+  const [ref, on] = useInView<HTMLDivElement>(0.2, false)
+  const [i, setI] = useState(0)
+  useEffect(() => {
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setInterval(() => setI((v) => (v + 1) % POSTS.length), 2600)
+    return () => clearInterval(t)
+  }, [on])
+  const loop = [...POSTS, ...POSTS, ...POSTS]
+  const at = POSTS.length + i
+  return (
+    <div ref={ref} className="ips ips-social">
+      <div className="ips-social-track" style={{ ['--at' as string]: at }}>
+        {loop.map((p, k) => (
+          <SocialPost key={k} p={p} />
+        ))}
+      </div>
+      <div className="ips-social-frame" aria-hidden>
+        <div className="ips-social-top">
+          <span className="ips-social-avatar" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+          <span>
+            <b>iPayBTC</b>
+            <em>Lagos, Nigeria</em>
+          </span>
+          <i>•••</i>
+        </div>
+        <div className="ips-social-hole" />
+        <div className="ips-social-bottom">
+          <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" /></svg>
+          <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3.2-6.4L20 4l-1 4.3A8 8 0 0 1 20 12Z" /></svg>
+          <svg viewBox="0 0 24 24"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4 18-7Z" /></svg>
+          <span className="ips-social-dots">
+            {POSTS.map((_, k) => (
+              <i key={k} className={k === i ? 'is-on' : ''} />
+            ))}
+          </span>
+          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4.5L6 21V3Z" /></svg>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** Two rows of posts drifting past each other. */
+export function PostWall() {
+  const row = [...POSTS, ...POSTS]
+  const row2 = [...POSTS.slice(3), ...POSTS.slice(0, 3)]
+  return (
+    <div className="ips ips-wall">
+      <div className="ips-wall-row">
+        {[...row, ...row].map((p, k) => (
+          <SocialPost key={k} p={p} />
+        ))}
+      </div>
+      <div className="ips-wall-row is-back">
+        {[...row2, ...row2, ...row2, ...row2].map((p, k) => (
+          <SocialPost key={k} p={p} />
+        ))}
+      </div>
+    </div>
+  )
+}

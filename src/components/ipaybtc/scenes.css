@@ -496,3 +496,236 @@
   z-index: 2;
   pointer-events: none;
 }
+
+/* Social posts */
+.ips-post {
+  position: relative;
+  flex: none;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.ips-post-head {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 7%;
+  margin: 0;
+  font-family: 'Futura LT Condensed', 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13cqw;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.ips-post-head span {
+  display: block;
+}
+
+.ips-post-sub {
+  position: absolute;
+  left: 8%;
+  right: 30%;
+  top: 40%;
+  margin: 0;
+  font-family: 'Inter Tight', 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 4.2cqw;
+  line-height: 1.25;
+}
+
+.kora-case-plate .ips-post-obj {
+  position: absolute;
+  right: 6%;
+  bottom: 13%;
+  width: 46%;
+  height: auto;
+  object-fit: contain;
+}
+
+.ips-post-foot {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 5.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 3.4cqw;
+  font-weight: 600;
+}
+
+.ips-post-logo {
+  width: 30%;
+}
+
+.ips-post-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The carousel in an Instagram frame */
+.ips-social {
+  background: #040246;
+  --ips-pw: 30cqw;
+}
+
+.ips-social-track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  transform: translate(calc(var(--ips-pw) * var(--at) * -1 - var(--ips-pw) / 2), -50%);
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.2, 1);
+}
+
+.ips-social-track .ips-post {
+  width: var(--ips-pw);
+}
+
+.ips-social-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ips-pw);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.ips-social-top,
+.ips-social-bottom {
+  display: flex;
+  align-items: center;
+  gap: 1.2cqw;
+  padding: 1.4cqw 1.6cqw;
+  background: #111;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.ips-social-top {
+  border-radius: 1.6cqw 1.6cqw 0 0;
+  margin-top: -5cqw;
+  height: 5cqw;
+  box-sizing: border-box;
+}
+
+.ips-social-bottom {
+  border-radius: 0 0 1.6cqw 1.6cqw;
+  height: 4.4cqw;
+  box-sizing: border-box;
+}
+
+.ips-social-avatar {
+  display: grid;
+  place-items: center;
+  width: 2.8cqw;
+  height: 2.8cqw;
+  border-radius: 50%;
+  background: #0a31f5;
+  color: #fff;
+}
+
+.ips-social-avatar svg {
+  width: 80%;
+  height: auto;
+}
+
+.ips-social-top span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1cqw;
+  line-height: 1.25;
+}
+
+.ips-social-top em {
+  font-style: normal;
+  opacity: 0.8;
+}
+
+.ips-social-top i {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 1.2cqw;
+}
+
+.ips-social-hole {
+  aspect-ratio: 4 / 5;
+}
+
+.ips-social-bottom svg {
+  width: 1.9cqw;
+  height: 1.9cqw;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.ips-social-bottom svg:last-child {
+  margin-left: auto;
+}
+
+.ips-social-dots {
+  display: flex;
+  gap: 0.4cqw;
+  margin-left: auto;
+}
+
+.ips-social-dots i {
+  width: 0.45cqw;
+  height: 0.45cqw;
+  border-radius: 50%;
+  background: #555;
+}
+
+.ips-social-dots i.is-on {
+  background: #3e8bff;
+}
+
+/* The poster wall */
+.ips-wall {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1cqw;
+  background: #050e7f;
+}
+
+.ips-wall-row {
+  display: flex;
+  gap: 1cqw;
+  width: max-content;
+  animation: ips-drift 60s linear infinite;
+}
+
+.ips-wall-row.is-back {
+  animation-direction: reverse;
+  margin-left: -12cqw;
+}
+
+.ips-wall .ips-post {
+  width: 22cqw;
+}
+
+@keyframes ips-drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ips-wall-row {
+    animation: none;
+  }
+
+  .ips-social-track {
+    transition: none;
+  }
+}

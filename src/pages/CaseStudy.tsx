@@ -5,7 +5,7 @@ import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
-import { KeypadCard, LogoTile, PhoneBoard, PhonePlate, TypePoster, TypeSwap, ZoomImg } from '../components/ipaybtc/Scenes'
+import { KeypadCard, LogoTile, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg } from '../components/ipaybtc/Scenes'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -153,6 +153,10 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
           />
         ) : slot.art === 'ipaybtc-type' ? (
           <TypeSwap />
+        ) : slot.art === 'ipaybtc-social' ? (
+          <SocialCarousel />
+        ) : slot.art === 'ipaybtc-wall' ? (
+          <PostWall />
         ) : slot.art === 'ipaybtc-logo-navy' ? (
           <LogoTile tone="navy" />
         ) : slot.art === 'ipaybtc-phone' ? (
