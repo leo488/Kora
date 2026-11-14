@@ -394,6 +394,15 @@ const RF_GROCERIES: CaseSlot = { label: 'School fees for 90 girls in Ikorodu', r
 const RF_PLEDGE: CaseSlot = { label: 'The Pledge screen on Lime', ratio: '1991 / 2489', src: rf_pledge_full, srcSet: set([[rf_pledge_1600, 1600], [rf_pledge_full, 1991]]) }
 const RF_POSTERS: CaseSlot = { label: 'Three Refreeg posters', ratio: '5504 / 2501', src: rf_posters_full, srcSet: set([[rf_posters_1600, 1600], [rf_posters_2800, 2800], [rf_posters_full, 5504]]) }
 const RF_FAMILY: CaseSlot = { label: 'Refreeg at home', ratio: '5461 / 3072', src: rf_family_full, srcSet: set([[rf_family_1600, 1600], [rf_family_2800, 2800], [rf_family_full, 5461]]) }
+import rf_film from './assets/refreeg/refreeg-film.mp4'
+import rf_film_poster from './assets/refreeg/film-poster.jpg'
+const RF_FILM: CaseSlot = {
+  label: 'Refreeg launch film: Ask Refreeg finds a campaign you can see, then the receipt',
+  ratio: '16 / 9',
+  src: rf_film,
+  poster: rf_film_poster,
+  video: true,
+}
 const RF_TYPE: CaseSlot = { label: '“Give where you can see.” in Recoleta', ratio: '3840 / 1920', src: rf_type_full, srcSet: set([[rf_type_1600, 1600], [rf_type_2800, 2800], [rf_type_full, 3840]]) }
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -560,6 +569,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: RF_POSTERS },
       { kind: 'full', slot: RF_FAMILY, inset: true },
       { kind: 'full', slot: RF_TYPE },
+      { kind: 'full', slot: RF_FILM },
     ],
     next: 'Ipaybtc',
   },
