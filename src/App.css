@@ -4590,3 +4590,75 @@
   right: var(--kora-flare);
   width: calc(100% - 2 * var(--kora-flare));
 }
+
+/* Refreeg: notification pills over the photos */
+.rf-chip {
+  position: absolute;
+  z-index: 3;
+  container-type: inline-size;
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+  transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.15);
+  transition-delay: 0.25s;
+}
+.rf-chip.is-in {
+  opacity: 1;
+  transform: none;
+}
+.rf-chip-pill {
+  display: flex;
+  align-items: center;
+  gap: 4.5cqw;
+  padding: 3.2cqw 7cqw 3.2cqw 3.2cqw;
+  border-radius: 999px;
+  background: #fff;
+  color: #0e1b14;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+}
+.rf-chip-icon {
+  flex: none;
+  width: 15cqw;
+  height: 15cqw;
+  border-radius: 50%;
+  background: #0e1b14;
+  display: grid;
+  place-items: center;
+}
+.rf-chip-icon img {
+  width: 64%;
+  height: 64%;
+  display: block;
+}
+.rf-chip-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6cqw;
+  line-height: 1.2;
+}
+.rf-chip-text strong {
+  font-weight: 500;
+  font-size: 5cqw;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rf-chip-text span {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 4.7cqw;
+  color: #4a554e;
+}
+.rf-chip-text em {
+  font-style: normal;
+  font-size: 3.8cqw;
+  color: #7a837d;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rf-chip { transition: none; opacity: 1; transform: none; }
+}
+@font-face { font-family: 'Geist'; src: url('./assets/fonts/Geist-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Geist'; src: url('./assets/fonts/Geist-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
