@@ -193,6 +193,7 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
                 />
               )}
               {slot.screen && <ScreenOverlay screen={slot.screen} />}
+              {slot.top && <img className="kora-case-top" src={slot.top} alt="" aria-hidden />}
               {slot.keypad && <KeypadCard />}
             </>
           )

@@ -42,6 +42,37 @@ import tee1200 from './assets/ipaybtc-tee-1200.jpg'
 import tee2400 from './assets/ipaybtc-tee-2400.jpg'
 import borderless from './assets/ipaybtc-borderless.mp4'
 import borderlessPoster from './assets/ipaybtc-borderless-poster.jpg'
+import fx05a from './assets/figx/f05-1200.jpg'
+import fx05b from './assets/figx/f05-2400.jpg'
+import fx07a from './assets/figx/f07-1200.jpg'
+import fx07b from './assets/figx/f07-2400.jpg'
+import fx20a from './assets/figx/f20-1200.jpg'
+import fx20b from './assets/figx/f20-2400.jpg'
+import fx21a from './assets/figx/f21-1200.jpg'
+import fx21b from './assets/figx/f21-2400.jpg'
+import fx22a from './assets/figx/f22-1200.jpg'
+import fx22b from './assets/figx/f22-2400.jpg'
+import fx23a from './assets/figx/f23-1200.jpg'
+import fx23b from './assets/figx/f23-2400.jpg'
+import fx24a from './assets/figx/f24-1200.jpg'
+import fx24b from './assets/figx/f24-2400.jpg'
+import fx26a from './assets/figx/f26-1200.jpg'
+import fx26b from './assets/figx/f26-2400.jpg'
+import fx27a from './assets/figx/f27-1200.jpg'
+import fx27b from './assets/figx/f27-2400.jpg'
+import fx28a from './assets/figx/f28-1200.jpg'
+import fx28b from './assets/figx/f28-2400.jpg'
+import fx29a from './assets/figx/f29-1200.jpg'
+import fx29b from './assets/figx/f29-2400.jpg'
+import fx30a from './assets/figx/f30-1200.jpg'
+import fx30b from './assets/figx/f30-2400.jpg'
+import fx31a from './assets/figx/f31-1200.jpg'
+import fx31b from './assets/figx/f31-2400.jpg'
+import fx32a from './assets/figx/f32-1200.jpg'
+import fx32b from './assets/figx/f32-2400.jpg'
+import fx33a from './assets/figx/f33-1200.jpg'
+import fx33b from './assets/figx/f33-2400.jpg'
+import fx05top from './assets/figx/f05-fingers.webp'
 import teeClose1200 from './assets/ipaybtc-w-tee-1200.jpg'
 import teeClose2400 from './assets/ipaybtc-w-tee-2400.jpg'
 
@@ -70,6 +101,8 @@ export interface CaseSlot {
     | 'ipaybtc-poster-border'
     | 'ipaybtc-poster-tea'
     | 'ipaybtc-poster-spend'
+  /** A cut-out of the photo laid over the live screen (fingers on the glass). */
+  top?: string
   /** The app's amount keypad resting beside the people in the photo. */
   keypad?: boolean
   /** The photo eases out from a slight zoom while it is on screen. */
@@ -218,6 +251,32 @@ const IPAY_LANDSCAPE: CaseSlot = {
     radius: 44,
   },
 }
+/* Leo's Figma frames, exported from Figma as they are. */
+const fig = (n: string, label: string, pair: [string, string]): CaseSlot => plate(label, '10130 / 6488', pair)
+const FX05: CaseSlot = {
+  ...fig('05', 'Holding up iPayBTC on Electric Blue', [fx05a, fx05b]),
+  screen: {
+    flow: 'send',
+    size: [2400, 1537],
+    corners: [[1266, 728], [1507, 725], [1514, 1255], [1264, 1258]],
+    radius: 40,
+  },
+  top: fx05top,
+}
+const FX07 = fig('07', 'Buying Bitcoin under a blue sky', [fx07a, fx07b])
+const FX20 = fig('20', 'The iPayBTC brand guide', [fx20a, fx20b])
+const FX21 = fig('21', '“We Move In Sats” tote in the sun', [fx21a, fx21b])
+const FX22 = fig('22', 'The pattern tote on Electric Blue', [fx22a, fx22b])
+const FX23 = fig('23', 'Tee and staff pass', [fx23a, fx23b])
+const FX24 = fig('24', 'iPayBTC posters along a walkway', [fx24a, fx24b])
+const FX26 = fig('26', 'The blue tee on Milky Yellow', [fx26a, fx26b])
+const FX27 = fig('27', 'iPayBTC on the main stage', [fx27a, fx27b])
+const FX28 = fig('28', 'The app icon in the dock', [fx28a, fx28b])
+const FX29 = fig('29', 'iPayBTC on the watch', [fx29a, fx29b])
+const FX30 = fig('30', 'The iPayBTC website', [fx30a, fx30b])
+const FX31 = fig('31', 'Futura LT Condensed ExtraBold', [fx31a, fx31b])
+const FX32 = fig('32', 'Neue Haas Grotesk', [fx32a, fx32b])
+const FX33 = fig('33', 'Friends in the sun', [fx33a, fx33b])
 const IPAY_POSTER_TEA = art('Buy Bitcoin before your tea gets cold.', '4 / 5', 'ipaybtc-poster-tea')
 const IPAY_POSTER_SPEND = art('Bitcoin was never meant to sit still. Spend it.', '4 / 5', 'ipaybtc-poster-spend')
 
@@ -277,6 +336,17 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_LAPTOP },
       { kind: 'full', slot: IPAY_LANDSCAPE },
       { kind: 'pair', slots: [IPAY_POSTER_TEA, IPAY_POSTER_SPEND], inset: true },
+      { kind: 'full', slot: FX33 },
+      { kind: 'full', slot: FX05, inset: true },
+      { kind: 'full', slot: FX07, inset: true },
+      { kind: 'pair', slots: [FX21, FX22], inset: true },
+      { kind: 'full', slot: FX24 },
+      { kind: 'pair', slots: [FX26, FX27], inset: true },
+      { kind: 'full', slot: FX30, inset: true },
+      { kind: 'pair', slots: [FX28, FX29], inset: true },
+      { kind: 'full', slot: FX23, inset: true },
+      { kind: 'pair', slots: [FX31, FX32], inset: true },
+      { kind: 'full', slot: FX20, inset: true },
     ],
     next: '3Projects',
   },

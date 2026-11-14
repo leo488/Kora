@@ -490,3 +490,9 @@
     transform: translateY(-50%) !important;
   }
 }
+
+/* A cut-out of the photo laid back over the live screen */
+.kora-case-plate .kora-flare > img.kora-case-top {
+  z-index: 2;
+  pointer-events: none;
+}
