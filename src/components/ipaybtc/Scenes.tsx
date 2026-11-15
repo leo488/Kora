@@ -64,6 +64,8 @@ const LINES: Array<[string, string, string, string?]> = [
   ['PAY NEPA', 'IN SATS.', d3check],
   ['NO BORDER.', 'NO PERMISSION.', d3bank],
   ['WE MOVE', 'IN SATS.', illSwirl, 'pink'],
+  ['你的比特币', '可以远行。', d3swap, 'blue'],
+  ['BITCOIN RẸ', 'LÈ RIN ÌRÌN-ÀJÒ.', d3coin],
 ]
 
 /** Campaign type whose words swap, like Wise's FULL SPEED / MIN FEES, with

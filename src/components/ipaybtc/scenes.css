@@ -858,3 +858,13 @@
 .ips-type[data-tone='pink'] .ips-type-logo {
   color: #050e7f;
 }
+
+.ips-type[data-tone='blue'] {
+  background: #0a31f5;
+  color: #ffffff;
+}
+
+/* Chinese lines: Barlow has no CJK glyphs, so the heavy Noto Sans SC takes over. */
+.ips-type-lines p {
+  font-family: 'Futura LT Condensed', 'Futura Condensed ExtraBold', 'Barlow Condensed', 'Noto Sans SC', sans-serif;
+}
