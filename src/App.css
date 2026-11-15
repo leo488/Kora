@@ -4488,6 +4488,11 @@
   align-self: center;
 }
 
+/* A slightly wider inset group (iPayBTC opening bento). */
+.kora-case-gallery > .is-inset.is-wide {
+  width: min(76%, 1280px);
+}
+
 /* Keep edge-to-edge plates from growing past a comfortable size on wide
    screens (a 16" MacBook and up). */
 .kora-case-gallery > * {
@@ -4518,7 +4523,7 @@
 }
 
 .kora-case-art-ipaybtc {
-  background: #0a31f5;
+  background: linear-gradient(135deg, #050e7f 0%, #050e7f 25%, #0a31f5 78%, #3ed4ff 100%);
   color: #ffffff;
 }
 
@@ -4528,7 +4533,8 @@
 }
 
 @media (max-width: 760px) {
-  .kora-case-gallery > .is-inset {
+  .kora-case-gallery > .is-inset,
+  .kora-case-gallery > .is-inset.is-wide {
     width: 100%;
   }
 }

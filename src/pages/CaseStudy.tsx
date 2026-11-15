@@ -107,10 +107,10 @@ export function CaseStudy() {
 function Block({ block }: { block: CaseBlock }) {
   switch (block.kind) {
     case 'full':
-      return <Plate slot={block.slot} inset={block.inset} />
+      return <Plate slot={block.slot} inset={block.inset} wide={block.wide} gapAfter={block.gapAfter} />
     case 'pair':
       return (
-        <div className={`kora-case-pair${block.inset ? ' is-inset' : ''}`}>
+        <div className={`kora-case-pair${block.inset ? ' is-inset' : ''}${block.wide ? ' is-wide' : ''}`}>
           <Plate slot={block.slots[0]} />
           <Plate slot={block.slots[1]} />
         </div>
@@ -139,11 +139,11 @@ function Block({ block }: { block: CaseBlock }) {
 
 /** An image or loop — or, until it exists, a grey panel naming what goes
  *  there. */
-function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean }) {
+function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean; wide?: boolean; gapAfter?: boolean }) {
   return (
     <figure
-      className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}`}
-      style={{ aspectRatio: slot.ratio }}
+      className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}${wide ? ' is-wide' : ''}`}
+      style={{ aspectRatio: slot.ratio, marginBottom: gapAfter ? 'clamp(48px, 8vw, 140px)' : undefined }}
     >
       <div className="kora-flare">
         {slot.art === 'ipaybtc-logo' ? (

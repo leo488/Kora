@@ -17,9 +17,9 @@ import tableFull from './assets/ipaybtc-table-full.jpg'
 import card1600 from './assets/ipaybtc-card-1600.jpg'
 import card2800 from './assets/ipaybtc-card-2800.jpg'
 import cardFull from './assets/ipaybtc-card-full.jpg'
-import hand1000 from './assets/ipaybtc-hand-1000.jpg'
-import hand1800 from './assets/ipaybtc-hand-1800.jpg'
-import handFull from './assets/ipaybtc-hand-full.jpg'
+import hand1000 from './assets/ipaybtc-hand2-1000.jpg'
+import hand1800 from './assets/ipaybtc-hand2-1800.jpg'
+import handFull from './assets/ipaybtc-hand2-full.jpg'
 import iconPhone1000 from './assets/ipaybtc-iconphone-1000.jpg'
 import iconPhone1800 from './assets/ipaybtc-iconphone-1800.jpg'
 import iconPhoneFull from './assets/ipaybtc-iconphone-full.jpg'
@@ -42,6 +42,8 @@ import lanyard2400 from './assets/ipaybtc-lanyard-2400.jpg'
 import tee1200 from './assets/ipaybtc-tee-1200.jpg'
 import tee2400 from './assets/ipaybtc-tee-2400.jpg'
 import borderless from './assets/ipaybtc-borderless.mp4'
+import ipayMotion from './assets/ipaybtc-motion.mp4'
+import ipayMotionPoster from './assets/ipaybtc-motion-poster.jpg'
 import borderlessPoster from './assets/ipaybtc-borderless-poster.jpg'
 import fx05a from './assets/figx/f05-1200.jpg'
 import fx05b from './assets/figx/f05-2400.jpg'
@@ -181,8 +183,8 @@ export interface CaseSlot {
 
 export type CaseBlock =
   /** `inset` sits the block in the centre column instead of edge to edge. */
-  | { kind: 'full'; slot: CaseSlot; inset?: boolean }
-  | { kind: 'pair'; slots: [CaseSlot, CaseSlot]; inset?: boolean }
+  | { kind: 'full'; slot: CaseSlot; inset?: boolean; wide?: boolean; gapAfter?: boolean }
+  | { kind: 'pair'; slots: [CaseSlot, CaseSlot]; inset?: boolean; wide?: boolean }
   | { kind: 'grid'; columns: number; slots: CaseSlot[] }
   | { kind: 'collage'; slots: CaseSlot[] }
 
@@ -251,21 +253,22 @@ const IPAY_ICON: CaseSlot = {
     flow: 'launch',
     size: [3584, 4480],
     corners: [[1161.5, 876.6], [2419.7, 876.6], [2419.7, 3599.2], [1161.5, 3599.2]],
-    radius: 50,
+    radius: 52,
   },
 }
 
 
 const IPAY_HAND: CaseSlot = {
-  label: 'A hand holding a phone, buying Bitcoin in iPayBTC',
+  label: 'A hand holding a phone, swapping in iPayBTC',
   ratio: '4 / 5',
   src: handFull,
   srcSet: set([[hand1000, 1000], [hand1800, 1800], [handFull, 3584]]),
   screen: {
-    flow: 'buy',
-    size: [3584, 4800],
-    corners: [[580.6, 901.8], [1799.2, 530.1], [2713.9, 3195.1], [1518, 3646]],
-    radius: 50,
+    flow: 'swap',
+    tone: 'light',
+    size: [3584, 4480],
+    corners: [[774.7, 1205.5], [1798.3, 893.3], [2566.7, 3131.9], [1562.1, 3510.6]],
+    radius: 52,
     glare: 'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%)',
   },
 }
@@ -285,6 +288,13 @@ const IPAY_LOGO_NAVY = art('The iPayBTC wordmark on Deep Navy', '4 / 5', 'ipaybt
 const IPAY_TEE_CLOSE = plate('The iPayBTC wordmark on a white tee', '4 / 5', [teeClose1200, teeClose2400])
 const IPAY_LANYARD = plate('iPayBTC lanyard and staff pass', '4 / 5', [lanyard1200, lanyard2400])
 const IPAY_TEE = plate('iPayBTC tee on a tennis court', '4 / 5', [tee1200, tee2400])
+const IPAY_MOTION: CaseSlot = {
+  label: 'iPayBTC brand motion: pay, swap and we move in sats',
+  ratio: '16 / 9',
+  src: ipayMotion,
+  poster: ipayMotionPoster,
+  video: true,
+}
 const IPAY_CARD_VIDEO: CaseSlot = {
   label: 'The iPayBTC card over clips that cut from a road trip to Lagos',
   ratio: '16 / 9',
@@ -462,13 +472,14 @@ export const CASE_STUDIES: CaseStudy[] = [
     hero: IPAY_TABLE,
     gallery: [
       { kind: 'full', slot: IPAY_CARD },
-      { kind: 'full', slot: IPAY_LOGO, inset: true },
-      { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true },
-      { kind: 'full', slot: IPAY_BILLBOARD },
+      { kind: 'full', slot: IPAY_LOGO, inset: true, wide: true },
+      { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true, wide: true },
+      { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true, gapAfter: true },
+      { kind: 'full', slot: IPAY_CARD_VIDEO },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
       { kind: 'pair', slots: [IPAY_LOGO_NAVY, IPAY_TEE_CLOSE], inset: true },
       { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
-      { kind: 'full', slot: IPAY_CARD_VIDEO },
+      { kind: 'full', slot: IPAY_BILLBOARD },
       { kind: 'full', slot: IPAY_POSTER_BORDER, inset: true },
       { kind: 'pair', slots: [IPAY_WRAP, IPAY_PHONE], inset: true },
       { kind: 'full', slot: IPAY_UNDER },
