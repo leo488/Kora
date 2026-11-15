@@ -1,3 +1,4 @@
+import illSwirl from '../../assets/ipaybtc-ill-swirl.svg'
 import { useEffect, useRef, useState } from 'react'
 import './scenes.css'
 import ipaybtcLogo from '../../assets/ipaybtc-logo.svg?raw'
@@ -57,11 +58,12 @@ function useCycle(length: number, every: number) {
 }
 
 /* Each line comes with one of our 3D objects. */
-const LINES: Array<[string, string, string]> = [
+const LINES: Array<[string, string, string, string?]> = [
   ['YOUR BITCOIN', 'CAN TRAVEL.', d3swap],
   ['BEFORE YOUR', 'TEA GETS COLD.', d3coin],
   ['PAY NEPA', 'IN SATS.', d3check],
   ['NO BORDER.', 'NO PERMISSION.', d3bank],
+  ['WE MOVE', 'IN SATS.', illSwirl, 'pink'],
 ]
 
 /** Campaign type whose words swap, like Wise's FULL SPEED / MIN FEES, with
@@ -69,7 +71,7 @@ const LINES: Array<[string, string, string]> = [
 export function TypeSwap() {
   const i = useCycle(LINES.length, 2000)
   return (
-    <div className="ips ips-type">
+    <div className="ips ips-type" data-tone={LINES[i][3] ?? 'navy'}>
       <div className="ips-type-lines" aria-live="off">
         {LINES.map((l, k) => (
           <p key={k} className={k === i ? 'is-on' : ''}>
@@ -80,7 +82,7 @@ export function TypeSwap() {
       </div>
       <div className="ips-type-objs" aria-hidden>
         {LINES.map((l, k) => (
-          <img key={k} src={l[2]} alt="" className={k === i ? 'is-on' : ''} />
+          <img key={k} src={l[2]} alt="" className={`${k === i ? 'is-on' : ''}${l[3] ? ' is-ill' : ''}`} />
         ))}
       </div>
       <span className="ips-type-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />

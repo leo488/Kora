@@ -24,6 +24,18 @@
 .ips-type {
   background: var(--ips-navy);
   color: var(--ips-yellow);
+  transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ips-type[data-tone='pink'] {
+  background: #f6d5dd;
+  color: #050e7f;
+}
+
+.kora-case-plate .ips-type-objs img.is-ill {
+  inset: auto -26% -4% auto;
+  width: 165%;
+  height: auto;
 }
 
 .ips-type-lines p {
@@ -841,4 +853,8 @@
     transform: none;
     transition: none;
   }
+}
+
+.ips-type[data-tone='pink'] .ips-type-logo {
+  color: #050e7f;
 }
