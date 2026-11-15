@@ -182,12 +182,12 @@ import whotafrica012000 from './assets/whotafrica-01-2000.jpg'
    HEVC, but Firefox never does and Chrome only where the hardware obliges, so
    the master stays out of the bundle and this is what ships. */
 
-import ipaybtcFilm from './assets/ipaybtc-motion.mp4'
+import ipaybtcFilm from './assets/ipaybtc-tile-film.mp4'
 import koraClosingFilm from './assets/kora-closing.mp4'
 import koraClosingPoster1200 from './assets/kora-closing-poster-1200.jpg'
 import koraClosingPoster2000 from './assets/kora-closing-poster-2000.jpg'
-import ipaybtcFilmPoster1200 from './assets/ipaybtc-motion-poster-1200.jpg'
-import ipaybtcFilmPoster2000 from './assets/ipaybtc-motion-poster-2000.jpg'
+import ipaybtcFilmPoster1200 from './assets/ipaybtc-tile-poster-1200.jpg'
+import ipaybtcFilmPoster2000 from './assets/ipaybtc-tile-poster-2000.jpg'
 
 export interface ProjectImage {
   /** Widest plate available — also the plain `src` fallback. */
