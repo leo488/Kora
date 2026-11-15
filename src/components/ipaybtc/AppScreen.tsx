@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import logo from '../../assets/ipaybtc-logo.svg?raw'
 import './app-screen.css'
+import { SwapApp } from './SwapApp'
 
 /* The iPayBTC app (v3, light mode) running on a phone in a still photo.
    Everything is drawn at the phone's own size, 390 × 844, and the plate that
@@ -70,8 +71,8 @@ const SCRIPT: Record<AppFlow, Step[]> = {
     [1600, { press: 'icon' }],
     [1850, { press: null, screen: 'splash' }],
     [3000, { screen: 'home' }],
-    [6800, { screen: 'icons' }],
-    [8600, {}],
+    [16000, { screen: 'icons' }],
+    [17800, {}],
   ],
 }
 
@@ -380,9 +381,8 @@ function Launch({ s }: { s: State }) {
         </div>
       </div>
       <div className="ias-page ias-splash">
-        <i dangerouslySetInnerHTML={{ __html: logo }} />
+        {s.screen === 'icons' ? <i dangerouslySetInnerHTML={{ __html: logo }} /> : <SwapApp playing tone="dark" />}
       </div>
-      <Home s={s} flow="launch" />
     </div>
   )
 }
