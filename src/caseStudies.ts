@@ -259,13 +259,12 @@ const IPAY_ICON: CaseSlot = {
 
 
 const IPAY_HAND: CaseSlot = {
-  label: 'A hand holding a phone, swapping in iPayBTC',
+  label: 'A hand holding a phone, receiving Bitcoin by QR in iPayBTC',
   ratio: '4 / 5',
   src: handFull,
   srcSet: set([[hand1000, 1000], [hand1800, 1800], [handFull, 3584]]),
   screen: {
-    flow: 'swap',
-    tone: 'light',
+    flow: 'receive',
     size: [3584, 4480],
     corners: [[774.7, 1205.5], [1798.3, 893.3], [2566.7, 3131.9], [1562.1, 3510.6]],
     radius: 52,
