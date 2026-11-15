@@ -10,6 +10,7 @@
    app on the phone in the photo (components/ipaybtc/ScreenOverlay.tsx). */
 
 import type { PhoneScreen } from './components/ipaybtc/ScreenOverlay'
+import type { SteamSpot } from './components/ipaybtc/Steam'
 import table1600 from './assets/ipaybtc-table-1600.jpg'
 import table2800 from './assets/ipaybtc-table-2800.jpg'
 import tableFull from './assets/ipaybtc-table-full.jpg'
@@ -146,6 +147,8 @@ export interface CaseSlot {
   overlay?: 'ipaybtc-card'
   /** The live app, mapped onto the phone screen in the photo. */
   screen?: PhoneScreen
+  /** Steam drifting off a hot drink in the photo. */
+  steam?: SteamSpot
   /** A plate drawn in code instead of a photo. */
   art?:
     | 'ipaybtc-logo'
@@ -216,12 +219,14 @@ const IPAY_TABLE: CaseSlot = {
   src: tableFull,
   srcSet: set([[table1600, 1600], [table2800, 2800], [tableFull, 5504]]),
   screen: {
-    flow: 'send',
+    flow: 'swap',
+    tone: 'dark',
     size: [5504, 3072],
-    corners: [[2318.9, 702.5], [3138.4, 876.4], [2655, 2607.5], [1801, 2404.3]],
-    radius: 50,
+    corners: [[2317.0, 691.2], [3146.3, 867.1], [2657.1, 2619.0], [1792.9, 2413.4]],
+    radius: 54,
     glare: 'linear-gradient(115deg, rgba(255,240,220,0.10) 0%, rgba(255,255,255,0) 45%, rgba(60,30,0,0.06) 100%)',
   },
+  steam: { x: 76, y: 9, size: 24, drift: 125 },
 }
 
 const IPAY_CARD: CaseSlot = {

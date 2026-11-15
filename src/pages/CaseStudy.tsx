@@ -5,6 +5,7 @@ import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
+import { Steam } from '../components/ipaybtc/Steam'
 import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg } from '../components/ipaybtc/Scenes'
 import { Chip } from '../components/refreeg/Chip'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
@@ -209,6 +210,7 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
                 />
               )}
               {slot.screen && <ScreenOverlay screen={slot.screen} />}
+              {slot.steam && <Steam spot={slot.steam} />}
               {slot.top && <img className="kora-case-top" src={slot.top} alt="" aria-hidden />}
               {slot.keypad && <KeypadCard />}
             </>
