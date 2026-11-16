@@ -169,6 +169,8 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
           <Merch kind="tote" />
         ) : slot.art === 'ipaybtc-wallposter' ? (
           <WallPoster post={1} />
+        ) : slot.art === 'ipaybtc-logo-blue' ? (
+          <LogoTile tone="blue" />
         ) : slot.art === 'ipaybtc-logo-navy' ? (
           <LogoTile tone="navy" />
         ) : slot.art === 'ipaybtc-phone' ? (

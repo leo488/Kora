@@ -79,6 +79,7 @@ import fx05top from './assets/figx/f05-fingers.webp'
 import ladyPl1200 from './assets/figx/ipaybtc-lady-plantain-1200.jpg'
 import ladyPl2400 from './assets/figx/ipaybtc-lady-plantain-2400.jpg'
 import ladyPl4800 from './assets/figx/ipaybtc-lady-plantain-4800.jpg'
+import teeBlue from './assets/ipaybtc-tee-blue-1200.jpg'
 import teeClose1200 from './assets/ipaybtc-w-tee-1200.jpg'
 import teeClose2400 from './assets/ipaybtc-w-tee-2400.jpg'
 import rf_logo_1600 from './assets/refreeg/rf-logo-1600.jpg'
@@ -156,6 +157,7 @@ export interface CaseSlot {
   steam?: SteamSpot
   /** A plate drawn in code instead of a photo. */
   art?:
+    | 'ipaybtc-logo-blue'
     | 'ipaybtc-logo'
     | 'ipaybtc-logo-navy'
     | 'ipaybtc-type'
@@ -287,6 +289,8 @@ const IPAY_BILLBOARD = plate('Naira → Sats on a sidewalk billboard, with the a
 /* The scenes of the Ragged Edge Wise page, made our own. */
 const IPAY_TYPE = art('Campaign lines swapping, one 3D icon each', '5 / 4', 'ipaybtc-type')
 const IPAY_LOGO_NAVY = art('The iPayBTC wordmark on Deep Navy', '4 / 5', 'ipaybtc-logo-navy')
+const IPAY_LOGO_BLUE = art('The iPayBTC wordmark on Electric Blue', '3 / 4', 'ipaybtc-logo-blue')
+const IPAY_TEE_BLUE: CaseSlot = { label: 'The iPayBTC wordmark printed on an Electric Blue tee', ratio: '3 / 4', src: teeBlue }
 const IPAY_TEE_CLOSE = plate('The iPayBTC wordmark on a white tee', '4 / 5', [teeClose1200, teeClose2400])
 const IPAY_LANYARD = plate('iPayBTC lanyard and staff pass', '4 / 5', [lanyard1200, lanyard2400])
 const IPAY_TEE = plate('iPayBTC tee on a tennis court', '4 / 5', [tee1200, tee2400])
@@ -485,8 +489,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true, gapAfter: true },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
-      { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true, gapAfter: true },
-      { kind: 'pair', slots: [IPAY_LOGO_NAVY, IPAY_TEE_CLOSE], inset: true },
+      { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true },
+      { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
       { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
       { kind: 'full', slot: IPAY_BILLBOARD },
       { kind: 'full', slot: IPAY_POSTER_BORDER, inset: true },
