@@ -189,7 +189,7 @@ export interface CaseSlot {
 export type CaseBlock =
   /** `inset` sits the block in the centre column instead of edge to edge. */
   | { kind: 'full'; slot: CaseSlot; inset?: boolean; wide?: boolean; gapAfter?: boolean }
-  | { kind: 'pair'; slots: [CaseSlot, CaseSlot]; inset?: boolean; wide?: boolean }
+  | { kind: 'pair'; slots: [CaseSlot, CaseSlot]; inset?: boolean; wide?: boolean; gapAfter?: boolean }
   | { kind: 'grid'; columns: number; slots: CaseSlot[] }
   | { kind: 'collage'; slots: CaseSlot[] }
 
@@ -490,7 +490,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_CARD_VIDEO },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
       { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true },
-      { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
+      { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true, gapAfter: true },
       { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
       { kind: 'full', slot: IPAY_BILLBOARD },
       { kind: 'full', slot: IPAY_POSTER_BORDER, inset: true },

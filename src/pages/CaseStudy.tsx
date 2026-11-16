@@ -110,7 +110,7 @@ function Block({ block }: { block: CaseBlock }) {
       return <Plate slot={block.slot} inset={block.inset} wide={block.wide} gapAfter={block.gapAfter} />
     case 'pair':
       return (
-        <div className={`kora-case-pair${block.inset ? ' is-inset' : ''}${block.wide ? ' is-wide' : ''}`}>
+        <div className={`kora-case-pair${block.inset ? ' is-inset' : ''}${block.wide ? ' is-wide' : ''}`} style={block.gapAfter ? { marginBottom: '100vh' } : undefined}>
           <Plate slot={block.slots[0]} />
           <Plate slot={block.slots[1]} />
         </div>
