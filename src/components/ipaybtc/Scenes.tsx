@@ -88,11 +88,13 @@ export function TypeSwap() {
           </p>
         ))}
       </div>
+      {/* Illustrations hidden for now, being reworked.
       <div className="ips-type-objs" aria-hidden>
         {LINES.map((l, k) => (
           <img key={k} src={l[2]} alt="" className={`${k === i ? 'is-on' : ''} is-ill`} />
         ))}
       </div>
+      */}
       <span className="ips-type-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
     </div>
   )
