@@ -4672,40 +4672,40 @@
 /* Chinese poster over the lady photo: vertical headline left, vertical line right, logo bottom right. */
 .kora-cnposter {
   position: absolute;
-  inset: 0;
+  inset: 0 var(--kora-flare, 0px);
   container-type: inline-size;
   pointer-events: none;
   font-family: 'Noto Sans SC', sans-serif;
-  color: #ffd84a;
+  color: #050e7f;
 }
 .kora-cnposter-head {
   position: absolute;
-  left: 4%;
+  left: 6%;
   top: 9%;
   margin: 0;
   writing-mode: vertical-rl;
   font-weight: 900;
-  font-size: 8.6cqw;
+  font-size: 8cqw;
   line-height: 1.08;
   letter-spacing: 0.04em;
 }
 .kora-cnposter-sub {
   position: absolute;
-  right: 6%;
+  right: 7%;
   top: 9%;
   margin: 0;
   writing-mode: vertical-rl;
   font-weight: 500;
-  font-size: 1.7cqw;
+  font-size: 1.6cqw;
   line-height: 1.6;
   letter-spacing: 0.3em;
-  color: #ffffff;
+  color: #050e7f;
 }
 .kora-cnposter-logo {
   position: absolute;
-  right: 5.5%;
-  bottom: 7%;
-  width: 14%;
-  color: #ffffff;
+  right: 6%;
+  bottom: 8%;
+  width: 13%;
+  color: #050e7f;
 }
 .kora-cnposter-logo svg { display: block; width: 100%; height: auto; }

@@ -76,6 +76,9 @@ import fx32b from './assets/figx/f32-2400.jpg'
 import fx33a from './assets/figx/f33-1200.jpg'
 import fx33b from './assets/figx/f33-2400.jpg'
 import fx05top from './assets/figx/f05-fingers.webp'
+import ladyPl1200 from './assets/figx/ipaybtc-lady-plantain-1200.jpg'
+import ladyPl2400 from './assets/figx/ipaybtc-lady-plantain-2400.jpg'
+import ladyPl4800 from './assets/figx/ipaybtc-lady-plantain-4800.jpg'
 import teeClose1200 from './assets/ipaybtc-w-tee-1200.jpg'
 import teeClose2400 from './assets/ipaybtc-w-tee-2400.jpg'
 import rf_logo_1600 from './assets/refreeg/rf-logo-1600.jpg'
@@ -345,15 +348,9 @@ const FX05: CaseSlot = {
   top: fx05top,
 }
 const IPAY_CN_POSTER: CaseSlot = {
-  ...fig('05', 'iPayBTC in Chinese: Your Bitcoin can travel', [fx05a, fx05b]),
-  screen: {
-    flow: 'swap',
-    tone: 'light',
-    size: [2400, 1537],
-    corners: [[1266, 728], [1507, 725], [1514, 1255], [1264, 1258]],
-    radius: 40,
-  },
-  top: fx05top,
+  ...plate('iPayBTC in Chinese: Your Bitcoin can travel', '4800 / 3074', [ladyPl1200, ladyPl2400]),
+  src: ladyPl4800,
+  srcSet: set([[ladyPl1200, 1200], [ladyPl2400, 2400], [ladyPl4800, 4800]]),
   overlay: 'cn-poster',
 }
 const FX07 = fig('07', 'Buying Bitcoin under a blue sky', [fx07a, fx07b])
@@ -488,7 +485,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true, gapAfter: true },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
-      { kind: 'full', slot: IPAY_CN_POSTER, gapAfter: true },
+      { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true, gapAfter: true },
       { kind: 'pair', slots: [IPAY_LOGO_NAVY, IPAY_TEE_CLOSE], inset: true },
       { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
       { kind: 'full', slot: IPAY_BILLBOARD },
