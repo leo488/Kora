@@ -1,4 +1,10 @@
-import illSwirl from '../../assets/ipaybtc-ill-swirl.svg'
+import ilSend from '../../assets/ipaybtc-ill/ipaybtc-send-transparent.webp'
+import ilCoinFan from '../../assets/ipaybtc-ill/ipaybtc-coin-fan.webp'
+import ilSpend from '../../assets/ipaybtc-ill/ipaybtc-spendings-transparent.webp'
+import ilCrypto from '../../assets/ipaybtc-ill/ipaybtc-crypto-transparent.webp'
+import ilStacks from '../../assets/ipaybtc-ill/ipaybtc-coin-stacks.webp'
+import ilBtc from '../../assets/ipaybtc-ill/ipaybtc-bitcoin-coin.webp'
+import ilStrategy from '../../assets/ipaybtc-ill/ipaybtc-strategy-transparent.webp'
 import { useEffect, useRef, useState } from 'react'
 import './scenes.css'
 import ipaybtcLogo from '../../assets/ipaybtc-logo.svg?raw'
@@ -58,14 +64,14 @@ function useCycle(length: number, every: number) {
 }
 
 /* Each line comes with one of our 3D objects. */
-const LINES: Array<[string, string, string, string?]> = [
-  ['YOUR BITCOIN', 'CAN TRAVEL.', d3swap],
-  ['BEFORE YOUR', 'TEA GETS COLD.', d3coin],
-  ['PAY NEPA', 'IN SATS.', d3check],
-  ['NO BORDER.', 'NO PERMISSION.', d3bank],
-  ['WE MOVE', 'IN SATS.', illSwirl, 'pink'],
-  ['你的比特币', '可以远行。', d3swap, 'blue'],
-  ['BITCOIN RẸ', 'LÈ RIN ÌRÌN-ÀJÒ.', d3coin],
+const LINES: Array<[string, string, string, string]> = [
+  ['YOUR BITCOIN', 'CAN TRAVEL.', ilSend, 'sky'],
+  ['BEFORE YOUR', 'TEA GETS COLD.', ilCoinFan, 'peach'],
+  ['PAY NEPA', 'IN SATS.', ilSpend, 'mint'],
+  ['NO BORDER.', 'NO PERMISSION.', ilCrypto, 'navy'],
+  ['WE MOVE', 'IN SATS.', ilStacks, 'pink'],
+  ['你的比特币', '可以远行。', ilBtc, 'blue'],
+  ['BITCOIN RẸ', 'LÈ RIN ÌRÌN-ÀJÒ.', ilStrategy, 'plantain'],
 ]
 
 /** Campaign type whose words swap, like Wise's FULL SPEED / MIN FEES, with
@@ -73,7 +79,7 @@ const LINES: Array<[string, string, string, string?]> = [
 export function TypeSwap() {
   const i = useCycle(LINES.length, 2000)
   return (
-    <div className="ips ips-type" data-tone={LINES[i][3] ?? 'navy'}>
+    <div className="ips ips-type" data-tone={LINES[i][3]}>
       <div className="ips-type-lines" aria-live="off">
         {LINES.map((l, k) => (
           <p key={k} className={k === i ? 'is-on' : ''}>
@@ -84,7 +90,7 @@ export function TypeSwap() {
       </div>
       <div className="ips-type-objs" aria-hidden>
         {LINES.map((l, k) => (
-          <img key={k} src={l[2]} alt="" className={`${k === i ? 'is-on' : ''}${l[3] ? ' is-ill' : ''}`} />
+          <img key={k} src={l[2]} alt="" className={`${k === i ? 'is-on' : ''} is-ill`} />
         ))}
       </div>
       <span className="ips-type-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
