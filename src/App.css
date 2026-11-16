@@ -4668,3 +4668,44 @@
 }
 @font-face { font-family: 'Geist'; src: url('./assets/fonts/Geist-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Geist'; src: url('./assets/fonts/Geist-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+
+/* Chinese poster over the lady photo: vertical headline left, vertical line right, logo bottom right. */
+.kora-cnposter {
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+  pointer-events: none;
+  font-family: 'Noto Sans SC', sans-serif;
+  color: #ffd84a;
+}
+.kora-cnposter-head {
+  position: absolute;
+  left: 4%;
+  top: 9%;
+  margin: 0;
+  writing-mode: vertical-rl;
+  font-weight: 900;
+  font-size: 8.6cqw;
+  line-height: 1.08;
+  letter-spacing: 0.04em;
+}
+.kora-cnposter-sub {
+  position: absolute;
+  right: 6%;
+  top: 9%;
+  margin: 0;
+  writing-mode: vertical-rl;
+  font-weight: 500;
+  font-size: 1.7cqw;
+  line-height: 1.6;
+  letter-spacing: 0.3em;
+  color: #ffffff;
+}
+.kora-cnposter-logo {
+  position: absolute;
+  right: 5.5%;
+  bottom: 7%;
+  width: 14%;
+  color: #ffffff;
+}
+.kora-cnposter-logo svg { display: block; width: 100%; height: auto; }

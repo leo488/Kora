@@ -143,7 +143,7 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
   return (
     <figure
       className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}${wide ? ' is-wide' : ''}`}
-      style={{ aspectRatio: slot.ratio, marginBottom: gapAfter ? 'clamp(48px, 8vw, 140px)' : undefined }}
+      style={{ aspectRatio: slot.ratio, marginBottom: gapAfter ? 'clamp(96px, 16vw, 320px)' : undefined }}
     >
       <div className="kora-flare">
         {slot.art === 'ipaybtc-logo' ? (
@@ -213,6 +213,13 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
               {slot.steam && <Steam spot={slot.steam} />}
               {slot.top && <img className="kora-case-top" src={slot.top} alt="" aria-hidden />}
               {slot.keypad && <KeypadCard />}
+              {slot.overlay === 'cn-poster' && (
+                <div className="kora-cnposter" aria-hidden>
+                  <p className="kora-cnposter-head">你的比特币<br />可以远行</p>
+                  <p className="kora-cnposter-sub">随时随地发送、兑换和使用比特币。</p>
+                  <span className="kora-cnposter-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+                </div>
+              )}
             </>
           )
         ) : (

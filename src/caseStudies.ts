@@ -146,7 +146,7 @@ export interface CaseSlot {
   /** First frame shown while a video loads. */
   poster?: string
   /** Something drawn in code on top of the photo or video. */
-  overlay?: 'ipaybtc-card'
+  overlay?: 'ipaybtc-card' | 'cn-poster'
   /** The live app, mapped onto the phone screen in the photo. */
   screen?: PhoneScreen
   /** Steam drifting off a hot drink in the photo. */
@@ -344,6 +344,18 @@ const FX05: CaseSlot = {
   },
   top: fx05top,
 }
+const IPAY_CN_POSTER: CaseSlot = {
+  ...fig('05', 'iPayBTC in Chinese: Your Bitcoin can travel', [fx05a, fx05b]),
+  screen: {
+    flow: 'swap',
+    tone: 'light',
+    size: [2400, 1537],
+    corners: [[1266, 728], [1507, 725], [1514, 1255], [1264, 1258]],
+    radius: 40,
+  },
+  top: fx05top,
+  overlay: 'cn-poster',
+}
 const FX07 = fig('07', 'Buying Bitcoin under a blue sky', [fx07a, fx07b])
 const FX20 = fig('20', 'The iPayBTC brand guide', [fx20a, fx20b])
 const FX21 = fig('21', '“We Move In Sats” tote in the sun', [fx21a, fx21b])
@@ -476,6 +488,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true, gapAfter: true },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
+      { kind: 'full', slot: IPAY_CN_POSTER, gapAfter: true },
       { kind: 'pair', slots: [IPAY_LOGO_NAVY, IPAY_TEE_CLOSE], inset: true },
       { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
       { kind: 'full', slot: IPAY_BILLBOARD },
