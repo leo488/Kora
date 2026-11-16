@@ -139,11 +139,11 @@ function Block({ block }: { block: CaseBlock }) {
 
 /** An image or loop — or, until it exists, a grey panel naming what goes
  *  there. */
-function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean; wide?: boolean; gapAfter?: boolean }) {
+function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean; wide?: boolean; gapAfter?: boolean | 'end' }) {
   return (
     <figure
       className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}${wide ? ' is-wide' : ''}${slot.frameFit ? ' is-framefit' : ''}`}
-      style={{ aspectRatio: slot.ratio, marginBottom: gapAfter ? 'clamp(96px, 16vw, 320px)' : undefined }}
+      style={{ aspectRatio: slot.ratio, marginBottom: gapAfter === 'end' ? '100vh' : gapAfter ? 'clamp(96px, 16vw, 320px)' : undefined }}
     >
       <div className="kora-flare">
         {slot.art === 'ipaybtc-logo' ? (
