@@ -142,7 +142,7 @@ function Block({ block }: { block: CaseBlock }) {
 function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean; wide?: boolean; gapAfter?: boolean }) {
   return (
     <figure
-      className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}${wide ? ' is-wide' : ''}`}
+      className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}${wide ? ' is-wide' : ''}${slot.frameFit ? ' is-framefit' : ''}`}
       style={{ aspectRatio: slot.ratio, marginBottom: gapAfter ? 'clamp(96px, 16vw, 320px)' : undefined }}
     >
       <div className="kora-flare">

@@ -4709,3 +4709,9 @@
   color: #050e7f;
 }
 .kora-cnposter-logo svg { display: block; width: 100%; height: auto; }
+
+.kora-case-plate.is-framefit .kora-flare > img {
+  left: var(--kora-flare);
+  right: var(--kora-flare);
+  width: auto;
+}

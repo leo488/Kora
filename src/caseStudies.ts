@@ -149,6 +149,8 @@ export interface CaseSlot {
   video?: boolean
   /** First frame shown while a video loads. */
   poster?: string
+  /** Fit the picture to the visible frame instead of the wider flare layer. */
+  frameFit?: boolean
   /** Something drawn in code on top of the photo or video. */
   overlay?: 'ipaybtc-card' | 'cn-poster'
   /** The live app, mapped onto the phone screen in the photo. */
@@ -290,7 +292,7 @@ const IPAY_BILLBOARD = plate('Naira → Sats on a sidewalk billboard, with the a
 const IPAY_TYPE = art('Campaign lines swapping, one 3D icon each', '5 / 4', 'ipaybtc-type')
 const IPAY_LOGO_NAVY = art('The iPayBTC wordmark on Deep Navy', '4 / 5', 'ipaybtc-logo-navy')
 const IPAY_LOGO_BLUE = art('The iPayBTC wordmark on Electric Blue', '3 / 4', 'ipaybtc-logo-blue')
-const IPAY_TEE_BLUE: CaseSlot = { label: 'The iPayBTC wordmark printed on an Electric Blue tee', ratio: '3 / 4', src: teeBlue }
+const IPAY_TEE_BLUE: CaseSlot = { label: 'The iPayBTC wordmark printed on an Electric Blue tee', ratio: '3 / 4', src: teeBlue, frameFit: true }
 const IPAY_TEE_CLOSE = plate('The iPayBTC wordmark on a white tee', '4 / 5', [teeClose1200, teeClose2400])
 const IPAY_LANYARD = plate('iPayBTC lanyard and staff pass', '4 / 5', [lanyard1200, lanyard2400])
 const IPAY_TEE = plate('iPayBTC tee on a tennis court', '4 / 5', [tee1200, tee2400])
