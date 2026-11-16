@@ -25,6 +25,7 @@ import iconPhone1800 from './assets/ipaybtc-iconphone-1800.jpg'
 import iconPhoneFull from './assets/ipaybtc-iconphone-full.jpg'
 import wrap1200 from './assets/ipaybtc-wrap-1200.jpg'
 import wrap2400 from './assets/ipaybtc-wrap-2400.jpg'
+import building800 from './assets/ipaybtc-building-800.jpg'
 import billboard1200 from './assets/ipaybtc-billboard-1200.jpg'
 import billboard2400 from './assets/ipaybtc-billboard-2400.jpg'
 import roadtrip1200 from './assets/ipaybtc-scene-roadtrip-1200.jpg'
@@ -318,7 +319,7 @@ const IPAY_CARD_VIDEO: CaseSlot = {
 }
 const IPAY_TYPE_REEL = art('The iPayBTC typefaces, then the campaign posters', '16 / 10', 'ipaybtc-type-reel')
 const IPAY_POSTER_BORDER = art('No bank opening hours. No border. No permission.', '16 / 10', 'ipaybtc-poster-border')
-const IPAY_WRAP = plate('“We move in sats” wrapped on a building in Lagos', '4 / 5', [wrap1200, wrap2400])
+const IPAY_WRAP: CaseSlot = { label: '“Your Bitcoin can travel.” wrapped on a building', ratio: '3 / 4', src: building800 }
 const IPAY_PHONE = art('The app buying Bitcoin', '4 / 5', 'ipaybtc-phone')
 const IPAY_UNDER = plate('“Your Naira can’t travel. Your Bitcoin can.” on an underground platform', '5504 / 3072', [under1200, under2400])
 const IPAY_KEYPAD: CaseSlot = {
