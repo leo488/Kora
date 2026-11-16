@@ -953,9 +953,9 @@
 .ips-obphone-frame {
   height: 84%;
   aspect-ratio: 390 / 844;
-  padding: 1.6%;
+  padding: 0;
   border-radius: 12% / 5.6%;
-  background: #0b0b10;
+  background: none;
   box-sizing: content-box;
 }
 .ips-obphone-screen {

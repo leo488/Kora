@@ -495,7 +495,7 @@ export function TypeReel() {
 
 /* Onboarding in a phone: slides through the three light screens, wipes to
    dark mode, slides through the dark ones, wipes back. */
-const OB_STEPS = 8
+const OB_STEPS = 3
 export function OnboardPhone() {
   const [ref, on] = useInView<HTMLDivElement>(0.3, false)
   const [step, setStep] = useState(0)
@@ -505,8 +505,8 @@ export function OnboardPhone() {
     return () => clearTimeout(t)
   }, [on, step])
   // steps: 0,1,2 light slides · 3 wipe to dark (on screen 0) · 4,5 dark slides · 6 hold · 7 wipe back to light
-  const dark = step >= 3 && step <= 6
-  const idx = step <= 2 ? step : step === 3 ? 0 : step === 4 ? 1 : step >= 5 && step <= 6 ? 2 : 0
+  const dark = false
+  const idx = step % 3
   return (
     <div ref={ref} className="ips ips-obphone" role="img" aria-label="iPayBTC onboarding, light then dark mode">
       <div className="ips-obphone-frame">
