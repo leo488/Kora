@@ -6,7 +6,7 @@ import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
 import { Steam } from '../components/ipaybtc/Steam'
-import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg } from '../components/ipaybtc/Scenes'
+import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg, Onboarding, TypeReel, OnboardPhone } from '../components/ipaybtc/Scenes'
 import { Chip } from '../components/refreeg/Chip'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
@@ -169,6 +169,10 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
           <Merch kind="tote" />
         ) : slot.art === 'ipaybtc-wallposter' ? (
           <WallPoster post={1} />
+        ) : slot.art === 'ipaybtc-onboard-phone' ? (
+          <OnboardPhone />
+        ) : slot.art === 'ipaybtc-onboard' ? (
+          <Onboarding />
         ) : slot.art === 'ipaybtc-logo-blue' ? (
           <LogoTile tone="blue" />
         ) : slot.art === 'ipaybtc-logo-navy' ? (
@@ -177,6 +181,8 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
           <PhonePlate flow="buy" />
         ) : slot.art === 'ipaybtc-phones' ? (
           <PhoneBoard />
+        ) : slot.art === 'ipaybtc-type-reel' ? (
+          <TypeReel />
         ) : slot.art === 'ipaybtc-poster-border' ? (
           <TypePoster tone="navy" size={9} lines={['No bank opening hours.', 'No border.', 'No permission.']} />
         ) : slot.art === 'ipaybtc-poster-tea' ? (

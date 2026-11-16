@@ -160,6 +160,9 @@ export interface CaseSlot {
   /** A plate drawn in code instead of a photo. */
   art?:
     | 'ipaybtc-logo-blue'
+    | 'ipaybtc-onboard'
+    | 'ipaybtc-type-reel'
+    | 'ipaybtc-onboard-phone'
     | 'ipaybtc-logo'
     | 'ipaybtc-logo-navy'
     | 'ipaybtc-type'
@@ -291,6 +294,8 @@ const IPAY_BILLBOARD = plate('Naira → Sats on a sidewalk billboard, with the a
 /* The scenes of the Ragged Edge Wise page, made our own. */
 const IPAY_TYPE = art('Campaign lines swapping, one 3D icon each', '5 / 4', 'ipaybtc-type')
 const IPAY_LOGO_NAVY = art('The iPayBTC wordmark on Deep Navy', '4 / 5', 'ipaybtc-logo-navy')
+const IPAY_ONBOARD = art('iPayBTC onboarding screens, light mode', '16 / 9', 'ipaybtc-onboard')
+const IPAY_ONBOARD_PHONE = art('iPayBTC onboarding, light then dark mode', '4 / 5', 'ipaybtc-onboard-phone')
 const IPAY_LOGO_BLUE = art('The iPayBTC wordmark on Electric Blue', '3 / 4', 'ipaybtc-logo-blue')
 const IPAY_TEE_BLUE: CaseSlot = { label: 'The iPayBTC wordmark printed on an Electric Blue tee', ratio: '3 / 4', src: teeBlue, frameFit: true }
 const IPAY_TEE_CLOSE = plate('The iPayBTC wordmark on a white tee', '4 / 5', [teeClose1200, teeClose2400])
@@ -311,6 +316,7 @@ const IPAY_CARD_VIDEO: CaseSlot = {
   video: true,
   overlay: 'ipaybtc-card',
 }
+const IPAY_TYPE_REEL = art('The iPayBTC typefaces, then the campaign posters', '16 / 10', 'ipaybtc-type-reel')
 const IPAY_POSTER_BORDER = art('No bank opening hours. No border. No permission.', '16 / 10', 'ipaybtc-poster-border')
 const IPAY_WRAP = plate('“We move in sats” wrapped on a building in Lagos', '4 / 5', [wrap1200, wrap2400])
 const IPAY_PHONE = art('The app buying Bitcoin', '4 / 5', 'ipaybtc-phone')
@@ -494,8 +500,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true },
       { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
       { kind: 'full', slot: IPAY_UNDER, gapAfter: true },
-      { kind: 'full', slot: IPAY_POSTER_BORDER, inset: true, wide: true },
-      { kind: 'pair', slots: [IPAY_WRAP, IPAY_PHONE], inset: true, wide: true, gapAfter: true },
+      { kind: 'full', slot: IPAY_TYPE_REEL, inset: true, wide: true },
+      { kind: 'pair', slots: [IPAY_WRAP, IPAY_ONBOARD_PHONE], inset: true, wide: true, gapAfter: true },
       { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
       { kind: 'full', slot: IPAY_BILLBOARD },
       { kind: 'full', slot: IPAY_KEYPAD, inset: true },

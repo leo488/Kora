@@ -1,3 +1,9 @@
+import obd0 from '../../assets/ipaybtc-onboard/obd0.jpg'
+import obd1 from '../../assets/ipaybtc-onboard/obd1.jpg'
+import obd2 from '../../assets/ipaybtc-onboard/obd2.jpg'
+import ob0 from '../../assets/ipaybtc-onboard/ob0.jpg'
+import ob1 from '../../assets/ipaybtc-onboard/ob1.jpg'
+import ob2 from '../../assets/ipaybtc-onboard/ob2.jpg'
 import ilSend from '../../assets/ipaybtc-ill/ipaybtc-send-transparent.webp'
 import ilCoinFan from '../../assets/ipaybtc-ill/ipaybtc-coin-fan.webp'
 import ilSpend from '../../assets/ipaybtc-ill/ipaybtc-spendings-transparent.webp'
@@ -435,6 +441,84 @@ export function WallPoster({ post = 1 }: { post?: number }) {
         <img src={wallImg} alt="An iPayBTC poster taped to a wall" />
         <div className="ips-wallposter-paper">
           <SocialPost p={POSTS[post]} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** The light onboarding screens, side by side on the page grey. */
+export function Onboarding() {
+  return (
+    <div className="ips ips-onboard" role="img" aria-label="iPayBTC onboarding screens, light mode">
+      {[ob0, ob1, ob2].map((src, k) => (
+        <img key={k} src={src} alt="" />
+      ))}
+    </div>
+  )
+}
+
+/* The type reel: the two brand fonts first, then the campaign posters. */
+const ROWS_BOLD = ['ABCDEFGHIJKLMN', 'OPQRSTUVWXYZ', '1234567890!@#$%&*']
+const ROWS_BODY = ['Aa Bb Cc Dd Ee Ff Gg', 'Hh Ii Jj Kk Ll Mm Nn', 'Oo Pp Qq Rr Ss Tt Uu', '1234567890 ₦ $ ₿ @ #']
+const REEL_POSTERS: Array<{ tone: 'navy' | 'yellow' | 'blue'; lines: string[]; size?: number }> = [
+  { tone: 'navy', size: 9, lines: ['No bank opening hours.', 'No border.', 'No permission.'] },
+  { tone: 'yellow', size: 9, lines: ['Buy Bitcoin', 'before your', 'tea gets cold.'] },
+  { tone: 'blue', size: 8.5, lines: ['Bitcoin was', 'never meant', 'to sit still.', 'Spend it.'] },
+]
+export function TypeReel() {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, false)
+  const [step, setStep] = useState(0)
+  useEffect(() => {
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setTimeout(() => setStep((v) => (v + 1) % (2 + REEL_POSTERS.length)), step < 2 ? 4200 : 3400)
+    return () => clearTimeout(t)
+  }, [on, step])
+  return (
+    <div ref={ref} className="ips ips-reel">
+      {step === 0 && (
+        <div key="f1" className="ips-spec is-bold">
+          <p className="ips-spec-rows">{ROWS_BOLD.map((r, k) => <span key={k} style={{ animationDelay: `${k * 90}ms` }}>{r}</span>)}</p>
+          <p className="ips-spec-cap">built to communicate with both impact<br />and precision.</p>
+        </div>
+      )}
+      {step === 1 && (
+        <div key="f2" className="ips-spec is-body">
+          <p className="ips-spec-rows">{ROWS_BODY.map((r, k) => <span key={k} style={{ animationDelay: `${k * 90}ms` }}>{r}</span>)}</p>
+          <p className="ips-spec-cap">DM Sans. Clear and friendly<br />for everyday reading.</p>
+        </div>
+      )}
+      {step >= 2 && <TypePoster key={step} {...REEL_POSTERS[step - 2]} />}
+    </div>
+  )
+}
+
+/* Onboarding in a phone: slides through the three light screens, wipes to
+   dark mode, slides through the dark ones, wipes back. */
+const OB_STEPS = 8
+export function OnboardPhone() {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, false)
+  const [step, setStep] = useState(0)
+  useEffect(() => {
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setTimeout(() => setStep((v) => (v + 1) % OB_STEPS), 2200)
+    return () => clearTimeout(t)
+  }, [on, step])
+  // steps: 0,1,2 light slides · 3 wipe to dark (on screen 0) · 4,5 dark slides · 6 hold · 7 wipe back to light
+  const dark = step >= 3 && step <= 6
+  const idx = step <= 2 ? step : step === 3 ? 0 : step === 4 ? 1 : step >= 5 && step <= 6 ? 2 : 0
+  return (
+    <div ref={ref} className="ips ips-obphone" role="img" aria-label="iPayBTC onboarding, light then dark mode">
+      <div className="ips-obphone-frame">
+        <div className="ips-obphone-screen">
+          <div className="ips-obphone-strip" style={{ transform: `translateX(${-idx * 100}%)` }}>
+            {[ob0, ob1, ob2].map((src, k) => <img key={k} src={src} alt="" />)}
+          </div>
+          <div className={`ips-obphone-dark${dark ? ' is-on' : ''}`}>
+            <div className="ips-obphone-strip" style={{ transform: `translateX(${-idx * 100}%)` }}>
+              {[obd0, obd1, obd2].map((src, k) => <img key={k} src={src} alt="" />)}
+            </div>
+          </div>
         </div>
       </div>
     </div>
