@@ -4746,44 +4746,6 @@
   }
 }
 
-/* Contact + Abuja band: one Koraa Blue block before the footer. */
-.kora-offices {
-  padding-top: 24px;
-}
-
-.kora-app .kora-rx-contact {
-  background: var(--koraa-blue);
-  color: rgba(255, 255, 255, 0.78);
-  border-top: 0;
-}
-
-.kora-app .kora-rx-contact h2,
-.kora-app .kora-rx-contact-mail a {
-  color: #fff;
-}
-
-.kora-app .kora-rx-contact .kora-pill.is-solid {
-  background: #fff;
-  color: var(--koraa-ink);
-}
-
-.kora-app .kora-rx-contact .kora-pill.is-solid:hover {
-  background: var(--koraa-plantain);
-}
-
-.kora-app .kora-rx-contact .kora-pill.is-outline {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.6);
-}
-
-.kora-app .kora-rx-contact .kora-rx-copy {
-  color: #fff;
-}
-
-.kora-app .kora-rx-contact-photo {
-  background: rgba(255, 255, 255, 0.1);
-}
-
 /* Projects whose case study is not out yet: the cursor pill says when. */
 .kora-rx-row-link.is-soon .kora-rx-view {
   background: var(--koraa-dusk);
@@ -4796,4 +4758,12 @@
     top: 16px;
     transform: none;
   }
+}
+
+.kora-wip-link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-left: 6px;
 }
