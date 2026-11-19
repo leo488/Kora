@@ -167,6 +167,7 @@ import framefest013000 from './assets/framefest-01-3000.jpg'
 import framefest021200 from './assets/framefest-02-1200.jpg'
 import framefest022000 from './assets/framefest-02-2000.jpg'
 import framefest023000 from './assets/framefest-02-3000.jpg'
+import refreegFilm from './assets/refreeg/refreeg-film.mp4'
 import refreeg011200 from './assets/refreeg-01-1200.jpg'
 import refreeg012000 from './assets/refreeg-01-2000.jpg'
 import refreeg013000 from './assets/refreeg-01-3000.jpg'
@@ -243,6 +244,8 @@ export interface ProjectFilm {
   /** The film's own running length, so the reel holds it to the last frame
       instead of cutting away mid-shot. */
   durationMs: number
+  /** Show the still first and fade the film in over it after this long. */
+  afterImageMs?: number
 }
 
 const IPAYBTC_FILM: ProjectFilm = {
@@ -289,6 +292,7 @@ export const PROJECTS: Project[] = [
     year: '2025',
     headline: 'Refreeg — Giving, Made Direct',
     stat: '—',
+    film: { src: refreegFilm, poster: FRAMES.refreeg01, durationMs: 14770, afterImageMs: 1600 },
     images: [FRAMES.refreeg01, FRAMES.refreeg02, FRAMES.refreeg03],
   },
   {

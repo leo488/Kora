@@ -4716,7 +4716,7 @@
   width: auto;
 }
 
-/* Work-in-progress bar: Dusk purple, slides down from the top on scroll. */
+/* Work-in-progress bar: Zobo pink, slides down from the top on scroll. */
 .kora-wip-bar {
   position: fixed;
   top: 0;
@@ -4724,7 +4724,7 @@
   right: 0;
   z-index: 300;
   padding: 10px 24px;
-  background: var(--koraa-dusk);
+  background: var(--koraa-zobo);
   color: var(--koraa-ink);
   font-size: 14px;
   font-weight: 500;
@@ -4784,4 +4784,168 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* ------------------------------------------------------------------------
+   Nov 20 pass: Zobo offices band, contact + newsletter type, film thumbs.
+   ------------------------------------------------------------------------ */
+
+/* Offices band on Zobo pink. White fails contrast on Zobo, so it is Ink. */
+.kora-offices {
+  background: var(--koraa-zobo);
+  color: rgba(10, 10, 10, 0.72);
+}
+
+.kora-office-code,
+.kora-office-time {
+  color: var(--koraa-ink);
+}
+
+/* Contact: one big statement, a readable line under it, the two actions,
+   and the inbox set large on a rule at the bottom. */
+.kora-rx-contact h2 {
+  max-width: 11ch;
+  font-size: clamp(52px, 7vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.kora-rx-contact-ask p {
+  margin: 32px 0 0;
+  max-width: 32ch;
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.kora-rx-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 36px;
+}
+
+.kora-rx-contact-mail {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.kora-rx-contact-mail a {
+  font-size: clamp(24px, 2.6vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.kora-rx-contact-mail a:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+}
+
+/* Newsletter: heading as loud as the contact, and a field you can't miss. */
+.kora-rx-newsletter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 32px var(--kora-gutter);
+}
+
+.kora-rx-newsletter h2 {
+  grid-row: span 2;
+  margin: 0;
+  max-width: 9ch;
+  font-size: clamp(52px, 7vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+}
+
+.kora-rx-newsletter-form {
+  flex-wrap: nowrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.kora-rx-newsletter-form input {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+  height: 60px;
+  padding: 0 26px;
+  border: 1.5px solid var(--text-h);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 18px;
+}
+
+.kora-rx-newsletter-form input::placeholder {
+  color: var(--text);
+  opacity: 1;
+}
+
+.kora-rx-newsletter-form input:focus-visible {
+  border-color: var(--koraa-zobo);
+  background: rgba(255, 142, 198, 0.08);
+}
+
+.kora-rx-newsletter-form .kora-pill {
+  height: 60px;
+  padding: 0 30px;
+  font-size: 18px;
+}
+
+.kora-rx-newsletter small {
+  font-size: 14px;
+}
+
+@media (max-width: 760px) {
+  .kora-rx-newsletter {
+    grid-template-columns: 1fr;
+  }
+
+  .kora-rx-newsletter h2 {
+    grid-row: auto;
+  }
+}
+
+/* Image first, then the film fades in over it. */
+.kora-film-after {
+  position: absolute;
+  inset: 0;
+}
+
+.kora-film-after img,
+.kora-film-after video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kora-film-after video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.kora-film-after.is-playing video {
+  opacity: 1;
+}
+
+.kora-rx-contact-actions .kora-pill {
+  box-sizing: border-box;
+  justify-content: center;
+  height: 52px;
+  padding: 0 26px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 17px;
 }

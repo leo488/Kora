@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { PointerEvent, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { srcSetFor } from '../data'
-import type { Post, Project } from '../data'
+import type { Post, Project, ProjectImage } from '../data'
 import { caseLinkFor, CASE_STUDY_DUE } from '../caseStudies'
 import { CheckIcon, CopyIcon } from './icons'
 import { useContact } from '../contact/useContact'
@@ -78,7 +78,14 @@ export function ClientRow({ project, index }: { project: Project; index?: number
           onPointerMove={followCursor}
         >
           <div className="kora-flare">
-            {project.film ? (
+            {project.film?.afterImageMs ? (
+              <FilmAfterImage
+                src={project.film.src}
+                delayMs={project.film.afterImageMs}
+                still={lead}
+                alt={project.brand}
+              />
+            ) : project.film ? (
               <video
                 src={project.film.src}
                 poster={project.film.poster.src}
@@ -107,6 +114,39 @@ export function ClientRow({ project, index }: { project: Project; index?: number
         </div>
       </RowLink>
     </li>
+  )
+}
+
+/** The still shows first; once the row is in view the film fades in over it
+ *  and loops. Reduced motion keeps the still. */
+function FilmAfterImage({ src, delayMs, still, alt }: { src: string; delayMs: number; still: ProjectImage; alt: string }) {
+  const box = useRef<HTMLDivElement>(null)
+  const video = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
+
+  useEffect(() => {
+    const el = box.current
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let timer = 0
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !timer) {
+        timer = window.setTimeout(() => {
+          const v = video.current
+          if (!v) return
+          v.play().then(() => setPlaying(true)).catch(() => {})
+        }, delayMs)
+        io.disconnect()
+      }
+    }, { threshold: 0.4 })
+    io.observe(el)
+    return () => { io.disconnect(); window.clearTimeout(timer) }
+  }, [delayMs])
+
+  return (
+    <div ref={box} className={`kora-film-after${playing ? ' is-playing' : ''}`}>
+      <img src={still.src} srcSet={srcSetFor(still)} sizes="(max-width: 760px) 100vw, 66vw" alt={alt} loading="lazy" draggable={false} />
+      <video ref={video} src={src} muted loop playsInline preload="none" aria-hidden="true" disablePictureInPicture />
+    </div>
   )
 }
 

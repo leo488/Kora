@@ -24,7 +24,7 @@ import { ClientRow, Contact, NewsCard } from '../components/Sections'
    The offices band and the footer come from Layout. */
 
 /** The clients Home features, in order. The Work page still shows them all. */
-const HOME_PROJECTS = ['Ipaybtc', '3Projects', 'Refreeg', 'Tagmi']
+const HOME_PROJECTS = ['Ipaybtc', 'Refreeg', '3Projects', 'Tagmi']
 
 /** The hero plates: the heads-together shot, then the Tagmi 3D scene. */
 const HERO_STILLS: Array<[string, number]> = [
