@@ -1,3 +1,5 @@
+import blog01 from './assets/blog/blog-01.jpg'
+import blog02 from './assets/blog/blog-02.jpg'
 export interface NavLinkItem {
   label: string
   to?: string
@@ -278,6 +280,17 @@ export const PROJECTS: Project[] = [
     images: [FRAMES.ipaybtc01, FRAMES.ipaybtc02, FRAMES.ipaybtc03],
   },
   {
+    name: 'Refreeg',
+    brand: 'Refreeg',
+    // TODO(kora): placeholder copy — these three plates arrived labelled as
+    // Frame Fest exports; the artwork is Refreeg's, the words are stand-ins.
+    category: 'Social Impact',
+    year: '2025',
+    headline: 'Refreeg — Giving, Made Direct',
+    stat: '—',
+    images: [FRAMES.refreeg01, FRAMES.refreeg02, FRAMES.refreeg03],
+  },
+  {
     name: 'Escro',
     brand: 'Escro',
     category: 'Web3',
@@ -305,17 +318,6 @@ export const PROJECTS: Project[] = [
     headline: 'Frame Fest — An Identity for a Festival of Moving Image',
     stat: '—',
     images: [FRAMES.framefest01, FRAMES.framefest02],
-  },
-  {
-    name: 'Refreeg',
-    brand: 'Refreeg',
-    // TODO(kora): placeholder copy — these three plates arrived labelled as
-    // Frame Fest exports; the artwork is Refreeg's, the words are stand-ins.
-    category: 'Social Impact',
-    year: '2025',
-    headline: 'Refreeg — Giving, Made Direct',
-    stat: '—',
-    images: [FRAMES.refreeg01, FRAMES.refreeg02, FRAMES.refreeg03],
   },
   {
     name: 'squaremetre',
@@ -530,6 +532,8 @@ export const PARTNERS: Partner[] = [
 
 export interface Post {
   title: string
+  /** Card art; blank when unset. */
+  image?: string
   category: string
   date: string
 }
@@ -537,11 +541,13 @@ export interface Post {
 export const POSTS: Post[] = [
   {
     title: 'Bold wins in fintech',
+    image: blog01,
     category: 'Branding',
     date: 'Jun 2026',
   },
   {
     title: 'Designing for trust',
+    image: blog02,
     category: 'Case Study',
     date: 'May 2026',
   },

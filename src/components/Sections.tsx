@@ -7,8 +7,6 @@ import { caseLinkFor, CASE_STUDY_DUE } from '../caseStudies'
 import { CheckIcon, CopyIcon } from './icons'
 import { useContact } from '../contact/useContact'
 import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
-import talkingHead from '../assets/kora-talking-head.mp4'
-import talkingHeadPoster from '../assets/kora-talking-head-poster.jpg'
 
 /* The homepage's building blocks, shared so every page is made of the same
    parts: client rows, news cards and the contact block. */
@@ -115,9 +113,10 @@ export function ClientRow({ project, index }: { project: Project; index?: number
 export function NewsCard({ post }: { post: Post }) {
   return (
     <Link to="/blog" className="kora-rx-card">
-      {/* Left blank until the posts have art of their own. */}
       <div className="kora-rx-card-media kora-rx-media" aria-hidden="true">
-        <div className="kora-flare" />
+        <div className="kora-flare">
+          {post.image && <img src={post.image} alt="" loading="lazy" draggable={false} />}
+        </div>
       </div>
       <div className="kora-rx-card-body">
         <span className="kora-rx-card-kind">{post.category}</span>
@@ -158,19 +157,9 @@ export function Contact() {
         </div>
       </div>
 
-      {/* A silent talking-head loop of a studio creative. */}
-      <div className="kora-rx-contact-photo" aria-hidden="true">
-        <video
-          src={talkingHead}
-          poster={talkingHeadPoster}
-          muted
-          loop
-          autoPlay
-          playsInline
-          preload="metadata"
-          disablePictureInPicture
-        />
-      </div>
+      {/* A portrait of the studio goes here, as on the reference. Left blank
+          until there is a photo. */}
+      <div className="kora-rx-contact-photo" aria-hidden="true" />
     </section>
   )
 }

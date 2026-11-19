@@ -4768,11 +4768,7 @@
   margin-left: 6px;
 }
 
-.kora-rx-contact-photo {
-  overflow: hidden;
-}
-
-.kora-rx-contact-photo video {
+.kora-rx-card-media .kora-flare img {
   display: block;
   width: 100%;
   height: 100%;
