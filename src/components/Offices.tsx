@@ -62,14 +62,6 @@ export function Offices() {
               ))}
             </address>
 
-            <div className="kora-office-contact">
-              <a href={`mailto:${office.email}`}>{office.email}</a>
-              {office.phone && (
-                <a href={`tel:${office.phone.replace(/\s/g, '')}`}>
-                  {office.phone}
-                </a>
-              )}
-            </div>
           </li>
         ))}
       </ul>

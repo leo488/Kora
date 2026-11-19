@@ -4746,21 +4746,42 @@
   }
 }
 
-/* Contact band on Zobo pink, set in Ink (white on Zobo fails contrast). */
+/* Contact + Abuja band: one Koraa Blue block before the footer. */
 .kora-offices {
-  background: var(--koraa-zobo);
-  color: rgba(10, 10, 10, 0.72);
+  padding-top: 24px;
 }
 
-.kora-offices .kora-office-code,
-.kora-offices .kora-office-time,
-.kora-offices a {
+.kora-app .kora-rx-contact {
+  background: var(--koraa-blue);
+  color: rgba(255, 255, 255, 0.78);
+  border-top: 0;
+}
+
+.kora-app .kora-rx-contact h2,
+.kora-app .kora-rx-contact-mail a {
+  color: #fff;
+}
+
+.kora-app .kora-rx-contact .kora-pill.is-solid {
+  background: #fff;
   color: var(--koraa-ink);
 }
 
-.kora-offices .kora-office-contact a:hover {
-  color: var(--koraa-ink);
-  opacity: 0.6;
+.kora-app .kora-rx-contact .kora-pill.is-solid:hover {
+  background: var(--koraa-plantain);
+}
+
+.kora-app .kora-rx-contact .kora-pill.is-outline {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.kora-app .kora-rx-contact .kora-rx-copy {
+  color: #fff;
+}
+
+.kora-app .kora-rx-contact-photo {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Projects whose case study is not out yet: the cursor pill says when. */
