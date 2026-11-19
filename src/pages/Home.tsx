@@ -110,7 +110,7 @@ function Statement() {
   return (
     <section className={`kora-rx-statement kora-rx-reveal${cls}`} ref={ref}>
       <h1 className="kora-rx-statement-line">
-        Koraa’ helps ambitious startups and businesses build brands and digital
+        We help ambitious startups and businesses build brands and digital
         products that are ready to compete globally.
       </h1>
     </section>

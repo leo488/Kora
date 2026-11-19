@@ -91,19 +91,11 @@ export interface Office {
 
 export const OFFICES: Office[] = [
   {
-    code: 'LOS',
-    city: 'Lagos',
-    timeZone: 'Africa/Lagos',
-    address: ['Victoria Island', 'Lagos', 'Nigeria'],
-    email: 'lagos@kora.studio',
-    mapUrl: 'https://maps.google.com/?q=Victoria+Island+Lagos+Nigeria',
-  },
-  {
     code: 'ABV',
     city: 'Abuja',
     timeZone: 'Africa/Lagos',
     address: ['Wuse II', 'Abuja, FCT', 'Nigeria'],
-    email: 'abuja@kora.studio',
+    email: 'hello@wearekoraa.com',
     mapUrl: 'https://maps.google.com/?q=Wuse+II+Abuja+Nigeria',
   },
 ]

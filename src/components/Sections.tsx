@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import type { PointerEvent } from 'react'
+import type { PointerEvent, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { srcSetFor } from '../data'
 import type { Post, Project } from '../data'
-import { caseLinkFor } from '../caseStudies'
+import { caseLinkFor, CASE_STUDY_DUE } from '../caseStudies'
 import { CheckIcon, CopyIcon } from './icons'
 import { useContact } from '../contact/useContact'
 import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
@@ -27,13 +27,25 @@ function followCursor(event: PointerEvent<HTMLDivElement>) {
   event.currentTarget.style.setProperty('--kora-vy', `${event.clientY - box.top}px`)
 }
 
+/** A published case study links through; the rest are a plain block. */
+function RowLink({ to, children }: { to?: string; children: ReactNode }) {
+  return to ? (
+    <Link to={to} className="kora-rx-row-link">
+      {children}
+    </Link>
+  ) : (
+    <div className="kora-rx-row-link is-soon">{children}</div>
+  )
+}
+
 export function ClientRow({ project, index }: { project: Project; index?: number }) {
   const lead = project.images[0]
   const hasStat = project.stat && project.stat !== '—'
+  const to = caseLinkFor(project.name)
 
   return (
     <li className="kora-rx-row">
-      <Link to={caseLinkFor(project.name) ?? '/work'} className="kora-rx-row-link">
+      <RowLink to={to}>
         <div className="kora-rx-row-text">
           <div className="kora-rx-row-head">
             {index !== undefined && (
@@ -88,11 +100,11 @@ export function ClientRow({ project, index }: { project: Project; index?: number
               />
             )}
           </div>
-          <span className="kora-rx-view" aria-hidden="true">
-            View
+          <span className="kora-rx-view" aria-hidden={to ? true : undefined}>
+            {to ? 'View' : `Case study out ${CASE_STUDY_DUE}`}
           </span>
         </div>
-      </Link>
+      </RowLink>
     </li>
   )
 }

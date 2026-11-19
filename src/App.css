@@ -4715,3 +4715,64 @@
   right: var(--kora-flare);
   width: auto;
 }
+
+/* Work-in-progress bar: Dusk purple, slides down from the top on scroll. */
+.kora-wip-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  padding: 10px 24px;
+  background: var(--koraa-dusk);
+  color: var(--koraa-ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-align: center;
+  transform: translateY(-100%);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.kora-wip-bar.is-shown {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-wip-bar {
+    transition: none;
+  }
+}
+
+/* Contact band on Zobo pink, set in Ink (white on Zobo fails contrast). */
+.kora-offices {
+  background: var(--koraa-zobo);
+  color: rgba(10, 10, 10, 0.72);
+}
+
+.kora-offices .kora-office-code,
+.kora-offices .kora-office-time,
+.kora-offices a {
+  color: var(--koraa-ink);
+}
+
+.kora-offices .kora-office-contact a:hover {
+  color: var(--koraa-ink);
+  opacity: 0.6;
+}
+
+/* Projects whose case study is not out yet: the cursor pill says when. */
+.kora-rx-row-link.is-soon .kora-rx-view {
+  background: var(--koraa-dusk);
+  white-space: nowrap;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .kora-rx-row-link.is-soon .kora-rx-view {
+    left: 16px;
+    top: 16px;
+    transform: none;
+  }
+}

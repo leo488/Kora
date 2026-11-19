@@ -615,9 +615,15 @@ export function caseStudyFor(slug: string | undefined) {
 }
 
 /** The case study link for a project, if it has one. */
+/** Case studies that are out. Every other project shows a "coming" note. */
+const PUBLISHED = new Set(['ipaybtc', 'refreeg'])
+
+/** When the unpublished case studies are due. */
+export const CASE_STUDY_DUE = 'December 2026'
+
 export function caseLinkFor(projectName: string) {
   const study = caseStudyFor(projectName)
-  return study ? `/work/${study.slug}` : undefined
+  return study && PUBLISHED.has(study.slug) ? `/work/${study.slug}` : undefined
 }
 
 /* Parked iPayBTC slots (cut from the running order, kept for the ideas

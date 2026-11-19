@@ -64,8 +64,7 @@ export function Footer() {
 
       <div className="kora-footer-meta kora-container">
         <span>&copy; 2026 Koraa Studios Ltd. All rights reserved.</span>
-        {/* TODO(kora): placeholder registration number — swap for the real RC. */}
-        <span className="kora-footer-rc">RC 1234567</span>
+        <span className="kora-footer-rc">RC 10005554</span>
         <span>Designed &amp; built with care.</span>
       </div>
     </footer>
