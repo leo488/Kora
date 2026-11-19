@@ -4774,3 +4774,14 @@
   height: 100%;
   object-fit: cover;
 }
+
+.kora-rx-contact-photo {
+  overflow: hidden;
+}
+
+.kora-rx-contact-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

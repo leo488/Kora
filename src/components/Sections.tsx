@@ -7,6 +7,7 @@ import { caseLinkFor, CASE_STUDY_DUE } from '../caseStudies'
 import { CheckIcon, CopyIcon } from './icons'
 import { useContact } from '../contact/useContact'
 import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
+import onboarderArt from '../assets/onboarder-illustration.jpg'
 
 /* The homepage's building blocks, shared so every page is made of the same
    parts: client rows, news cards and the contact block. */
@@ -157,9 +158,10 @@ export function Contact() {
         </div>
       </div>
 
-      {/* A portrait of the studio goes here, as on the reference. Left blank
-          until there is a photo. */}
-      <div className="kora-rx-contact-photo" aria-hidden="true" />
+      {/* Onboarder line illustration on Dusk purple. */}
+      <div className="kora-rx-contact-photo" aria-hidden="true">
+        <img src={onboarderArt} alt="" loading="lazy" draggable={false} />
+      </div>
     </section>
   )
 }
