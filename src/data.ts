@@ -1,5 +1,6 @@
 import blog01 from './assets/blog/blog-01.jpg'
 import blog02 from './assets/blog/blog-02.jpg'
+import blog03 from './assets/blog/blog-03.jpg'
 export interface NavLinkItem {
   label: string
   to?: string
@@ -553,6 +554,7 @@ export const POSTS: Post[] = [
   },
   {
     title: 'Identity in Web3',
+    image: blog03,
     category: 'Insights',
     date: 'Apr 2026',
   },
