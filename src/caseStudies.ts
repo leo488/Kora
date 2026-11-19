@@ -619,3 +619,7 @@ export function caseLinkFor(projectName: string) {
   const study = caseStudyFor(projectName)
   return study ? `/work/${study.slug}` : undefined
 }
+
+/* Parked iPayBTC slots (cut from the running order, kept for the ideas
+   inbox). Exported so the build keeps them without placing them on the page. */
+export const IPAY_PARKED = { wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }
