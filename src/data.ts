@@ -536,22 +536,22 @@ export interface Post {
 
 export const POSTS: Post[] = [
   {
-    title: 'Why Bold Branding Wins in Fintech',
+    title: 'Bold wins in fintech',
     category: 'Branding',
     date: 'Jun 2026',
   },
   {
-    title: 'Designing for Trust: Lessons From iPayBTC',
+    title: 'Designing for trust',
     category: 'Case Study',
     date: 'May 2026',
   },
   {
-    title: 'The Future of Visual Identity in Web3',
+    title: 'Identity in Web3',
     category: 'Insights',
     date: 'Apr 2026',
   },
   {
-    title: 'What a Global Studio Learns From Local Markets',
+    title: 'Local roots, global reach',
     category: 'Studio Notes',
     date: 'Mar 2026',
   },
