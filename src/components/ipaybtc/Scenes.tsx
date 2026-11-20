@@ -370,14 +370,27 @@ export function SocialCarousel() {
   const [i, setI] = useState(0)
   useEffect(() => {
     if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const t = window.setInterval(() => setI((v) => (v + 1) % POSTS.length), 2600)
+    const t = window.setInterval(() => {
+      setSnap(false)
+      setI((v) => v + 1)
+    }, 2600)
     return () => clearInterval(t)
   }, [on])
+  // Always slide forward; once past the last post, jump back one set with
+  // no transition so the loop never runs backwards.
+  const [snap, setSnap] = useState(false)
+  const n = POSTS.length
   const loop = [...POSTS, ...POSTS, ...POSTS]
-  const at = POSTS.length + i
+  const at = n + i
+  const onEnd = () => {
+    if (i >= n) {
+      setSnap(true)
+      setI(i - n)
+    }
+  }
   return (
     <div ref={ref} className="ips ips-social">
-      <div className="ips-social-track" style={{ ['--at' as string]: at }}>
+      <div className={`ips-social-track${snap ? ' is-snap' : ''}`} style={{ ['--at' as string]: at }} onTransitionEnd={onEnd}>
         {loop.map((p, k) => (
           <SocialPost key={k} p={p} flat />
         ))}
@@ -398,7 +411,7 @@ export function SocialCarousel() {
           <svg viewBox="0 0 24 24"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4 18-7Z" /></svg>
           <span className="ips-social-dots">
             {POSTS.map((_, k) => (
-              <i key={k} className={k === i ? 'is-on' : ''} />
+              <i key={k} className={k === i % n ? 'is-on' : ''} />
             ))}
           </span>
           <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4.5L6 21V3Z" /></svg>
