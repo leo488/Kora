@@ -52,6 +52,8 @@ import tee1200 from './assets/ipaybtc-tee-1200.jpg'
 import tee2400 from './assets/ipaybtc-tee-2400.jpg'
 import borderless from './assets/ipaybtc-borderless.mp4'
 import ipayLogoLoop from './assets/ipaybtc-logo-loop.mp4'
+import ipayTypeGrid from './assets/ipaybtc-type-grid.mp4'
+import ipayTypeGridPoster from './assets/ipaybtc-type-grid-poster.jpg'
 import ipayLogoLoopPoster from './assets/ipaybtc-logo-loop-poster.jpg'
 import ipayMotion from './assets/ipaybtc-brand-motion.mp4'
 import ipayMotionPoster from './assets/ipaybtc-brand-motion-poster.jpg'
@@ -272,6 +274,14 @@ const IPAY_LOGO: CaseSlot = {
   ratio: '16 / 9',
   src: ipayLogoLoop,
   poster: ipayLogoLoopPoster,
+  video: true,
+}
+
+const IPAY_TYPE_GRID: CaseSlot = {
+  label: 'The display type introduced through its numerals, currency signs and the coin',
+  ratio: '16 / 9',
+  src: ipayTypeGrid,
+  poster: ipayTypeGridPoster,
   video: true,
 }
 
@@ -574,6 +584,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_WISE_MARKET },
       { kind: 'full', slot: IPAY_KEYPAD },
       { kind: 'full', slot: IPAY_WISE_NAIL },
+      { kind: 'full', slot: IPAY_TYPE_GRID, inset: true, wide: true },
       { kind: 'full', slot: IPAY_UNDER },
       // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },

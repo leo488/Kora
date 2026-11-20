@@ -170,46 +170,87 @@ const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '↑']
 const TYPING = ['2', '20', '200', '2,000', '20,000']
 const PRESS = ['2', '0', '0', '0', '0']
 
-/** The amount keypad lifted out of the app, beside the people in a photo. */
+/** The send flow lifted out of the new app, beside the people in a photo:
+    the amount is typed, the review sheet rises, then the pixels gather into
+    the sent check (motion M4, M5, M7 from the app's component library). */
+const AVATAR = [0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0]
+const SCATTER = Array.from({ length: 16 }, (_, i) => {
+  const a = (i * 137.5 * Math.PI) / 180
+  const r = 70 + ((i * 37) % 60)
+  return [Math.cos(a) * r, Math.sin(a) * r]
+})
+
 export function KeypadCard() {
   const [ref, on] = useInView<HTMLDivElement>(0.4, false)
   const [n, setN] = useState(0)
+  const [phase, setPhase] = useState<'type' | 'go' | 'sheet' | 'press' | 'done'>('type')
   useFit(ref, 0.2, 360)
   useEffect(() => {
-    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!on) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setN(TYPING.length)
+      return
+    }
     const t: number[] = []
+    const at = (ms: number, f: () => void) => t.push(window.setTimeout(f, ms))
     const loop = () => {
       setN(0)
-      TYPING.forEach((_, k) => t.push(window.setTimeout(() => setN(k + 1), 900 + k * 420)))
-      t.push(window.setTimeout(loop, 6000))
+      setPhase('type')
+      TYPING.forEach((_, k) => at(800 + k * 380, () => setN(k + 1)))
+      at(2700, () => setPhase('go'))
+      at(3000, () => setPhase('sheet'))
+      at(4700, () => setPhase('press'))
+      at(5000, () => setPhase('done'))
+      at(8800, loop)
     }
     loop()
     return () => t.forEach(clearTimeout)
   }, [on])
-  const pressed = n > 0 ? PRESS[n - 1] : null
+  const pressed = phase === 'type' && n > 0 ? PRESS[n - 1] : null
   return (
-    <div ref={ref} className={`ips-kcard${on ? ' is-in' : ''}`} aria-hidden>
+    <div ref={ref} className={`ips-kcard${on ? ' is-in' : ''}`} data-phase={phase} aria-hidden>
       <div className="ips-kcard-scale">
-        <div className="ips-kcard-panel">
-          <div>
-            <span>Send to Tolu</span>
-            <span>SATS</span>
-          </div>
-          <strong className={n === 0 ? 'is-empty' : ''}>{n === 0 ? '0' : TYPING[n - 1]}</strong>
-        </div>
-        <div className={`ips-kcard-toast${n === TYPING.length ? ' is-on' : ''}`}>
-          <i>✓</i>
+        <div className="ips-kcard-head">
+          <span className="ips-kcard-av">
+            {AVATAR.map((p, i) => (
+              <i key={i} style={{ opacity: p, transitionDelay: `${((i % 4) + Math.floor(i / 4)) * 45}ms` }} />
+            ))}
+          </span>
           <span>
-            <b>20,000 SATS SENT</b>
-            <small>To Tolu · just now</small>
+            <small>Send to</small>
+            <b>Tolu Adebayo</b>
           </span>
         </div>
+        <strong className={`ips-kcard-amt${n === 0 ? ' is-empty' : ''}`}>
+          {n === 0 ? '0' : TYPING[n - 1]}
+          <em>SATS</em>
+        </strong>
         <div className="ips-kcard-keys">
           {KEYS.map((k) => (
-            <span key={k} className={`${k === pressed ? 'is-pressed' : ''}${k === '↑' && n === TYPING.length ? ' is-go' : ''}`}>
+            <span key={k} className={`${k === pressed ? 'is-pressed' : ''}${k === '↑' && phase === 'go' ? ' is-go' : ''}`}>
               {k}
             </span>
           ))}
+        </div>
+        <div className="ips-kcard-sheet">
+          <i className="ips-kcard-grab" />
+          <b className="ips-kcard-title">Review</b>
+          <dl>
+            <div><dt>To</dt><dd>Tolu Adebayo</dd></div>
+            <div><dt>Amount</dt><dd>20,000 sats</dd></div>
+            <div><dt>Arrives</dt><dd>Instantly</dd></div>
+          </dl>
+          <span className="ips-kcard-btn">Send</span>
+        </div>
+        <div className="ips-kcard-done">
+          <span className="ips-kcard-px">
+            {SCATTER.map(([x, y], i) => (
+              <i key={i} style={{ ['--x' as string]: `${x}px`, ['--y' as string]: `${y}px`, transitionDelay: `${i * 14}ms` }} />
+            ))}
+            <svg viewBox="0 0 40 40"><path d="M11 21l6 6 12-14" /></svg>
+          </span>
+          <b>Sent</b>
+          <small>20,000 sats to Tolu</small>
         </div>
       </div>
     </div>
