@@ -5180,25 +5180,6 @@
   font-size: 15px;
 }
 
-/* Clock band, Nov 20: just the time in Abuja, on the same 24px gutter as the
-   nav and the footer. */
-.kora-offices-inner {
-  padding: 0 24px;
-}
-
-.kora-offices-label {
-  margin: 0 0 12px;
-  font-size: 17px;
-  font-weight: 500;
-  color: rgba(10, 10, 10, 0.78);
-}
-
-.kora-offices .kora-office-time {
-  margin: 0;
-  font-size: clamp(64px, 11vw, 200px);
-  line-height: 0.9;
-}
-
 /* One gutter for the whole page (Nov 20): nav, rows, clock band and footer
    all start and end on the same line, on any screen. */
 .kora-app {
@@ -5216,8 +5197,9 @@
   padding-right: var(--kora-gutter);
 }
 
-.kora-app .kora-offices-inner {
-  padding: 0 var(--kora-gutter);
+.kora-app .kora-offices-grid {
+  padding-left: var(--kora-gutter);
+  padding-right: var(--kora-gutter);
 }
 
 .kora-app .kora-pills {
