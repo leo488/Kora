@@ -506,7 +506,8 @@
 }
 
 /* A cut-out of the photo laid back over the live screen */
-.kora-case-plate .kora-flare > img.kora-case-top {
+.kora-case-plate .kora-flare > img.kora-case-top,
+.kora-case-frame > img.kora-case-top {
   z-index: 2;
   pointer-events: none;
 }

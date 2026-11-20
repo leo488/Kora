@@ -265,6 +265,8 @@ export interface Project {
   year: string
   headline: string
   stat: string
+  /** Short caption under the stat, as Ragged Edge writes theirs. */
+  statNote?: string
   /** Cycled by the hero carousel while this project is selected. */
   images: ProjectImage[]
   /** Optional opening frame. When set it leads the project's reel, so a
@@ -291,7 +293,8 @@ export const PROJECTS: Project[] = [
     category: 'Giving platform',
     year: '2025',
     headline: 'Refreeg — Giving, Made Direct',
-    stat: '₦50M raised in funding',
+    stat: '₦50 million',
+    statNote: 'Raised in funding',
     film: { src: refreegFilm, poster: FRAMES.refreeg01, durationMs: 14770, afterImageMs: 1600 },
     images: [FRAMES.refreeg01, FRAMES.refreeg02, FRAMES.refreeg03],
   },
@@ -311,6 +314,7 @@ export const PROJECTS: Project[] = [
     year: '2025',
     headline: 'Tagmi — A Bold Identity for a Social Platform',
     stat: 'In development',
+    statNote: 'A social media platform, launching soon',
     images: [FRAMES.tagmi04, FRAMES.tagmi01, FRAMES.tagmi02, FRAMES.tagmi03],
   },
   {

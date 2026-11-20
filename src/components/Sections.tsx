@@ -67,6 +67,7 @@ export function ClientRow({ project, index }: { project: Project; index?: number
                 {project.stat}
               </p>
             )}
+            {hasStat && project.statNote && <p className="kora-rx-row-note">{project.statNote}</p>}
             <p className="kora-rx-row-meta">
               {project.category}, {project.year}
             </p>
