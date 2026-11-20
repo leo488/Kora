@@ -13,7 +13,6 @@ import { MerchReel, OnboardTap, WebsiteHero } from '../components/ipaybtc/Extras
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 import ladyCut from '../assets/figx/ipaybtc-lady-cutout-2400.webp'
 import ilCoinFan from '../assets/ipaybtc-ill/ipaybtc-coin-fan.webp'
-import ilBtc from '../assets/ipaybtc-ill/ipaybtc-bitcoin-coin.webp'
 import ilStacks from '../assets/ipaybtc-ill/ipaybtc-coin-stacks.webp'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -247,15 +246,9 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
                 <>
                 <div className="kora-cnposter-ills" aria-hidden>
                   <img className="is-fan" src={ilCoinFan} alt="" />
-                  <img className="is-coin" src={ilBtc} alt="" />
                   <img className="is-stacks" src={ilStacks} alt="" />
                 </div>
                 <img className="kora-cnposter-cut" src={ladyCut} alt="" aria-hidden />
-                <div className="kora-cnposter" aria-hidden>
-                  <p className="kora-cnposter-head">你的比特币<br />可以远行</p>
-                  <p className="kora-cnposter-sub">随时随地发送、兑换和使用比特币。</p>
-                  <span className="kora-cnposter-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
-                </div>
                 </>
               )}
             </>

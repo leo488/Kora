@@ -5267,7 +5267,6 @@
 .kora-cnposter-ills img {
   position: absolute;
   height: auto;
-  animation: kora-ill-drift 9s ease-in-out infinite alternate;
 }
 
 .kora-cnposter-ills .is-fan {
