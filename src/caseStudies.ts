@@ -312,11 +312,10 @@ const IPAY_HAND: CaseSlot = {
     corners: [[839.8, 926.0], [1972.6, 594.7], [2824.6, 3076.7], [1708.8, 3470.3]],
     radius: 52,
     glare: 'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%)',
-  },  // After the payment lands: the tote, the cap, then the watch. Hard cuts.
+  },  // After the payment lands: the tote, then the cap. Hard cuts.
   then: [
     { src: toteImg, label: 'The iPayBTC tote' },
     { src: capImg, label: 'The iPayBTC cap' },
-    { src: fx29b, label: 'iPayBTC on the watch' },
   ],
 }
 const plate = (label: string, ratio: string, name: [string, string]): CaseSlot => ({
@@ -450,7 +449,7 @@ const IPAY_MERCH: CaseSlot = {
   reel: [IPAY_TEE, FX29, FX26, FX23, FX28, FX27].map(reelFrame),
 }
 /* The website, rebuilt live in the layout of Leo's Figma frame. */
-const IPAY_COLOUR_CARDS = art('The campaign lines on the colour pairs: each bright card on its own deep square', '3 / 1.25', 'ipaybtc-colour-cards')
+const IPAY_COLOUR_CARDS = art('The campaign lines on the colour pairs: each bright card on its own deep square', '3 / 1.6', 'ipaybtc-colour-cards')
 const IPAY_MOCKUPS = art('The iPayBTC tote and staff pass', '16 / 9', 'ipaybtc-mockups')
 const IPAY_WEB = art('The iPayBTC website, with the app live beside the hero photo', '10130 / 6488', 'ipaybtc-website')
 const IPAY_SOCIAL = art('Posts sliding through the iPayBTC feed', '16 / 9', 'ipaybtc-social')
@@ -594,7 +593,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_UNDER },
       // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },
-      { kind: 'full', slot: IPAY_SOCIAL, inset: true, wide: true },
     ],
     next: '3Projects',
   },

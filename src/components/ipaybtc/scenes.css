@@ -1346,3 +1346,59 @@
 
 /* Social scroll on yellow, Nov 20 */
 .ips.ips-social { background: #fff778; }
+
+/* Sent: our tilted coin shape blobs in, then the check strokes on. */
+.ips-kcard-coin {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 18px;
+  overflow: visible;
+}
+
+.ips-kcard-coin ellipse {
+  fill: #0a31f5;
+  scale: 0;
+  transition: scale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;
+}
+
+.ips-kcard-coin path {
+  fill: none;
+  stroke: #fff778;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 22;
+  stroke-dashoffset: 22;
+}
+
+.ips-kcard[data-phase='done'] .ips-kcard-coin ellipse { scale: 1; }
+
+.ips-kcard[data-phase='done'] .ips-kcard-coin path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.3s cubic-bezier(0.2, 0, 0, 1) 0.5s;
+}
+
+/* The road-trip photo keeps easing out while the flow plays. */
+.kora-case-plate:has(.ips-kcard) img.ips-zoom.is-in {
+  animation: ips-slow-out 18s cubic-bezier(0.25, 0, 0.25, 1) infinite alternate;
+}
+
+@keyframes ips-slow-out {
+  from { transform: scale(1.14); }
+  to { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-case-plate:has(.ips-kcard) img.ips-zoom.is-in { animation: none; }
+}
+
+.ips-kcard svg.ips-kcard-av {
+  display: block;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: none;
+  overflow: visible;
+}
+.ips-kcard svg.ips-kcard-av ellipse { fill: #0a31f5; }
+.ips-kcard svg.ips-kcard-av text { fill: #fff778; font: 800 17px 'Barlow Condensed', sans-serif; }
