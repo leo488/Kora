@@ -280,7 +280,7 @@ export const PROJECTS: Project[] = [
     brand: 'ipaybtc',
     category: 'Fintech',
     year: '2026',
-    headline: 'iPayBTC — re‑Designing a Bitcoin Brand for Everyday Use',
+    headline: 'iPayBTC — Re‑designing a Bitcoin brand for everyday use',
     stat: '—',
     film: IPAYBTC_FILM,
     images: [FRAMES.ipaybtc01, FRAMES.ipaybtc02, FRAMES.ipaybtc03],
@@ -292,7 +292,7 @@ export const PROJECTS: Project[] = [
     // Frame Fest exports; the artwork is Refreeg's, the words are stand-ins.
     category: 'Giving platform',
     year: '2025',
-    headline: 'Refreeg — Giving, Made Direct',
+    headline: 'Refreeg — Giving, made direct',
     stat: '₦50 million',
     statNote: 'Raised in funding',
     film: { src: refreegFilm, poster: FRAMES.refreeg01, durationMs: 14770, afterImageMs: 1600 },
@@ -303,7 +303,7 @@ export const PROJECTS: Project[] = [
     brand: 'Escro',
     category: 'Web3',
     year: '2025',
-    headline: 'Escro — Making Peer‑to‑Peer Deals Feel Safe',
+    headline: 'Escro — Making peer‑to‑peer deals feel safe',
     stat: '—',
     images: [FRAMES.escro01, FRAMES.escro02],
   },
@@ -312,7 +312,7 @@ export const PROJECTS: Project[] = [
     brand: 'Tagmi',
     category: 'Social media',
     year: '2025',
-    headline: 'Tagmi — A Bold Identity for a Social Platform',
+    headline: 'Tagmi — A bold identity for a social platform',
     stat: 'In development',
     statNote: 'A social media platform, launching soon',
     images: [FRAMES.tagmi04, FRAMES.tagmi01, FRAMES.tagmi02, FRAMES.tagmi03],
@@ -324,7 +324,7 @@ export const PROJECTS: Project[] = [
     // headline and stat are stand-ins — swap them for the actual brief.
     category: 'Events & Culture',
     year: '2025',
-    headline: 'Frame Fest — An Identity for a Festival of Moving Image',
+    headline: 'Frame Fest — An identity for a festival of moving image',
     stat: '—',
     images: [FRAMES.framefest01, FRAMES.framefest02],
   },
@@ -333,7 +333,7 @@ export const PROJECTS: Project[] = [
     brand: 'squaremetre',
     category: 'Real Estate',
     year: '2024',
-    headline: 'squaremetre — Fractional Property Investing, Simplified',
+    headline: 'squaremetre — Fractional property investing, simplified',
     stat: '—',
     // Still on its original plate: no new art was supplied for this one.
     images: [FRAMES.squaremetre01],
@@ -343,7 +343,7 @@ export const PROJECTS: Project[] = [
     brand: 'FourStrides',
     category: 'Sports & Lifestyle',
     year: '2024',
-    headline: 'FourStrides — An Identity Built to Move',
+    headline: 'FourStrides — An identity built to move',
     stat: '—',
     images: [FRAMES.fourstrides01, FRAMES.fourstrides02],
   },
@@ -352,7 +352,7 @@ export const PROJECTS: Project[] = [
     brand: 'Whotafrica',
     category: 'Fintech',
     year: '2023',
-    headline: 'Whotafrica — Trusted Supply, End to End',
+    headline: 'Whotafrica — Trusted supply, end to end',
     stat: '—',
     // As with squaremetre — no new art supplied, so the original stands.
     images: [FRAMES.whotafrica01],
@@ -362,7 +362,7 @@ export const PROJECTS: Project[] = [
     brand: '3PROJECTS',
     category: 'IT consultancy',
     year: '2026',
-    headline: '3PROJECTS — Complexity Isn’t a Hurdle. It’s an Asset.',
+    headline: '3PROJECTS — Complexity isn’t a hurdle. It’s an asset.',
     stat: '—',
     images: [FRAMES.threeProjects01, FRAMES.threeProjects02, FRAMES.threeProjects03],
   },
@@ -515,24 +515,20 @@ export interface Partner {
   scale: number
 }
 
+/* Optical sizes (Nov 20): each mark's height follows its aspect ratio
+   (height ~ ratio^-0.42), so wide and stacked lockups carry the same visual
+   weight; the two very heavy marks (Whot, Frame Fest) sit a step smaller. */
 export const PARTNERS: Partner[] = [
-  { name: 'Õhobù', logo: logoOhobu, scale: 0.9 },
-  { name: 'Tagmi', logo: logoTagmi, scale: 0.88 },
-  // Stacked lockup, so it earns height it would never get from a shared cap.
-  { name: 'Cleon', logo: logoCleon, scale: 1.45 },
-  { name: 'Refreeg', logo: logoRefreeg, scale: 0.92 },
-  { name: 'Cleon de Spotless', logo: logoCleonSpotless, scale: 0.82 },
-  // Widest mark in the set at 6.8:1, and the diamond — not the word — sets its
-  // box height, so a scale that matched boxes left the lettering undersized.
-  // Sized off the cap height instead: 0.86 puts "Squaremetre" at ~25px.
-  { name: 'Squaremetre', logo: logoSquaremetre, scale: 0.86 },
-  // Very heavy strokes, so it reads large even set small.
-  { name: 'Whot', logo: logoWhot, scale: 0.66 },
-  { name: 'Frame Fest', logo: logoFrameFest, scale: 0.86 },
-  // Same lockup problem as Squaremetre, worse: the word is only 58% of the box
-  // height, so it read smallest of the whole set. 0.90 lands its caps at ~24px.
-  { name: 'FourStrides', logo: logoFourStrides, scale: 0.90 },
-  { name: '3PROJECTS', logo: logoThreeProjects, scale: 0.74 },
+  { name: 'Õhobù', logo: logoOhobu, scale: 0.98 },
+  { name: 'Tagmi', logo: logoTagmi, scale: 1.05 },
+  { name: 'Cleon', logo: logoCleon, scale: 1.62 },
+  { name: 'Refreeg', logo: logoRefreeg, scale: 0.85 },
+  { name: 'Cleon de Spotless', logo: logoCleonSpotless, scale: 1.05 },
+  { name: 'Squaremetre', logo: logoSquaremetre, scale: 0.72 },
+  { name: 'Whot', logo: logoWhot, scale: 0.78 },
+  { name: 'Frame Fest', logo: logoFrameFest, scale: 0.9 },
+  { name: 'FourStrides', logo: logoFourStrides, scale: 0.76 },
+  { name: '3PROJECTS', logo: logoThreeProjects, scale: 0.82 },
 ]
 
 /* Posts — shared by the Blog index and the Happenings strip on Home.
