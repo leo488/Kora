@@ -5365,3 +5365,7 @@
   }
   .kora-case-frame > .kora-cnposter-bg { background: #e0e5e6; }
 }
+
+/* Hand-drawn coin vectors: bigger, fan opening out behind her. */
+.kora-cnposter-ills .is-fan { left: 10%; top: 24%; width: 38%; }
+.kora-cnposter-ills .is-stacks { left: 63%; top: 34%; width: 21%; }
