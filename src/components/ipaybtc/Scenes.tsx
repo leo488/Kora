@@ -197,6 +197,13 @@ export function KeypadCard() {
           </div>
           <strong className={n === 0 ? 'is-empty' : ''}>{n === 0 ? '0' : TYPING[n - 1]}</strong>
         </div>
+        <div className={`ips-kcard-toast${n === TYPING.length ? ' is-on' : ''}`}>
+          <i>✓</i>
+          <span>
+            <b>20,000 SATS SENT</b>
+            <small>To Tolu · just now</small>
+          </span>
+        </div>
         <div className="ips-kcard-keys">
           {KEYS.map((k) => (
             <span key={k} className={`${k === pressed ? 'is-pressed' : ''}${k === '↑' && n === TYPING.length ? ' is-go' : ''}`}>
@@ -520,6 +527,26 @@ export function OnboardPhone() {
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  )
+}
+
+/** The real onboarding screens (the bento version), sliding one to the next,
+    sized 390 × 844 to sit on a phone in a photo. */
+export function OnboardStrip({ playing = true }: { playing?: boolean }) {
+  const [idx, setIdx] = useState(0)
+  useEffect(() => {
+    if (!playing || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setTimeout(() => setIdx((v) => (v + 1) % 3), 2200)
+    return () => clearTimeout(t)
+  }, [playing, idx])
+  return (
+    <div className="ips-obstrip">
+      <div className="ips-obstrip-row" style={{ transform: `translateX(${-idx * 390}px)` }}>
+        {[ob0, ob1, ob2].map((src, k) => (
+          <img key={k} src={src} alt="" />
+        ))}
       </div>
     </div>
   )
