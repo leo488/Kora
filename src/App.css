@@ -5369,3 +5369,55 @@
 /* Hand-drawn coin vectors: bigger, fan opening out behind her. */
 .kora-cnposter-ills .is-fan { left: 10%; top: 24%; width: 38%; }
 .kora-cnposter-ills .is-stacks { left: 63%; top: 34%; width: 21%; }
+
+/* Coins: the fan spills open coin by coin from the front coin each time the
+   background cuts; the stacks are poured, each coin dropping and bouncing. */
+.kora-cnposter-ills .c {
+  transform-box: view-box;
+}
+
+.kora-cnposter-ills .is-fan .c {
+  transform-origin: 560px 560px;
+  animation: kora-fan-spill 3.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation-delay: calc(var(--k) * 0.07s);
+}
+
+@keyframes kora-fan-spill {
+  0% { rotate: var(--from); opacity: 0; }
+  4% { opacity: 1; }
+  30%, 100% { rotate: 0deg; opacity: 1; }
+}
+
+.kora-cnposter-ills .is-stacks .c {
+  animation: kora-coin-drop 3.4s linear infinite;
+  animation-delay: calc(var(--k) * 0.09s);
+}
+
+@keyframes kora-coin-drop {
+  0% { translate: 0 -900px; opacity: 0; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  3% { opacity: 1; }
+  16% { translate: 0 0; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+  20% { translate: 0 -36px; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  24% { translate: 0 0; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+  26.5% { translate: 0 -10px; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  29%, 100% { translate: 0 0; opacity: 1; }
+}
+
+.kora-cnposter-ills .is-stacks .is-tip {
+  transform-origin: 560px 300px;
+  animation-name: kora-coin-flip;
+}
+
+@keyframes kora-coin-flip {
+  0% { translate: 0 -700px; rotate: -160deg; opacity: 0; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  3% { opacity: 1; }
+  18% { translate: 0 0; rotate: 6deg; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+  23% { translate: 0 -24px; rotate: -3deg; }
+  28%, 100% { translate: 0 0; rotate: 0deg; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-cnposter-ills .c { animation: none !important; }
+}
+
+

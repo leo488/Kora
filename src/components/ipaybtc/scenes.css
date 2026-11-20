@@ -1343,3 +1343,6 @@
 .ips-kcard[data-phase='done'] .ips-kcard-done small {
   transition-delay: 0.8s;
 }
+
+/* Social scroll on yellow, Nov 20 */
+.ips.ips-social { background: #fff778; }
