@@ -6,6 +6,8 @@ import art0 from '../../assets/ipaybtc-onboard/ob0-art.jpg'
 import art1 from '../../assets/ipaybtc-onboard/ob1-art.jpg'
 import art2 from '../../assets/ipaybtc-onboard/ob2-art.jpg'
 import { SwapApp } from './SwapApp'
+import mkTote from '../../assets/ipaybtc-tote-2400.jpg'
+import mkPass from '../../assets/ipaybtc-lanyard-blue-1200.jpg'
 import { useInView } from './Scenes'
 
 /* iPayBTC case study, Nov 20 pass: the onboarding as a real tap-through,
@@ -187,6 +189,67 @@ export function WebsiteHero() {
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+/** The colour pairs at work: each deep square holds its bright card, and the
+    cards cut through the campaign lines while they are on screen. */
+const PAIRS = [
+  { deep: '#3f1407', bright: '#8ce8b4', ink: '#0a3a2a' },
+  { deep: '#0a3a2a', bright: '#ffb28c', ink: '#3f1407' },
+  { deep: '#050e7f', bright: '#fff778', ink: '#050e7f' },
+  { deep: '#06205e', bright: '#a9d2ff', ink: '#06205e' },
+  { deep: '#0a31f5', bright: '#ffffff', ink: '#050e7f' },
+]
+const LINES: Array<{ head: string[]; sub?: string }> = [
+  { head: ['Your Naira', "can't travel.", 'Your Bitcoin', 'can.'] },
+  { head: ['Pay NEPA', 'in sats.'], sub: 'Airtime, data and light bills, straight from your Bitcoin.' },
+  { head: ['Buy Bitcoin', 'before your', 'tea gets', 'cold.'] },
+  { head: ['No border.', 'No permission.'], sub: 'No bank opening hours.' },
+  { head: ['Bitcoin was', 'never meant', 'to sit still.', 'Spend it.'] },
+]
+
+export function ColourCards() {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, false)
+  const [step, setStep] = useState(0)
+  useEffect(() => {
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setInterval(() => setStep((s) => s + 1), 2600)
+    return () => clearInterval(t)
+  }, [on])
+  return (
+    <div ref={ref} className={`ipx-cc${on ? ' is-on' : ''}`} aria-hidden>
+      {[0, 1, 2].map((slot) => {
+        const k = (step + slot * 2) % PAIRS.length
+        const p = PAIRS[k]
+        const l = LINES[(step + slot) % LINES.length]
+        return (
+          <div key={slot} className="ipx-cc-sq" style={{ background: p.deep }}>
+            <div key={step} className="ipx-cc-card" style={{ background: p.bright, color: p.ink, animationDelay: `${slot * 90}ms` }}>
+              <b>
+                {l.head.map((h) => (
+                  <span key={h}>{h}</span>
+                ))}
+              </b>
+              {l.sub && <span>{l.sub}</span>}
+              <i dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+/** The merch on one plain ground: the tote and the staff pass rise in and
+    drift slowly while they are on screen. */
+export function MockupBoard() {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, true)
+  return (
+    <div ref={ref} className={`ipx-mk${on ? ' is-on' : ''}`}>
+      <img className="ipx-mk-tote" src={mkTote} alt="The iPayBTC tote" loading="lazy" />
+      <img className="ipx-mk-pass" src={mkPass} alt="The iPayBTC staff pass on its lanyard" loading="lazy" />
     </div>
   )
 }

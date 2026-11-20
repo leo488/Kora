@@ -9,11 +9,11 @@ import type { PhoneScreen } from '../components/ipaybtc/ScreenOverlay'
 import { Steam } from '../components/ipaybtc/Steam'
 import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg, Onboarding, TypeReel } from '../components/ipaybtc/Scenes'
 import { Chip } from '../components/refreeg/Chip'
-import { MerchReel, OnboardTap, WebsiteHero } from '../components/ipaybtc/Extras'
+import { ColourCards, MerchReel, MockupBoard, OnboardTap, WebsiteHero } from '../components/ipaybtc/Extras'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 import ladyCut from '../assets/figx/ipaybtc-lady-cutout-2400.webp'
-import ilCoinFan from '../assets/ipaybtc-ill/ipaybtc-coin-fan.webp'
-import ilStacks from '../assets/ipaybtc-ill/ipaybtc-coin-stacks.webp'
+import ilCoinFan from '../assets/ipaybtc-ill/ipaybtc-coin-fan.svg?raw'
+import ilStacks from '../assets/ipaybtc-ill/ipaybtc-coin-stacks.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
    in images, then the next project and the contact block. */
@@ -204,6 +204,10 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
           <TypePoster tone="yellow" lines={['Buy Bitcoin', 'before your', 'tea gets cold.']} />
         ) : slot.art === 'ipaybtc-merch-reel' && slot.reel ? (
           <MerchReel frames={slot.reel} />
+        ) : slot.art === 'ipaybtc-mockups' ? (
+          <MockupBoard />
+        ) : slot.art === 'ipaybtc-colour-cards' ? (
+          <ColourCards />
         ) : slot.art === 'ipaybtc-website' ? (
           <WebsiteHero />
         ) : slot.art === 'ipaybtc-poster-spend' ? (
@@ -244,9 +248,10 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
               {slot.keypad && <KeypadCard />}
               {slot.overlay === 'cn-poster' && (
                 <>
+                <div className="kora-cnposter-bg" aria-hidden />
                 <div className="kora-cnposter-ills" aria-hidden>
-                  <img className="is-fan" src={ilCoinFan} alt="" />
-                  <img className="is-stacks" src={ilStacks} alt="" />
+                  <span className="is-fan" dangerouslySetInnerHTML={{ __html: ilCoinFan }} />
+                  <span className="is-stacks" dangerouslySetInnerHTML={{ __html: ilStacks }} />
                 </div>
                 <img className="kora-cnposter-cut" src={ladyCut} alt="" aria-hidden />
                 </>
