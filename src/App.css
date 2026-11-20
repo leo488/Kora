@@ -4796,7 +4796,7 @@
 
 /* Offices band on Zobo pink. White fails contrast on Zobo, so it is Ink. */
 .kora-offices {
-  background: var(--koraa-zobo);
+  background: var(--koraa-dusk);
   color: rgba(10, 10, 10, 0.72);
 }
 

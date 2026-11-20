@@ -169,7 +169,7 @@ export function WebsiteHero() {
           <span className="ipx-web-cta">Get the app</span>
         </nav>
         <h3 className="ipx-web-head">
-          {['Spend Bitcoin', 'like money, for', 'everyday use'].map((l, k) => (
+          {['Spend Bitcoin', 'like money, for', 'everyday use.'].map((l, k) => (
             <span key={l} style={{ transitionDelay: `${150 + k * 110}ms` }}>
               <i>{l}</i>
             </span>

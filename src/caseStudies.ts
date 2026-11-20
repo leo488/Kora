@@ -32,6 +32,12 @@ import roadtrip1200 from './assets/ipaybtc-scene-roadtrip-1200.jpg'
 import roadtrip2400 from './assets/ipaybtc-scene-roadtrip-2400.jpg'
 import pole1200 from './assets/ipaybtc-w-pole-1200.jpg'
 import pole2400 from './assets/ipaybtc-w-pole-2400.jpg'
+import wiseTable1200 from './assets/ipaybtc-wise-table-1200.jpg'
+import wiseTable2400 from './assets/ipaybtc-wise-table-2400.jpg'
+import wiseMarket1200 from './assets/ipaybtc-wise-market-1200.jpg'
+import wiseMarket2400 from './assets/ipaybtc-wise-market-2400.jpg'
+import wiseNail1200 from './assets/ipaybtc-wise-nail-1200.jpg'
+import wiseNail2400 from './assets/ipaybtc-wise-nail-2400.jpg'
 import under1200 from './assets/ipaybtc-w-under-1200.jpg'
 import under2400 from './assets/ipaybtc-w-under-2400.jpg'
 import laptop1200 from './assets/ipaybtc-w-laptop-1200.jpg'
@@ -343,6 +349,29 @@ const IPAY_LAPTOP: CaseSlot = {
     radius: 6,
   },
 }
+
+/* The three scenes after Leo's Wise references, generated in 4K (Nov 20). */
+const IPAY_WISE_TABLE = plate('The iPayBTC card on the tray after dinner', '5470 / 3011', [wiseTable1200, wiseTable2400])
+const IPAY_WISE_MARKET: CaseSlot = {
+  ...plate('Paying with iPayBTC at a market stall', '5471 / 3072', [wiseMarket1200, wiseMarket2400]),
+  screen: {
+    flow: 'swap',
+    tone: 'light',
+    size: [5471, 3072],
+    corners: [[2471.7, 990.1], [3071.4, 952.3], [3153.4, 2251.2], [2553.7, 2289]],
+    radius: 46,
+  },
+}
+const IPAY_WISE_NAIL: CaseSlot = {
+  ...plate('iPayBTC on a phone at the nail salon', '5504 / 3072', [wiseNail1200, wiseNail2400]),
+  screen: {
+    flow: 'swap',
+    tone: 'dark',
+    size: [5504, 3072],
+    corners: [[1859.6, 1179.8], [2425, 638.6], [3625.3, 1892.4], [3059.9, 2433.6]],
+    radius: 52,
+  },
+}
 const IPAY_LANDSCAPE: CaseSlot = {
   ...plate('iPayBTC held up over the hills', '5504 / 3072', [landscape1200, landscape2400]),
   screen: {
@@ -512,9 +541,13 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true, wide: true },
       { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true, gapAfter: true },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
+      { kind: 'full', slot: IPAY_WISE_TABLE },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
+      { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true },
       { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
-      { kind: 'full', slot: IPAY_UNDER, gapAfter: true },
+      { kind: 'full', slot: IPAY_WISE_MARKET },
+      { kind: 'full', slot: IPAY_WISE_NAIL },
+      { kind: 'full', slot: IPAY_UNDER },
       { kind: 'full', slot: IPAY_WEB, inset: true },
       // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },
@@ -636,4 +669,4 @@ export function caseLinkFor(projectName: string) {
 
 /* Parked iPayBTC slots (cut from the running order, kept for the ideas
    inbox). Exported so the build keeps them without placing them on the page. */
-export const IPAY_PARKED = { IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_CN_POSTER, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }
+export const IPAY_PARKED = { IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }
