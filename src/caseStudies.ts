@@ -212,6 +212,8 @@ export type CaseBlock =
   | { kind: 'pair'; slots: [CaseSlot, CaseSlot]; inset?: boolean; wide?: boolean; gapAfter?: boolean; cols?: string }
   | { kind: 'grid'; columns: number; slots: CaseSlot[] }
   | { kind: 'collage'; slots: CaseSlot[] }
+  /** A short write-up between plates. */
+  | { kind: 'text'; heading: string; body: string }
 
 export interface CaseSection {
   heading: string
@@ -246,10 +248,9 @@ const IPAY_TABLE: CaseSlot = {
   src: tableFull,
   srcSet: set([[table1600, 1600], [table2800, 2800], [tableFull, 5504]]),
   screen: {
-    flow: 'swap',
-    tone: 'dark',
+    flow: 'buy',
     size: [5504, 3072],
-    corners: [[2317.0, 691.2], [3146.3, 867.1], [2657.1, 2619.0], [1792.9, 2413.4]],
+    corners: [[2317.8, 696.4], [3142.5, 872.3], [2656.2, 2613.6], [1796.6, 2409.4]],
     radius: 54,
     glare: 'linear-gradient(115deg, rgba(255,240,220,0.10) 0%, rgba(255,255,255,0) 45%, rgba(60,30,0,0.06) 100%)',
   },
@@ -291,7 +292,7 @@ const IPAY_HAND: CaseSlot = {
   screen: {
     flow: 'receive',
     size: [3584, 4480],
-    corners: [[849.1, 942.0], [1971.0, 599.9], [2813.2, 3053.4], [1712.1, 3468.5]],
+    corners: [[839.8, 926.0], [1972.6, 594.7], [2824.6, 3076.7], [1708.8, 3470.3]],
     radius: 52,
     glare: 'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%)',
   },  // After the payment lands: the tote, the cap, then the watch. Hard cuts.
@@ -364,20 +365,18 @@ const IPAY_WISE_TABLE = plate('The iPayBTC card on the tray after dinner', '5470
 const IPAY_WISE_MARKET: CaseSlot = {
   ...plate('Paying with iPayBTC at a market stall', '5471 / 3072', [wiseMarket1200, wiseMarket2400]),
   screen: {
-    flow: 'swap',
-    tone: 'light',
+    flow: 'send',
     size: [5471, 3072],
-    corners: [[2471.7, 990.1], [3071.4, 952.3], [3153.4, 2251.2], [2553.7, 2289]],
+    corners: [[2472.2, 987.2], [3066.7, 949.4], [3152.0, 2254.1], [2551.9, 2290.3]],
     radius: 46,
   },
 }
 const IPAY_WISE_NAIL: CaseSlot = {
   ...plate('iPayBTC on a phone at the nail salon', '5504 / 3072', [wiseNail1200, wiseNail2400]),
   screen: {
-    flow: 'swap',
-    tone: 'dark',
+    flow: 'receive',
     size: [5504, 3072],
-    corners: [[1859.6, 1179.8], [2425, 638.6], [3625.3, 1892.4], [3059.9, 2433.6]],
+    corners: [[1850.6, 1167.4], [2438.6, 684.8], [3634.0, 1896.4], [3042.5, 2420.9]],
     radius: 52,
   },
 }
@@ -546,11 +545,21 @@ export const CASE_STUDIES: CaseStudy[] = [
     hero: IPAY_TABLE,
     gallery: [
       { kind: 'full', slot: IPAY_CARD },
+      {
+        kind: 'text',
+        heading: 'The identity',
+        body: 'A wordmark that leans forward, a deep navy, a bright electric blue and a warm yellow. Small enough to sit on an app icon, bold enough to carry a billboard.',
+      },
       { kind: 'full', slot: IPAY_LOGO, inset: true, wide: true },
       { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true, wide: true },
       { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
-      { kind: 'full', slot: IPAY_WEB, inset: true },
+      {
+        kind: 'text',
+        heading: 'The website',
+        body: 'The site speaks the same language as the app: the same condensed display type, the same DM Sans, the same yellow. It leads with one promise, spend Bitcoin like money, and puts the live app right beside it.',
+      },
+      { kind: 'full', slot: IPAY_WEB, inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_TABLE },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
       { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true },

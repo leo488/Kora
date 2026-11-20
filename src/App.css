@@ -5211,3 +5211,42 @@
 .kora-case-frame > img.kora-case-then {
   z-index: 3;
 }
+
+/* Case study rhythm, Nov 20: more air between blocks (pairs keep their
+   tight inner gap), and short write-ups between plates. */
+.kora-case-gallery {
+  gap: clamp(48px, 6vw, 104px);
+}
+
+.kora-case-gallery > .kora-case-note {
+  width: min(76%, 1280px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 24px;
+  margin: clamp(24px, 4vw, 64px) 0 calc(-1 * clamp(16px, 3vw, 56px));
+}
+
+.kora-case-note h2 {
+  margin: 0;
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-h);
+}
+
+.kora-case-note p {
+  margin: 0;
+  max-width: 42ch;
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .kora-case-gallery > .kora-case-note {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+}

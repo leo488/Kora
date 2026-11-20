@@ -131,6 +131,13 @@ function Block({ block }: { block: CaseBlock }) {
           ))}
         </div>
       )
+    case 'text':
+      return (
+        <section className="kora-case-note">
+          <h2>{block.heading}</h2>
+          <p>{block.body}</p>
+        </section>
+      )
     case 'collage':
       return (
         <div className="kora-case-collage">

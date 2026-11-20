@@ -314,10 +314,26 @@
    Leo sends the picture; cream app panel with the current app. */
 .ipx-web {
   inset: 0 var(--kora-flare, 0px);
-  background:
-    radial-gradient(42% 62% at 100% 100%, #3fd4ff 0%, rgba(36, 131, 251, 0.6) 45%, rgba(10, 53, 245, 0) 100%),
-    linear-gradient(100deg, #040e7f 0%, #040e7f 46%, #0822c1 72%, #0a35f5 100%);
+  background: linear-gradient(100deg, #040e7f 0%, #040e7f 46%, #0822c1 72%, #0a35f5 100%);
   overflow: hidden;
+}
+
+/* The cyan glow drifts slowly around the right side of the frame. */
+.ipx-web::before {
+  content: '';
+  position: absolute;
+  width: 90%;
+  height: 130%;
+  right: -30%;
+  bottom: -55%;
+  background: radial-gradient(closest-side, #3fd4ff 0%, rgba(36, 131, 251, 0.6) 45%, rgba(10, 53, 245, 0) 100%);
+  animation: ipx-web-glow 14s ease-in-out infinite alternate;
+}
+
+@keyframes ipx-web-glow {
+  0% { translate: 0 0; scale: 1; }
+  50% { translate: -18% -22%; scale: 1.15; }
+  100% { translate: -42% 6%; scale: 0.95; }
 }
 
 .ipx-web-page {
@@ -333,6 +349,12 @@
   transform: translateY(8%);
   opacity: 0;
   transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s;
+  /* Zoomed out so the whole page reads inside the frame. */
+  scale: 0.84;
+  transform-origin: 50% 100%;
+  bottom: 7%;
+  border-radius: 0.6cqw;
+  overflow: hidden;
 }
 
 .ipx-web.is-on .ipx-web-page {
@@ -487,5 +509,11 @@
   .ipx-web * {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ipx-web::before {
+    animation: none;
   }
 }
