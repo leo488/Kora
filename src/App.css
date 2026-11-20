@@ -5305,3 +5305,63 @@
     animation: none;
   }
 }
+
+/* Chinese poster, Nov 20: the coin fan and stacks are traced vectors, so
+   they recolour with the background. Hard cuts through the brand pairs. */
+.kora-case-frame > .kora-cnposter-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  animation: kora-cn-bg 13.6s step-end infinite;
+}
+
+.kora-cnposter-ills > span {
+  position: absolute;
+  display: block;
+}
+
+.kora-cnposter-ills svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.kora-cnposter-ills .ink { animation: kora-cn-ink 13.6s step-end infinite; }
+.kora-cnposter-ills .blue { animation: kora-cn-blue 13.6s step-end infinite; }
+.kora-cnposter-ills .yellow { animation: kora-cn-yellow 13.6s step-end infinite; }
+
+@keyframes kora-cn-bg {
+  0% { background: #e0e5e6; }
+  25% { background: #0a31f5; }
+  50% { background: #fff778; }
+  75% { background: #050e7f; }
+}
+
+@keyframes kora-cn-ink {
+  0% { fill: #0c0c10; }
+  25% { fill: #050e7f; }
+  50% { fill: #050e7f; }
+  75% { fill: #02063f; }
+}
+
+@keyframes kora-cn-blue {
+  0% { fill: #0a31f5; }
+  25% { fill: #88c2ed; }
+  50% { fill: #0a31f5; }
+  75% { fill: #88c2ed; }
+}
+
+@keyframes kora-cn-yellow {
+  0% { fill: #ffd84a; }
+  25% { fill: #fff778; }
+  50% { fill: #ffffff; }
+  75% { fill: #fff778; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-case-frame > .kora-cnposter-bg,
+  .kora-cnposter-ills path {
+    animation: none;
+  }
+  .kora-case-frame > .kora-cnposter-bg { background: #e0e5e6; }
+}
