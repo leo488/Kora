@@ -98,7 +98,7 @@ export function Footer() {
         </div>
         <div className="kora-footer-item">
           <dt>Find us</dt>
-          <dd>Victoria Island, Lagos · Wuse II, Abuja</dd>
+          <dd>10C Momoh Close, Freedom Avenue, Abuja</dd>
         </div>
         <div className="kora-footer-item">
           <dt>Brand test</dt>

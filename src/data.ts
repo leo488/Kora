@@ -105,9 +105,9 @@ export const OFFICES: Office[] = [
     code: 'ABV',
     city: 'Abuja',
     timeZone: 'Africa/Lagos',
-    address: ['Wuse II', 'Abuja, FCT', 'Nigeria'],
+    address: ['10C Momoh Close', 'Freedom Avenue', 'Abuja'],
     email: 'hello@wearekoraa.com',
-    mapUrl: 'https://maps.google.com/?q=Wuse+II+Abuja+Nigeria',
+    mapUrl: 'https://maps.google.com/?q=10C+Momoh+Close+Freedom+Avenue+Abuja',
   },
 ]
 
