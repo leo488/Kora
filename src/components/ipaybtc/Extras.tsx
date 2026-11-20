@@ -6,8 +6,10 @@ import art0 from '../../assets/ipaybtc-onboard/ob0-art.jpg'
 import art1 from '../../assets/ipaybtc-onboard/ob1-art.jpg'
 import art2 from '../../assets/ipaybtc-onboard/ob2-art.jpg'
 import { SwapApp } from './SwapApp'
-import mkTote from '../../assets/ipaybtc-tote-2400.jpg'
-import mkPass from '../../assets/ipaybtc-lanyard-blue-1200.jpg'
+import mkTote from '../../assets/ipaybtc-mk/tote.webp'
+import mkTee from '../../assets/ipaybtc-mk/tee.webp'
+import mkWatch from '../../assets/ipaybtc-mk/watch.webp'
+import mkPass from '../../assets/ipaybtc-mk/pass.webp'
 import { useInView } from './Scenes'
 
 /* iPayBTC case study, Nov 20 pass: the onboarding as a real tap-through,
@@ -242,14 +244,22 @@ export function ColourCards() {
   )
 }
 
-/** The merch on one plain ground: the tote and the staff pass rise in and
-    drift slowly while they are on screen. */
+/** The merch on one plain ground: tote, tee, watch and staff pass rise in
+    one after another, then drift slowly while they are on screen. */
+const MOCKS = [
+  { src: mkTote, cls: 'is-tote', alt: 'The iPayBTC tote' },
+  { src: mkTee, cls: 'is-tee', alt: 'The iPayBTC tee on a hanger' },
+  { src: mkWatch, cls: 'is-watch', alt: 'The iPayBTC app on a watch' },
+  { src: mkPass, cls: 'is-pass', alt: 'The iPayBTC staff pass on its lanyard' },
+]
+
 export function MockupBoard() {
   const [ref, on] = useInView<HTMLDivElement>(0.3, true)
   return (
     <div ref={ref} className={`ipx-mk${on ? ' is-on' : ''}`}>
-      <img className="ipx-mk-tote" src={mkTote} alt="The iPayBTC tote" loading="lazy" />
-      <img className="ipx-mk-pass" src={mkPass} alt="The iPayBTC staff pass on its lanyard" loading="lazy" />
+      {MOCKS.map((m, i) => (
+        <img key={m.cls} className={m.cls} src={m.src} alt={m.alt} loading="lazy" style={{ ['--i' as string]: i }} />
+      ))}
     </div>
   )
 }
