@@ -198,7 +198,9 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
         ) : slot.art === 'ipaybtc-poster-spend' ? (
           <TypePoster tone="blue" lines={['Bitcoin was', 'never meant', 'to sit still.', 'Spend it.']} />
         ) : slot.src ? (
-          slot.video ? (
+          /* The picture sits in the visible frame, never under the flare
+             reach, so nothing is cropped at rest. */
+          <div className="kora-case-frame">{slot.video ? (
             <>
               <video src={slot.src} poster={slot.poster} muted loop autoPlay playsInline aria-label={slot.label} />
               {slot.overlay === 'ipaybtc-card' && (
@@ -237,7 +239,7 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
                 </div>
               )}
             </>
-          )
+          )}</div>
         ) : (
           <figcaption>{slot.label}</figcaption>
         )}
