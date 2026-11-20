@@ -5421,3 +5421,18 @@
 }
 
 
+
+/* Exact redraw of the reference coins (Nov 20, 3). */
+.kora-cnposter-ills .is-fan .c { transform-origin: 650px 600px; }
+.kora-cnposter-ills .is-stacks .is-tip { transform-origin: 430px 260px; }
+.kora-cnposter-ills .is-fan { left: 11%; top: 22%; width: 36%; }
+.kora-cnposter-ills .is-stacks { left: 62%; top: 30%; width: 22%; }
+
+/* Coin colours ride on custom properties so they reach inside <use>. */
+.kora-cnposter-ills { animation: kora-cn-coins 13.6s step-end infinite; }
+@keyframes kora-cn-coins {
+  0% { --c-ink: #0c0c10; --c-blue: #0a31f5; --c-yellow: #ffd84a; }
+  25% { --c-ink: #050e7f; --c-blue: #88c2ed; --c-yellow: #fff778; }
+  50% { --c-ink: #050e7f; --c-blue: #0a31f5; --c-yellow: #ffffff; }
+  75% { --c-ink: #02063f; --c-blue: #88c2ed; --c-yellow: #fff778; }
+}
