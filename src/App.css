@@ -4488,6 +4488,11 @@
   align-self: center;
 }
 
+/* A slightly wider inset group (iPayBTC opening bento). */
+.kora-case-gallery > .is-inset.is-wide {
+  width: min(76%, 1280px);
+}
+
 /* Keep edge-to-edge plates from growing past a comfortable size on wide
    screens (a 16" MacBook and up). */
 .kora-case-gallery > * {
@@ -4518,7 +4523,7 @@
 }
 
 .kora-case-art-ipaybtc {
-  background: #0a31f5;
+  background: linear-gradient(135deg, #050e7f 0%, #050e7f 25%, #0a31f5 78%, #3ed4ff 100%);
   color: #ffffff;
 }
 
@@ -4528,7 +4533,8 @@
 }
 
 @media (max-width: 760px) {
-  .kora-case-gallery > .is-inset {
+  .kora-case-gallery > .is-inset,
+  .kora-case-gallery > .is-inset.is-wide {
     width: 100%;
   }
 }
@@ -4662,3 +4668,297 @@
 }
 @font-face { font-family: 'Geist'; src: url('./assets/fonts/Geist-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
 @font-face { font-family: 'Geist'; src: url('./assets/fonts/Geist-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+
+/* Chinese poster over the lady photo: vertical headline left, vertical line right, logo bottom right. */
+.kora-cnposter {
+  position: absolute;
+  inset: 0 var(--kora-flare, 0px);
+  container-type: inline-size;
+  pointer-events: none;
+  font-family: 'Noto Sans SC', sans-serif;
+  color: #050e7f;
+}
+.kora-cnposter-head {
+  position: absolute;
+  left: 6%;
+  top: 9%;
+  margin: 0;
+  writing-mode: vertical-rl;
+  font-weight: 900;
+  font-size: 8cqw;
+  line-height: 1.08;
+  letter-spacing: 0.04em;
+}
+.kora-cnposter-sub {
+  position: absolute;
+  right: 7%;
+  top: 9%;
+  margin: 0;
+  writing-mode: vertical-rl;
+  font-weight: 500;
+  font-size: 1.6cqw;
+  line-height: 1.6;
+  letter-spacing: 0.3em;
+  color: #050e7f;
+}
+.kora-cnposter-logo {
+  position: absolute;
+  right: 6%;
+  bottom: 8%;
+  width: 13%;
+  color: #050e7f;
+}
+.kora-cnposter-logo svg { display: block; width: 100%; height: auto; }
+
+.kora-case-plate.is-framefit .kora-flare > img {
+  left: var(--kora-flare);
+  right: var(--kora-flare);
+  width: auto;
+}
+
+/* Work-in-progress bar: Zobo pink, slides down from the top on scroll. */
+.kora-wip-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  padding: 10px 24px;
+  background: var(--koraa-zobo);
+  color: var(--koraa-ink);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-align: center;
+  transform: translateY(-100%);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.kora-wip-bar.is-shown {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-wip-bar {
+    transition: none;
+  }
+}
+
+/* Projects whose case study is not out yet: the cursor pill says when. */
+.kora-rx-row-link.is-soon .kora-rx-view {
+  background: var(--koraa-dusk);
+  white-space: nowrap;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .kora-rx-row-link.is-soon .kora-rx-view {
+    left: 16px;
+    top: 16px;
+    transform: none;
+  }
+}
+
+.kora-wip-link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-left: 6px;
+}
+
+.kora-rx-card-media .kora-flare img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kora-rx-contact-photo {
+  overflow: hidden;
+}
+
+.kora-rx-contact-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ------------------------------------------------------------------------
+   Nov 20 pass: Zobo offices band, contact + newsletter type, film thumbs.
+   ------------------------------------------------------------------------ */
+
+/* Offices band on Zobo pink. White fails contrast on Zobo, so it is Ink. */
+.kora-offices {
+  background: var(--koraa-zobo);
+  color: rgba(10, 10, 10, 0.72);
+}
+
+.kora-office-code,
+.kora-office-time {
+  color: var(--koraa-ink);
+}
+
+/* Contact: one big statement, a readable line under it, the two actions,
+   and the inbox set large on a rule at the bottom. */
+.kora-rx-contact h2 {
+  max-width: 11ch;
+  font-size: clamp(52px, 7vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.kora-rx-contact-ask p {
+  margin: 32px 0 0;
+  max-width: 32ch;
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.kora-rx-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 36px;
+}
+
+.kora-rx-contact-mail {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.kora-rx-contact-mail a {
+  font-size: clamp(24px, 2.6vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.kora-rx-contact-mail a:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+}
+
+/* Newsletter: heading as loud as the contact, and a field you can't miss. */
+.kora-rx-newsletter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 32px var(--kora-gutter);
+}
+
+.kora-rx-newsletter h2 {
+  grid-row: span 2;
+  margin: 0;
+  max-width: 9ch;
+  font-size: clamp(52px, 7vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+}
+
+.kora-rx-newsletter-form {
+  flex-wrap: nowrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.kora-rx-newsletter-form input {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+  height: 60px;
+  padding: 0 26px;
+  border: 1.5px solid var(--text-h);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 18px;
+}
+
+.kora-rx-newsletter-form input::placeholder {
+  color: var(--text);
+  opacity: 1;
+}
+
+.kora-rx-newsletter-form input:focus,
+.kora-rx-newsletter-form input:focus-visible {
+  border-color: var(--koraa-plantain);
+  background: rgba(215, 242, 75, 0.08);
+  outline: none;
+}
+
+.kora-rx-newsletter-form .kora-pill {
+  height: 60px;
+  padding: 0 30px;
+  font-size: 18px;
+}
+
+.kora-rx-newsletter small {
+  font-size: 14px;
+}
+
+@media (max-width: 760px) {
+  .kora-rx-newsletter {
+    grid-template-columns: 1fr;
+  }
+
+  .kora-rx-newsletter h2 {
+    grid-row: auto;
+  }
+}
+
+/* Image first, then the film fades in over it. */
+.kora-film-after {
+  position: absolute;
+  inset: 0;
+}
+
+.kora-film-after img,
+.kora-film-after video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kora-film-after video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.kora-film-after.is-playing video {
+  opacity: 1;
+}
+
+.kora-rx-contact-actions .kora-pill {
+  box-sizing: border-box;
+  justify-content: center;
+  height: 52px;
+  padding: 0 26px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 17px;
+}
+
+/* A pair whose two plates share a height at different ratios. */
+.kora-case-pair.has-cols {
+  grid-template-columns: var(--pair-cols);
+}
+
+@media (max-width: 760px) {
+  .kora-case-pair.has-cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

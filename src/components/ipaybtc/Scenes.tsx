@@ -1,3 +1,16 @@
+import obd0 from '../../assets/ipaybtc-onboard/obd0.jpg'
+import obd1 from '../../assets/ipaybtc-onboard/obd1.jpg'
+import obd2 from '../../assets/ipaybtc-onboard/obd2.jpg'
+import ob0 from '../../assets/ipaybtc-onboard/ob0.jpg'
+import ob1 from '../../assets/ipaybtc-onboard/ob1.jpg'
+import ob2 from '../../assets/ipaybtc-onboard/ob2.jpg'
+import ilSend from '../../assets/ipaybtc-ill/ipaybtc-send-transparent.webp'
+import ilCoinFan from '../../assets/ipaybtc-ill/ipaybtc-coin-fan.webp'
+import ilSpend from '../../assets/ipaybtc-ill/ipaybtc-spendings-transparent.webp'
+import ilCrypto from '../../assets/ipaybtc-ill/ipaybtc-crypto-transparent.webp'
+import ilStacks from '../../assets/ipaybtc-ill/ipaybtc-coin-stacks.webp'
+import ilBtc from '../../assets/ipaybtc-ill/ipaybtc-bitcoin-coin.webp'
+import ilStrategy from '../../assets/ipaybtc-ill/ipaybtc-strategy-transparent.webp'
 import { useEffect, useRef, useState } from 'react'
 import './scenes.css'
 import ipaybtcLogo from '../../assets/ipaybtc-logo.svg?raw'
@@ -33,7 +46,7 @@ export function useInView<T extends Element>(threshold = 0.3, once = true) {
 
 /** Scale for content drawn at a fixed size: `frac` of the plate's width
     divided by the drawn width. Written to --ips-s on the element. */
-function useFit<T extends HTMLElement>(ref: React.RefObject<T | null>, frac: number, drawn: number, byHeight = false) {
+export function useFit<T extends HTMLElement>(ref: React.RefObject<T | null>, frac: number, drawn: number, byHeight = false) {
   useEffect(() => {
     const el = ref.current
     const plate = el?.closest('.kora-case-plate') as HTMLElement | null
@@ -57,11 +70,14 @@ function useCycle(length: number, every: number) {
 }
 
 /* Each line comes with one of our 3D objects. */
-const LINES: Array<[string, string, string]> = [
-  ['YOUR BITCOIN', 'CAN TRAVEL.', d3swap],
-  ['BEFORE YOUR', 'TEA GETS COLD.', d3coin],
-  ['PAY NEPA', 'IN SATS.', d3check],
-  ['NO BORDER.', 'NO PERMISSION.', d3bank],
+const LINES: Array<[string, string, string, string]> = [
+  ['YOUR BITCOIN', 'CAN TRAVEL.', ilSend, 'sky'],
+  ['BEFORE YOUR', 'TEA GETS COLD.', ilCoinFan, 'peach'],
+  ['PAY NEPA', 'IN SATS.', ilSpend, 'mint'],
+  ['NO BORDER.', 'NO PERMISSION.', ilCrypto, 'navy'],
+  ['WE MOVE', 'IN SATS.', ilStacks, 'pink'],
+  ['你的比特币', '可以远行。', ilBtc, 'blue'],
+  ['BITCOIN RẸ', 'LÈ RIN ÌRÌN-ÀJÒ.', ilStrategy, 'plantain'],
 ]
 
 /** Campaign type whose words swap, like Wise's FULL SPEED / MIN FEES, with
@@ -69,7 +85,7 @@ const LINES: Array<[string, string, string]> = [
 export function TypeSwap() {
   const i = useCycle(LINES.length, 2000)
   return (
-    <div className="ips ips-type">
+    <div className="ips ips-type" data-tone={LINES[i][3]}>
       <div className="ips-type-lines" aria-live="off">
         {LINES.map((l, k) => (
           <p key={k} className={k === i ? 'is-on' : ''}>
@@ -78,11 +94,13 @@ export function TypeSwap() {
           </p>
         ))}
       </div>
+      {/* Illustrations hidden for now, being reworked.
       <div className="ips-type-objs" aria-hidden>
         {LINES.map((l, k) => (
-          <img key={k} src={l[2]} alt="" className={k === i ? 'is-on' : ''} />
+          <img key={k} src={l[2]} alt="" className={`${k === i ? 'is-on' : ''} is-ill`} />
         ))}
       </div>
+      */}
       <span className="ips-type-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
     </div>
   )
@@ -423,6 +441,84 @@ export function WallPoster({ post = 1 }: { post?: number }) {
         <img src={wallImg} alt="An iPayBTC poster taped to a wall" />
         <div className="ips-wallposter-paper">
           <SocialPost p={POSTS[post]} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** The light onboarding screens, side by side on the page grey. */
+export function Onboarding() {
+  return (
+    <div className="ips ips-onboard" role="img" aria-label="iPayBTC onboarding screens, light mode">
+      {[ob0, ob1, ob2].map((src, k) => (
+        <img key={k} src={src} alt="" />
+      ))}
+    </div>
+  )
+}
+
+/* The type reel: the two brand fonts first, then the campaign posters. */
+const ROWS_BOLD = ['ABCDEFGHIJKLMN', 'OPQRSTUVWXYZ', '1234567890!@#$%&*']
+const ROWS_BODY = ['Aa Bb Cc Dd Ee Ff Gg', 'Hh Ii Jj Kk Ll Mm Nn', 'Oo Pp Qq Rr Ss Tt Uu', '1234567890 ₦ $ ₿ @ #']
+const REEL_POSTERS: Array<{ tone: 'navy' | 'yellow' | 'blue'; lines: string[]; size?: number }> = [
+  { tone: 'navy', size: 9, lines: ['No bank opening hours.', 'No border.', 'No permission.'] },
+  { tone: 'yellow', size: 9, lines: ['Buy Bitcoin', 'before your', 'tea gets cold.'] },
+  { tone: 'blue', size: 8.5, lines: ['Bitcoin was', 'never meant', 'to sit still.', 'Spend it.'] },
+]
+export function TypeReel() {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, false)
+  const [step, setStep] = useState(0)
+  useEffect(() => {
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setTimeout(() => setStep((v) => (v + 1) % (2 + REEL_POSTERS.length)), step < 2 ? 4200 : 3400)
+    return () => clearTimeout(t)
+  }, [on, step])
+  return (
+    <div ref={ref} className="ips ips-reel">
+      {step === 0 && (
+        <div key="f1" className="ips-spec is-bold">
+          <p className="ips-spec-rows">{ROWS_BOLD.map((r, k) => <span key={k} style={{ animationDelay: `${k * 90}ms` }}>{r}</span>)}</p>
+          <p className="ips-spec-cap">built to communicate with both impact<br />and precision.</p>
+        </div>
+      )}
+      {step === 1 && (
+        <div key="f2" className="ips-spec is-body">
+          <p className="ips-spec-rows">{ROWS_BODY.map((r, k) => <span key={k} style={{ animationDelay: `${k * 90}ms` }}>{r}</span>)}</p>
+          <p className="ips-spec-cap">DM Sans. Clear and friendly<br />for everyday reading.</p>
+        </div>
+      )}
+      {step >= 2 && <TypePoster key={step} {...REEL_POSTERS[step - 2]} />}
+    </div>
+  )
+}
+
+/* Onboarding in a phone: slides through the three light screens, wipes to
+   dark mode, slides through the dark ones, wipes back. */
+const OB_STEPS = 3
+export function OnboardPhone() {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, false)
+  const [step, setStep] = useState(0)
+  useEffect(() => {
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setTimeout(() => setStep((v) => (v + 1) % OB_STEPS), 2200)
+    return () => clearTimeout(t)
+  }, [on, step])
+  // steps: 0,1,2 light slides · 3 wipe to dark (on screen 0) · 4,5 dark slides · 6 hold · 7 wipe back to light
+  const dark = false
+  const idx = step % 3
+  return (
+    <div ref={ref} className="ips ips-obphone" role="img" aria-label="iPayBTC onboarding, light then dark mode">
+      <div className="ips-obphone-frame">
+        <div className="ips-obphone-screen">
+          <div className="ips-obphone-strip" style={{ transform: `translateX(${-idx * 100}%)` }}>
+            {[ob0, ob1, ob2].map((src, k) => <img key={k} src={src} alt="" />)}
+          </div>
+          <div className={`ips-obphone-dark${dark ? ' is-on' : ''}`}>
+            <div className="ips-obphone-strip" style={{ transform: `translateX(${-idx * 100}%)` }}>
+              {[obd0, obd1, obd2].map((src, k) => <img key={k} src={src} alt="" />)}
+            </div>
+          </div>
         </div>
       </div>
     </div>

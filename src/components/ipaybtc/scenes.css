@@ -24,6 +24,20 @@
 .ips-type {
   background: var(--ips-navy);
   color: var(--ips-yellow);
+  transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ips-type[data-tone='pink'] {
+  background: #f6d5dd;
+  color: #050e7f;
+}
+
+.kora-case-plate .ips-type-objs img.is-ill {
+  inset: auto 0 0 auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right bottom;
 }
 
 .ips-type-lines p {
@@ -842,3 +856,133 @@
     transition: none;
   }
 }
+
+.ips-type[data-tone='pink'] .ips-type-logo {
+  color: #050e7f;
+}
+
+.ips-type[data-tone='blue'] {
+  background: #0a31f5;
+  color: #ffffff;
+}
+
+/* Chinese lines: Barlow has no CJK glyphs, so the heavy Noto Sans SC takes over. */
+.ips-type-lines p {
+  font-family: 'Futura LT Condensed', 'Futura Condensed ExtraBold', 'Barlow Condensed', 'Noto Sans SC', sans-serif;
+}
+
+.ips-type[data-tone='sky'] { background: #a9d2ff; color: #050e7f; }
+.ips-type[data-tone='peach'] { background: #ffb28c; color: #050e7f; }
+.ips-type[data-tone='mint'] { background: #8ce8b4; color: #0a3a2a; }
+.ips-type[data-tone='plantain'] { background: #ffd84a; color: #050e7f; }
+.ips-type[data-tone='navy'] { background: #050e7f; color: #ffd84a; }
+.ips-type[data-tone='sky'] .ips-type-logo,
+.ips-type[data-tone='peach'] .ips-type-logo,
+.ips-type[data-tone='plantain'] .ips-type-logo { color: #050e7f; }
+.ips-type[data-tone='mint'] .ips-type-logo { color: #0a3a2a; }
+.ips-type-objs { width: 42%; height: 58%; aspect-ratio: auto; }
+
+.ips-onboard {
+  position: absolute;
+  inset: 0 var(--kora-flare, 0px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+  background: #e6e5e0;
+}
+.kora-case-plate .ips-onboard img {
+  position: static;
+  width: 23%;
+  height: auto;
+  border-radius: 7% / 3.2%;
+  box-shadow: 0 30px 60px -30px rgba(5, 14, 127, 0.25);
+}
+
+@font-face {
+  font-family: 'Futura LT Condensed';
+  src: url('../../assets/fonts/FuturaLT-CondensedExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-display: swap;
+}
+.ips-reel { background: var(--ips-blue); }
+.ips-reel > .ips { position: absolute; inset: 0; }
+.ips-spec { position: absolute; inset: 0; }
+.ips-spec.is-bold { background: #0a31f5; color: #ffffff; }
+.ips-spec.is-body { background: #050e7f; color: #ffd84a; }
+.ips-spec-rows {
+  position: absolute;
+  left: calc(var(--kora-flare, 0px) + 5%);
+  right: calc(var(--kora-flare, 0px) + 5%);
+  top: 16%;
+  margin: 0;
+  display: grid;
+}
+.ips-spec.is-bold .ips-spec-rows { font: 800 9.4cqw/0.92 'Futura LT Condensed', var(--ips-bold); text-transform: uppercase; }
+.ips-spec.is-body .ips-spec-rows { font: 600 6.4cqw/1.12 'DM Sans', sans-serif; letter-spacing: -0.01em; }
+.ips-spec-rows span {
+  display: block;
+  white-space: nowrap;
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(70%);
+  animation: ips-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.ips-spec-cap {
+  position: absolute;
+  left: calc(var(--kora-flare, 0px) + 5.6%);
+  bottom: 8%;
+  margin: 0;
+  font: 400 1.35cqw/1.45 'DM Mono', ui-monospace, monospace;
+  opacity: 0;
+  animation: ips-fade 0.6s ease-out 0.5s both;
+}
+@keyframes ips-rise { to { clip-path: inset(0 0 0 0); transform: none; } }
+@keyframes ips-fade { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .ips-spec-rows span, .ips-spec-cap { animation: none; clip-path: none; transform: none; opacity: 1; }
+}
+
+.ips-obphone {
+  position: absolute;
+  inset: 0 var(--kora-flare, 0px);
+  background: #e6e5e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ips-obphone-frame {
+  height: 84%;
+  aspect-ratio: 390 / 844;
+  padding: 0;
+  border-radius: 12% / 5.6%;
+  background: none;
+  box-sizing: content-box;
+}
+.ips-obphone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10.5% / 4.9%;
+  overflow: hidden;
+  background: #fff;
+}
+.ips-obphone-strip {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.kora-case-plate .ips-obphone-strip img {
+  position: static;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ips-obphone-dark {
+  position: absolute;
+  inset: 0;
+  clip-path: circle(0% at 50% 100%);
+  transition: clip-path 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.ips-obphone-dark.is-on { clip-path: circle(150% at 50% 100%); }

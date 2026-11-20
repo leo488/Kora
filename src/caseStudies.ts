@@ -10,20 +10,22 @@
    app on the phone in the photo (components/ipaybtc/ScreenOverlay.tsx). */
 
 import type { PhoneScreen } from './components/ipaybtc/ScreenOverlay'
+import type { SteamSpot } from './components/ipaybtc/Steam'
 import table1600 from './assets/ipaybtc-table-1600.jpg'
 import table2800 from './assets/ipaybtc-table-2800.jpg'
 import tableFull from './assets/ipaybtc-table-full.jpg'
 import card1600 from './assets/ipaybtc-card-1600.jpg'
 import card2800 from './assets/ipaybtc-card-2800.jpg'
 import cardFull from './assets/ipaybtc-card-full.jpg'
-import hand1000 from './assets/ipaybtc-hand-1000.jpg'
-import hand1800 from './assets/ipaybtc-hand-1800.jpg'
-import handFull from './assets/ipaybtc-hand-full.jpg'
+import hand1000 from './assets/ipaybtc-hand2-1000.jpg'
+import hand1800 from './assets/ipaybtc-hand2-1800.jpg'
+import handFull from './assets/ipaybtc-hand2-full.jpg'
 import iconPhone1000 from './assets/ipaybtc-iconphone-1000.jpg'
 import iconPhone1800 from './assets/ipaybtc-iconphone-1800.jpg'
 import iconPhoneFull from './assets/ipaybtc-iconphone-full.jpg'
 import wrap1200 from './assets/ipaybtc-wrap-1200.jpg'
 import wrap2400 from './assets/ipaybtc-wrap-2400.jpg'
+import building800 from './assets/ipaybtc-building-800.jpg'
 import billboard1200 from './assets/ipaybtc-billboard-1200.jpg'
 import billboard2400 from './assets/ipaybtc-billboard-2400.jpg'
 import roadtrip1200 from './assets/ipaybtc-scene-roadtrip-1200.jpg'
@@ -36,11 +38,13 @@ import laptop1200 from './assets/ipaybtc-w-laptop-1200.jpg'
 import laptop2400 from './assets/ipaybtc-w-laptop-2400.jpg'
 import landscape1200 from './assets/ipaybtc-w-landscape-1200.jpg'
 import landscape2400 from './assets/ipaybtc-w-landscape-2400.jpg'
-import lanyard1200 from './assets/ipaybtc-lanyard-1200.jpg'
-import lanyard2400 from './assets/ipaybtc-lanyard-2400.jpg'
+import lanyard1200 from './assets/ipaybtc-lanyard-blue-1200.jpg'
+import lanyard2400 from './assets/ipaybtc-lanyard-blue-2400.jpg'
 import tee1200 from './assets/ipaybtc-tee-1200.jpg'
 import tee2400 from './assets/ipaybtc-tee-2400.jpg'
 import borderless from './assets/ipaybtc-borderless.mp4'
+import ipayMotion from './assets/ipaybtc-brand-motion.mp4'
+import ipayMotionPoster from './assets/ipaybtc-brand-motion-poster.jpg'
 import borderlessPoster from './assets/ipaybtc-borderless-poster.jpg'
 import fx05a from './assets/figx/f05-1200.jpg'
 import fx05b from './assets/figx/f05-2400.jpg'
@@ -73,6 +77,10 @@ import fx32b from './assets/figx/f32-2400.jpg'
 import fx33a from './assets/figx/f33-1200.jpg'
 import fx33b from './assets/figx/f33-2400.jpg'
 import fx05top from './assets/figx/f05-fingers.webp'
+import ladyPl1200 from './assets/figx/ipaybtc-lady-plantain-1200.jpg'
+import ladyPl2400 from './assets/figx/ipaybtc-lady-plantain-2400.jpg'
+import ladyPl4800 from './assets/figx/ipaybtc-lady-plantain-4800.jpg'
+import teeBlue from './assets/ipaybtc-tee-blue-1200.jpg'
 import teeClose1200 from './assets/ipaybtc-w-tee-1200.jpg'
 import teeClose2400 from './assets/ipaybtc-w-tee-2400.jpg'
 import rf_logo_1600 from './assets/refreeg/rf-logo-1600.jpg'
@@ -142,12 +150,20 @@ export interface CaseSlot {
   video?: boolean
   /** First frame shown while a video loads. */
   poster?: string
+  /** Fit the picture to the visible frame instead of the wider flare layer. */
+  frameFit?: boolean
   /** Something drawn in code on top of the photo or video. */
-  overlay?: 'ipaybtc-card'
+  overlay?: 'ipaybtc-card' | 'cn-poster'
   /** The live app, mapped onto the phone screen in the photo. */
   screen?: PhoneScreen
+  /** Steam drifting off a hot drink in the photo. */
+  steam?: SteamSpot
   /** A plate drawn in code instead of a photo. */
   art?:
+    | 'ipaybtc-logo-blue'
+    | 'ipaybtc-onboard'
+    | 'ipaybtc-type-reel'
+    | 'ipaybtc-onboard-phone'
     | 'ipaybtc-logo'
     | 'ipaybtc-logo-navy'
     | 'ipaybtc-type'
@@ -163,6 +179,10 @@ export interface CaseSlot {
     | 'ipaybtc-poster-border'
     | 'ipaybtc-poster-tea'
     | 'ipaybtc-poster-spend'
+    | 'ipaybtc-merch-reel'
+    | 'ipaybtc-website'
+  /** Frames for the merch reel, shown whole, one after another. */
+  reel?: Array<{ src: string; srcSet?: string; label: string }>
   /** A cut-out of the photo laid over the live screen (fingers on the glass). */
   top?: string
   /** The app's amount keypad resting beside the people in the photo. */
@@ -178,8 +198,8 @@ export interface CaseSlot {
 
 export type CaseBlock =
   /** `inset` sits the block in the centre column instead of edge to edge. */
-  | { kind: 'full'; slot: CaseSlot; inset?: boolean }
-  | { kind: 'pair'; slots: [CaseSlot, CaseSlot]; inset?: boolean }
+  | { kind: 'full'; slot: CaseSlot; inset?: boolean; wide?: boolean; gapAfter?: boolean | 'end' }
+  | { kind: 'pair'; slots: [CaseSlot, CaseSlot]; inset?: boolean; wide?: boolean; gapAfter?: boolean; cols?: string }
   | { kind: 'grid'; columns: number; slots: CaseSlot[] }
   | { kind: 'collage'; slots: CaseSlot[] }
 
@@ -216,12 +236,14 @@ const IPAY_TABLE: CaseSlot = {
   src: tableFull,
   srcSet: set([[table1600, 1600], [table2800, 2800], [tableFull, 5504]]),
   screen: {
-    flow: 'send',
+    flow: 'swap',
+    tone: 'dark',
     size: [5504, 3072],
-    corners: [[2318.9, 702.5], [3138.4, 876.4], [2655, 2607.5], [1801, 2404.3]],
-    radius: 50,
+    corners: [[2317.0, 691.2], [3146.3, 867.1], [2657.1, 2619.0], [1792.9, 2413.4]],
+    radius: 54,
     glare: 'linear-gradient(115deg, rgba(255,240,220,0.10) 0%, rgba(255,255,255,0) 45%, rgba(60,30,0,0.06) 100%)',
   },
+  steam: { x: 76, y: 9, size: 24, drift: 125 },
 }
 
 const IPAY_CARD: CaseSlot = {
@@ -246,21 +268,21 @@ const IPAY_ICON: CaseSlot = {
     flow: 'launch',
     size: [3584, 4480],
     corners: [[1161.5, 876.6], [2419.7, 876.6], [2419.7, 3599.2], [1161.5, 3599.2]],
-    radius: 50,
+    radius: 52,
   },
 }
 
 
 const IPAY_HAND: CaseSlot = {
-  label: 'A hand holding a phone, buying Bitcoin in iPayBTC',
+  label: 'A hand holding a phone, receiving Bitcoin by QR in iPayBTC',
   ratio: '4 / 5',
   src: handFull,
   srcSet: set([[hand1000, 1000], [hand1800, 1800], [handFull, 3584]]),
   screen: {
-    flow: 'buy',
-    size: [3584, 4800],
-    corners: [[580.6, 901.8], [1799.2, 530.1], [2713.9, 3195.1], [1518, 3646]],
-    radius: 50,
+    flow: 'receive',
+    size: [3584, 4480],
+    corners: [[774.7, 1205.5], [1798.3, 893.3], [2566.7, 3131.9], [1562.1, 3510.6]],
+    radius: 52,
     glare: 'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%)',
   },
 }
@@ -277,9 +299,20 @@ const IPAY_BILLBOARD = plate('Naira → Sats on a sidewalk billboard, with the a
 /* The scenes of the Ragged Edge Wise page, made our own. */
 const IPAY_TYPE = art('Campaign lines swapping, one 3D icon each', '5 / 4', 'ipaybtc-type')
 const IPAY_LOGO_NAVY = art('The iPayBTC wordmark on Deep Navy', '4 / 5', 'ipaybtc-logo-navy')
+const IPAY_ONBOARD = art('iPayBTC onboarding screens, light mode', '16 / 9', 'ipaybtc-onboard')
+const IPAY_ONBOARD_PHONE = art('iPayBTC onboarding, light then dark mode', '3 / 4', 'ipaybtc-onboard-phone')
+const IPAY_LOGO_BLUE = art('The iPayBTC wordmark on Electric Blue', '3 / 4', 'ipaybtc-logo-blue')
+const IPAY_TEE_BLUE: CaseSlot = { label: 'The iPayBTC wordmark printed on an Electric Blue tee', ratio: '3 / 4', src: teeBlue, frameFit: true }
 const IPAY_TEE_CLOSE = plate('The iPayBTC wordmark on a white tee', '4 / 5', [teeClose1200, teeClose2400])
 const IPAY_LANYARD = plate('iPayBTC lanyard and staff pass', '4 / 5', [lanyard1200, lanyard2400])
 const IPAY_TEE = plate('iPayBTC tee on a tennis court', '4 / 5', [tee1200, tee2400])
+const IPAY_MOTION: CaseSlot = {
+  label: 'iPayBTC brand motion: pay, swap and we move in sats',
+  ratio: '16 / 9',
+  src: ipayMotion,
+  poster: ipayMotionPoster,
+  video: true,
+}
 const IPAY_CARD_VIDEO: CaseSlot = {
   label: 'The iPayBTC card over clips that cut from a road trip to Lagos',
   ratio: '16 / 9',
@@ -288,8 +321,9 @@ const IPAY_CARD_VIDEO: CaseSlot = {
   video: true,
   overlay: 'ipaybtc-card',
 }
+const IPAY_TYPE_REEL = art('The iPayBTC typefaces, then the campaign posters', '16 / 10', 'ipaybtc-type-reel')
 const IPAY_POSTER_BORDER = art('No bank opening hours. No border. No permission.', '16 / 10', 'ipaybtc-poster-border')
-const IPAY_WRAP = plate('“We move in sats” wrapped on a building in Lagos', '4 / 5', [wrap1200, wrap2400])
+const IPAY_WRAP: CaseSlot = { label: '“Your Bitcoin can travel.” wrapped on a building', ratio: '3 / 4', src: building800 }
 const IPAY_PHONE = art('The app buying Bitcoin', '4 / 5', 'ipaybtc-phone')
 const IPAY_UNDER = plate('“Your Naira can’t travel. Your Bitcoin can.” on an underground platform', '5504 / 3072', [under1200, under2400])
 const IPAY_KEYPAD: CaseSlot = {
@@ -312,10 +346,10 @@ const IPAY_LAPTOP: CaseSlot = {
 const IPAY_LANDSCAPE: CaseSlot = {
   ...plate('iPayBTC held up over the hills', '5504 / 3072', [landscape1200, landscape2400]),
   screen: {
-    flow: 'send',
+    flow: 'onboard',
     size: [5504, 3072],
-    corners: [[2383, 702], [3118, 705], [3126, 2402], [2371, 2400]],
-    radius: 44,
+    corners: [[2346, 664], [3155, 667], [3158, 2436], [2336, 2434]],
+    radius: 60,
   },
 }
 /* Leo's Figma frames, exported from Figma as they are. */
@@ -329,6 +363,12 @@ const FX05: CaseSlot = {
     radius: 40,
   },
   top: fx05top,
+}
+const IPAY_CN_POSTER: CaseSlot = {
+  ...plate('iPayBTC in Chinese: Your Bitcoin can travel', '4800 / 3074', [ladyPl1200, ladyPl2400]),
+  src: ladyPl4800,
+  srcSet: set([[ladyPl1200, 1200], [ladyPl2400, 2400], [ladyPl4800, 4800]]),
+  overlay: 'cn-poster',
 }
 const FX07 = fig('07', 'Buying Bitcoin under a blue sky', [fx07a, fx07b])
 const FX20 = fig('20', 'The iPayBTC brand guide', [fx20a, fx20b])
@@ -344,6 +384,17 @@ const FX30 = fig('30', 'The iPayBTC website', [fx30a, fx30b])
 const FX31 = fig('31', 'Futura LT Condensed ExtraBold', [fx31a, fx31b])
 const FX32 = fig('32', 'Neue Haas Grotesk', [fx32a, fx32b])
 const FX33 = fig('33', 'Friends in the sun', [fx33a, fx33b])
+/* Where the building wrap was: the tee on the court eases in, then the
+   watch and the rest of Leo's Figma frames, each shown whole. */
+const reelFrame = (slot: CaseSlot) => ({ src: slot.src!, srcSet: slot.srcSet, label: slot.label })
+const IPAY_MERCH: CaseSlot = {
+  label: 'iPayBTC merch and touchpoints: the tee, the watch, the dock, the stage',
+  ratio: '10130 / 6488',
+  art: 'ipaybtc-merch-reel',
+  reel: [IPAY_TEE, FX29, FX26, FX23, FX28, FX27].map(reelFrame),
+}
+/* The website, rebuilt live in the layout of Leo's Figma frame. */
+const IPAY_WEB = art('The iPayBTC website, with the app live beside the hero photo', '10130 / 6488', 'ipaybtc-website')
 const IPAY_SOCIAL = art('Posts sliding through the iPayBTC feed', '16 / 9', 'ipaybtc-social')
 const IPAY_WALL = art('The campaign as social posts', '16 / 9', 'ipaybtc-wall')
 const IPAY_ICONS = art('The iPayBTC 3D set: our coin, a coin ring, swap, gift, tick and bank', '16 / 9', 'ipaybtc-icons')
@@ -457,38 +508,16 @@ export const CASE_STUDIES: CaseStudy[] = [
     hero: IPAY_TABLE,
     gallery: [
       { kind: 'full', slot: IPAY_CARD },
-      { kind: 'full', slot: IPAY_LOGO, inset: true },
-      { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true },
-      { kind: 'full', slot: IPAY_BILLBOARD },
-      { kind: 'full', slot: IPAY_TYPE, inset: true },
-      { kind: 'pair', slots: [IPAY_LOGO_NAVY, IPAY_TEE_CLOSE], inset: true },
-      { kind: 'pair', slots: [IPAY_LANYARD, IPAY_TEE] },
+      { kind: 'full', slot: IPAY_LOGO, inset: true, wide: true },
+      { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true, wide: true },
+      { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true, gapAfter: true },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
-      { kind: 'full', slot: IPAY_POSTER_BORDER, inset: true },
-      { kind: 'pair', slots: [IPAY_WRAP, IPAY_PHONE], inset: true },
-      { kind: 'full', slot: IPAY_UNDER },
-      { kind: 'full', slot: IPAY_KEYPAD, inset: true },
-      { kind: 'full', slot: IPAY_POLE },
-      { kind: 'full', slot: IPAY_PHONES, inset: true },
-      { kind: 'full', slot: IPAY_SOCIAL },
-      { kind: 'full', slot: IPAY_WALL },
-      { kind: 'full', slot: IPAY_ICONS },
-      { kind: 'pair', slots: [IPAY_CAP, IPAY_TOTE], inset: true },
-      { kind: 'pair', slots: [IPAY_WALLPOSTER, IPAY_COIN], inset: true },
-      { kind: 'full', slot: IPAY_LAPTOP },
+      { kind: 'full', slot: IPAY_TYPE, inset: true },
+      { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
+      { kind: 'full', slot: IPAY_UNDER, gapAfter: true },
+      { kind: 'full', slot: IPAY_WEB, inset: true },
+      // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },
-      { kind: 'pair', slots: [IPAY_POSTER_TEA, IPAY_POSTER_SPEND], inset: true },
-      { kind: 'full', slot: FX33 },
-      { kind: 'full', slot: FX05, inset: true },
-      { kind: 'full', slot: FX07, inset: true },
-      { kind: 'pair', slots: [FX21, FX22], inset: true },
-      { kind: 'full', slot: FX24 },
-      { kind: 'pair', slots: [FX26, FX27], inset: true },
-      { kind: 'full', slot: FX30, inset: true },
-      { kind: 'pair', slots: [FX28, FX29], inset: true },
-      { kind: 'full', slot: FX23, inset: true },
-      { kind: 'pair', slots: [FX31, FX32], inset: true },
-      { kind: 'full', slot: FX20, inset: true },
     ],
     next: '3Projects',
   },
@@ -594,7 +623,17 @@ export function caseStudyFor(slug: string | undefined) {
 }
 
 /** The case study link for a project, if it has one. */
+/** Case studies that are out. Every other project shows a "coming" note. */
+const PUBLISHED = new Set(['ipaybtc'])
+
+/** When the unpublished case studies are due. */
+export const CASE_STUDY_DUE = 'December 2026'
+
 export function caseLinkFor(projectName: string) {
   const study = caseStudyFor(projectName)
-  return study ? `/work/${study.slug}` : undefined
+  return study && PUBLISHED.has(study.slug) ? `/work/${study.slug}` : undefined
 }
+
+/* Parked iPayBTC slots (cut from the running order, kept for the ideas
+   inbox). Exported so the build keeps them without placing them on the page. */
+export const IPAY_PARKED = { IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_CN_POSTER, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }

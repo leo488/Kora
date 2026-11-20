@@ -1,0 +1,48 @@
+.kora-steam {
+  position: absolute;
+  aspect-ratio: 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.kora-steam span {
+  position: absolute;
+  left: 25%;
+  top: 25%;
+  width: 50%;
+  height: 50%;
+  border-radius: 46% 54% 60% 40% / 52% 44% 56% 48%;
+  background:
+    radial-gradient(closest-side at 40% 45%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0) 70%),
+    radial-gradient(closest-side at 65% 60%, rgba(255, 250, 240, 0.55), rgba(255, 255, 255, 0) 75%);
+  filter: blur(11px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.kora-steam.is-on span {
+  animation: kora-steam var(--dur) cubic-bezier(0.33, 0, 0.4, 1) var(--delay) infinite;
+}
+
+@keyframes kora-steam {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg) scale(calc(var(--s) * 0.45));
+  }
+  18% {
+    opacity: 0.85;
+  }
+  55% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(calc(var(--s) * 1.6));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-steam {
+    display: none;
+  }
+}

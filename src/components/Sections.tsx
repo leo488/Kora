@@ -1,12 +1,13 @@
-import { useState } from 'react'
-import type { PointerEvent } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import type { PointerEvent, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { srcSetFor } from '../data'
-import type { Post, Project } from '../data'
-import { caseLinkFor } from '../caseStudies'
+import type { Post, Project, ProjectImage } from '../data'
+import { caseLinkFor, CASE_STUDY_DUE } from '../caseStudies'
 import { CheckIcon, CopyIcon } from './icons'
 import { useContact } from '../contact/useContact'
 import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
+import onboarderArt from '../assets/onboarder-illustration.jpg'
 
 /* The homepage's building blocks, shared so every page is made of the same
    parts: client rows, news cards and the contact block. */
@@ -27,13 +28,25 @@ function followCursor(event: PointerEvent<HTMLDivElement>) {
   event.currentTarget.style.setProperty('--kora-vy', `${event.clientY - box.top}px`)
 }
 
+/** A published case study links through; the rest are a plain block. */
+function RowLink({ to, children }: { to?: string; children: ReactNode }) {
+  return to ? (
+    <Link to={to} className="kora-rx-row-link">
+      {children}
+    </Link>
+  ) : (
+    <div className="kora-rx-row-link is-soon">{children}</div>
+  )
+}
+
 export function ClientRow({ project, index }: { project: Project; index?: number }) {
   const lead = project.images[0]
   const hasStat = project.stat && project.stat !== '—'
+  const to = caseLinkFor(project.name)
 
   return (
     <li className="kora-rx-row">
-      <Link to={caseLinkFor(project.name) ?? '/work'} className="kora-rx-row-link">
+      <RowLink to={to}>
         <div className="kora-rx-row-text">
           <div className="kora-rx-row-head">
             {index !== undefined && (
@@ -65,7 +78,14 @@ export function ClientRow({ project, index }: { project: Project; index?: number
           onPointerMove={followCursor}
         >
           <div className="kora-flare">
-            {project.film ? (
+            {project.film?.afterImageMs ? (
+              <FilmAfterImage
+                src={project.film.src}
+                delayMs={project.film.afterImageMs}
+                still={lead}
+                alt={project.brand}
+              />
+            ) : project.film ? (
               <video
                 src={project.film.src}
                 poster={project.film.poster.src}
@@ -88,12 +108,45 @@ export function ClientRow({ project, index }: { project: Project; index?: number
               />
             )}
           </div>
-          <span className="kora-rx-view" aria-hidden="true">
-            View
+          <span className="kora-rx-view" aria-hidden={to ? true : undefined}>
+            {to ? 'View' : `Case study out ${CASE_STUDY_DUE}`}
           </span>
         </div>
-      </Link>
+      </RowLink>
     </li>
+  )
+}
+
+/** The still shows first; once the row is in view the film fades in over it
+ *  and loops. Reduced motion keeps the still. */
+function FilmAfterImage({ src, delayMs, still, alt }: { src: string; delayMs: number; still: ProjectImage; alt: string }) {
+  const box = useRef<HTMLDivElement>(null)
+  const video = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
+
+  useEffect(() => {
+    const el = box.current
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let timer = 0
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !timer) {
+        timer = window.setTimeout(() => {
+          const v = video.current
+          if (!v) return
+          v.play().then(() => setPlaying(true)).catch(() => {})
+        }, delayMs)
+        io.disconnect()
+      }
+    }, { threshold: 0.4 })
+    io.observe(el)
+    return () => { io.disconnect(); window.clearTimeout(timer) }
+  }, [delayMs])
+
+  return (
+    <div ref={box} className={`kora-film-after${playing ? ' is-playing' : ''}`}>
+      <img src={still.src} srcSet={srcSetFor(still)} sizes="(max-width: 760px) 100vw, 66vw" alt={alt} loading="lazy" draggable={false} />
+      <video ref={video} src={src} muted loop playsInline preload="none" aria-hidden="true" disablePictureInPicture />
+    </div>
   )
 }
 
@@ -101,9 +154,10 @@ export function ClientRow({ project, index }: { project: Project; index?: number
 export function NewsCard({ post }: { post: Post }) {
   return (
     <Link to="/blog" className="kora-rx-card">
-      {/* Left blank until the posts have art of their own. */}
       <div className="kora-rx-card-media kora-rx-media" aria-hidden="true">
-        <div className="kora-flare" />
+        <div className="kora-flare">
+          {post.image && <img src={post.image} alt="" loading="lazy" draggable={false} />}
+        </div>
       </div>
       <div className="kora-rx-card-body">
         <span className="kora-rx-card-kind">{post.category}</span>
@@ -144,9 +198,10 @@ export function Contact() {
         </div>
       </div>
 
-      {/* A portrait of the studio goes here, as on the reference. Left blank
-          until there is a photo. */}
-      <div className="kora-rx-contact-photo" aria-hidden="true" />
+      {/* Onboarder line illustration on Dusk purple. */}
+      <div className="kora-rx-contact-photo" aria-hidden="true">
+        <img src={onboarderArt} alt="" loading="lazy" draggable={false} />
+      </div>
     </section>
   )
 }

@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { AppScreen } from './AppScreen'
+import { SwapApp } from './SwapApp'
+import { ReceiveApp } from './ReceiveApp'
+import { CoinBurst } from './CoinBurst'
 import { WebDash } from './Scenes'
+import { OnboardScreen } from './Extras'
 import type { AppFlow } from './AppScreen'
 
 /* Puts the live app screen onto the phone in a still photo.
@@ -10,7 +14,10 @@ import type { AppFlow } from './AppScreen'
    measured in the photo with one perspective transform (matrix3d). */
 
 export interface PhoneScreen {
-  flow: AppFlow
+  /** 'swap' runs the dark v3 app (SwapApp); the others run the v3 light app. */
+  flow: AppFlow | 'swap' | 'receive' | 'onboard'
+  /** Fix the swap app to light or dark instead of following the site theme. */
+  tone?: 'light' | 'dark'
   /** The photo's own size in px. */
   size: [number, number]
   /** Screen corners in photo px: top-left, top-right, bottom-right, bottom-left
@@ -25,10 +32,14 @@ export interface PhoneScreen {
 }
 
 
+/** The coin burst when the swap lands. Off for now; flip to bring it back. */
+const BURST = false
+
 export function ScreenOverlay({ screen }: { screen: PhoneScreen }) {
   const ref = useRef<HTMLDivElement>(null)
   const [box, setBox] = useState<[number, number] | null>(null)
   const [playing, setPlaying] = useState(false)
+  const [burst, setBurst] = useState(0)
 
   useEffect(() => {
     const el = ref.current?.parentElement
@@ -46,13 +57,14 @@ export function ScreenOverlay({ screen }: { screen: PhoneScreen }) {
   }, [])
 
   let transform = 'scale(0)'
+  let pts: [number, number][] | null = null
   if (box) {
     const [lw, lh] = box
     const [iw, ih] = screen.size
     const s = Math.max(lw / iw, lh / ih)
     const ox = (lw - iw * s) / 2
     const oy = (lh - ih * s) / 2
-    const pts = screen.corners.map(([x, y]) => [ox + x * s, oy + y * s] as [number, number])
+    pts = screen.corners.map(([x, y]) => [ox + x * s, oy + y * s] as [number, number])
     transform = screen.web ? matrix3d(pts, 1440, 900) : matrix3d(pts, 390, 844)
   }
 
@@ -67,8 +79,19 @@ export function ScreenOverlay({ screen }: { screen: PhoneScreen }) {
           ...(screen.web ? { width: 1440, height: 900 } : null),
         }}
       >
-        {screen.web ? <WebDash playing={playing} /> : <AppScreen flow={screen.flow} playing={playing} />}
+        {screen.web ? (
+          <WebDash playing={playing} />
+        ) : screen.flow === 'onboard' ? (
+          <OnboardScreen playing={playing} />
+        ) : screen.flow === 'receive' ? (
+          <ReceiveApp playing={playing} />
+        ) : screen.flow === 'swap' ? (
+          <SwapApp playing={playing} tone={screen.tone} onDone={BURST ? () => setBurst((b) => b + 1) : undefined} />
+        ) : (
+          <AppScreen flow={screen.flow} playing={playing} />
+        )}
       </div>
+      {screen.flow === 'swap' && burst > 0 && pts && <CoinBurst key={burst} pts={pts} />}
     </div>
   )
 }

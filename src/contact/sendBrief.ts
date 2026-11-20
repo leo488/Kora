@@ -8,7 +8,7 @@
    brief is written into an email in the visitor's own mail app instead. A
    lead is never dropped silently. */
 
-export const NEW_BUSINESS_EMAIL = 'hello@kora.studio'
+export const NEW_BUSINESS_EMAIL = 'hello@wearekoraa.com'
 
 const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined
 const ACCESS_KEY = import.meta.env.VITE_CONTACT_ACCESS_KEY as string | undefined

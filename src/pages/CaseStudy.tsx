@@ -5,8 +5,10 @@ import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
-import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg } from '../components/ipaybtc/Scenes'
+import { Steam } from '../components/ipaybtc/Steam'
+import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg, Onboarding, TypeReel } from '../components/ipaybtc/Scenes'
 import { Chip } from '../components/refreeg/Chip'
+import { MerchReel, OnboardTap, WebsiteHero } from '../components/ipaybtc/Extras'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -106,10 +108,13 @@ export function CaseStudy() {
 function Block({ block }: { block: CaseBlock }) {
   switch (block.kind) {
     case 'full':
-      return <Plate slot={block.slot} inset={block.inset} />
+      return <Plate slot={block.slot} inset={block.inset} wide={block.wide} gapAfter={block.gapAfter} />
     case 'pair':
       return (
-        <div className={`kora-case-pair${block.inset ? ' is-inset' : ''}`}>
+        <div
+          className={`kora-case-pair${block.inset ? ' is-inset' : ''}${block.wide ? ' is-wide' : ''}${block.cols ? ' has-cols' : ''}`}
+          style={{ ...(block.gapAfter ? { marginBottom: '100vh' } : null), ...(block.cols ? { ['--pair-cols' as string]: block.cols } : null) }}
+        >
           <Plate slot={block.slots[0]} />
           <Plate slot={block.slots[1]} />
         </div>
@@ -138,11 +143,11 @@ function Block({ block }: { block: CaseBlock }) {
 
 /** An image or loop — or, until it exists, a grey panel naming what goes
  *  there. */
-function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean }) {
+function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean; wide?: boolean; gapAfter?: boolean | 'end' }) {
   return (
     <figure
-      className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}`}
-      style={{ aspectRatio: slot.ratio }}
+      className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}${wide ? ' is-wide' : ''}${slot.frameFit ? ' is-framefit' : ''}`}
+      style={{ aspectRatio: slot.ratio, marginBottom: gapAfter === 'end' ? '100vh' : gapAfter ? 'clamp(96px, 16vw, 320px)' : undefined }}
     >
       <div className="kora-flare">
         {slot.art === 'ipaybtc-logo' ? (
@@ -168,16 +173,28 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
           <Merch kind="tote" />
         ) : slot.art === 'ipaybtc-wallposter' ? (
           <WallPoster post={1} />
+        ) : slot.art === 'ipaybtc-onboard-phone' ? (
+          <OnboardTap />
+        ) : slot.art === 'ipaybtc-onboard' ? (
+          <Onboarding />
+        ) : slot.art === 'ipaybtc-logo-blue' ? (
+          <LogoTile tone="blue" />
         ) : slot.art === 'ipaybtc-logo-navy' ? (
           <LogoTile tone="navy" />
         ) : slot.art === 'ipaybtc-phone' ? (
           <PhonePlate flow="buy" />
         ) : slot.art === 'ipaybtc-phones' ? (
           <PhoneBoard />
+        ) : slot.art === 'ipaybtc-type-reel' ? (
+          <TypeReel />
         ) : slot.art === 'ipaybtc-poster-border' ? (
           <TypePoster tone="navy" size={9} lines={['No bank opening hours.', 'No border.', 'No permission.']} />
         ) : slot.art === 'ipaybtc-poster-tea' ? (
           <TypePoster tone="yellow" lines={['Buy Bitcoin', 'before your', 'tea gets cold.']} />
+        ) : slot.art === 'ipaybtc-merch-reel' && slot.reel ? (
+          <MerchReel frames={slot.reel} />
+        ) : slot.art === 'ipaybtc-website' ? (
+          <WebsiteHero />
         ) : slot.art === 'ipaybtc-poster-spend' ? (
           <TypePoster tone="blue" lines={['Bitcoin was', 'never meant', 'to sit still.', 'Spend it.']} />
         ) : slot.src ? (
@@ -209,8 +226,16 @@ function Plate({ slot, eager = false, inset = false }: { slot: CaseSlot; eager?:
                 />
               )}
               {slot.screen && <ScreenOverlay screen={slot.screen} />}
+              {slot.steam && <Steam spot={slot.steam} />}
               {slot.top && <img className="kora-case-top" src={slot.top} alt="" aria-hidden />}
               {slot.keypad && <KeypadCard />}
+              {slot.overlay === 'cn-poster' && (
+                <div className="kora-cnposter" aria-hidden>
+                  <p className="kora-cnposter-head">你的比特币<br />可以远行</p>
+                  <p className="kora-cnposter-sub">随时随地发送、兑换和使用比特币。</p>
+                  <span className="kora-cnposter-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+                </div>
+              )}
             </>
           )
         ) : (

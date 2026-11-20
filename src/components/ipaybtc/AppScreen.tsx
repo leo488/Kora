@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import logo from '../../assets/ipaybtc-logo.svg?raw'
 import './app-screen.css'
+import { SwapApp } from './SwapApp'
 
 /* The iPayBTC app (v3, light mode) running on a phone in a still photo.
    Everything is drawn at the phone's own size, 390 × 844, and the plate that
@@ -70,8 +71,8 @@ const SCRIPT: Record<AppFlow, Step[]> = {
     [1600, { press: 'icon' }],
     [1850, { press: null, screen: 'splash' }],
     [3000, { screen: 'home' }],
-    [6800, { screen: 'icons' }],
-    [8600, {}],
+    [16000, { screen: 'icons' }],
+    [17800, {}],
   ],
 }
 
@@ -338,22 +339,22 @@ function Transaction({ flow, s }: { flow: 'send' | 'buy'; s: State }) {
   )
 }
 
-const ICONS: Array<{ name: string; bg: string; fg: string; d: string }> = [
-  { name: 'Camera', bg: '#2B2F3A', fg: '#E9EAEE', d: 'M8 13h24v16H8zM15 13l2-3h6l2 3M20 25a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z' },
-  { name: 'Photos', bg: '#FFFFFF', fg: '#F5BF0F', d: 'M20 9v22M9 20h22M12 12l16 16M28 12 12 28' },
-  { name: 'Mail', bg: '#4DA3FF', fg: '#FFFFFF', d: 'M9 13h22v14H9zM9 13l11 8 11-8' },
-  { name: 'Notes', bg: '#F5E27A', fg: '#0B0F2E', d: 'M11 15h18M11 20h18M11 25h12' },
-  { name: 'Clock', bg: '#0B0F2E', fg: '#FFFFFF', d: 'M20 31a11 11 0 1 0 0-22 11 11 0 0 0 0 22ZM20 14v6l4 3' },
-  { name: 'Maps', bg: '#88C2ED', fg: '#050E7F', d: 'M10 12l7-2 6 2 7-2v18l-7 2-6-2-7 2zM17 10v18M23 12v18' },
-  { name: 'Music', bg: '#FF5A36', fg: '#FFFFFF', d: 'M16 27V13l12-3v14M16 27a3 3 0 1 1-3-3 3 3 0 0 1 3 3ZM28 24a3 3 0 1 1-3-3 3 3 0 0 1 3 3Z' },
-  { name: 'Weather', bg: '#4DA3FF', fg: '#FFF778', d: 'M17 17a4 4 0 1 0 0-.1M14 27h13a4 4 0 0 0 0-8 6 6 0 0 0-11 2 3 3 0 0 0-2 6Z' },
-  { name: 'Calendar', bg: '#FFFFFF', fg: '#FF5A36', d: 'M11 12h18v17H11zM11 17h18M16 10v4M24 10v4' },
-  { name: 'Settings', bg: '#8A8FA3', fg: '#FFFFFF', d: 'M20 25a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM20 8v4M20 28v4M8 20h4M28 20h4M11.5 11.5l3 3M25.5 25.5l3 3M28.5 11.5l-3 3M14.5 25.5l-3 3' },
-  { name: 'Messages', bg: '#0D8A5F', fg: '#FFFFFF', d: 'M10 18c0-4 4-7 10-7s10 3 10 7-4 7-10 7l-6 4v-5c-2-1-4-3-4-6Z' },
-  { name: 'Files', bg: '#FFFFFF', fg: '#0A31F5', d: 'M10 13h8l2 2h10v13H10z' },
-  { name: 'Wallet', bg: '#0B0F2E', fg: '#F5BF0F', d: 'M10 14h20v14H10zM10 18h20M24 23h3' },
-  { name: 'Health', bg: '#FFFFFF', fg: '#FF8EC6', d: 'M20 29s-9-5-9-11a5 5 0 0 1 9-2 5 5 0 0 1 9 2c0 6-9 11-9 11Z' },
-  { name: 'Books', bg: '#FF8A00', fg: '#FFFFFF', d: 'M11 12h8v17h-8zM21 12h8v17h-8z' },
+const ICONS: Array<{ name: string; svg: string }> = [
+  { name: 'Camera', svg: '<defs><linearGradient id="gcam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3e3e8"/><stop offset="1" stop-color="#9a9aa1"/></linearGradient></defs><rect width="60" height="60" fill="url(#gcam)"/><rect x="8" y="17" width="44" height="30" rx="6" fill="#2c2c2e"/><rect x="22" y="13" width="16" height="6" rx="2" fill="#2c2c2e"/><circle cx="30" cy="32" r="10" fill="#e5e5ea"/><circle cx="30" cy="32" r="7" fill="#1c1c1e"/><circle cx="27.5" cy="29.5" r="2" fill="#5a5a66"/><circle cx="45" cy="22" r="1.8" fill="#ffd60a"/>' },
+  { name: 'Photos', svg: '<rect width="60" height="60" fill="#fff"/><ellipse cx="30" cy="18" rx="6" ry="11" fill="#fbc02d" opacity=".85" transform="rotate(0 30 30)"/><ellipse cx="30" cy="18" rx="6" ry="11" fill="#f57c00" opacity=".85" transform="rotate(45 30 30)"/><ellipse cx="30" cy="18" rx="6" ry="11" fill="#e53935" opacity=".85" transform="rotate(90 30 30)"/><ellipse cx="30" cy="18" rx="6" ry="11" fill="#d81b60" opacity=".85" transform="rotate(135 30 30)"/><ellipse cx="30" cy="18" rx="6" ry="11" fill="#8e24aa" opacity=".85" transform="rotate(180 30 30)"/><ellipse cx="30" cy="18" rx="6" ry="11" fill="#1e88e5" opacity=".85" transform="rotate(225 30 30)"/><ellipse cx="30" cy="18" rx="6" ry="11" fill="#00acc1" opacity=".85" transform="rotate(270 30 30)"/><ellipse cx="30" cy="18" rx="6" ry="11" fill="#43a047" opacity=".85" transform="rotate(315 30 30)"/>' },
+  { name: 'Mail', svg: '<defs><linearGradient id="gmail" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#21b8ff"/><stop offset="1" stop-color="#0a6cff"/></linearGradient></defs><rect width="60" height="60" fill="url(#gmail)"/><rect x="11" y="18" width="38" height="25" rx="3" fill="#fff"/><path d="M12 20l18 13 18-13" fill="none" stroke="#9fd2ff" stroke-width="2"/>' },
+  { name: 'Notes', svg: '<rect width="60" height="60" fill="#fff"/><defs><linearGradient id="gnote" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe27a"/><stop offset="1" stop-color="#ffcc02"/></linearGradient></defs><rect width="60" height="16" fill="url(#gnote)"/><path d="M8 26h44M8 34h44M8 42h44M8 50h44" stroke="#dcdce0" stroke-width="1.2"/><path d="M8 16h44" stroke="#d6a800" stroke-width="1" stroke-dasharray="2 2"/>' },
+  { name: 'Clock', svg: '<rect width="60" height="60" fill="#000"/><circle cx="30" cy="30" r="24" fill="#fff"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(0 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(30 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(60 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(90 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(120 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(150 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(180 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(210 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(240 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(270 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(300 30 30)"/><rect x="29.4" y="8" width="1.2" height="4" fill="#000" transform="rotate(330 30 30)"/><path d="M30 30V15M30 30l9 6" stroke="#000" stroke-width="2.6" stroke-linecap="round"/><path d="M30 30l-6 14" stroke="#ff9500" stroke-width="1.2"/><circle cx="30" cy="30" r="1.8" fill="#ff9500"/>' },
+  { name: 'Maps', svg: '<defs><linearGradient id="gmap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3f0e6"/><stop offset="1" stop-color="#e3ecd8"/></linearGradient></defs><rect width="60" height="60" fill="url(#gmap)"/><path d="M0 44L60 16" stroke="#fff" stroke-width="8"/><path d="M0 44L60 16" stroke="#ffd34d" stroke-width="3"/><path d="M18 0v60" stroke="#fff" stroke-width="5"/><rect x="36" y="34" width="24" height="26" fill="#bfe3a6"/><path d="M30 20l9 20-9-5-9 5z" fill="#0a84ff"/>' },
+  { name: 'Music', svg: '<defs><linearGradient id="gmus" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6f8a"/><stop offset="1" stop-color="#fa233b"/></linearGradient></defs><rect width="60" height="60" fill="url(#gmus)"/><path d="M25 40V18l17-4v22" fill="none" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/><circle cx="21" cy="40" r="5" fill="#fff"/><circle cx="38" cy="36" r="5" fill="#fff"/>' },
+  { name: 'Weather', svg: '<defs><linearGradient id="gwx" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f7dff"/><stop offset="1" stop-color="#68c9ff"/></linearGradient></defs><rect width="60" height="60" fill="url(#gwx)"/><circle cx="24" cy="24" r="9" fill="#ffd60a"/><path d="M20 44h22a7 7 0 0 0 0-14 10 10 0 0 0-19 3 6 6 0 0 0-3 11z" fill="#fff"/>' },
+  { name: 'Calendar', svg: '<rect width="60" height="60" fill="#fff"/><text x="30" y="19" text-anchor="middle" font-family="-apple-system,Helvetica,Arial" font-weight="600" font-size="10" fill="#ff3b30">SUNDAY</text><text x="30" y="48" text-anchor="middle" font-family="-apple-system,Helvetica,Arial" font-weight="300" font-size="30" fill="#111">15</text>' },
+  { name: 'Settings', svg: '<defs><linearGradient id="gset" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9adb5"/><stop offset="1" stop-color="#6e727b"/></linearGradient></defs><rect width="60" height="60" fill="url(#gset)"/><rect x="27" y="8" width="6" height="10" rx="1.5" fill="#3a3b40" transform="rotate(0 30 30)"/><rect x="27" y="8" width="6" height="10" rx="1.5" fill="#3a3b40" transform="rotate(45 30 30)"/><rect x="27" y="8" width="6" height="10" rx="1.5" fill="#3a3b40" transform="rotate(90 30 30)"/><rect x="27" y="8" width="6" height="10" rx="1.5" fill="#3a3b40" transform="rotate(135 30 30)"/><rect x="27" y="8" width="6" height="10" rx="1.5" fill="#3a3b40" transform="rotate(180 30 30)"/><rect x="27" y="8" width="6" height="10" rx="1.5" fill="#3a3b40" transform="rotate(225 30 30)"/><rect x="27" y="8" width="6" height="10" rx="1.5" fill="#3a3b40" transform="rotate(270 30 30)"/><rect x="27" y="8" width="6" height="10" rx="1.5" fill="#3a3b40" transform="rotate(315 30 30)"/><circle cx="30" cy="30" r="15" fill="#3a3b40"/><circle cx="30" cy="30" r="10" fill="#8d9098"/><circle cx="30" cy="30" r="5" fill="#3a3b40"/>' },
+  { name: 'Messages', svg: '<defs><linearGradient id="gmsg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ff26a"/><stop offset="1" stop-color="#22c33f"/></linearGradient></defs><rect width="60" height="60" fill="url(#gmsg)"/><path d="M30 13c-11 0-19 7-19 15 0 5 3 9 7 12-1 3-3 5-5 6 4 0 8-1 11-3 2 .4 4 .6 6 .6 11 0 19-7 19-15s-8-15-19-15z" fill="#fff"/>' },
+  { name: 'Files', svg: '<rect width="60" height="60" fill="#fff"/><defs><linearGradient id="gfold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ac8fa"/><stop offset="1" stop-color="#1a8cff"/></linearGradient></defs><path d="M10 20a3 3 0 0 1 3-3h11l4 4h19a3 3 0 0 1 3 3v19a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3z" fill="url(#gfold)"/>' },
+  { name: 'Wallet', svg: '<rect width="60" height="60" fill="#000"/><rect x="11" y="13" width="38" height="28" rx="4" fill="#2f2f33"/><rect x="11" y="18" width="38" height="8" fill="#0a84ff"/><rect x="11" y="24" width="38" height="8" fill="#ffcc00"/><rect x="11" y="30" width="38" height="8" fill="#34c759"/><rect x="11" y="36" width="38" height="12" rx="3" fill="#ff3b30"/><path d="M8 40h44v10a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4z" fill="#d2d2d7"/>' },
+  { name: 'Health', svg: '<rect width="60" height="60" fill="#fff"/><defs><linearGradient id="ghl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6fa8"/><stop offset="1" stop-color="#ff2d55"/></linearGradient></defs><path d="M48 14c-5-4-12-2-18 4-6-6-13-8-18-4" fill="none"/><path d="M30 47S12 36 12 24a9 9 0 0 1 18-3 9 9 0 0 1 18 3c0 12-18 23-18 23z" fill="url(#ghl)" transform="translate(9 9) scale(.7)"/>' },
+  { name: 'Books', svg: '<defs><linearGradient id="gbk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffa733"/><stop offset="1" stop-color="#ff7a00"/></linearGradient></defs><rect width="60" height="60" fill="url(#gbk)"/><path d="M30 20c-5-4-12-4-17-2v24c5-2 12-2 17 2 5-4 12-4 17-2V18c-5-2-12-2-17 2z" fill="#fff"/><path d="M30 20v24" stroke="#ff8a00" stroke-width="1.5"/>' },
 ]
 
 function Launch({ s }: { s: State }) {
@@ -368,29 +369,20 @@ function Launch({ s }: { s: State }) {
           </span>
           {ICONS.map((ic) => (
             <span key={ic.name} className="ias-app">
-              <i style={{ background: ic.bg, color: ic.fg }}>
-                <svg viewBox="0 0 40 40" aria-hidden>
-                  <path d={ic.d} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </i>
+              <i><svg viewBox="0 0 60 60" aria-hidden dangerouslySetInnerHTML={{ __html: ic.svg }} /></i>
               {ic.name}
             </span>
           ))}
         </div>
         <div className="ias-dock">
           {ICONS.slice(10, 14).map((ic) => (
-            <i key={ic.name} style={{ background: ic.bg, color: ic.fg }}>
-              <svg viewBox="0 0 40 40" aria-hidden>
-                <path d={ic.d} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </i>
+            <i key={ic.name}><svg viewBox="0 0 60 60" aria-hidden dangerouslySetInnerHTML={{ __html: ic.svg }} /></i>
           ))}
         </div>
       </div>
       <div className="ias-page ias-splash">
-        <i dangerouslySetInnerHTML={{ __html: logo }} />
+        {s.screen === 'icons' ? <i dangerouslySetInnerHTML={{ __html: logo }} /> : <SwapApp playing tone="dark" />}
       </div>
-      <Home s={s} flow="launch" />
     </div>
   )
 }

@@ -7,6 +7,7 @@ import { useFlareController } from '../hooks/useFlareController'
 import { Offices } from './Offices'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
+import { Announcement } from './Announcement'
 import { ContactProvider } from '../contact/ContactContext'
 import '../system.css'
 
@@ -47,6 +48,7 @@ export function Layout() {
         {/* The project brief modal lives here so every page can open it and
             it inherits the theme. */}
         <ContactProvider>
+          <Announcement />
           {!isHome && <DockedMasthead />}
           <Outlet />
           <Offices />

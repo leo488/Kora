@@ -1,3 +1,6 @@
+import blog01 from './assets/blog/blog-01.jpg'
+import blog02 from './assets/blog/blog-02.jpg'
+import blog03 from './assets/blog/blog-03.jpg'
 export interface NavLinkItem {
   label: string
   to?: string
@@ -95,7 +98,7 @@ export const OFFICES: Office[] = [
     city: 'Lagos',
     timeZone: 'Africa/Lagos',
     address: ['Victoria Island', 'Lagos', 'Nigeria'],
-    email: 'lagos@kora.studio',
+    email: 'hello@wearekoraa.com',
     mapUrl: 'https://maps.google.com/?q=Victoria+Island+Lagos+Nigeria',
   },
   {
@@ -103,7 +106,7 @@ export const OFFICES: Office[] = [
     city: 'Abuja',
     timeZone: 'Africa/Lagos',
     address: ['Wuse II', 'Abuja, FCT', 'Nigeria'],
-    email: 'abuja@kora.studio',
+    email: 'hello@wearekoraa.com',
     mapUrl: 'https://maps.google.com/?q=Wuse+II+Abuja+Nigeria',
   },
 ]
@@ -164,6 +167,7 @@ import framefest013000 from './assets/framefest-01-3000.jpg'
 import framefest021200 from './assets/framefest-02-1200.jpg'
 import framefest022000 from './assets/framefest-02-2000.jpg'
 import framefest023000 from './assets/framefest-02-3000.jpg'
+import refreegFilm from './assets/refreeg/refreeg-film.mp4'
 import refreeg011200 from './assets/refreeg-01-1200.jpg'
 import refreeg012000 from './assets/refreeg-01-2000.jpg'
 import refreeg013000 from './assets/refreeg-01-3000.jpg'
@@ -182,12 +186,12 @@ import whotafrica012000 from './assets/whotafrica-01-2000.jpg'
    HEVC, but Firefox never does and Chrome only where the hardware obliges, so
    the master stays out of the bundle and this is what ships. */
 
-import ipaybtcFilm from './assets/ipaybtc-motion.mp4'
+import ipaybtcFilm from './assets/ipaybtc-tile-film.mp4'
 import koraClosingFilm from './assets/kora-closing.mp4'
 import koraClosingPoster1200 from './assets/kora-closing-poster-1200.jpg'
 import koraClosingPoster2000 from './assets/kora-closing-poster-2000.jpg'
-import ipaybtcFilmPoster1200 from './assets/ipaybtc-motion-poster-1200.jpg'
-import ipaybtcFilmPoster2000 from './assets/ipaybtc-motion-poster-2000.jpg'
+import ipaybtcFilmPoster1200 from './assets/ipaybtc-tile-poster-1200.jpg'
+import ipaybtcFilmPoster2000 from './assets/ipaybtc-tile-poster-2000.jpg'
 
 export interface ProjectImage {
   /** Widest plate available — also the plain `src` fallback. */
@@ -240,6 +244,8 @@ export interface ProjectFilm {
   /** The film's own running length, so the reel holds it to the last frame
       instead of cutting away mid-shot. */
   durationMs: number
+  /** Show the still first and fade the film in over it after this long. */
+  afterImageMs?: number
 }
 
 const IPAYBTC_FILM: ProjectFilm = {
@@ -273,9 +279,21 @@ export const PROJECTS: Project[] = [
     category: 'Fintech',
     year: '2026',
     headline: 'iPayBTC — re‑Designing a Bitcoin Brand for Everyday Use',
-    stat: '12TRN',
+    stat: '—',
     film: IPAYBTC_FILM,
     images: [FRAMES.ipaybtc01, FRAMES.ipaybtc02, FRAMES.ipaybtc03],
+  },
+  {
+    name: 'Refreeg',
+    brand: 'Refreeg',
+    // TODO(kora): placeholder copy — these three plates arrived labelled as
+    // Frame Fest exports; the artwork is Refreeg's, the words are stand-ins.
+    category: 'Giving platform',
+    year: '2025',
+    headline: 'Refreeg — Giving, Made Direct',
+    stat: '₦50M raised in funding',
+    film: { src: refreegFilm, poster: FRAMES.refreeg01, durationMs: 14770, afterImageMs: 1600 },
+    images: [FRAMES.refreeg01, FRAMES.refreeg02, FRAMES.refreeg03],
   },
   {
     name: 'Escro',
@@ -283,16 +301,16 @@ export const PROJECTS: Project[] = [
     category: 'Web3',
     year: '2025',
     headline: 'Escro — Making Peer‑to‑Peer Deals Feel Safe',
-    stat: '4.2M',
+    stat: '—',
     images: [FRAMES.escro01, FRAMES.escro02],
   },
   {
     name: 'Tagmi',
     brand: 'Tagmi',
-    category: 'E-commerce',
+    category: 'Social media',
     year: '2025',
-    headline: 'Tagmi — A Bold Identity for a Social Marketplace',
-    stat: '860K',
+    headline: 'Tagmi — A Bold Identity for a Social Platform',
+    stat: 'In development',
     images: [FRAMES.tagmi04, FRAMES.tagmi01, FRAMES.tagmi02, FRAMES.tagmi03],
   },
   {
@@ -307,23 +325,12 @@ export const PROJECTS: Project[] = [
     images: [FRAMES.framefest01, FRAMES.framefest02],
   },
   {
-    name: 'Refreeg',
-    brand: 'Refreeg',
-    // TODO(kora): placeholder copy — these three plates arrived labelled as
-    // Frame Fest exports; the artwork is Refreeg's, the words are stand-ins.
-    category: 'Social Impact',
-    year: '2025',
-    headline: 'Refreeg — Giving, Made Direct',
-    stat: '—',
-    images: [FRAMES.refreeg01, FRAMES.refreeg02, FRAMES.refreeg03],
-  },
-  {
     name: 'squaremetre',
     brand: 'squaremetre',
     category: 'Real Estate',
     year: '2024',
     headline: 'squaremetre — Fractional Property Investing, Simplified',
-    stat: '1.8M',
+    stat: '—',
     // Still on its original plate: no new art was supplied for this one.
     images: [FRAMES.squaremetre01],
   },
@@ -333,7 +340,7 @@ export const PROJECTS: Project[] = [
     category: 'Sports & Lifestyle',
     year: '2024',
     headline: 'FourStrides — An Identity Built to Move',
-    stat: '320K',
+    stat: '—',
     images: [FRAMES.fourstrides01, FRAMES.fourstrides02],
   },
   {
@@ -342,17 +349,17 @@ export const PROJECTS: Project[] = [
     category: 'Fintech',
     year: '2023',
     headline: 'Whotafrica — Trusted Supply, End to End',
-    stat: '540K',
+    stat: '—',
     // As with squaremetre — no new art supplied, so the original stands.
     images: [FRAMES.whotafrica01],
   },
   {
     name: '3Projects',
     brand: '3PROJECTS',
-    category: 'Motorsport',
+    category: 'IT consultancy',
     year: '2026',
     headline: '3PROJECTS — Complexity Isn’t a Hurdle. It’s an Asset.',
-    stat: '2.6M',
+    stat: '—',
     images: [FRAMES.threeProjects01, FRAMES.threeProjects02, FRAMES.threeProjects03],
   },
 ]
@@ -530,28 +537,33 @@ export const PARTNERS: Partner[] = [
 
 export interface Post {
   title: string
+  /** Card art; blank when unset. */
+  image?: string
   category: string
   date: string
 }
 
 export const POSTS: Post[] = [
   {
-    title: 'Why Bold Branding Wins in Fintech',
+    title: 'Bold wins in fintech',
+    image: blog01,
     category: 'Branding',
     date: 'Jun 2026',
   },
   {
-    title: 'Designing for Trust: Lessons From iPayBTC',
+    title: 'Designing for trust',
+    image: blog02,
     category: 'Case Study',
     date: 'May 2026',
   },
   {
-    title: 'The Future of Visual Identity in Web3',
+    title: 'Identity in Web3',
+    image: blog03,
     category: 'Insights',
     date: 'Apr 2026',
   },
   {
-    title: 'What a Global Studio Learns From Local Markets',
+    title: 'Local roots, global reach',
     category: 'Studio Notes',
     date: 'Mar 2026',
   },

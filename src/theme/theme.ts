@@ -4,14 +4,9 @@ export type Theme = 'dark' | 'light'
 
 export const THEME_KEY = 'kora:theme'
 
-/** Dark is the studio's default; a saved choice wins on the next visit. */
+/** Every visit opens in dark. The light switch still works for the visit,
+    but a saved light choice is no longer restored. */
 export function initialTheme(): Theme {
-  try {
-    const saved = localStorage.getItem(THEME_KEY)
-    if (saved === 'dark' || saved === 'light') return saved
-  } catch {
-    // Storage blocked; fall through to the default.
-  }
   return 'dark'
 }
 
