@@ -51,6 +51,8 @@ import lanyard2400 from './assets/ipaybtc-lanyard-blue-2400.jpg'
 import tee1200 from './assets/ipaybtc-tee-1200.jpg'
 import tee2400 from './assets/ipaybtc-tee-2400.jpg'
 import borderless from './assets/ipaybtc-borderless.mp4'
+import ipayLogoLoop from './assets/ipaybtc-logo-loop.mp4'
+import ipayLogoLoopPoster from './assets/ipaybtc-logo-loop-poster.jpg'
 import ipayMotion from './assets/ipaybtc-brand-motion.mp4'
 import ipayMotionPoster from './assets/ipaybtc-brand-motion-poster.jpg'
 import borderlessPoster from './assets/ipaybtc-borderless-poster.jpg'
@@ -248,7 +250,8 @@ const IPAY_TABLE: CaseSlot = {
   src: tableFull,
   srcSet: set([[table1600, 1600], [table2800, 2800], [tableFull, 5504]]),
   screen: {
-    flow: 'buy',
+    flow: 'swap',
+    tone: 'dark',
     size: [5504, 3072],
     corners: [[2317.8, 696.4], [3142.5, 872.3], [2656.2, 2613.6], [1796.6, 2409.4]],
     radius: 54,
@@ -265,9 +268,11 @@ const IPAY_CARD: CaseSlot = {
 }
 
 const IPAY_LOGO: CaseSlot = {
-  label: 'The iPayBTC wordmark on Electric Blue',
+  label: 'The iPayBTC wordmark animating through the brand colours',
   ratio: '16 / 9',
-  art: 'ipaybtc-logo',
+  src: ipayLogoLoop,
+  poster: ipayLogoLoopPoster,
+  video: true,
 }
 
 const IPAY_ICON: CaseSlot = {
@@ -365,7 +370,8 @@ const IPAY_WISE_TABLE = plate('The iPayBTC card on the tray after dinner', '5470
 const IPAY_WISE_MARKET: CaseSlot = {
   ...plate('Paying with iPayBTC at a market stall', '5471 / 3072', [wiseMarket1200, wiseMarket2400]),
   screen: {
-    flow: 'send',
+    flow: 'swap',
+    tone: 'light',
     size: [5471, 3072],
     corners: [[2472.2, 987.2], [3066.7, 949.4], [3152.0, 2254.1], [2551.9, 2290.3]],
     radius: 46,
@@ -374,7 +380,8 @@ const IPAY_WISE_MARKET: CaseSlot = {
 const IPAY_WISE_NAIL: CaseSlot = {
   ...plate('iPayBTC on a phone at the nail salon', '5504 / 3072', [wiseNail1200, wiseNail2400]),
   screen: {
-    flow: 'receive',
+    flow: 'swap',
+    tone: 'dark',
     size: [5504, 3072],
     corners: [[1850.6, 1167.4], [2438.6, 684.8], [3634.0, 1896.4], [3042.5, 2420.9]],
     radius: 52,
@@ -562,7 +569,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_WEB, inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_TABLE },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
-      { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true },
+      { kind: 'full', slot: IPAY_CN_POSTER },
       { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_MARKET },
       { kind: 'full', slot: IPAY_WISE_NAIL },

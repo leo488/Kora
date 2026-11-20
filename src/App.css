@@ -5250,3 +5250,59 @@
     gap: 12px;
   }
 }
+
+/* Chinese poster, Nov 20: full width, the brand illustrations set big
+   behind the woman (a cut-out of her sits on top), drifting slowly. */
+.kora-case-frame > img.kora-cnposter-cut {
+  z-index: 2;
+}
+
+.kora-cnposter-ills {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.kora-cnposter-ills img {
+  position: absolute;
+  height: auto;
+  animation: kora-ill-drift 9s ease-in-out infinite alternate;
+}
+
+.kora-cnposter-ills .is-fan {
+  left: 28.5%;
+  top: 34%;
+  width: 25%;
+  animation-delay: -2s;
+}
+
+.kora-cnposter-ills .is-coin {
+  left: 55%;
+  top: 4%;
+  width: 26%;
+  animation-duration: 11s;
+}
+
+.kora-cnposter-ills .is-stacks {
+  left: 62%;
+  top: 50%;
+  width: 17%;
+  animation-delay: -5s;
+  animation-duration: 10s;
+}
+
+@keyframes kora-ill-drift {
+  from { translate: 0 0; rotate: 0deg; }
+  to { translate: 0 -4%; rotate: 4deg; }
+}
+
+.kora-cnposter {
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kora-cnposter-ills img {
+    animation: none;
+  }
+}
