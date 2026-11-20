@@ -20,6 +20,8 @@ import cardFull from './assets/ipaybtc-card-full.jpg'
 import hand1000 from './assets/ipaybtc-hand2-1000.jpg'
 import hand1800 from './assets/ipaybtc-hand2-1800.jpg'
 import handFull from './assets/ipaybtc-hand2-full.jpg'
+import toteImg from './assets/ipaybtc-tote-2400.jpg'
+import capImg from './assets/ipaybtc-cap-2400.jpg'
 import iconPhone1000 from './assets/ipaybtc-iconphone-1000.jpg'
 import iconPhone1800 from './assets/ipaybtc-iconphone-1800.jpg'
 import iconPhoneFull from './assets/ipaybtc-iconphone-full.jpg'
@@ -49,6 +51,10 @@ import lanyard2400 from './assets/ipaybtc-lanyard-blue-2400.jpg'
 import tee1200 from './assets/ipaybtc-tee-1200.jpg'
 import tee2400 from './assets/ipaybtc-tee-2400.jpg'
 import borderless from './assets/ipaybtc-borderless.mp4'
+import ipayLogoLoop from './assets/ipaybtc-logo-loop.mp4'
+import ipayTypeGrid from './assets/ipaybtc-type-grid.mp4'
+import ipayTypeGridPoster from './assets/ipaybtc-type-grid-poster.jpg'
+import ipayLogoLoopPoster from './assets/ipaybtc-logo-loop-poster.jpg'
 import ipayMotion from './assets/ipaybtc-brand-motion.mp4'
 import ipayMotionPoster from './assets/ipaybtc-brand-motion-poster.jpg'
 import borderlessPoster from './assets/ipaybtc-borderless-poster.jpg'
@@ -187,6 +193,8 @@ export interface CaseSlot {
     | 'ipaybtc-poster-spend'
     | 'ipaybtc-merch-reel'
     | 'ipaybtc-website'
+  /** Pictures cut to, one after another, once the live screen has played. */
+  then?: Array<{ src: string; label: string }>
   /** Frames for the merch reel, shown whole, one after another. */
   reel?: Array<{ src: string; srcSet?: string; label: string }>
   /** A cut-out of the photo laid over the live screen (fingers on the glass). */
@@ -208,6 +216,8 @@ export type CaseBlock =
   | { kind: 'pair'; slots: [CaseSlot, CaseSlot]; inset?: boolean; wide?: boolean; gapAfter?: boolean; cols?: string }
   | { kind: 'grid'; columns: number; slots: CaseSlot[] }
   | { kind: 'collage'; slots: CaseSlot[] }
+  /** A short write-up between plates. */
+  | { kind: 'text'; heading: string; body: string }
 
 export interface CaseSection {
   heading: string
@@ -245,7 +255,7 @@ const IPAY_TABLE: CaseSlot = {
     flow: 'swap',
     tone: 'dark',
     size: [5504, 3072],
-    corners: [[2317.0, 691.2], [3146.3, 867.1], [2657.1, 2619.0], [1792.9, 2413.4]],
+    corners: [[2317.8, 696.4], [3142.5, 872.3], [2656.2, 2613.6], [1796.6, 2409.4]],
     radius: 54,
     glare: 'linear-gradient(115deg, rgba(255,240,220,0.10) 0%, rgba(255,255,255,0) 45%, rgba(60,30,0,0.06) 100%)',
   },
@@ -260,9 +270,19 @@ const IPAY_CARD: CaseSlot = {
 }
 
 const IPAY_LOGO: CaseSlot = {
-  label: 'The iPayBTC wordmark on Electric Blue',
+  label: 'The iPayBTC wordmark animating through the brand colours',
   ratio: '16 / 9',
-  art: 'ipaybtc-logo',
+  src: ipayLogoLoop,
+  poster: ipayLogoLoopPoster,
+  video: true,
+}
+
+const IPAY_TYPE_GRID: CaseSlot = {
+  label: 'The display type introduced through its numerals, currency signs and the coin',
+  ratio: '16 / 9',
+  src: ipayTypeGrid,
+  poster: ipayTypeGridPoster,
+  video: true,
 }
 
 const IPAY_ICON: CaseSlot = {
@@ -287,10 +307,15 @@ const IPAY_HAND: CaseSlot = {
   screen: {
     flow: 'receive',
     size: [3584, 4480],
-    corners: [[774.7, 1205.5], [1798.3, 893.3], [2566.7, 3131.9], [1562.1, 3510.6]],
+    corners: [[839.8, 926.0], [1972.6, 594.7], [2824.6, 3076.7], [1708.8, 3470.3]],
     radius: 52,
     glare: 'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%)',
-  },
+  },  // After the payment lands: the tote, the cap, then the watch. Hard cuts.
+  then: [
+    { src: toteImg, label: 'The iPayBTC tote' },
+    { src: capImg, label: 'The iPayBTC cap' },
+    { src: fx29b, label: 'iPayBTC on the watch' },
+  ],
 }
 const plate = (label: string, ratio: string, name: [string, string]): CaseSlot => ({
   label,
@@ -358,7 +383,7 @@ const IPAY_WISE_MARKET: CaseSlot = {
     flow: 'swap',
     tone: 'light',
     size: [5471, 3072],
-    corners: [[2471.7, 990.1], [3071.4, 952.3], [3153.4, 2251.2], [2553.7, 2289]],
+    corners: [[2472.2, 987.2], [3066.7, 949.4], [3152.0, 2254.1], [2551.9, 2290.3]],
     radius: 46,
   },
 }
@@ -368,7 +393,7 @@ const IPAY_WISE_NAIL: CaseSlot = {
     flow: 'swap',
     tone: 'dark',
     size: [5504, 3072],
-    corners: [[1859.6, 1179.8], [2425, 638.6], [3625.3, 1892.4], [3059.9, 2433.6]],
+    corners: [[1850.6, 1167.4], [2438.6, 684.8], [3634.0, 1896.4], [3042.5, 2420.9]],
     radius: 52,
   },
 }
@@ -537,18 +562,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     hero: IPAY_TABLE,
     gallery: [
       { kind: 'full', slot: IPAY_CARD },
+      {
+        kind: 'text',
+        heading: 'The identity',
+        body: 'A wordmark that leans forward, a deep navy, a bright electric blue and a warm yellow. Small enough to sit on an app icon, bold enough to carry a billboard.',
+      },
       { kind: 'full', slot: IPAY_LOGO, inset: true, wide: true },
       { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true, wide: true },
-      { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true, gapAfter: true },
+      { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
+      {
+        kind: 'text',
+        heading: 'The website',
+        body: 'The site speaks the same language as the app: the same condensed display type, the same DM Sans, the same yellow. It leads with one promise, spend Bitcoin like money, and puts the live app right beside it.',
+      },
+      { kind: 'full', slot: IPAY_WEB, inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_TABLE },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
-      { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true },
+      { kind: 'full', slot: IPAY_CN_POSTER },
       { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_MARKET },
+      { kind: 'full', slot: IPAY_KEYPAD },
       { kind: 'full', slot: IPAY_WISE_NAIL },
+      { kind: 'full', slot: IPAY_TYPE_GRID, inset: true, wide: true },
       { kind: 'full', slot: IPAY_UNDER },
-      { kind: 'full', slot: IPAY_WEB, inset: true },
       // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },
     ],

@@ -56,12 +56,6 @@ export function Offices() {
 
             <p className="kora-office-time">{times[office.code]}</p>
 
-            <address className="kora-office-address">
-              {office.address.map((line) => (
-                <span key={line}>{line}</span>
-              ))}
-            </address>
-
           </li>
         ))}
       </ul>

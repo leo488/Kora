@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import ilSend from '../../assets/ipaybtc-ill/ipaybtc-send-transparent.webp'
 import './extras.css'
 import ipaybtcLogo from '../../assets/ipaybtc-logo.svg?raw'
 import art0 from '../../assets/ipaybtc-onboard/ob0-art.jpg'
@@ -176,8 +177,9 @@ export function WebsiteHero() {
           ))}
         </h3>
         <div className="ipx-web-row">
-          {/* Yellow until Leo sends the photo. */}
-          <div className="ipx-web-photo" />
+          <div className="ipx-web-photo">
+            <img className="ipx-web-ill" src={ilSend} alt="" />
+          </div>
           <div className="ipx-web-app">
             <div ref={phone} className="ipx-web-phone" style={{ transform: `scale(${s})` }}>
               <SwapApp playing={on} tone="dark" />

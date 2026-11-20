@@ -987,3 +987,359 @@
   transition: clip-path 0.9s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .ips-obphone-dark.is-on { clip-path: circle(150% at 50% 100%); }
+
+/* The bento onboarding screens on a photographed phone. */
+.ips-obstrip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #fff;
+}
+.ips-obstrip-row {
+  display: flex;
+  width: 1170px;
+  height: 844px;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.kora-case-plate .ips-obstrip-row img,
+.ips-obstrip-row img {
+  position: static;
+  flex: 0 0 390px;
+  width: 390px;
+  height: 844px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Keypad card, Nov 20: amount in the app's display face, and a sent
+   receipt that drops in once the amount is typed. */
+.ips-kcard-panel strong {
+  font-family: 'Barlow Condensed', 'DM Sans', sans-serif;
+  font-weight: 800;
+  font-size: 72px;
+  letter-spacing: 0;
+}
+
+.ips-kcard-scale {
+  position: relative;
+}
+
+.ips-kcard-toast {
+  position: absolute;
+  left: 50%;
+  top: -20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px 12px 12px;
+  border-radius: 999px;
+  background: #050e7f;
+  color: #fff;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  white-space: nowrap;
+  translate: -50% -60%;
+  scale: 0.6;
+  opacity: 0;
+  transition: translate 0.55s cubic-bezier(0.22, 1.4, 0.36, 1), scale 0.55s cubic-bezier(0.22, 1.4, 0.36, 1), opacity 0.25s;
+  transition-delay: 0.45s;
+  z-index: 2;
+}
+
+.ips-kcard-toast.is-on {
+  translate: -50% -100%;
+  scale: 1;
+  opacity: 1;
+}
+
+.ips-kcard-toast i {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff778;
+  color: #050e7f;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.ips-kcard-toast b {
+  display: block;
+  font: 800 22px/1 'Barlow Condensed', 'DM Sans', sans-serif;
+}
+
+.ips-kcard-toast small {
+  display: block;
+  margin-top: 3px;
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+/* Keypad card, Nov 20 (2): the new app's dark UI. Types the amount, the
+   review sheet rises, then the pixels gather into the sent check. */
+.ips-kcard .ips-kcard-scale {
+  position: relative;
+  height: 600px;
+  padding: 22px 18px 18px;
+  border: 0;
+  border-radius: 36px;
+  background: #0b0b10;
+  color: #fff;
+  overflow: hidden;
+}
+
+.ips-kcard-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ips-kcard-head small {
+  display: block;
+  font-size: 13px;
+  color: #a0a5b8;
+}
+
+.ips-kcard-head b {
+  display: block;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.ips-kcard-av {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  width: 44px;
+  height: 44px;
+  padding: 6px;
+  border-radius: 12px;
+  background: #0a31f5;
+}
+
+.ips-kcard-av i {
+  background: #fff778;
+  scale: 0.2;
+  transition: scale 0.22s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.ips-kcard.is-in .ips-kcard-av i {
+  scale: 1;
+}
+
+.ips-kcard-amt {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+  margin: 30px 0 22px;
+  font: 800 84px/0.9 'Barlow Condensed', 'DM Sans', sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.ips-kcard-amt.is-empty {
+  color: #4a4d5c;
+}
+
+.ips-kcard-amt em {
+  font: 700 15px/1 'DM Sans', sans-serif;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  color: #fff778;
+  margin-top: 8px;
+}
+
+.ips-kcard .ips-kcard-keys {
+  gap: 10px;
+  padding: 0 6px;
+}
+
+.ips-kcard .ips-kcard-keys span {
+  height: 68px;
+  border-radius: 20px;
+  aspect-ratio: auto;
+  justify-self: stretch;
+  background: #16171f;
+  color: #fff;
+  font-size: 28px;
+  transition: scale 0.16s cubic-bezier(0.2, 0, 0, 1), background 0.16s;
+}
+
+.ips-kcard .ips-kcard-keys span.is-pressed {
+  scale: 0.9;
+  background: #1c2a7a;
+  transition-duration: 0.09s;
+}
+
+.ips-kcard .ips-kcard-keys span:last-child {
+  background: #fff778;
+  color: #0b0b10;
+}
+
+.ips-kcard .ips-kcard-keys span.is-go {
+  scale: 0.9;
+}
+
+/* M5: the sheet rises with a small overshoot */
+.ips-kcard-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 22px 22px;
+  border-radius: 30px 30px 0 0;
+  background: #16171f;
+  translate: 0 105%;
+  transition: translate 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.ips-kcard[data-phase='sheet'] .ips-kcard-sheet,
+.ips-kcard[data-phase='press'] .ips-kcard-sheet {
+  translate: 0 0;
+}
+
+.ips-kcard[data-phase='done'] .ips-kcard-sheet {
+  translate: 0 105%;
+  transition: translate 0.22s cubic-bezier(0.3, 0, 1, 1);
+}
+
+.ips-kcard-grab {
+  display: block;
+  width: 40px;
+  height: 4px;
+  margin: 0 auto 18px;
+  border-radius: 4px;
+  background: #3a3c48;
+}
+
+.ips-kcard-title {
+  display: block;
+  font: 800 34px/1 'Barlow Condensed', 'DM Sans', sans-serif;
+  text-transform: uppercase;
+}
+
+.ips-kcard-sheet dl {
+  margin: 16px 0 22px;
+}
+
+.ips-kcard-sheet dl div {
+  display: flex;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-top: 1px solid #23242e;
+  font-size: 16px;
+}
+
+.ips-kcard-sheet dt {
+  color: #a0a5b8;
+}
+
+.ips-kcard-sheet dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.ips-kcard-btn {
+  display: grid;
+  place-items: center;
+  height: 60px;
+  border-radius: 999px;
+  background: #0a31f5;
+  font-size: 18px;
+  font-weight: 700;
+  transition: scale 0.16s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.ips-kcard[data-phase='press'] .ips-kcard-btn {
+  scale: 0.94;
+  transition-duration: 0.09s;
+}
+
+/* M7: sixteen pixels gather, the check strokes in, the title rises */
+.ips-kcard-done {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #0b0b10;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ips-kcard[data-phase='done'] .ips-kcard-done {
+  opacity: 1;
+}
+
+.ips-kcard-px {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 30px);
+  grid-auto-rows: 30px;
+  margin-bottom: 26px;
+}
+
+.ips-kcard-px i {
+  background: #0a31f5;
+  translate: var(--x) var(--y);
+  scale: 0.3;
+  opacity: 0;
+  transition: translate 0.36s cubic-bezier(0.2, 0, 0, 1), scale 0.36s cubic-bezier(0.2, 0, 0, 1), opacity 0.2s;
+}
+
+.ips-kcard[data-phase='done'] .ips-kcard-px i {
+  translate: 0 0;
+  scale: 1;
+  opacity: 1;
+}
+
+.ips-kcard-px svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ips-kcard-px path {
+  fill: none;
+  stroke: #fff778;
+  stroke-width: 3.4;
+  stroke-linecap: square;
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+}
+
+.ips-kcard[data-phase='done'] .ips-kcard-px path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.24s cubic-bezier(0.2, 0, 0, 1) 0.52s;
+}
+
+.ips-kcard-done b,
+.ips-kcard-done small {
+  opacity: 0;
+  translate: 0 8px;
+}
+
+.ips-kcard-done b {
+  font: 800 56px/1 'Barlow Condensed', 'DM Sans', sans-serif;
+  text-transform: uppercase;
+}
+
+.ips-kcard-done small {
+  font-size: 16px;
+  color: #a0a5b8;
+}
+
+.ips-kcard[data-phase='done'] .ips-kcard-done b,
+.ips-kcard[data-phase='done'] .ips-kcard-done small {
+  opacity: 1;
+  translate: 0 0;
+  transition: opacity 0.2s, translate 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition-delay: 0.7s;
+}
+
+.ips-kcard[data-phase='done'] .ips-kcard-done small {
+  transition-delay: 0.8s;
+}

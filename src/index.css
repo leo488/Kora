@@ -77,7 +77,9 @@
 
 .kora-container {
   width: 100%;
-  max-width: 1440px;
+  /* No cap: every band lines up with the nav on the same 24px gutter,
+     however wide the screen. */
+  max-width: none;
   margin: 0 auto;
   box-sizing: border-box;
 }
