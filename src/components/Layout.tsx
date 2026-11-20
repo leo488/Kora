@@ -4,6 +4,7 @@ import { THEME_KEY, ThemeContext, initialTheme } from '../theme/theme'
 import type { Theme } from '../theme/theme'
 import { DockedMasthead } from './Masthead'
 import { useFlareController } from '../hooks/useFlareController'
+import { Offices } from './Offices'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
 import { Announcement } from './Announcement'
@@ -50,6 +51,7 @@ export function Layout() {
           <Announcement />
           {!isHome && <DockedMasthead />}
           <Outlet />
+          <Offices />
           <Footer />
           <CookieBar />
         </ContactProvider>

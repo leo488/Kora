@@ -1702,7 +1702,6 @@
    no fades on the logo (brand rule). */
 .kora-footer-logo-box {
   width: 100%;
-  max-width: 1440px;
   margin-top: 72px;
 }
 
@@ -4828,7 +4827,7 @@
   width: auto;
 }
 
-/* Work-in-progress bar: Zobo pink, slides down from the top on scroll. */
+/* Work-in-progress bar: Plantain green, slides down from the top on scroll. */
 .kora-wip-bar {
   position: fixed;
   top: 0;
@@ -4836,7 +4835,7 @@
   right: 0;
   z-index: 300;
   padding: 10px 24px;
-  background: var(--koraa-zobo);
+  background: var(--koraa-plantain);
   color: var(--koraa-ink);
   font-size: 14px;
   font-weight: 500;
@@ -5179,4 +5178,49 @@
 .kora-rx-row-meta {
   margin-top: 14px;
   font-size: 15px;
+}
+
+/* Clock band, Nov 20: just the time in Abuja, on the same 24px gutter as the
+   nav and the footer. */
+.kora-offices-inner {
+  padding: 0 24px;
+}
+
+.kora-offices-label {
+  margin: 0 0 12px;
+  font-size: 17px;
+  font-weight: 500;
+  color: rgba(10, 10, 10, 0.78);
+}
+
+.kora-offices .kora-office-time {
+  margin: 0;
+  font-size: clamp(64px, 11vw, 200px);
+  line-height: 0.9;
+}
+
+/* One gutter for the whole page (Nov 20): nav, rows, clock band and footer
+   all start and end on the same line, on any screen. */
+.kora-app {
+  --kora-gutter: 24px;
+}
+
+@media (max-width: 760px) {
+  .kora-app {
+    --kora-gutter: 18px;
+  }
+}
+
+.kora-app .kora-footer {
+  padding-left: var(--kora-gutter);
+  padding-right: var(--kora-gutter);
+}
+
+.kora-app .kora-offices-inner {
+  padding: 0 var(--kora-gutter);
+}
+
+.kora-app .kora-pills {
+  padding-left: var(--kora-gutter);
+  padding-right: var(--kora-gutter);
 }
