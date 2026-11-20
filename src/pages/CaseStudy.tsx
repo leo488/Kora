@@ -6,8 +6,9 @@ import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
 import { Steam } from '../components/ipaybtc/Steam'
-import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg, Onboarding, TypeReel, OnboardPhone } from '../components/ipaybtc/Scenes'
+import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg, Onboarding, TypeReel } from '../components/ipaybtc/Scenes'
 import { Chip } from '../components/refreeg/Chip'
+import { MerchReel, OnboardTap, WebsiteHero } from '../components/ipaybtc/Extras'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 
 /* One case study: hero plate, intro with the facts beside it, the work told
@@ -110,7 +111,10 @@ function Block({ block }: { block: CaseBlock }) {
       return <Plate slot={block.slot} inset={block.inset} wide={block.wide} gapAfter={block.gapAfter} />
     case 'pair':
       return (
-        <div className={`kora-case-pair${block.inset ? ' is-inset' : ''}${block.wide ? ' is-wide' : ''}`} style={block.gapAfter ? { marginBottom: '100vh' } : undefined}>
+        <div
+          className={`kora-case-pair${block.inset ? ' is-inset' : ''}${block.wide ? ' is-wide' : ''}${block.cols ? ' has-cols' : ''}`}
+          style={{ ...(block.gapAfter ? { marginBottom: '100vh' } : null), ...(block.cols ? { ['--pair-cols' as string]: block.cols } : null) }}
+        >
           <Plate slot={block.slots[0]} />
           <Plate slot={block.slots[1]} />
         </div>
@@ -170,7 +174,7 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
         ) : slot.art === 'ipaybtc-wallposter' ? (
           <WallPoster post={1} />
         ) : slot.art === 'ipaybtc-onboard-phone' ? (
-          <OnboardPhone />
+          <OnboardTap />
         ) : slot.art === 'ipaybtc-onboard' ? (
           <Onboarding />
         ) : slot.art === 'ipaybtc-logo-blue' ? (
@@ -187,6 +191,10 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
           <TypePoster tone="navy" size={9} lines={['No bank opening hours.', 'No border.', 'No permission.']} />
         ) : slot.art === 'ipaybtc-poster-tea' ? (
           <TypePoster tone="yellow" lines={['Buy Bitcoin', 'before your', 'tea gets cold.']} />
+        ) : slot.art === 'ipaybtc-merch-reel' && slot.reel ? (
+          <MerchReel frames={slot.reel} />
+        ) : slot.art === 'ipaybtc-website' ? (
+          <WebsiteHero />
         ) : slot.art === 'ipaybtc-poster-spend' ? (
           <TypePoster tone="blue" lines={['Bitcoin was', 'never meant', 'to sit still.', 'Spend it.']} />
         ) : slot.src ? (

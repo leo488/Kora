@@ -4949,3 +4949,14 @@
   align-items: center;
   font-size: 17px;
 }
+
+/* A pair whose two plates share a height at different ratios. */
+.kora-case-pair.has-cols {
+  grid-template-columns: var(--pair-cols);
+}
+
+@media (max-width: 760px) {
+  .kora-case-pair.has-cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

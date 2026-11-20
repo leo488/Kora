@@ -46,7 +46,7 @@ export function useInView<T extends Element>(threshold = 0.3, once = true) {
 
 /** Scale for content drawn at a fixed size: `frac` of the plate's width
     divided by the drawn width. Written to --ips-s on the element. */
-function useFit<T extends HTMLElement>(ref: React.RefObject<T | null>, frac: number, drawn: number, byHeight = false) {
+export function useFit<T extends HTMLElement>(ref: React.RefObject<T | null>, frac: number, drawn: number, byHeight = false) {
   useEffect(() => {
     const el = ref.current
     const plate = el?.closest('.kora-case-plate') as HTMLElement | null
