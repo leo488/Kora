@@ -346,9 +346,9 @@ const IPAY_LAPTOP: CaseSlot = {
 const IPAY_LANDSCAPE: CaseSlot = {
   ...plate('iPayBTC held up over the hills', '5504 / 3072', [landscape1200, landscape2400]),
   screen: {
-    flow: 'launch',
+    flow: 'onboard',
     size: [5504, 3072],
-    corners: [[2346, 664], [3155, 667], [3164, 2441], [2333, 2438]],
+    corners: [[2346, 664], [3155, 667], [3158, 2436], [2336, 2434]],
     radius: 60,
   },
 }
@@ -515,11 +515,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_TYPE, inset: true },
       { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
       { kind: 'full', slot: IPAY_UNDER, gapAfter: true },
-      { kind: 'full', slot: IPAY_TYPE_REEL, inset: true, wide: true },
-      // The app where the wrap billboard was, beside the merch reel.
-      { kind: 'pair', slots: [IPAY_ONBOARD_PHONE, IPAY_MERCH], inset: true, wide: true, cols: 'minmax(0, 1fr) minmax(0, 2.082fr)' },
       { kind: 'full', slot: IPAY_WEB, inset: true },
-      // Last scene: the app launching in a hand over the hills.
+      // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },
     ],
     next: '3Projects',
@@ -627,7 +624,7 @@ export function caseStudyFor(slug: string | undefined) {
 
 /** The case study link for a project, if it has one. */
 /** Case studies that are out. Every other project shows a "coming" note. */
-const PUBLISHED = new Set(['ipaybtc', 'refreeg'])
+const PUBLISHED = new Set(['ipaybtc'])
 
 /** When the unpublished case studies are due. */
 export const CASE_STUDY_DUE = 'December 2026'
@@ -639,4 +636,4 @@ export function caseLinkFor(projectName: string) {
 
 /* Parked iPayBTC slots (cut from the running order, kept for the ideas
    inbox). Exported so the build keeps them without placing them on the page. */
-export const IPAY_PARKED = { IPAY_CN_POSTER, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }
+export const IPAY_PARKED = { IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_CN_POSTER, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }

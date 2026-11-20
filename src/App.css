@@ -4890,9 +4890,11 @@
   opacity: 1;
 }
 
+.kora-rx-newsletter-form input:focus,
 .kora-rx-newsletter-form input:focus-visible {
-  border-color: var(--koraa-zobo);
-  background: rgba(255, 142, 198, 0.08);
+  border-color: var(--koraa-plantain);
+  background: rgba(215, 242, 75, 0.08);
+  outline: none;
 }
 
 .kora-rx-newsletter-form .kora-pill {

@@ -4,8 +4,7 @@ import ipaybtcLogo from '../../assets/ipaybtc-logo.svg?raw'
 import art0 from '../../assets/ipaybtc-onboard/ob0-art.jpg'
 import art1 from '../../assets/ipaybtc-onboard/ob1-art.jpg'
 import art2 from '../../assets/ipaybtc-onboard/ob2-art.jpg'
-import webPhoto from '../../assets/ipaybtc-web-photo.jpg'
-import { AppScreen } from './AppScreen'
+import { SwapApp } from './SwapApp'
 import { useInView } from './Scenes'
 
 /* iPayBTC case study, Nov 20 pass: the onboarding as a real tap-through,
@@ -35,20 +34,19 @@ function useScaleTo<T extends HTMLElement>(w: number, h: number, frac: number) {
 
 const SLIDES = [
   { art: art0, head: ['Your Bitcoin', 'can travel.'], sub: 'Send sats to anyone, anywhere, in seconds. No border, no bank hours.' },
-  { art: art1, head: ['Buy Bitcoin before', 'your tea gets', 'cold.'], sub: 'Buy, swap and hold Bitcoin and stablecoins in one app.' },
+  { art: art1, head: ['Buy Bitcoin', 'before your tea', 'gets cold.'], sub: 'Buy, swap and hold Bitcoin and stablecoins in one app.' },
   { art: art2, head: ['Pay NEPA', 'in sats.'], sub: 'Airtime, data and light bills, straight from your Bitcoin.' },
 ]
 
 type Phase = 'in' | 'tap' | 'out'
 
-export function OnboardTap() {
-  const [view, on] = useInView<HTMLDivElement>(0.3, false)
-  const [ref, s] = useScaleTo<HTMLDivElement>(390, 844, 0.86)
+/** The onboarding screen itself, drawn at 390 × 844 (for a photo's phone). */
+export function OnboardScreen({ playing = true }: { playing?: boolean }) {
   const [step, setStep] = useState(0)
   const [phase, setPhase] = useState<Phase>('in')
 
   useEffect(() => {
-    if (!on || reduced()) return
+    if (!playing || reduced()) return
     const t = [
       window.setTimeout(() => setPhase('tap'), 2600),
       window.setTimeout(() => setPhase('out'), 3000),
@@ -58,49 +56,59 @@ export function OnboardTap() {
       }, 3450),
     ]
     return () => t.forEach(clearTimeout)
-  }, [on, step])
+  }, [playing, step])
 
   const slide = SLIDES[step]
   const last = step === SLIDES.length - 1
 
   return (
+    <div className="ipx-ob-screen">
+      <div className="ipx-ob-status">
+        <b>9:41</b>
+        <span className="ipx-ob-icons" />
+      </div>
+      <div className="ipx-ob-top">
+        <span className="ipx-ob-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+        <span>Skip</span>
+      </div>
+
+      <div key={step} className={`ipx-ob-body is-${phase}`}>
+        <img className="ipx-ob-art" src={slide.art} alt="" />
+        <h3 className="ipx-ob-head">
+          {slide.head.map((l, k) => (
+            <span key={l} style={{ animationDelay: `${180 + k * 90}ms` }}>
+              <i>{l}</i>
+            </span>
+          ))}
+        </h3>
+        <p className="ipx-ob-sub">{slide.sub}</p>
+      </div>
+
+      <div className="ipx-ob-dots">
+        {SLIDES.map((_, k) => (
+          <i key={k} className={k === step ? 'is-on' : ''} />
+        ))}
+      </div>
+
+      <div className="ipx-ob-actions">
+        <button className={`ipx-ob-next${phase === 'tap' ? ' is-pressed' : ''}`}>
+          <span key={last ? 'g' : 'n'}>{last ? 'Get started' : 'Next'}</span>
+          {phase === 'tap' && <em className="ipx-ob-touch" />}
+        </button>
+        <button className="ipx-ob-alt">I already have an account</button>
+      </div>
+      <span className="ipx-ob-homebar" />
+    </div>
+  )
+}
+
+export function OnboardTap() {
+  const [view, on] = useInView<HTMLDivElement>(0.3, false)
+  const [ref, s] = useScaleTo<HTMLDivElement>(390, 844, 0.86)
+  return (
     <div ref={view} className="ips ipx-ob" role="img" aria-label="iPayBTC onboarding: tapping Next brings in each screen">
       <div ref={ref} className="ipx-ob-phone" style={{ transform: `scale(${s})` }}>
-        <div className="ipx-ob-status">
-          <b>9:41</b>
-          <span className="ipx-ob-icons" />
-        </div>
-        <div className="ipx-ob-top">
-          <span className="ipx-ob-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
-          <span>Skip</span>
-        </div>
-
-        <div key={step} className={`ipx-ob-body is-${phase}`}>
-          <img className="ipx-ob-art" src={slide.art} alt="" />
-          <h3 className="ipx-ob-head">
-            {slide.head.map((l, k) => (
-              <span key={l} style={{ animationDelay: `${180 + k * 90}ms` }}>
-                <i>{l}</i>
-              </span>
-            ))}
-          </h3>
-          <p className="ipx-ob-sub">{slide.sub}</p>
-        </div>
-
-        <div className="ipx-ob-dots">
-          {SLIDES.map((_, k) => (
-            <i key={k} className={k === step ? 'is-on' : ''} />
-          ))}
-        </div>
-
-        <div className="ipx-ob-actions">
-          <button className={`ipx-ob-next${phase === 'tap' ? ' is-pressed' : ''}`}>
-            <span key={last ? 'g' : 'n'}>{last ? 'Get started' : 'Next'}</span>
-            {phase === 'tap' && <em className="ipx-ob-touch" />}
-          </button>
-          <button className="ipx-ob-alt">I already have an account</button>
-        </div>
-        <span className="ipx-ob-homebar" />
+        <OnboardScreen playing={on} />
       </div>
     </div>
   )
@@ -146,7 +154,7 @@ export function MerchReel({ frames, every = 4200 }: { frames: ReelFrame[]; every
 
 export function WebsiteHero() {
   const [ref, on] = useInView<HTMLDivElement>(0.25, false)
-  const [phone, s] = useScaleTo<HTMLDivElement>(390, 844, 0.98)
+  const [phone, s] = useScaleTo<HTMLDivElement>(390, 844, 1.0)
   return (
     <div ref={ref} className={`ips ipx-web${on ? ' is-on' : ''}`} role="img" aria-label="The iPayBTC website">
       <div className="ipx-web-page">
@@ -168,13 +176,11 @@ export function WebsiteHero() {
           ))}
         </h3>
         <div className="ipx-web-row">
-          {/* Interim photo until Leo sends the final one. */}
-          <div className="ipx-web-photo">
-            <img src={webPhoto} alt="" />
-          </div>
+          {/* Yellow until Leo sends the photo. */}
+          <div className="ipx-web-photo" />
           <div className="ipx-web-app">
             <div ref={phone} className="ipx-web-phone" style={{ transform: `scale(${s})` }}>
-              <AppScreen flow="buy" playing={on} />
+              <SwapApp playing={on} tone="dark" />
             </div>
           </div>
         </div>
