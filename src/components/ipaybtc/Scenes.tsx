@@ -346,7 +346,7 @@ export const POSTS: Post[] = [
 ]
 
 /** One 4:5 social post. */
-export function SocialPost({ p }: { p: Post }) {
+export function SocialPost({ p, flat = false }: { p: Post; flat?: boolean }) {
   return (
     <div className="ips-post" style={{ background: p.bg, color: p.fg }}>
       <p className="ips-post-head">
@@ -355,7 +355,7 @@ export function SocialPost({ p }: { p: Post }) {
         ))}
       </p>
       {p.sub && <p className="ips-post-sub">{p.sub}</p>}
-      <img className="ips-post-obj" src={p.obj} alt="" />
+      {!flat && <img className="ips-post-obj" src={p.obj} alt="" />}
       <div className="ips-post-foot">
         <span className="ips-post-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
         <span className="ips-post-stores">iOS · Android</span>
@@ -379,7 +379,7 @@ export function SocialCarousel() {
     <div ref={ref} className="ips ips-social">
       <div className="ips-social-track" style={{ ['--at' as string]: at }}>
         {loop.map((p, k) => (
-          <SocialPost key={k} p={p} />
+          <SocialPost key={k} p={p} flat />
         ))}
       </div>
       <div className="ips-social-frame" aria-hidden>

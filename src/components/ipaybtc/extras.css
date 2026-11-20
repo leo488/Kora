@@ -766,3 +766,27 @@
 .kora-case-plate:has(.ipx-mk2) + .kora-case-plate:has(.ipx-cc) {
   margin-top: calc(16px - clamp(48px, 6vw, 104px));
 }
+
+/* Nov 20 (6): one blue ground, plain switches, every piece the same size.
+   The pass sits low so its card reads at the others' size, lanyard running
+   up out of frame. Colour cards just pop in. */
+.ipx-mk2 img,
+.ipx-mk2 .is-tee,
+.ipx-mk2 .is-tote,
+.ipx-mk2 .is-watch {
+  top: 50%;
+  height: 80%;
+  animation: none;
+  scale: none;
+}
+.ipx-mk2 .is-pass {
+  top: auto;
+  bottom: 10%;
+  height: 165%;
+  translate: -50% 0;
+  animation: none;
+  scale: none;
+}
+.ipx-cc-card { animation: ipx-cc-pop 0.32s cubic-bezier(0.3, 1.6, 0.6, 1) both; }
+@keyframes ipx-cc-pop { from { scale: 0.6; } to { scale: 1; } }
+

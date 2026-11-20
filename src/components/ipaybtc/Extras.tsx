@@ -248,9 +248,9 @@ export function ColourCards() {
     tee on blue, tote, staff pass, then the watch. */
 const MOCKS = [
   { src: mkTee, cls: 'is-tee', bg: '#0a31f5', alt: 'The iPayBTC tee on a hanger' },
-  { src: mkTote, cls: 'is-tote', bg: '#fff778', alt: 'The iPayBTC tote' },
-  { src: mkPass, cls: 'is-pass', bg: '#88c2ed', alt: 'The iPayBTC staff pass on its lanyard' },
-  { src: mkWatch, cls: 'is-watch', bg: '#eceef3', alt: 'The iPayBTC app on a watch' },
+  { src: mkTote, cls: 'is-tote', bg: '#0a31f5', alt: 'The iPayBTC tote' },
+  { src: mkPass, cls: 'is-pass', bg: '#0a31f5', alt: 'The iPayBTC staff pass on its lanyard' },
+  { src: mkWatch, cls: 'is-watch', bg: '#0a31f5', alt: 'The iPayBTC app on a watch' },
 ]
 
 export function MockupBoard() {

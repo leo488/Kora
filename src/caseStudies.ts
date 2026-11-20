@@ -452,7 +452,7 @@ const IPAY_MERCH: CaseSlot = {
 const IPAY_COLOUR_CARDS = art('The campaign lines on the colour pairs: each bright card on its own deep square', '3 / 1.6', 'ipaybtc-colour-cards')
 const IPAY_MOCKUPS = art('The iPayBTC tote and staff pass', '16 / 9', 'ipaybtc-mockups')
 const IPAY_WEB = art('The iPayBTC website, with the app live beside the hero photo', '10130 / 6488', 'ipaybtc-website')
-const IPAY_SOCIAL = art('Posts sliding through the iPayBTC feed', '16 / 9', 'ipaybtc-social')
+const IPAY_SOCIAL = art('Posts sliding through the iPayBTC feed', '4 / 3', 'ipaybtc-social')
 const IPAY_WALL = art('The campaign as social posts', '16 / 9', 'ipaybtc-wall')
 const IPAY_ICONS = art('The iPayBTC 3D set: our coin, a coin ring, swap, gift, tick and bank', '16 / 9', 'ipaybtc-icons')
 const IPAY_COIN = art('The iPayBTC coin in 3D', '4 / 5', 'ipaybtc-coin')
@@ -593,6 +593,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_UNDER },
       // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },
+      { kind: 'full', slot: IPAY_SOCIAL, inset: true, wide: true },
     ],
     next: '3Projects',
   },
