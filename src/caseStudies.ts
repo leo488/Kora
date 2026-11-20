@@ -539,8 +539,9 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_CARD },
       { kind: 'full', slot: IPAY_LOGO, inset: true, wide: true },
       { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true, wide: true },
-      { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true, gapAfter: true },
+      { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
+      { kind: 'full', slot: IPAY_WEB, inset: true },
       { kind: 'full', slot: IPAY_WISE_TABLE },
       { kind: 'full', slot: IPAY_TYPE, inset: true },
       { kind: 'full', slot: IPAY_CN_POSTER, inset: true, wide: true },
@@ -548,7 +549,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: IPAY_WISE_MARKET },
       { kind: 'full', slot: IPAY_WISE_NAIL },
       { kind: 'full', slot: IPAY_UNDER },
-      { kind: 'full', slot: IPAY_WEB, inset: true },
       // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },
     ],
