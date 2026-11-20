@@ -20,6 +20,8 @@ import cardFull from './assets/ipaybtc-card-full.jpg'
 import hand1000 from './assets/ipaybtc-hand2-1000.jpg'
 import hand1800 from './assets/ipaybtc-hand2-1800.jpg'
 import handFull from './assets/ipaybtc-hand2-full.jpg'
+import toteImg from './assets/ipaybtc-tote-2400.jpg'
+import capImg from './assets/ipaybtc-cap-2400.jpg'
 import iconPhone1000 from './assets/ipaybtc-iconphone-1000.jpg'
 import iconPhone1800 from './assets/ipaybtc-iconphone-1800.jpg'
 import iconPhoneFull from './assets/ipaybtc-iconphone-full.jpg'
@@ -187,6 +189,8 @@ export interface CaseSlot {
     | 'ipaybtc-poster-spend'
     | 'ipaybtc-merch-reel'
     | 'ipaybtc-website'
+  /** Pictures cut to, one after another, once the live screen has played. */
+  then?: Array<{ src: string; label: string }>
   /** Frames for the merch reel, shown whole, one after another. */
   reel?: Array<{ src: string; srcSet?: string; label: string }>
   /** A cut-out of the photo laid over the live screen (fingers on the glass). */
@@ -287,10 +291,15 @@ const IPAY_HAND: CaseSlot = {
   screen: {
     flow: 'receive',
     size: [3584, 4480],
-    corners: [[774.7, 1205.5], [1798.3, 893.3], [2566.7, 3131.9], [1562.1, 3510.6]],
+    corners: [[849.1, 942.0], [1971.0, 599.9], [2813.2, 3053.4], [1712.1, 3468.5]],
     radius: 52,
     glare: 'linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%)',
-  },
+  },  // After the payment lands: the tote, the cap, then the watch. Hard cuts.
+  then: [
+    { src: toteImg, label: 'The iPayBTC tote' },
+    { src: capImg, label: 'The iPayBTC cap' },
+    { src: fx29b, label: 'iPayBTC on the watch' },
+  ],
 }
 const plate = (label: string, ratio: string, name: [string, string]): CaseSlot => ({
   label,

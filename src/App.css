@@ -5206,3 +5206,8 @@
   padding-left: var(--kora-gutter);
   padding-right: var(--kora-gutter);
 }
+
+/* Pictures the hand plate cuts to after the live screen. */
+.kora-case-frame > img.kora-case-then {
+  z-index: 3;
+}

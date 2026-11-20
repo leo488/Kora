@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { PROJECTS } from '../data'
 import { caseStudyFor } from '../caseStudies'
 import type { CaseBlock, CaseSlot } from '../caseStudies'
 import { Contact } from '../components/Sections'
 import { ScreenOverlay } from '../components/ipaybtc/ScreenOverlay'
+import type { PhoneScreen } from '../components/ipaybtc/ScreenOverlay'
 import { Steam } from '../components/ipaybtc/Steam'
 import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg, Onboarding, TypeReel } from '../components/ipaybtc/Scenes'
 import { Chip } from '../components/refreeg/Chip'
@@ -227,7 +228,7 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
                   loading={eager ? 'eager' : 'lazy'}
                 />
               )}
-              {slot.screen && <ScreenOverlay screen={slot.screen} />}
+              {slot.screen && (slot.then ? <ScreenThen screen={slot.screen} then={slot.then} /> : <ScreenOverlay screen={slot.screen} />)}
               {slot.steam && <Steam spot={slot.steam} />}
               {slot.top && <img className="kora-case-top" src={slot.top} alt="" aria-hidden />}
               {slot.keypad && <KeypadCard />}
@@ -249,3 +250,55 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
   )
 }
 
+
+/** The live screen plays once through, then the plate cuts (no fades) to
+    each picture in turn and back to the phone, which starts over. */
+const SCREEN_MS = 9800
+const CUT_MS = 2200
+
+function ScreenThen({ screen, then }: { screen: PhoneScreen; then: Array<{ src: string; label: string }> }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [onScreen, setOnScreen] = useState(false)
+  const [i, setI] = useState(-1) // -1: the phone
+  const [round, setRound] = useState(0)
+
+  useEffect(() => {
+    const el = ref.current?.parentElement
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => setOnScreen(e.isIntersecting), { threshold: 0.15 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!onScreen) return
+    const t = window.setTimeout(
+      () => {
+        if (i + 1 < then.length) setI(i + 1)
+        else {
+          setI(-1)
+          setRound((r) => r + 1)
+        }
+      },
+      i < 0 ? SCREEN_MS : CUT_MS,
+    )
+    return () => clearTimeout(t)
+  }, [onScreen, i, then.length])
+
+  return (
+    <>
+      <div ref={ref} hidden />
+      <ScreenOverlay key={round} screen={screen} />
+      {then.map((p, k) => (
+        <img
+          key={p.src}
+          className="kora-case-then"
+          src={p.src}
+          alt={k === i ? p.label : ''}
+          loading="lazy"
+          style={{ visibility: k === i ? 'visible' : 'hidden' }}
+        />
+      ))}
+    </>
+  )
+}
