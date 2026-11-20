@@ -173,13 +173,6 @@ const PRESS = ['2', '0', '0', '0', '0']
 /** The send flow lifted out of the new app, beside the people in a photo:
     the amount is typed, the review sheet rises, then the pixels gather into
     the sent check (motion M4, M5, M7 from the app's component library). */
-const AVATAR = [0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0]
-const SCATTER = Array.from({ length: 16 }, (_, i) => {
-  const a = (i * 137.5 * Math.PI) / 180
-  const r = 70 + ((i * 37) % 60)
-  return [Math.cos(a) * r, Math.sin(a) * r]
-})
-
 export function KeypadCard() {
   const [ref, on] = useInView<HTMLDivElement>(0.4, false)
   const [n, setN] = useState(0)
@@ -211,11 +204,10 @@ export function KeypadCard() {
     <div ref={ref} className={`ips-kcard${on ? ' is-in' : ''}`} data-phase={phase} aria-hidden>
       <div className="ips-kcard-scale">
         <div className="ips-kcard-head">
-          <span className="ips-kcard-av">
-            {AVATAR.map((p, i) => (
-              <i key={i} style={{ opacity: p, transitionDelay: `${((i % 4) + Math.floor(i / 4)) * 45}ms` }} />
-            ))}
-          </span>
+          <svg className="ips-kcard-av" viewBox="-24 -24 48 48">
+            <ellipse rx="13" ry="18.5" transform="rotate(32)" />
+            <text y="5.5" textAnchor="middle">T</text>
+          </svg>
           <span>
             <small>Send to</small>
             <b>Tolu Adebayo</b>
@@ -243,12 +235,10 @@ export function KeypadCard() {
           <span className="ips-kcard-btn">Send</span>
         </div>
         <div className="ips-kcard-done">
-          <span className="ips-kcard-px">
-            {SCATTER.map(([x, y], i) => (
-              <i key={i} style={{ ['--x' as string]: `${x}px`, ['--y' as string]: `${y}px`, transitionDelay: `${i * 14}ms` }} />
-            ))}
-            <svg viewBox="0 0 40 40"><path d="M11 21l6 6 12-14" /></svg>
-          </span>
+          <svg className="ips-kcard-coin" viewBox="-30 -30 60 60">
+            <ellipse rx="13" ry="18.5" transform="rotate(32)" />
+            <path d="M-6 1l4 4 8-9" />
+          </svg>
           <b>Sent</b>
           <small>20,000 sats to Tolu</small>
         </div>
@@ -356,7 +346,7 @@ export const POSTS: Post[] = [
 ]
 
 /** One 4:5 social post. */
-export function SocialPost({ p }: { p: Post }) {
+export function SocialPost({ p, flat = false }: { p: Post; flat?: boolean }) {
   return (
     <div className="ips-post" style={{ background: p.bg, color: p.fg }}>
       <p className="ips-post-head">
@@ -365,7 +355,7 @@ export function SocialPost({ p }: { p: Post }) {
         ))}
       </p>
       {p.sub && <p className="ips-post-sub">{p.sub}</p>}
-      <img className="ips-post-obj" src={p.obj} alt="" />
+      {!flat && <img className="ips-post-obj" src={p.obj} alt="" />}
       <div className="ips-post-foot">
         <span className="ips-post-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
         <span className="ips-post-stores">iOS · Android</span>
@@ -389,7 +379,7 @@ export function SocialCarousel() {
     <div ref={ref} className="ips ips-social">
       <div className="ips-social-track" style={{ ['--at' as string]: at }}>
         {loop.map((p, k) => (
-          <SocialPost key={k} p={p} />
+          <SocialPost key={k} p={p} flat />
         ))}
       </div>
       <div className="ips-social-frame" aria-hidden>

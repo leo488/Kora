@@ -228,7 +228,7 @@ export function ColourCards() {
         const l = LINES[(step + slot) % LINES.length]
         return (
           <div key={slot} className="ipx-cc-sq" style={{ background: p.deep }}>
-            <div key={step} className="ipx-cc-card" style={{ background: p.bright, color: p.ink, animationDelay: `${slot * 90}ms` }}>
+            <div key={step} className="ipx-cc-card" style={{ background: p.bright, color: p.ink, animationDelay: `${slot * 160}ms` }}>
               <b>
                 {l.head.map((h) => (
                   <span key={h}>{h}</span>
@@ -244,21 +244,29 @@ export function ColourCards() {
   )
 }
 
-/** The merch on one plain ground: tote, tee, watch and staff pass rise in
-    one after another, then drift slowly while they are on screen. */
+/** The merch, one piece at a time on its own ground, hard cuts between:
+    tee on blue, tote, staff pass, then the watch. */
 const MOCKS = [
-  { src: mkTote, cls: 'is-tote', alt: 'The iPayBTC tote' },
-  { src: mkTee, cls: 'is-tee', alt: 'The iPayBTC tee on a hanger' },
-  { src: mkWatch, cls: 'is-watch', alt: 'The iPayBTC app on a watch' },
-  { src: mkPass, cls: 'is-pass', alt: 'The iPayBTC staff pass on its lanyard' },
+  { src: mkTee, cls: 'is-tee', bg: '#0a31f5', alt: 'The iPayBTC tee on a hanger' },
+  { src: mkTote, cls: 'is-tote', bg: '#0a31f5', alt: 'The iPayBTC tote' },
+  { src: mkPass, cls: 'is-pass', bg: '#0a31f5', alt: 'The iPayBTC staff pass on its lanyard' },
+  { src: mkWatch, cls: 'is-watch', bg: '#0a31f5', alt: 'The iPayBTC app on a watch' },
 ]
 
 export function MockupBoard() {
-  const [ref, on] = useInView<HTMLDivElement>(0.3, true)
+  const [ref, on] = useInView<HTMLDivElement>(0.3, false)
+  const [step, setStep] = useState(0)
+  useEffect(() => {
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setInterval(() => setStep((s) => (s + 1) % MOCKS.length), 2600)
+    return () => clearInterval(t)
+  }, [on])
+  const m = MOCKS[step]
   return (
-    <div ref={ref} className={`ipx-mk${on ? ' is-on' : ''}`}>
-      {MOCKS.map((m, i) => (
-        <img key={m.cls} className={m.cls} src={m.src} alt={m.alt} loading="lazy" style={{ ['--i' as string]: i }} />
+    <div ref={ref} className="ipx-mk2" style={{ background: m.bg }}>
+      <img key={step} className={m.cls} src={m.src} alt={m.alt} />
+      {MOCKS.map((x) => (
+        <link key={x.cls} rel="preload" as="image" href={x.src} />
       ))}
     </div>
   )
