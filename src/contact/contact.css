@@ -411,3 +411,50 @@ button.kora-cta {
     flex: 1 1 100%;
   }
 }
+
+/* The contact page: the same brief, in the page. */
+.kora-contact-page {
+  display: grid;
+  grid-template-columns: minmax(0, 640px) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 120px);
+  align-items: start;
+  padding: 0 var(--kora-gutter) clamp(80px, 9vw, 140px);
+}
+
+.kora-dialog.is-inline {
+  display: block;
+  position: static;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  margin: 0;
+  overflow: visible;
+}
+
+.kora-contact-side {
+  display: grid;
+  gap: 32px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text-h);
+}
+
+.kora-contact-side span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.kora-contact-side a {
+  color: var(--text-h);
+}
+
+.kora-contact-side address {
+  font-style: normal;
+}
+
+@media (max-width: 900px) {
+  .kora-contact-page { grid-template-columns: minmax(0, 1fr); }
+  .kora-dialog.is-inline { width: 100%; height: auto; border: 1px solid var(--border); }
+}

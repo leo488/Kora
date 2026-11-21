@@ -15,6 +15,7 @@ const ACCESS_KEY = import.meta.env.VITE_CONTACT_ACCESS_KEY as string | undefined
 
 export interface Brief {
   services: string[]
+  budget: string
   company: string
   goal: string
   timeline: string
@@ -37,6 +38,7 @@ const lines = (brief: Brief) =>
     `Reply by: ${brief.prefer}`,
     `Brand or company: ${brief.company}`,
     `Needs: ${brief.services.join(', ')}`,
+    brief.budget && `Budget: ${brief.budget}`,
     brief.timeline && `Timeline: ${brief.timeline}`,
     brief.goal && `\nAbout the project:\n${brief.goal}`,
     brief.note && `\n${brief.note}`,

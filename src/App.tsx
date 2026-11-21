@@ -8,6 +8,8 @@ import { About } from './pages/About'
 import { Blog } from './pages/Blog'
 import { CaseStudy } from './pages/CaseStudy'
 import { BrandTest } from './pages/BrandTest'
+import { BlogPost } from './pages/BlogPost'
+import { ContactPage } from './pages/Contact'
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/work/:slug" element={<CaseStudy />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/brand-test" element={<BrandTest />} />
         </Route>
       </Routes>
