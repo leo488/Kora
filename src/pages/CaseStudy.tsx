@@ -249,10 +249,11 @@ export function Plate({ slot, eager = false, inset = false, wide = false, gapAft
               {slot.overlay === 'cn-poster' && (
                 <>
                 <div className="kora-cnposter-bg" aria-hidden />
+                {/* Coins parked (Leo, Nov 21): plain pink behind the lady.
                 <div className="kora-cnposter-ills" aria-hidden>
                   <span className="is-fan" dangerouslySetInnerHTML={{ __html: ilCoinFan }} />
                   <span className="is-stacks" dangerouslySetInnerHTML={{ __html: ilStacks }} />
-                </div>
+                </div> */}
                 <img className="kora-cnposter-cut" src={ladyCut} alt="" aria-hidden />
                 </>
               )}
@@ -319,3 +320,6 @@ function ScreenThen({ screen, then }: { screen: PhoneScreen; then: Array<{ src: 
     </>
   )
 }
+
+/* Kept for when the coins come back. */
+export const PARKED_COINS = [ilCoinFan, ilStacks]

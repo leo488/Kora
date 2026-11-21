@@ -791,20 +791,9 @@
 @keyframes ipx-cc-pop { from { scale: 0.6; } to { scale: 1; } }
 
 
-/* Nov 20 (7): social and poster on the light grey; post and card copy in
-   the app's own type (DM Sans), no condensed display face. */
+/* Nov 20 (7), revised Nov 21: social on the light grey. Leo wants the
+   bold display type back on posts and cards (not DM Sans), and the Chinese
+   poster on the iPayBTC pink with the coins taken out. */
 .ips.ips-social { background: #eceef3; }
-.kora-case-frame > .kora-cnposter-bg { background: #eceef3; }
-.ips-post-head,
-.ipx-cc-card b {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 700;
-  text-transform: none;
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-.ips-post-head { font-size: 10.5cqw; }
-.ipx-cc-card b { font-size: 2.3cqw; }
-.ips-post-sub { font-family: 'DM Sans', sans-serif; }
+.kora-case-frame > .kora-cnposter-bg { background: #f6d5dd; animation: none; }
 .ips-social-track.is-snap { transition: none; }
-@media (max-width: 760px) { .ipx-cc-card b { font-size: 3.6cqw; } }
