@@ -2,9 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { THEME_KEY, ThemeContext, initialTheme } from '../theme/theme'
 import type { Theme } from '../theme/theme'
-import { DockedMasthead } from './Masthead'
+import { NxHeader } from '../nx/NxHeader'
+import '../nx/nx.css'
 import { useFlareController } from '../hooks/useFlareController'
-import { Offices } from './Offices'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
 import { Announcement } from './Announcement'
@@ -39,22 +39,20 @@ export function Layout() {
     }
   }, [theme])
 
-  const isHome = pathname === '/'
   // The bottom-of-screen image flare, for every image on every page.
   useFlareController()
 
   return (
     <ThemeContext.Provider value={themeValue}>
-      <main className={`kora-app is-${shown}`}>
+      <main className={`kora-app nx-app is-${shown}`} data-path={pathname}>
         {/* Every page wears the homepage masthead. Home drives it from its
             own scroll; the rest show it docked at the top. */}
         {/* The project brief modal lives here so every page can open it and
             it inherits the theme. */}
         <ContactProvider>
           <Announcement />
-          {!isHome && <DockedMasthead />}
+          <NxHeader />
           <Outlet />
-          <Offices />
           <Footer />
           <CookieBar />
         </ContactProvider>

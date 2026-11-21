@@ -1,0 +1,974 @@
+/* ---------------------------------------------------------------------------
+   Nonstop layout (Nov 21). One grid for every page: a 12px gutter, two
+   halves, labels on the left half and content on the right. Koraa’ fonts,
+   colours, logo and motion are unchanged; only the layout is new.
+   No fades, no shadows: things cut or scale.
+   --------------------------------------------------------------------------- */
+
+.nx-app {
+  --nx-g: 12px;
+  --nx-head: 52px;
+  --nx-line: var(--border);
+}
+
+/* The bar ---------------------------------------------------------------- */
+
+.nx-head {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  height: var(--nx-head);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--nx-g);
+  align-items: center;
+  padding: 0 var(--nx-g);
+  background: var(--bg);
+  font-size: 15px;
+}
+
+.nx-head-spacer {
+  height: var(--nx-head);
+}
+
+.nx-head-logo {
+  display: inline-flex;
+  width: 74px;
+  color: var(--text-h);
+}
+
+.nx-head-logo svg {
+  width: 100%;
+  height: auto;
+}
+
+.nx-head-nav {
+  display: flex;
+  gap: 16px;
+}
+
+.nx-head-nav a,
+.nx-head-cta {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.nx-head-nav a:hover,
+.nx-head-nav a.is-active,
+.nx-head-cta:hover {
+  color: var(--text-h);
+}
+
+.nx-head-end {
+  position: absolute;
+  right: var(--nx-g);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nx-head-theme {
+  color: var(--text);
+}
+
+/* Shared pieces ---------------------------------------------------------- */
+
+.nx-page {
+  padding: 0 var(--nx-g);
+  overflow-x: clip;
+}
+
+.nx-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--nx-g);
+}
+
+.nx-label {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.nx-label sup {
+  font-size: 10px;
+}
+
+.nx-lead {
+  margin: 0;
+  max-width: 34ch;
+  font-size: clamp(20px, 1.6vw, 26px);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.nx-lead a {
+  color: inherit;
+}
+
+.nx-meta {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.nx-arrow {
+  flex: none;
+}
+
+.nx-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-h);
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.nx-link:hover {
+  color: var(--accent-ink);
+}
+
+.nx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--surface-hover);
+  color: var(--text-h);
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nx-btn:hover:not(:disabled) {
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+}
+
+.nx-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.nx-section {
+  padding: clamp(96px, 12vw, 200px) 0 0;
+}
+
+/* Home ------------------------------------------------------------------- */
+
+.nx-intro {
+  padding: 12px 0 0;
+}
+
+.nx-intro .nx-lead {
+  max-width: 40ch;
+}
+
+/* The logo animation, looping in grey across the whole page. */
+.nx-mark {
+  margin: clamp(32px, 6vw, 110px) 0 clamp(8px, 1vw, 16px);
+  --nx-loop: #2a2a2a;
+  --nx-loop-fly: #3a3a3a;
+}
+
+.kora-app.is-light .nx-mark {
+  --nx-loop: #dcdbd5;
+  --nx-loop-fly: #cfcec8;
+}
+
+.nx-loop {
+  display: block;
+  width: 100%;
+}
+
+.nx-logos {
+  margin: 0 calc(-1 * var(--nx-g));
+  padding: 14px 0;
+  border-top: 1px solid var(--nx-line);
+  border-bottom: 1px solid var(--nx-line);
+}
+
+.nx-logos .kora-marquee {
+  margin: 0;
+}
+
+.nx-more {
+  padding: 28px 0 0;
+}
+
+/* Work rows -------------------------------------------------------------- */
+
+.nx-rows {
+  list-style: none;
+  margin: clamp(64px, 8vw, 140px) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--nx-g);
+}
+
+.nx-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--nx-g);
+  color: inherit;
+  text-decoration: none;
+}
+
+.nx-row-media {
+  aspect-ratio: 16 / 9;
+  overflow: visible;
+}
+
+.nx-row-media .kora-flare > img,
+.nx-row-media .kora-flare > video {
+  transition: scale 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nx-row:hover .nx-row-media .kora-flare > img,
+.nx-row:hover .nx-row-media .kora-flare > video {
+  scale: 1.03;
+}
+
+.nx-row-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.nx-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  color: var(--text-h);
+}
+
+.nx-row-head h3 {
+  margin: 0 0 4px;
+  font-size: clamp(18px, 1.4vw, 22px);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.nx-row:hover .nx-row-head .nx-arrow {
+  color: var(--accent-ink);
+}
+
+.nx-soon {
+  flex: none;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.nx-row-stat {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: var(--text-h);
+}
+
+.nx-row-stat span {
+  color: var(--text);
+}
+
+.nx-row-story {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+/* Accordion and lists ---------------------------------------------------- */
+
+.nx-acc,
+.nx-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nx-acc li,
+.nx-list li {
+  border-bottom: 1px solid var(--nx-line);
+}
+
+.nx-acc button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 0;
+  border: 0;
+  background: none;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nx-acc-sign {
+  color: var(--text);
+}
+
+.nx-acc-body {
+  padding: 0 0 18px;
+}
+
+.nx-acc-body p {
+  margin: 0 0 10px;
+  max-width: 60ch;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.nx-list-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto 12px;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.nx-list-thumb {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.nx-list-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: scale 0.4s;
+}
+
+.nx-list-row:hover .nx-list-thumb img {
+  scale: 1.08;
+}
+
+.nx-list-row:hover {
+  color: var(--accent-ink);
+}
+
+.nx-inline-form {
+  display: flex;
+  gap: var(--nx-g);
+  align-items: center;
+  border-bottom: 1px solid var(--nx-line);
+}
+
+.nx-inline-form input,
+.nx-fields input,
+.nx-fields textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 0;
+  border: 0;
+  background: none;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 20px;
+  outline: none;
+}
+
+.nx-inline-form input::placeholder,
+.nx-fields input::placeholder,
+.nx-fields textarea::placeholder {
+  color: var(--text);
+}
+
+/* Case study ------------------------------------------------------------- */
+
+.nx-case {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: var(--nx-g);
+  align-items: start;
+  padding-top: 12px;
+}
+
+.nx-case-work {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nx-g);
+  min-width: 0;
+}
+
+/* The plates fill the column: the full-page widths, insets and big gaps of
+   the old layout give way to one tight stack. */
+.nx-case-work > *,
+.nx-case-work .kora-case-gallery > * {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  align-self: stretch !important;
+}
+
+.nx-case-work .kora-case-plate {
+  width: 100%;
+}
+
+.nx-case-work .kora-case-pair {
+  gap: var(--nx-g);
+}
+
+.nx-case-work .kora-rx-media {
+  --kora-flare: 40px;
+}
+
+.nx-case-panel {
+  position: sticky;
+  top: calc(var(--nx-head) + 12px);
+  z-index: 2;
+  height: calc(100svh - var(--nx-head) - 24px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  overflow-y: auto;
+  background: var(--bg);
+  scrollbar-width: none;
+}
+
+.nx-case-id {
+  display: grid;
+  grid-template-columns: 24px auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--nx-line);
+  color: var(--text-h);
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nx-case-id img {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.nx-case-id h1,
+.nx-case-id strong {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.nx-case-tag {
+  padding-left: 32px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nx-case-year {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+
+.nx-case-id.is-link:hover,
+.nx-case-id.is-link:hover .nx-case-tag,
+.nx-case-id.is-link:hover .nx-case-year {
+  color: var(--accent-ink);
+}
+
+.nx-case-panel .nx-acc-body p {
+  font-size: 17px;
+}
+
+.nx-case-next p {
+  margin: 0 0 12px;
+  font-size: 22px;
+  color: var(--text-h);
+}
+
+.nx-case-next .nx-case-id {
+  padding-top: 12px;
+  border-top: 1px solid var(--nx-line);
+}
+
+/* Contact ---------------------------------------------------------------- */
+
+.nx-contact {
+  min-height: calc(100svh - var(--nx-head) - 120px);
+  padding-top: 24px;
+  padding-bottom: 120px;
+}
+
+.nx-contact-title {
+  margin: 0 0 40px;
+  font-size: clamp(26px, 2.2vw, 34px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--text-h);
+}
+
+.nx-fields {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.nx-fields > input,
+.nx-fields > textarea {
+  border-bottom: 1px solid var(--nx-line);
+  resize: vertical;
+}
+
+.nx-fields fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.nx-fields legend {
+  padding: 16px 0 14px;
+  font-size: 20px;
+  color: var(--text);
+}
+
+.nx-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--nx-line);
+}
+
+.nx-chips button {
+  padding: 9px 14px;
+  border: 1px solid var(--nx-line);
+  border-radius: 999px;
+  background: none;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.nx-chips button[aria-pressed='true'] {
+  border-color: var(--koraa-plantain);
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+}
+
+.nx-error {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--koraa-jollof);
+}
+
+.nx-form-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.nx-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.nx-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-hover);
+  cursor: pointer;
+}
+
+.nx-dots button.is-on {
+  background: var(--text-h);
+}
+
+.nx-dots button:disabled {
+  cursor: default;
+}
+
+/* Phones ----------------------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .nx-head {
+    grid-template-columns: auto 1fr;
+  }
+
+  .nx-head-nav {
+    gap: 12px;
+    font-size: 14px;
+    justify-content: flex-end;
+  }
+
+  .nx-head-nav a[href='/about'],
+  .nx-head-nav a[href='/blog'],
+  .nx-head-end {
+    display: none;
+  }
+
+  .nx-split,
+  .nx-row,
+  .nx-case {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nx-split > div:empty {
+    display: none;
+  }
+
+  .nx-section .nx-label {
+    margin-bottom: 12px;
+  }
+
+  .nx-row-text {
+    gap: 12px;
+    padding-bottom: 20px;
+  }
+
+  .nx-case-panel {
+    position: static;
+    height: auto;
+    order: -1;
+  }
+
+  .nx-case-tag {
+    padding-left: 8px;
+  }
+
+  .nx-list-row {
+    grid-template-columns: 56px 1fr 12px;
+  }
+
+  .nx-list-row .nx-meta {
+    display: none;
+  }
+}
+
+/* Footer wordmark: dark glass, lit from the top left, sinking into the page
+   at its foot. */
+.nx-app .kora-footer-logo-box {
+  position: relative;
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
+}
+
+.nx-glass {
+  position: relative;
+  aspect-ratio: 2632 / 793;
+  overflow: hidden;
+}
+
+.nx-glass > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-box: fill-box;
+  will-change: translate;
+}
+
+/* The work-in-progress bar slides in over the top while scrolling: move the
+   bar down under it, at the same pace, so the links stay reachable. */
+.nx-head {
+  transition: translate 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nx-app:has(.kora-wip-bar.is-shown) .nx-head {
+  translate: 0 46px;
+}
+
+@media (max-width: 760px) {
+  .nx-app:has(.kora-wip-bar.is-shown) .nx-head {
+    translate: none;
+  }
+}
+
+/* Footer, in the split layout ------------------------------------------- */
+
+.nx-app .kora-footer.nx-foot {
+  padding: clamp(120px, 14vw, 220px) var(--nx-g) var(--nx-g);
+  background: var(--bg);
+}
+
+.nx-foot-mail {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  max-width: none;
+  margin-bottom: 20px;
+}
+
+.nx-foot-mail a {
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.nx-foot-mail a:hover {
+  color: var(--accent-ink);
+}
+
+.nx-foot-mail .kora-footer-action {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.nx-foot-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nx-foot-list li {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--nx-g);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--nx-line);
+  font-size: 15px;
+  color: var(--text-h);
+}
+
+.nx-foot-list li > span:first-child {
+  color: var(--text);
+}
+
+.nx-foot-list a,
+.nx-foot-list button {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--text-h);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nx-foot-list a:hover,
+.nx-foot-list button:hover {
+  color: var(--accent-ink);
+}
+
+.nx-app .nx-foot .kora-footer-logo-box {
+  margin-top: clamp(80px, 10vw, 160px);
+}
+
+.nx-foot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 8px;
+}
+
+.nx-foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 17px;
+}
+
+.nx-foot-links a {
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.nx-foot-links a:hover {
+  color: var(--accent-ink);
+}
+
+.nx-foot-meta {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* One button style everywhere: the pills left in older parts of the site
+   take the bar's square grey button. */
+.nx-app .kora-pill,
+.nx-app .kora-pill.is-solid {
+  border-radius: 4px;
+  border: 0;
+  background: var(--surface-hover);
+  color: var(--text-h);
+}
+
+.nx-app .kora-pill:hover,
+.nx-app .kora-pill.is-solid:hover {
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+}
+
+/* Brand test, on the split ----------------------------------------------- */
+
+.nx-app .kora-bt-stage {
+  grid-template-columns: 1fr 1fr;
+  gap: var(--nx-g);
+  padding: 12px var(--nx-g) 96px;
+  min-height: calc(100svh - var(--nx-head));
+}
+
+.nx-app .kora-bt-panel {
+  top: calc(var(--nx-head) + 12px);
+  height: calc(100svh - var(--nx-head) - 24px);
+}
+
+.nx-app .kora-bt-main {
+  align-items: flex-start;
+}
+
+.nx-app .kora-bt-step {
+  padding: 0;
+  max-width: none;
+  gap: 20px;
+}
+
+.nx-app .kora-bt-label {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text);
+}
+
+.nx-app .kora-bt-step h1 {
+  font-size: clamp(26px, 2.2vw, 34px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.nx-app .kora-bt-lede {
+  max-width: 34ch;
+  font-size: clamp(20px, 1.6vw, 26px);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+.nx-app .kora-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: none;
+}
+
+.nx-app .kora-field-label,
+.nx-app .kora-field-hint {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.nx-app .kora-field input {
+  width: 100%;
+  padding: 10px 0 14px;
+  border: 0;
+  border-bottom: 1px solid var(--nx-line);
+  border-radius: 0;
+  background: none;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 20px;
+  outline: none;
+}
+
+.nx-app .kora-field input:focus {
+  border-bottom-color: var(--text-h);
+}
+
+@media (max-width: 760px) {
+  .nx-app .kora-bt-stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nx-app .kora-bt-panel {
+    position: relative;
+    top: 0;
+    height: 46svh;
+    min-height: 0;
+  }
+
+  .nx-foot-list li {
+    grid-template-columns: 96px 1fr;
+  }
+
+  .nx-foot-mail {
+    flex-wrap: wrap;
+  }
+}
+
+.nx-app .kora-footer.nx-foot {
+  display: block;
+  border-top: 0;
+}
+
+.nx-foot > * {
+  width: 100%;
+}
+
+/* Rows, as Nonstop rules them: a hairline over every project, the same
+   small air above and below the picture, the copy pinned top and bottom. */
+.nx-rows {
+  gap: 0;
+  border-bottom: 1px solid var(--nx-line);
+}
+
+.nx-rows > li {
+  padding: var(--nx-g) 0;
+  border-top: 1px solid var(--nx-line);
+}
+
+.nx-row-head h3 {
+  font-size: clamp(18px, 1.45vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.nx-row-head .nx-meta {
+  font-size: 14px;
+}
+
+.nx-row-story {
+  max-width: 62ch;
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.4;
+}
+
+.nx-row-text {
+  padding-top: 0;
+}

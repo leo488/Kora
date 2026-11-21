@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { NAV_LINKS } from '../data'
-import { KoraMark } from './KoraMark'
+import g0 from '../assets/glass/koraa-glass-0.webp'
+import g1 from '../assets/glass/koraa-glass-1.webp'
+import g2 from '../assets/glass/koraa-glass-2.webp'
+import g3 from '../assets/glass/koraa-glass-3.webp'
+import g4 from '../assets/glass/koraa-glass-4.webp'
+import g5 from '../assets/glass/koraa-glass-5.webp'
+
+const GLASS = [g0, g1, g2, g3, g4, g5]
 import { useContact } from '../contact/useContact'
 import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
 
@@ -24,7 +31,7 @@ function useScrollDrop() {
 
   useEffect(() => {
     const box = ref.current
-    const glyphs = box ? Array.from(box.querySelectorAll<SVGPathElement>('svg > path')) : []
+    const glyphs = box ? Array.from(box.querySelectorAll<HTMLElement>('.nx-glass > img')) : []
     if (!box || !glyphs.length) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
@@ -85,68 +92,61 @@ export function Footer() {
   const logoRef = useScrollDrop()
 
   return (
-    <footer className="kora-footer">
-      <dl className="kora-footer-list kora-container">
-        <div className="kora-footer-item">
-          <dt>New business</dt>
-          <dd>
+    <footer className="kora-footer nx-foot">
+      <div className="nx-split nx-foot-top">
+        <p className="nx-label">Get in touch</p>
+        <div>
+          <p className="nx-lead nx-foot-mail">
             <a href={`mailto:${NEW_BUSINESS_EMAIL}`}>{NEW_BUSINESS_EMAIL}</a>
-          </dd>
-          <dd className="kora-footer-item-action">
             <CopyText text={NEW_BUSINESS_EMAIL} />
-          </dd>
+          </p>
+          <ul className="nx-foot-list">
+            <li>
+              <span>Find us</span>
+              <span>10C Momoh Close, Freedom Avenue, Abuja</span>
+            </li>
+            <li>
+              <span>Brand test</span>
+              <Link to="/brand-test">Take the brand test</Link>
+            </li>
+            <li>
+              <span>Call</span>
+              <button type="button" onClick={() => openContact({ prefer: 'A call' })}>
+                Book a call
+              </button>
+            </li>
+          </ul>
         </div>
-        <div className="kora-footer-item">
-          <dt>Find us</dt>
-          <dd>10C Momoh Close, Freedom Avenue, Abuja</dd>
-        </div>
-        <div className="kora-footer-item">
-          <dt>Brand test</dt>
-          <dd>
-            <Link to="/brand-test">Take the brand test</Link>
-          </dd>
-        </div>
-      </dl>
+      </div>
 
-      <div className="kora-footer-pills kora-container">
-        <button
-          type="button"
-          className="kora-pill is-solid kora-footer-cta"
-          onClick={() => openContact({ prefer: 'A call' })}
-        >
-          Book A Call
-        </button>
-        <div className="kora-footer-social">
-          {SOCIAL.map((s) => (
-            <a key={s.label} className="kora-pill is-solid" href={s.href}>
-              {s.label}
-            </a>
+      <div ref={logoRef} className="kora-footer-logo-box">
+        {/* The wordmark rendered in 3D (three.js, offline): grained dark
+            faces, polished chamfers. One layer per letter so each can drop
+            in on its own as the footer scrolls into view. */}
+        <div className="kora-footer-logo nx-glass" role="img" aria-label="Koraa’">
+          {GLASS.map((src) => (
+            <img key={src} src={src} alt="" loading="lazy" draggable={false} />
           ))}
         </div>
       </div>
 
-      <nav className="kora-footer-sitemap kora-container" aria-label="Footer">
-        {NAV_LINKS.map((item) =>
-          item.to ? (
-            <Link key={item.label} to={item.to}>
+      <div className="nx-foot-bottom">
+        <nav className="nx-foot-links" aria-label="Footer">
+          {SOCIAL.map((s) => (
+            <a key={s.label} href={s.href}>
+              {s.label}
+            </a>
+          ))}
+          {NAV_LINKS.filter((item) => item.to).map((item) => (
+            <Link key={item.label} to={item.to!}>
               {item.label}
             </Link>
-          ) : (
-            <a key={item.label} href="#">
-              {item.label}
-            </a>
-          ),
-        )}
-      </nav>
-
-      <div ref={logoRef} className="kora-footer-logo-box">
-        <KoraMark className="kora-footer-logo" />
-      </div>
-
-      <div className="kora-footer-meta kora-container">
-        <span>&copy; 2026 Koraa Studios Ltd. All rights reserved.</span>
-        <span className="kora-footer-rc">RC 10005554</span>
-        <span>Designed &amp; built with care.</span>
+          ))}
+        </nav>
+        <p className="nx-foot-meta">
+          <span>&copy; 2026 Koraa Studios Ltd.</span>
+          <span>RC 10005554</span>
+        </p>
       </div>
     </footer>
   )

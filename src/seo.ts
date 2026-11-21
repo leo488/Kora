@@ -28,18 +28,6 @@ const CASES: PageMeta[] = [
     description:
       'How Koraa’ rebuilt the iPayBTC brand, app and campaign so paying, saving and sending in sats feels as familiar as any bank app.',
   },
-  {
-    path: '/work/3projects',
-    title: '3PROJECTS: brand identity for an IT consultancy | Koraa’ case study',
-    description:
-      'Brand identity, logo system and campaign for 3PROJECTS, an IT consultancy working at the meeting point of enterprise transformation and technology.',
-  },
-  {
-    path: '/work/refreeg',
-    title: 'Refreeg: giving you can see | Koraa’ case study',
-    description:
-      'Brand identity, product design and web app for Refreeg, a giving platform built so donors can follow every naira from the first to the last.',
-  },
 ]
 
 export const PAGES: PageMeta[] = [

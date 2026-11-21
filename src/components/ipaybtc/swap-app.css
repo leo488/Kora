@@ -8,7 +8,7 @@
   --isw-text: #ffffff;
   --isw-muted: #a0a5b8;
   --isw-blue: #0a31f5;
-  --isw-yellow: #fff778;
+  --isw-yellow: #ffef6b;
   --isw-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: absolute;
   inset: 0;
@@ -857,7 +857,7 @@
 }
 
 .isw[data-tone='light'] .isw-tag {
-  background: #fff778;
+  background: #ffef6b;
   color: #0b0f2e;
 }
 
@@ -873,4 +873,112 @@
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* ---------- Card payment (CardPayApp) ---------- */
+
+.ipc-pay {
+  z-index: 1;
+}
+
+.isw.ipc[data-screen='done'] .ipc-pay {
+  transform: translateX(-30%);
+}
+
+.ipc-to {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 18px 20px 0;
+  text-align: center;
+}
+
+.ipc-to b {
+  font-size: 16px;
+}
+
+.ipc-amt {
+  font-size: 64px;
+  line-height: 1;
+  margin: 6px 0 2px;
+}
+
+.ipc-stage {
+  position: relative;
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+
+/* The card: Sat Blue with the brand's two ovals, a chip and the wordmark. */
+.ipc-card {
+  position: relative;
+  width: 300px;
+  aspect-ratio: 1.586;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(140deg, #050e7f 0%, #0a31f5 78%);
+  color: #fff;
+  transition: transform 0.45s var(--isw-ease);
+}
+
+.ipc-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04) 35%, transparent 55%, rgba(0, 0, 0, 0.18));
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.ipc-shape {
+  position: absolute;
+  left: -38%;
+  top: -46%;
+  width: 92%;
+  fill: #ff8619;
+}
+
+.ipc-chip {
+  position: absolute;
+  right: 22px;
+  top: 24px;
+  width: 38px;
+  height: 28px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #f3dd9c, #c9a253 55%, #a9842f);
+}
+
+.ipc-num {
+  position: absolute;
+  left: 22px;
+  bottom: 20px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+.ipc-logo {
+  position: absolute;
+  right: 22px;
+  bottom: 16px;
+  width: 104px;
+  color: #fff;
+}
+
+.ipc-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The tap: the card presses in toward the reader, straight. */
+.isw.ipc[data-tap='on'] .ipc-card {
+  transform: scale(0.94);
+}
+
+.ipc-hint {
+  text-align: center;
+  padding: 0 0 46px;
 }

@@ -5333,7 +5333,7 @@
 @keyframes kora-cn-bg {
   0% { background: #e0e5e6; }
   25% { background: #0a31f5; }
-  50% { background: #fff778; }
+  50% { background: #ffef6b; }
   75% { background: #050e7f; }
 }
 
@@ -5346,16 +5346,16 @@
 
 @keyframes kora-cn-blue {
   0% { fill: #0a31f5; }
-  25% { fill: #88c2ed; }
+  25% { fill: #8cc4ee; }
   50% { fill: #0a31f5; }
-  75% { fill: #88c2ed; }
+  75% { fill: #8cc4ee; }
 }
 
 @keyframes kora-cn-yellow {
   0% { fill: #ffd84a; }
-  25% { fill: #fff778; }
+  25% { fill: #ffef6b; }
   50% { fill: #ffffff; }
-  75% { fill: #fff778; }
+  75% { fill: #ffef6b; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -5432,11 +5432,11 @@
 .kora-cnposter-ills { animation: kora-cn-coins 13.6s step-end infinite; }
 @keyframes kora-cn-coins {
   0% { --c-ink: #0c0c10; --c-blue: #0a31f5; --c-yellow: #ffd84a; }
-  25% { --c-ink: #050e7f; --c-blue: #88c2ed; --c-yellow: #fff778; }
+  25% { --c-ink: #050e7f; --c-blue: #8cc4ee; --c-yellow: #ffef6b; }
   50% { --c-ink: #050e7f; --c-blue: #0a31f5; --c-yellow: #ffffff; }
-  75% { --c-ink: #02063f; --c-blue: #88c2ed; --c-yellow: #fff778; }
+  75% { --c-ink: #02063f; --c-blue: #8cc4ee; --c-yellow: #ffef6b; }
 }
 
 /* Poster, Nov 20 (4): static light blue ground, deep yellow coins. */
-.kora-case-frame > .kora-cnposter-bg { animation: none; background: #88c2ed; }
+.kora-case-frame > .kora-cnposter-bg { animation: none; background: #8cc4ee; }
 .kora-cnposter-ills { animation: none; --c-ink: #050e7f; --c-blue: #0a31f5; --c-yellow: #ffd84a; }

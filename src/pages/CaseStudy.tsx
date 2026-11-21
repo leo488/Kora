@@ -9,7 +9,8 @@ import type { PhoneScreen } from '../components/ipaybtc/ScreenOverlay'
 import { Steam } from '../components/ipaybtc/Steam'
 import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg, Onboarding, TypeReel } from '../components/ipaybtc/Scenes'
 import { Chip } from '../components/refreeg/Chip'
-import { ColourCards, MerchReel, MockupBoard, OnboardTap, WebsiteHero } from '../components/ipaybtc/Extras'
+import { BrandGradients, ColourCards, GuideStack, MerchReel, MockupBoard, OnboardTap, WebsiteHero } from '../components/ipaybtc/Extras'
+import { GUIDE_PAGES } from '../caseStudies'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 import ladyCut from '../assets/figx/ipaybtc-lady-cutout-2400.webp'
 import ilCoinFan from '../assets/ipaybtc-ill/ipaybtc-coin-fan.svg?raw'
@@ -109,7 +110,7 @@ export function CaseStudy() {
   )
 }
 
-function Block({ block }: { block: CaseBlock }) {
+export function Block({ block }: { block: CaseBlock }) {
   switch (block.kind) {
     case 'full':
       return <Plate slot={block.slot} inset={block.inset} wide={block.wide} gapAfter={block.gapAfter} />
@@ -154,7 +155,7 @@ function Block({ block }: { block: CaseBlock }) {
 
 /** An image or loop — or, until it exists, a grey panel naming what goes
  *  there. */
-function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean; wide?: boolean; gapAfter?: boolean | 'end' }) {
+export function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = false }: { slot: CaseSlot; eager?: boolean; inset?: boolean; wide?: boolean; gapAfter?: boolean | 'end' }) {
   return (
     <figure
       className={`kora-case-plate kora-rx-media${inset ? ' is-inset' : ''}${wide ? ' is-wide' : ''}${slot.frameFit ? ' is-framefit' : ''}`}
@@ -206,6 +207,10 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
           <MerchReel frames={slot.reel} />
         ) : slot.art === 'ipaybtc-mockups' ? (
           <MockupBoard />
+        ) : slot.art === 'ipaybtc-gradients' ? (
+          <BrandGradients />
+        ) : slot.art === 'ipaybtc-guide-stack' ? (
+          <GuideStack pages={GUIDE_PAGES} />
         ) : slot.art === 'ipaybtc-colour-cards' ? (
           <ColourCards />
         ) : slot.art === 'ipaybtc-website' ? (
@@ -218,6 +223,8 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
           <div className="kora-case-frame">{slot.video ? (
             <>
               <video src={slot.src} poster={slot.poster} muted loop autoPlay playsInline aria-label={slot.label} />
+              {slot.screen && <ScreenOverlay screen={slot.screen} />}
+              {slot.top && <img className="kora-case-top" src={slot.top} alt="" aria-hidden />}
               {slot.overlay === 'ipaybtc-card' && (
                 <div className="kora-paycard" aria-hidden>
                   <span className="kora-paycard-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
@@ -249,10 +256,11 @@ function Plate({ slot, eager = false, inset = false, wide = false, gapAfter = fa
               {slot.overlay === 'cn-poster' && (
                 <>
                 <div className="kora-cnposter-bg" aria-hidden />
+                {/* Coins parked (Leo, Nov 21): plain pink behind the lady.
                 <div className="kora-cnposter-ills" aria-hidden>
                   <span className="is-fan" dangerouslySetInnerHTML={{ __html: ilCoinFan }} />
                   <span className="is-stacks" dangerouslySetInnerHTML={{ __html: ilStacks }} />
-                </div>
+                </div> */}
                 <img className="kora-cnposter-cut" src={ladyCut} alt="" aria-hidden />
                 </>
               )}
@@ -319,3 +327,6 @@ function ScreenThen({ screen, then }: { screen: PhoneScreen; then: Array<{ src: 
     </>
   )
 }
+
+/* Kept for when the coins come back. */
+export const PARKED_COINS = [ilCoinFan, ilStacks]

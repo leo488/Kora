@@ -11,6 +11,23 @@
 
 import type { PhoneScreen } from './components/ipaybtc/ScreenOverlay'
 import type { SteamSpot } from './components/ipaybtc/Steam'
+import p3f02a from './assets/3projects-02-1200.jpg'
+import p3f02b from './assets/3projects-02-2000.jpg'
+import p3f02c from './assets/3projects-02-3000.jpg'
+import p3f03a from './assets/3projects-03-1200.jpg'
+import p3f03b from './assets/3projects-03-2000.jpg'
+import p3f03c from './assets/3projects-03-3000.jpg'
+import tg01a from './assets/tagmi-01-1200.jpg'
+import tg01b from './assets/tagmi-01-2000.jpg'
+import tg01c from './assets/tagmi-01-3000.jpg'
+import tg02a from './assets/tagmi-02-1200.jpg'
+import tg02b from './assets/tagmi-02-2000.jpg'
+import tg02c from './assets/tagmi-02-3000.jpg'
+import tg03a from './assets/tagmi-03-1200.jpg'
+import tg03b from './assets/tagmi-03-2000.jpg'
+import tg03c from './assets/tagmi-03-3000.jpg'
+import tg04a from './assets/tagmi-04-1200.jpg'
+import tg04b from './assets/tagmi-04-1774.jpg'
 import table1600 from './assets/ipaybtc-table-1600.jpg'
 import table2800 from './assets/ipaybtc-table-2800.jpg'
 import tableFull from './assets/ipaybtc-table-full.jpg'
@@ -76,6 +93,26 @@ import fx26a from './assets/figx/f26-1200.jpg'
 import fx26b from './assets/figx/f26-2400.jpg'
 import fx27a from './assets/figx/f27-1200.jpg'
 import fx27b from './assets/figx/f27-2400.jpg'
+import ladyCards from './assets/ipaybtc-lady-cards.mp4'
+import ladyCardsPoster from './assets/ipaybtc-lady-cards-poster.jpg'
+import colourType from './assets/ipaybtc-colour-type.mp4'
+import colourTypePoster from './assets/ipaybtc-colour-type-poster.jpg'
+import g_guide_indexa from './assets/ipaybtc-guide/guide-index-1200.jpg'
+import g_guide_indexb from './assets/ipaybtc-guide/guide-index-2400.jpg'
+import g_guide_whoa from './assets/ipaybtc-guide/guide-who-1200.jpg'
+import g_guide_whob from './assets/ipaybtc-guide/guide-who-2400.jpg'
+import g_guide_storya from './assets/ipaybtc-guide/guide-story-1200.jpg'
+import g_guide_storyb from './assets/ipaybtc-guide/guide-story-2400.jpg'
+import g_guide_promisea from './assets/ipaybtc-guide/guide-promise-1200.jpg'
+import g_guide_promiseb from './assets/ipaybtc-guide/guide-promise-2400.jpg'
+import g_guide_logoa from './assets/ipaybtc-guide/guide-logo-1200.jpg'
+import g_guide_logob from './assets/ipaybtc-guide/guide-logo-2400.jpg'
+import g_guide_logo_navya from './assets/ipaybtc-guide/guide-logo-navy-1200.jpg'
+import g_guide_logo_navyb from './assets/ipaybtc-guide/guide-logo-navy-2400.jpg'
+import g_tee_courta from './assets/ipaybtc-guide/tee-court-1200.jpg'
+import g_tee_courtb from './assets/ipaybtc-guide/tee-court-2400.jpg'
+import g_tee_navya from './assets/ipaybtc-guide/tee-navy-1200.jpg'
+import g_tee_navyb from './assets/ipaybtc-guide/tee-navy-2400.jpg'
 import fx28a from './assets/figx/f28-1200.jpg'
 import fx28b from './assets/figx/f28-2400.jpg'
 import fx29a from './assets/figx/f29-1200.jpg'
@@ -172,6 +209,8 @@ export interface CaseSlot {
   steam?: SteamSpot
   /** A plate drawn in code instead of a photo. */
   art?:
+    | 'ipaybtc-gradients'
+    | 'ipaybtc-guide-stack'
     | 'ipaybtc-colour-cards'
     | 'ipaybtc-mockups'
     | 'ipaybtc-logo-blue'
@@ -230,6 +269,8 @@ export interface CaseStudy {
   /** Matches Project.name in data.ts, and is the URL: /work/<slug>. */
   slug: string
   title: string
+  /** The short line beside the name, as Nonstop writes theirs. */
+  tagline?: string
   /** One or two sentences under the title. */
   summary: string
   facts: Array<{ label: string; value: string }>
@@ -379,9 +420,9 @@ const IPAY_LAPTOP: CaseSlot = {
 /* The three scenes after Leo's Wise references, generated in 4K (Nov 20). */
 const IPAY_WISE_TABLE = plate('The iPayBTC card on the tray after dinner', '5470 / 3011', [wiseTable1200, wiseTable2400])
 const IPAY_WISE_MARKET: CaseSlot = {
-  ...plate('Paying with iPayBTC at a market stall', '5471 / 3072', [wiseMarket1200, wiseMarket2400]),
+  ...plate('Paying with the iPayBTC card at a market stall', '5471 / 3072', [wiseMarket1200, wiseMarket2400]),
   screen: {
-    flow: 'swap',
+    flow: 'card',
     tone: 'light',
     size: [5471, 3072],
     corners: [[2472.2, 987.2], [3066.7, 949.4], [3152.0, 2254.1], [2551.9, 2290.3]],
@@ -439,6 +480,37 @@ const FX30 = fig('30', 'The iPayBTC website', [fx30a, fx30b])
 const FX31 = fig('31', 'Futura LT Condensed ExtraBold', [fx31a, fx31b])
 const FX32 = fig('32', 'Neue Haas Grotesk', [fx32a, fx32b])
 const FX33 = fig('33', 'Friends in the sun', [fx33a, fx33b])
+
+/* Nov 21: Leo's card plate replaces the static poster. The same lady and
+   her iPayBTC screen; the cards sweep in behind her on the pink. */
+const IPAY_LADY_CARDS: CaseSlot = {
+  label: 'iPayBTC cards sweeping in behind her',
+  ratio: '4800 / 3074',
+  src: ladyCards,
+  poster: ladyCardsPoster,
+  video: true,
+}
+const IPAY_COLOUR_TYPE: CaseSlot = {
+  label: 'The iPayBTC typefaces, Barlow Condensed and Neue Haas Grotesk, then the colours: Sat Blue and its shades, Sats Orange, Hibiscus, Harmattan Sky, Plantain',
+  ratio: '16 / 9',
+  src: colourType,
+  poster: colourTypePoster,
+  video: true,
+}
+const IPAY_STAGE = plate('iPayBTC on the main stage', '10130 / 6488', [fx27a, fx27b])
+const IPAY_GRADIENTS = art('The two iPayBTC gradients and their stops', '4 / 5', 'ipaybtc-gradients')
+const IPAY_TEE_COURT = plate('The white tee on the court', '19769 / 11839', [g_tee_courta, g_tee_courtb])
+const IPAY_TEE_NAVY = plate('The Sat Blue tee on Deep Blue', '8000 / 3964', [g_tee_navya, g_tee_navyb])
+const GUIDE = (label: string, pair: [string, string]) => plate(label, '6653 / 3743', pair)
+const IPAY_GUIDE_INDEX = GUIDE('The iPayBTC brand guide: contents', [g_guide_indexa, g_guide_indexb])
+const IPAY_GUIDE_WHO = GUIDE('Brand guide: who we are', [g_guide_whoa, g_guide_whob])
+const IPAY_GUIDE_STORY = GUIDE('Brand guide: the brand story', [g_guide_storya, g_guide_storyb])
+const IPAY_GUIDE_PROMISE = GUIDE('Brand guide: the Bitcoin promise', [g_guide_promisea, g_guide_promiseb])
+const IPAY_GUIDE_LOGO = GUIDE('Brand guide: the logo system', [g_guide_logoa, g_guide_logob])
+const IPAY_GUIDE_LOGO_NAVY = GUIDE('Brand guide: the wordmark on Deep Blue', [g_guide_logo_navya, g_guide_logo_navyb])
+/* The guide pages stacked in one frame, after Leo's reference. */
+export const GUIDE_PAGES = [IPAY_GUIDE_LOGO_NAVY, IPAY_GUIDE_INDEX, IPAY_GUIDE_STORY, IPAY_GUIDE_PROMISE, IPAY_GUIDE_LOGO, IPAY_GUIDE_WHO].map((p) => ({ src: p.src!, srcSet: p.srcSet!, label: p.label }))
+const IPAY_GUIDE_STACK = art('The iPayBTC brand guide, page by page', '3 / 5', 'ipaybtc-guide-stack')
 /* Where the building wrap was: the tee on the court eases in, then the
    watch and the rest of Leo's Figma frames, each shown whole. */
 const reelFrame = (slot: CaseSlot) => ({ src: slot.src!, srcSet: slot.srcSet, label: slot.label })
@@ -525,10 +597,27 @@ const RF_TOTECOPY: CaseSlot = { label: '“Give where you can see.” and the re
 const RF_LANYARD: CaseSlot = { label: 'Ask Refreeg on a phone hanging from a lanyard', ratio: '4096 / 4096', src: rf_lanyard_full, srcSet: set([[rf_lanyard_1600, 1600], [rf_lanyard_2800, 2800], [rf_lanyard_full, 4096]]) }
 const RF_TYPE: CaseSlot = { label: '“Give where you can see.” in Recoleta', ratio: '3840 / 1920', src: rf_type_full, srcSet: set([[rf_type_1600, 1600], [rf_type_2800, 2800], [rf_type_full, 3840]]) }
 
+/* 3PROJECTS and Tagmi plates from the homepage frames (3000px masters). */
+const frameSlot = (label: string, a: string, b: string, c: string): CaseSlot => ({
+  label,
+  ratio: '3000 / 1481',
+  src: c,
+  srcSet: set([[a, 1200], [b, 2000], [c, 3000]]),
+})
+const P3_TAG = frameSlot('The 3PROJECTS key tag on 3PROJECTS Blue', p3f02a, p3f02b, p3f02c)
+const P3_POSTER = frameSlot('“We focus on what matters. Everything else waits.”', p3f03a, p3f03b, p3f03c)
+const TG_CAST = frameSlot('The Tagmi cast of 3D characters on Tagmi Red', tg04a, tg04b, tg04b)
+const TG_EARN = frameSlot('“a new way to earn.”', tg01a, tg01b, tg01c)
+const TG_MARK = frameSlot('The Tagmi mark in 3D', tg02a, tg02b, tg02c)
+const TG_STREET = frameSlot('“where attention becomes income” on a street wall', tg03a, tg03b, tg03c)
+TG_CAST.ratio = '1774 / 887'
+TG_CAST.srcSet = set([[tg04a, 1200], [tg04b, 1774]])
+
 export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: 'ipaybtc',
     title: 'iPayBTC',
+    tagline: 'Bitcoin, spent like money',
     // TODO(kora): draft copy. The structure is final; swap every sentence
     // below for the real brief, and add highlights only if they are true.
     summary:
@@ -581,8 +670,9 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       { kind: 'full', slot: IPAY_WEB, inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_TABLE },
-      { kind: 'full', slot: IPAY_TYPE, inset: true },
-      { kind: 'full', slot: IPAY_CN_POSTER },
+      // The 3D-icon type swap is parked; the stage takes its place.
+      { kind: 'full', slot: IPAY_LADY_CARDS },
+      { kind: 'full', slot: IPAY_STAGE },
       { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_MARKET },
       { kind: 'full', slot: IPAY_KEYPAD, inset: true, wide: true },
@@ -594,12 +684,24 @@ export const CASE_STUDIES: CaseStudy[] = [
       // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },
       { kind: 'full', slot: IPAY_SOCIAL, inset: true, wide: true },
+      // Nov 21: colours and type, Leo's new frames, then the brand guide.
+      {
+        kind: 'text',
+        heading: 'Colour and type',
+        body: 'Sat Blue leads, with its two deeper shades for depth. Sats Orange carries Bitcoin. Hibiscus, Harmattan Sky and Plantain bring the warmth. Barlow Condensed is the bold voice for people always on the move; Neue Haas Grotesk is the calm one, clear enough for every generation.',
+      },
+      { kind: 'full', slot: IPAY_COLOUR_TYPE },
+      { kind: 'full', slot: IPAY_GRADIENTS },
+      { kind: 'full', slot: IPAY_TEE_COURT },
+      { kind: 'full', slot: IPAY_TEE_NAVY },
+      { kind: 'full', slot: IPAY_GUIDE_STACK },
     ],
     next: '3Projects',
   },
   {
     slug: '3projects',
     title: '3PROJECTS',
+    tagline: 'Complexity as an asset',
     // Copy taken from the 3PROJECTS Visual Identity Guidelines.
     summary:
       '3PROJECTS operates at the intersection of enterprise transformation and technology-driven business optimization, working with organizations between $50M and $1B in revenue.',
@@ -633,12 +735,16 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
     ],
     hero: P3_BILLBOARD,
-    gallery: [{ kind: 'full', slot: P3_FILM }],
+    gallery: [
+      { kind: 'pair', slots: [P3_TAG, P3_POSTER] },
+      { kind: 'full', slot: P3_FILM },
+    ],
     next: 'Refreeg',
   },
   {
     slug: 'refreeg',
     title: 'Refreeg',
+    tagline: 'Giving you can see',
     // Copy taken from the Refreeg brand book.
     summary: 'Giving you can see, from the first naira to the last.',
     facts: [
@@ -646,7 +752,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: 'Services', value: 'Brand identity, Product design, Web app, Campaign' },
       { label: 'Year', value: '2025' },
     ],
-    highlights: [],
+    highlights: ['Raised ₦50 million in funding.'],
     sections: [
       {
         heading: 'Proof, not trust',
@@ -690,6 +796,35 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: RF_BEANIE, inset: true },
       { kind: 'pair', slots: [RF_TOTECOPY, RF_LANYARD], inset: true },
     ],
+    next: 'Tagmi',
+  },
+  {
+    slug: 'tagmi',
+    title: 'Tagmi',
+    tagline: 'Where attention becomes income',
+    summary: 'Tagmi is a social media platform where attention becomes income. It is still in development.',
+    facts: [
+      { label: 'Client', value: 'Tagmi' },
+      { label: 'Industry', value: 'Social media' },
+      { label: 'Services', value: 'Brand identity, 3D, Campaign' },
+      { label: 'Status', value: 'In development' },
+    ],
+    highlights: [],
+    sections: [
+      {
+        heading: 'The idea',
+        paragraphs: ['A new way to earn: Tagmi turns the posts, tags and attention people already give away into income.'],
+      },
+      {
+        heading: 'The identity',
+        paragraphs: ['An @ that holds a t, a loud red, an acid green and a cast of 3D characters who live on their phones.'],
+      },
+    ],
+    hero: TG_CAST,
+    gallery: [
+      { kind: 'pair', slots: [TG_EARN, TG_MARK] },
+      { kind: 'full', slot: TG_STREET },
+    ],
     next: 'Ipaybtc',
   },
 ]
@@ -702,6 +837,7 @@ export function caseStudyFor(slug: string | undefined) {
 /** Case studies that are out. Every other project shows a "coming" note. */
 const PUBLISHED = new Set(['ipaybtc'])
 
+
 /** When the unpublished case studies are due. */
 export const CASE_STUDY_DUE = 'December 2026'
 
@@ -712,4 +848,4 @@ export function caseLinkFor(projectName: string) {
 
 /* Parked iPayBTC slots (cut from the running order, kept for the ideas
    inbox). Exported so the build keeps them without placing them on the page. */
-export const IPAY_PARKED = { IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }
+export const IPAY_PARKED = { IPAY_TYPE, IPAY_CN_POSTER, IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }

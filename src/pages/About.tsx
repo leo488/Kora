@@ -1,67 +1,33 @@
-import { Contact } from '../components/Sections'
-import { PageStatement } from '../components/PageStatement'
+import { Link } from 'react-router-dom'
+import { SERVICES } from '../data'
+import { Accordion } from '../nx/NxHome'
+import { NxArrow } from '../nx/NxHeader'
 
-/* About — parked.
-   ----------------
-   The manifesto layout is commented out below rather than deleted: the copy and
-   the ornament placement are worth keeping, the composition is what is being
-   reconsidered. Delete the placeholder and uncomment to restore it, along with
-   the AboutMarks import and the `.kora-page-about*` rules in App.css. */
+/* About, in the site's split layout: labels on the left half, content on the
+   right. The full page is still being written. */
 
 export function About() {
   return (
-    <div className="kora-rx kora-rx-sub">
-      <PageStatement title="About">
-        Coming soon. We are rebuilding this page. In the meantime, the work
-        speaks for itself.
-      </PageStatement>
-      <Contact />
+    <div className="nx-page">
+      <section className="nx-split nx-intro">
+        <h1 className="nx-label">About</h1>
+        <p className="nx-lead">
+          Coming soon. We are rebuilding this page. In the meantime, the work
+          speaks for itself.
+        </p>
+      </section>
+
+      <div className="nx-split nx-more">
+        <div />
+        <Link to="/work" className="nx-link">
+          See the work <NxArrow />
+        </Link>
+      </div>
+
+      <section className="nx-split nx-section">
+        <p className="nx-label">Services</p>
+        <Accordion items={SERVICES.map((s) => ({ title: s.name, body: s.description }))} />
+      </section>
     </div>
   )
 }
-
-/*
-import { useInView } from '../hooks/useInView'
-import { Reveal, Shape } from '../components/AboutMarks'
-import { PROJECTS, thumbOf } from '../data'
-
-// The reveals glimpse real work. Small variants only — these render a few
-// hundred pixels wide at most, so the 2000px plates would be waste.
-const [ipaybtc, escro, tagmi] = PROJECTS
-
-export function About() {
-  const [ref, visible] = useInView<HTMLElement>()
-
-  return (
-    <section
-      className={`kora-page-about${visible ? ' is-visible' : ''}`}
-      ref={ref}
-    >
-      <div className="kora-page-about-inner kora-container">
-        {/* The page is one continuous statement, which would make a 500-character
-            heading if it were marked up as one. The heading stays for structure
-            and screen readers; the statement itself is body text. *\/}
-        <h1 className="kora-visually-hidden">About Kora</h1>
-
-        <p className="kora-page-about-manifesto">
-          Koraa’ is a global creative studio{' '}
-          <Shape kind="blade" tone="blue" /> We partner with founders and teams
-          building something worth paying attention to{' '}
-          <Reveal src={thumbOf(ipaybtc.images[0])} /> and give them the brand, the
-          story, and the design system to back it up{' '}
-          <Shape kind="asterisk" tone="amber" /> Brand strategy, identity,
-          digital product, motion <Reveal src={thumbOf(escro.images[0])} /> and on
-          every project the same through-line: clarity first, craft always. No
-          templates, no shortcuts, no generic &ldquo;creative agency&rdquo;
-          filler <Shape kind="arrow-circle" tone="violet" /> Small team, senior
-          hands on every brief <Reveal src={thumbOf(tagmi.images[0])} /> and
-          offices close to the markets we work in{' '}
-          <Shape kind="arrow-square" tone="coral" /> from fintech in Lagos to
-          lifestyle brands in Abuja.
-        </p>
-      </div>
-    </section>
-  )
-}
-
-*/
