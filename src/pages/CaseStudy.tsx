@@ -9,7 +9,8 @@ import type { PhoneScreen } from '../components/ipaybtc/ScreenOverlay'
 import { Steam } from '../components/ipaybtc/Steam'
 import { IconGrid, IconTile, KeypadCard, LogoTile, Merch, WallPoster, PhoneBoard, PhonePlate, PostWall, SocialCarousel, TypePoster, TypeSwap, ZoomImg, Onboarding, TypeReel } from '../components/ipaybtc/Scenes'
 import { Chip } from '../components/refreeg/Chip'
-import { ColourCards, MerchReel, MockupBoard, OnboardTap, WebsiteHero } from '../components/ipaybtc/Extras'
+import { BrandGradients, ColourCards, GuideStack, MerchReel, MockupBoard, OnboardTap, WebsiteHero } from '../components/ipaybtc/Extras'
+import { GUIDE_PAGES } from '../caseStudies'
 import ipaybtcLogo from '../assets/ipaybtc-logo.svg?raw'
 import ladyCut from '../assets/figx/ipaybtc-lady-cutout-2400.webp'
 import ilCoinFan from '../assets/ipaybtc-ill/ipaybtc-coin-fan.svg?raw'
@@ -206,6 +207,10 @@ export function Plate({ slot, eager = false, inset = false, wide = false, gapAft
           <MerchReel frames={slot.reel} />
         ) : slot.art === 'ipaybtc-mockups' ? (
           <MockupBoard />
+        ) : slot.art === 'ipaybtc-gradients' ? (
+          <BrandGradients />
+        ) : slot.art === 'ipaybtc-guide-stack' ? (
+          <GuideStack pages={GUIDE_PAGES} />
         ) : slot.art === 'ipaybtc-colour-cards' ? (
           <ColourCards />
         ) : slot.art === 'ipaybtc-website' ? (

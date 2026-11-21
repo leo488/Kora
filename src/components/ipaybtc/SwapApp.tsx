@@ -218,7 +218,7 @@ export function SwapApp({ playing = true, onDone, tone }: { playing?: boolean; o
         <Status />
         <div className="isw-done-body">
           <svg className="isw-coincheck" width="72" height="72" viewBox="0 0 40 40" aria-hidden>
-            <ellipse cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="#fff778" />
+            <ellipse cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="#ffef6b" />
             <path d="M13 20.5l4.5 4.5L27.5 15" fill="none" stroke="#0b0b10" strokeWidth="5.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <strong className="isw-display isw-done-title">
@@ -265,7 +265,7 @@ export function SwapApp({ playing = true, onDone, tone }: { playing?: boolean; o
         <div className="isw-spin">
           <svg width="56" height="56" viewBox="0 0 40 40" aria-hidden>
             <ellipse cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="none" className="isw-spin-track" strokeWidth="3" />
-            <ellipse className="isw-spin-arc" cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="none" stroke="#fff778" strokeWidth="3" strokeLinecap="round" pathLength="100" />
+            <ellipse className="isw-spin-arc" cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="none" stroke="#ffef6b" strokeWidth="3" strokeLinecap="round" pathLength="100" />
           </svg>
         </div>
         <strong className="isw-display isw-sheet-title">Swapping…</strong>
@@ -349,8 +349,6 @@ export function CardPayApp({ playing = true, tone }: { playing?: boolean; tone?:
           <span className="isw-muted">≈ 2,632 sats from your Bitcoin card</span>
         </div>
         <div className="ipc-stage">
-          <i className="ipc-ring" />
-          <i className="ipc-ring" />
           <div className="ipc-card">
             <svg className="ipc-shape" viewBox="0 0 5065 3308" aria-hidden>
               <ellipse cx="2097.73" cy="1653.91" rx="724.285" ry="1463.82" transform="rotate(-33.0714 2097.73 1653.91)" />
@@ -368,7 +366,7 @@ export function CardPayApp({ playing = true, tone }: { playing?: boolean; tone?:
         <Status />
         <div className="isw-done-body">
           <svg className="isw-coincheck" width="72" height="72" viewBox="0 0 40 40" aria-hidden>
-            <ellipse cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="#fff778" />
+            <ellipse cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="#ffef6b" />
             <path d="M13 20.5l4.5 4.5L27.5 15" fill="none" stroke="#0b0b10" strokeWidth="5.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <strong className="isw-display isw-done-title">
@@ -390,7 +388,7 @@ export function CardPayApp({ playing = true, tone }: { playing?: boolean; tone?:
         <div className="isw-spin">
           <svg width="56" height="56" viewBox="0 0 40 40" aria-hidden>
             <ellipse cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="none" className="isw-spin-track" strokeWidth="3" />
-            <ellipse className="isw-spin-arc" cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="none" stroke="#fff778" strokeWidth="3" strokeLinecap="round" pathLength="100" />
+            <ellipse className="isw-spin-arc" cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="none" stroke="#ffef6b" strokeWidth="3" strokeLinecap="round" pathLength="100" />
           </svg>
         </div>
         <strong className="isw-display isw-sheet-title">Paying…</strong>

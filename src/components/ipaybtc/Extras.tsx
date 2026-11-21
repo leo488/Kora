@@ -200,7 +200,7 @@ export function WebsiteHero() {
 const PAIRS = [
   { deep: '#3f1407', bright: '#8ce8b4', ink: '#0a3a2a' },
   { deep: '#0a3a2a', bright: '#ffb28c', ink: '#3f1407' },
-  { deep: '#050e7f', bright: '#fff778', ink: '#050e7f' },
+  { deep: '#050e7f', bright: '#ffef6b', ink: '#050e7f' },
   { deep: '#06205e', bright: '#a9d2ff', ink: '#06205e' },
   { deep: '#0a31f5', bright: '#ffffff', ink: '#050e7f' },
 ]
@@ -267,6 +267,54 @@ export function MockupBoard() {
       <img key={step} className={m.cls} src={m.src} alt={m.alt} />
       {MOCKS.map((x) => (
         <link key={x.cls} rel="preload" as="image" href={x.src} />
+      ))}
+    </div>
+  )
+}
+
+/* ---------- Brand gradients (Nov 21) ----------
+   The two iPayBTC gradients, built from the palette, with the wordmark in
+   the middle and each stop's hex written where it sits. They swap with a
+   clean wipe, never a fade. */
+
+const GRADIENTS: Array<{ name: string; stops: Array<[string, string, number]> }> = [
+  { name: 'Deep to Sat', stops: [['Midnight', '#040246', 0], ['Deep Blue', '#050E7F', 30], ['Sat Blue', '#0A31F5', 72], ['Harmattan Sky', '#8CC4EE', 100]] },
+  { name: 'Sunrise', stops: [['Sats Orange', '#FF8619', 0], ['Plantain', '#FFEF6B', 18], ['Sat Blue', '#0A31F5', 64], ['Harmattan Sky', '#8CC4EE', 100]] },
+]
+
+export function BrandGradients() {
+  const [ref, on] = useInView<HTMLDivElement>(0.3, false)
+  const [i, setI] = useState(0)
+  useEffect(() => {
+    if (!on || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = window.setInterval(() => setI((n) => (n + 1) % GRADIENTS.length), 4200)
+    return () => clearInterval(id)
+  }, [on])
+  return (
+    <div ref={ref} className="ipg" aria-hidden>
+      {GRADIENTS.map((g, k) => (
+        <div key={g.name} className={`ipg-layer${k === i ? ' is-on' : ''}`} style={{ background: `linear-gradient(180deg, ${g.stops.map(([, h, p]) => `${h} ${p}%`).join(', ')})`, zIndex: k === i ? 2 : 1 }}>
+          <span className="ipg-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />
+          {g.stops.map(([n, h, p]) => (
+            <span key={h} className="ipg-stop" style={{ color: ['#FFEF6B', '#8CC4EE'].includes(h) ? '#040246' : '#fff', top: `${Math.min(Math.max(p, 4), 96)}%`, ['--align' as string]: p > 90 ? '-100%' : p < 5 ? '0%' : '-50%' }}>
+              <i />
+              <b>{h}</b>
+              <small>{n} · {p}%</small>
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/* ---------- Brand guide, stacked in one frame (Nov 21) ---------- */
+
+export function GuideStack({ pages }: { pages: Array<{ src: string; srcSet: string; label: string }> }) {
+  return (
+    <div className="ipgs">
+      {pages.map((p, k) => (
+        <img key={p.src} className={`ipgs-page ipgs-${k}`} src={p.src} srcSet={p.srcSet} sizes="40vw" alt={p.label} loading="lazy" />
       ))}
     </div>
   )

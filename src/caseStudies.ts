@@ -95,7 +95,6 @@ import fx27a from './assets/figx/f27-1200.jpg'
 import fx27b from './assets/figx/f27-2400.jpg'
 import ladyCards from './assets/ipaybtc-lady-cards.mp4'
 import ladyCardsPoster from './assets/ipaybtc-lady-cards-poster.jpg'
-import ladyCardsTop from './assets/ipaybtc-lady-cards-top.png'
 import colourType from './assets/ipaybtc-colour-type.mp4'
 import colourTypePoster from './assets/ipaybtc-colour-type-poster.jpg'
 import g_guide_indexa from './assets/ipaybtc-guide/guide-index-1200.jpg'
@@ -110,8 +109,6 @@ import g_guide_logoa from './assets/ipaybtc-guide/guide-logo-1200.jpg'
 import g_guide_logob from './assets/ipaybtc-guide/guide-logo-2400.jpg'
 import g_guide_logo_navya from './assets/ipaybtc-guide/guide-logo-navy-1200.jpg'
 import g_guide_logo_navyb from './assets/ipaybtc-guide/guide-logo-navy-2400.jpg'
-import g_logo_gradienta from './assets/ipaybtc-guide/logo-gradient-1200.jpg'
-import g_logo_gradientb from './assets/ipaybtc-guide/logo-gradient-2400.jpg'
 import g_tee_courta from './assets/ipaybtc-guide/tee-court-1200.jpg'
 import g_tee_courtb from './assets/ipaybtc-guide/tee-court-2400.jpg'
 import g_tee_navya from './assets/ipaybtc-guide/tee-navy-1200.jpg'
@@ -212,6 +209,8 @@ export interface CaseSlot {
   steam?: SteamSpot
   /** A plate drawn in code instead of a photo. */
   art?:
+    | 'ipaybtc-gradients'
+    | 'ipaybtc-guide-stack'
     | 'ipaybtc-colour-cards'
     | 'ipaybtc-mockups'
     | 'ipaybtc-logo-blue'
@@ -482,32 +481,24 @@ const FX31 = fig('31', 'Futura LT Condensed ExtraBold', [fx31a, fx31b])
 const FX32 = fig('32', 'Neue Haas Grotesk', [fx32a, fx32b])
 const FX33 = fig('33', 'Friends in the sun', [fx33a, fx33b])
 
-/* Nov 21: Leo's card plate. The cards sweep in behind her on the live-site
-   pink; the live app (card payment) runs on her phone, her fingers on top. */
+/* Nov 21: Leo's card plate replaces the static poster. The same lady and
+   her iPayBTC screen; the cards sweep in behind her on the pink. */
 const IPAY_LADY_CARDS: CaseSlot = {
-  label: 'iPayBTC cards sweeping in behind her, the card payment on her phone',
-  ratio: '16 / 9',
+  label: 'iPayBTC cards sweeping in behind her',
+  ratio: '4800 / 3074',
   src: ladyCards,
   poster: ladyCardsPoster,
   video: true,
-  screen: {
-    flow: 'card',
-    tone: 'dark',
-    size: [1920, 1080],
-    corners: [[1019.5, 521.7], [1198.1, 521.7], [1198.1, 902.1], [1019.5, 902.1]],
-    radius: 54,
-  },
-  top: ladyCardsTop,
 }
 const IPAY_COLOUR_TYPE: CaseSlot = {
-  label: 'The iPayBTC colours and typefaces: Sat Blue and its shades, Sats Orange, Hibiscus, Harmattan Sky, Plantain; Futura and Neue Haas Grotesk',
+  label: 'The iPayBTC typefaces, Barlow Condensed and Neue Haas Grotesk, then the colours: Sat Blue and its shades, Sats Orange, Hibiscus, Harmattan Sky, Plantain',
   ratio: '16 / 9',
   src: colourType,
   poster: colourTypePoster,
   video: true,
 }
 const IPAY_STAGE = plate('iPayBTC on the main stage', '10130 / 6488', [fx27a, fx27b])
-const IPAY_LOGO_GRADIENT = plate('The iPayBTC wordmark on the brand gradient', '19779 / 7634', [g_logo_gradienta, g_logo_gradientb])
+const IPAY_GRADIENTS = art('The two iPayBTC gradients and their stops', '4 / 5', 'ipaybtc-gradients')
 const IPAY_TEE_COURT = plate('The white tee on the court', '19769 / 11839', [g_tee_courta, g_tee_courtb])
 const IPAY_TEE_NAVY = plate('The Sat Blue tee on Deep Blue', '8000 / 3964', [g_tee_navya, g_tee_navyb])
 const GUIDE = (label: string, pair: [string, string]) => plate(label, '6653 / 3743', pair)
@@ -517,6 +508,9 @@ const IPAY_GUIDE_STORY = GUIDE('Brand guide: the brand story', [g_guide_storya, 
 const IPAY_GUIDE_PROMISE = GUIDE('Brand guide: the Bitcoin promise', [g_guide_promisea, g_guide_promiseb])
 const IPAY_GUIDE_LOGO = GUIDE('Brand guide: the logo system', [g_guide_logoa, g_guide_logob])
 const IPAY_GUIDE_LOGO_NAVY = GUIDE('Brand guide: the wordmark on Deep Blue', [g_guide_logo_navya, g_guide_logo_navyb])
+/* The guide pages stacked in one frame, after Leo's reference. */
+export const GUIDE_PAGES = [IPAY_GUIDE_LOGO_NAVY, IPAY_GUIDE_INDEX, IPAY_GUIDE_STORY, IPAY_GUIDE_PROMISE, IPAY_GUIDE_LOGO, IPAY_GUIDE_WHO].map((p) => ({ src: p.src!, srcSet: p.srcSet!, label: p.label }))
+const IPAY_GUIDE_STACK = art('The iPayBTC brand guide, page by page', '3 / 5', 'ipaybtc-guide-stack')
 /* Where the building wrap was: the tee on the court eases in, then the
    watch and the rest of Leo's Figma frames, each shown whole. */
 const reelFrame = (slot: CaseSlot) => ({ src: slot.src!, srcSet: slot.srcSet, label: slot.label })
@@ -676,9 +670,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       { kind: 'full', slot: IPAY_WEB, inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_TABLE },
-      // The 3D-icon type swap is parked; the card plate and the stage take its place.
+      // The 3D-icon type swap is parked; the stage takes its place.
       { kind: 'full', slot: IPAY_LADY_CARDS },
-      { kind: 'full', slot: IPAY_CN_POSTER },
       { kind: 'full', slot: IPAY_STAGE },
       { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_MARKET },
@@ -695,16 +688,13 @@ export const CASE_STUDIES: CaseStudy[] = [
       {
         kind: 'text',
         heading: 'Colour and type',
-        body: 'Sat Blue leads, with its two deeper shades for depth. Sats Orange carries Bitcoin. Hibiscus, Harmattan Sky and Plantain bring the warmth. Futura is the bold voice for people always on the move; Neue Haas Grotesk is the calm one, clear enough for every generation.',
+        body: 'Sat Blue leads, with its two deeper shades for depth. Sats Orange carries Bitcoin. Hibiscus, Harmattan Sky and Plantain bring the warmth. Barlow Condensed is the bold voice for people always on the move; Neue Haas Grotesk is the calm one, clear enough for every generation.',
       },
       { kind: 'full', slot: IPAY_COLOUR_TYPE },
-      { kind: 'full', slot: IPAY_LOGO_GRADIENT, inset: true, wide: true },
-      { kind: 'pair', slots: [IPAY_TEE_COURT, IPAY_TEE_NAVY], inset: true, wide: true },
-      { kind: 'full', slot: IPAY_GUIDE_INDEX, inset: true, wide: true },
-      { kind: 'full', slot: IPAY_GUIDE_WHO, inset: true, wide: true },
-      { kind: 'full', slot: IPAY_GUIDE_STORY, inset: true, wide: true },
-      { kind: 'full', slot: IPAY_GUIDE_PROMISE, inset: true, wide: true },
-      { kind: 'pair', slots: [IPAY_GUIDE_LOGO, IPAY_GUIDE_LOGO_NAVY], inset: true, wide: true },
+      { kind: 'full', slot: IPAY_GRADIENTS },
+      { kind: 'full', slot: IPAY_TEE_COURT },
+      { kind: 'full', slot: IPAY_TEE_NAVY },
+      { kind: 'full', slot: IPAY_GUIDE_STACK },
     ],
     next: '3Projects',
   },
@@ -857,4 +847,4 @@ export function caseLinkFor(projectName: string) {
 
 /* Parked iPayBTC slots (cut from the running order, kept for the ideas
    inbox). Exported so the build keeps them without placing them on the page. */
-export const IPAY_PARKED = { IPAY_TYPE, IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }
+export const IPAY_PARKED = { IPAY_TYPE, IPAY_CN_POSTER, IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }

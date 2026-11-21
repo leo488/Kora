@@ -8,7 +8,7 @@
   --isw-text: #ffffff;
   --isw-muted: #a0a5b8;
   --isw-blue: #0a31f5;
-  --isw-yellow: #fff778;
+  --isw-yellow: #ffef6b;
   --isw-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: absolute;
   inset: 0;
@@ -857,7 +857,7 @@
 }
 
 .isw[data-tone='light'] .isw-tag {
-  background: #fff778;
+  background: #ffef6b;
   color: #0b0f2e;
 }
 
@@ -920,7 +920,6 @@
   overflow: hidden;
   background: linear-gradient(140deg, #050e7f 0%, #0a31f5 78%);
   color: #fff;
-  transform: rotate(-8deg);
   transition: transform 0.45s var(--isw-ease);
 }
 
@@ -974,37 +973,9 @@
   height: auto;
 }
 
-/* The tap: the card dips toward the reader. */
+/* The tap: the card presses in toward the reader, straight. */
 .isw.ipc[data-tap='on'] .ipc-card {
-  transform: rotate(-8deg) scale(0.9);
-}
-
-/* Contactless rings grow out from behind the card while it waits. */
-.ipc-ring {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border: 2px solid var(--isw-blue);
-  animation: ipc-ring 1.8s var(--isw-ease) infinite;
-}
-
-.ipc-ring + .ipc-ring {
-  animation-delay: 0.9s;
-}
-
-.isw.ipc[data-tap='on'] .ipc-ring {
-  animation: none;
-  transform: scale(0);
-}
-
-@keyframes ipc-ring {
-  from {
-    transform: scale(0.6);
-  }
-  to {
-    transform: scale(1.7);
-  }
+  transform: scale(0.94);
 }
 
 .ipc-hint {
