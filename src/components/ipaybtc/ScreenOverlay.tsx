@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AppScreen } from './AppScreen'
-import { SwapApp } from './SwapApp'
+import { CardPayApp, SwapApp } from './SwapApp'
 import { ReceiveApp } from './ReceiveApp'
 import { CoinBurst } from './CoinBurst'
 import { WebDash, OnboardStrip } from './Scenes'
@@ -14,7 +14,7 @@ import type { AppFlow } from './AppScreen'
 
 export interface PhoneScreen {
   /** 'swap' runs the dark v3 app (SwapApp); the others run the v3 light app. */
-  flow: AppFlow | 'swap' | 'receive' | 'onboard'
+  flow: AppFlow | 'swap' | 'card' | 'receive' | 'onboard'
   /** Fix the swap app to light or dark instead of following the site theme. */
   tone?: 'light' | 'dark'
   /** The photo's own size in px. */
@@ -84,6 +84,8 @@ export function ScreenOverlay({ screen }: { screen: PhoneScreen }) {
           <OnboardStrip playing={playing} />
         ) : screen.flow === 'receive' ? (
           <ReceiveApp playing={playing} />
+        ) : screen.flow === 'card' ? (
+          <CardPayApp playing={playing} tone={screen.tone} />
         ) : screen.flow === 'swap' ? (
           <SwapApp playing={playing} tone={screen.tone} onDone={BURST ? () => setBurst((b) => b + 1) : undefined} />
         ) : (

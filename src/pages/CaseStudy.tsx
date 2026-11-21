@@ -218,6 +218,8 @@ export function Plate({ slot, eager = false, inset = false, wide = false, gapAft
           <div className="kora-case-frame">{slot.video ? (
             <>
               <video src={slot.src} poster={slot.poster} muted loop autoPlay playsInline aria-label={slot.label} />
+              {slot.screen && <ScreenOverlay screen={slot.screen} />}
+              {slot.top && <img className="kora-case-top" src={slot.top} alt="" aria-hidden />}
               {slot.overlay === 'ipaybtc-card' && (
                 <div className="kora-paycard" aria-hidden>
                   <span className="kora-paycard-logo" dangerouslySetInnerHTML={{ __html: ipaybtcLogo }} />

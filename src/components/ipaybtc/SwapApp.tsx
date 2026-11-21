@@ -296,6 +296,111 @@ export function SwapApp({ playing = true, onDone, tone }: { playing?: boolean; o
   )
 }
 
+/* ---------- Card payment ----------
+   The same v3 app paying at a stall with the iPayBTC Bitcoin card: the card
+   waits by the reader, the tap lands, the card is debited in sats while the
+   sheet loads, then it is paid. Same pieces, same sheet, same done page. */
+
+type PayState = { screen: 'pay' | 'done'; sheet: Sheet; tap: boolean }
+const PAY_START: PayState = { screen: 'pay', sheet: null, tap: false }
+const PAY_SCRIPT: Array<[number, Partial<PayState>]> = [
+  [1900, { tap: true }],
+  [2350, { sheet: 'loading' }],
+  [4500, { sheet: null, screen: 'done' }],
+  [8800, {}],
+]
+
+export function CardPayApp({ playing = true, tone }: { playing?: boolean; tone?: 'light' | 'dark' }) {
+  const site = useTheme().theme
+  const theme = tone ?? site
+  const [s, setS] = useState<PayState>(PAY_START)
+  const timers = useRef<number[]>([])
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setS({ ...PAY_START, screen: 'done' })
+      return
+    }
+    if (!playing) return
+    const loop = () => {
+      setS(PAY_START)
+      for (const [at, change] of PAY_SCRIPT) timers.current.push(window.setTimeout(() => setS((p) => ({ ...p, ...change })), at))
+      timers.current.push(window.setTimeout(loop, PAY_SCRIPT[PAY_SCRIPT.length - 1][0]))
+    }
+    loop()
+    const list = timers.current
+    return () => {
+      list.forEach(clearTimeout)
+      list.length = 0
+    }
+  }, [playing])
+
+  return (
+    <div className="isw ipc" data-tone={theme} data-screen={s.screen} data-sheet={s.sheet ?? 'none'} data-tap={s.tap ? 'on' : 'off'}>
+      <div className="isw-page ipc-pay">
+        <Status />
+        <div className="isw-bar">
+          <Icon d="M15 5l-7 7 7 7" />
+          <strong className="isw-display">Pay</strong>
+        </div>
+        <div className="ipc-to">
+          <span className="isw-muted">Paying</span>
+          <b>Mama Titi’s Stall</b>
+          <strong className="isw-display ipc-amt">₦4,500</strong>
+          <span className="isw-muted">≈ 2,632 sats from your Bitcoin card</span>
+        </div>
+        <div className="ipc-stage">
+          <i className="ipc-ring" />
+          <i className="ipc-ring" />
+          <div className="ipc-card">
+            <svg className="ipc-shape" viewBox="0 0 5065 3308" aria-hidden>
+              <ellipse cx="2097.73" cy="1653.91" rx="724.285" ry="1463.82" transform="rotate(-33.0714 2097.73 1653.91)" />
+              <ellipse cx="3018.12" cy="1212.77" rx="358.833" ry="991.135" transform="rotate(-43.7569 3018.12 1212.77)" />
+            </svg>
+            <i className="ipc-chip" />
+            <span className="ipc-num">•••• 2140</span>
+            <i className="ipc-logo" dangerouslySetInnerHTML={{ __html: logo }} />
+          </div>
+        </div>
+        <span className="isw-muted ipc-hint">Hold your card near the reader</span>
+      </div>
+
+      <div className="isw-page isw-done">
+        <Status />
+        <div className="isw-done-body">
+          <svg className="isw-coincheck" width="72" height="72" viewBox="0 0 40 40" aria-hidden>
+            <ellipse cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="#fff778" />
+            <path d="M13 20.5l4.5 4.5L27.5 15" fill="none" stroke="#0b0b10" strokeWidth="5.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <strong className="isw-display isw-done-title">
+            −2,632<small>SATS</small>
+            <br />
+            <em>Paid.</em>
+          </strong>
+          <span className="isw-soft">₦4,500 to Mama Titi’s Stall, debited from your iPayBTC card.</span>
+        </div>
+        <div className="isw-done-actions">
+          <button className="isw-btn">View receipt</button>
+          <button className="isw-btn is-primary">Done</button>
+        </div>
+      </div>
+
+      <div className="isw-scrim" />
+      <div className="isw-sheet isw-loading">
+        <span className="isw-grab" />
+        <div className="isw-spin">
+          <svg width="56" height="56" viewBox="0 0 40 40" aria-hidden>
+            <ellipse cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="none" className="isw-spin-track" strokeWidth="3" />
+            <ellipse className="isw-spin-arc" cx="20" cy="20" rx="13" ry="18.5" transform="rotate(32 20 20)" fill="none" stroke="#fff778" strokeWidth="3" strokeLinecap="round" pathLength="100" />
+          </svg>
+        </div>
+        <strong className="isw-display isw-sheet-title">Paying…</strong>
+        <span className="isw-muted">Debiting 2,632 sats from your iPayBTC card.</span>
+        <div className="isw-progress"><i /></div>
+      </div>
+    </div>
+  )
+}
+
 /* ---------- Pieces ---------- */
 
 function Icon({ d }: { d: string }) {

@@ -93,6 +93,29 @@ import fx26a from './assets/figx/f26-1200.jpg'
 import fx26b from './assets/figx/f26-2400.jpg'
 import fx27a from './assets/figx/f27-1200.jpg'
 import fx27b from './assets/figx/f27-2400.jpg'
+import ladyCards from './assets/ipaybtc-lady-cards.mp4'
+import ladyCardsPoster from './assets/ipaybtc-lady-cards-poster.jpg'
+import ladyCardsTop from './assets/ipaybtc-lady-cards-top.png'
+import colourType from './assets/ipaybtc-colour-type.mp4'
+import colourTypePoster from './assets/ipaybtc-colour-type-poster.jpg'
+import g_guide_indexa from './assets/ipaybtc-guide/guide-index-1200.jpg'
+import g_guide_indexb from './assets/ipaybtc-guide/guide-index-2400.jpg'
+import g_guide_whoa from './assets/ipaybtc-guide/guide-who-1200.jpg'
+import g_guide_whob from './assets/ipaybtc-guide/guide-who-2400.jpg'
+import g_guide_storya from './assets/ipaybtc-guide/guide-story-1200.jpg'
+import g_guide_storyb from './assets/ipaybtc-guide/guide-story-2400.jpg'
+import g_guide_promisea from './assets/ipaybtc-guide/guide-promise-1200.jpg'
+import g_guide_promiseb from './assets/ipaybtc-guide/guide-promise-2400.jpg'
+import g_guide_logoa from './assets/ipaybtc-guide/guide-logo-1200.jpg'
+import g_guide_logob from './assets/ipaybtc-guide/guide-logo-2400.jpg'
+import g_guide_logo_navya from './assets/ipaybtc-guide/guide-logo-navy-1200.jpg'
+import g_guide_logo_navyb from './assets/ipaybtc-guide/guide-logo-navy-2400.jpg'
+import g_logo_gradienta from './assets/ipaybtc-guide/logo-gradient-1200.jpg'
+import g_logo_gradientb from './assets/ipaybtc-guide/logo-gradient-2400.jpg'
+import g_tee_courta from './assets/ipaybtc-guide/tee-court-1200.jpg'
+import g_tee_courtb from './assets/ipaybtc-guide/tee-court-2400.jpg'
+import g_tee_navya from './assets/ipaybtc-guide/tee-navy-1200.jpg'
+import g_tee_navyb from './assets/ipaybtc-guide/tee-navy-2400.jpg'
 import fx28a from './assets/figx/f28-1200.jpg'
 import fx28b from './assets/figx/f28-2400.jpg'
 import fx29a from './assets/figx/f29-1200.jpg'
@@ -398,9 +421,9 @@ const IPAY_LAPTOP: CaseSlot = {
 /* The three scenes after Leo's Wise references, generated in 4K (Nov 20). */
 const IPAY_WISE_TABLE = plate('The iPayBTC card on the tray after dinner', '5470 / 3011', [wiseTable1200, wiseTable2400])
 const IPAY_WISE_MARKET: CaseSlot = {
-  ...plate('Paying with iPayBTC at a market stall', '5471 / 3072', [wiseMarket1200, wiseMarket2400]),
+  ...plate('Paying with the iPayBTC card at a market stall', '5471 / 3072', [wiseMarket1200, wiseMarket2400]),
   screen: {
-    flow: 'swap',
+    flow: 'card',
     tone: 'light',
     size: [5471, 3072],
     corners: [[2472.2, 987.2], [3066.7, 949.4], [3152.0, 2254.1], [2551.9, 2290.3]],
@@ -458,6 +481,42 @@ const FX30 = fig('30', 'The iPayBTC website', [fx30a, fx30b])
 const FX31 = fig('31', 'Futura LT Condensed ExtraBold', [fx31a, fx31b])
 const FX32 = fig('32', 'Neue Haas Grotesk', [fx32a, fx32b])
 const FX33 = fig('33', 'Friends in the sun', [fx33a, fx33b])
+
+/* Nov 21: Leo's card plate. The cards sweep in behind her on the live-site
+   pink; the live app (card payment) runs on her phone, her fingers on top. */
+const IPAY_LADY_CARDS: CaseSlot = {
+  label: 'iPayBTC cards sweeping in behind her, the card payment on her phone',
+  ratio: '16 / 9',
+  src: ladyCards,
+  poster: ladyCardsPoster,
+  video: true,
+  screen: {
+    flow: 'card',
+    tone: 'dark',
+    size: [1920, 1080],
+    corners: [[1019.5, 521.7], [1198.1, 521.7], [1198.1, 902.1], [1019.5, 902.1]],
+    radius: 54,
+  },
+  top: ladyCardsTop,
+}
+const IPAY_COLOUR_TYPE: CaseSlot = {
+  label: 'The iPayBTC colours and typefaces: Sat Blue and its shades, Sats Orange, Hibiscus, Harmattan Sky, Plantain; Futura and Neue Haas Grotesk',
+  ratio: '16 / 9',
+  src: colourType,
+  poster: colourTypePoster,
+  video: true,
+}
+const IPAY_STAGE = plate('iPayBTC on the main stage', '10130 / 6488', [fx27a, fx27b])
+const IPAY_LOGO_GRADIENT = plate('The iPayBTC wordmark on the brand gradient', '19779 / 7634', [g_logo_gradienta, g_logo_gradientb])
+const IPAY_TEE_COURT = plate('The white tee on the court', '19769 / 11839', [g_tee_courta, g_tee_courtb])
+const IPAY_TEE_NAVY = plate('The Sat Blue tee on Deep Blue', '8000 / 3964', [g_tee_navya, g_tee_navyb])
+const GUIDE = (label: string, pair: [string, string]) => plate(label, '6653 / 3743', pair)
+const IPAY_GUIDE_INDEX = GUIDE('The iPayBTC brand guide: contents', [g_guide_indexa, g_guide_indexb])
+const IPAY_GUIDE_WHO = GUIDE('Brand guide: who we are', [g_guide_whoa, g_guide_whob])
+const IPAY_GUIDE_STORY = GUIDE('Brand guide: the brand story', [g_guide_storya, g_guide_storyb])
+const IPAY_GUIDE_PROMISE = GUIDE('Brand guide: the Bitcoin promise', [g_guide_promisea, g_guide_promiseb])
+const IPAY_GUIDE_LOGO = GUIDE('Brand guide: the logo system', [g_guide_logoa, g_guide_logob])
+const IPAY_GUIDE_LOGO_NAVY = GUIDE('Brand guide: the wordmark on Deep Blue', [g_guide_logo_navya, g_guide_logo_navyb])
 /* Where the building wrap was: the tee on the court eases in, then the
    watch and the rest of Leo's Figma frames, each shown whole. */
 const reelFrame = (slot: CaseSlot) => ({ src: slot.src!, srcSet: slot.srcSet, label: slot.label })
@@ -617,8 +676,10 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       { kind: 'full', slot: IPAY_WEB, inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_TABLE },
-      { kind: 'full', slot: IPAY_TYPE, inset: true },
+      // The 3D-icon type swap is parked; the card plate and the stage take its place.
+      { kind: 'full', slot: IPAY_LADY_CARDS },
       { kind: 'full', slot: IPAY_CN_POSTER },
+      { kind: 'full', slot: IPAY_STAGE },
       { kind: 'pair', slots: [IPAY_LOGO_BLUE, IPAY_TEE_BLUE], inset: true, wide: true },
       { kind: 'full', slot: IPAY_WISE_MARKET },
       { kind: 'full', slot: IPAY_KEYPAD, inset: true, wide: true },
@@ -630,6 +691,20 @@ export const CASE_STUDIES: CaseStudy[] = [
       // Last scene: the onboarding in a hand over the hills.
       { kind: 'full', slot: IPAY_LANDSCAPE },
       { kind: 'full', slot: IPAY_SOCIAL, inset: true, wide: true },
+      // Nov 21: colours and type, Leo's new frames, then the brand guide.
+      {
+        kind: 'text',
+        heading: 'Colour and type',
+        body: 'Sat Blue leads, with its two deeper shades for depth. Sats Orange carries Bitcoin. Hibiscus, Harmattan Sky and Plantain bring the warmth. Futura is the bold voice for people always on the move; Neue Haas Grotesk is the calm one, clear enough for every generation.',
+      },
+      { kind: 'full', slot: IPAY_COLOUR_TYPE },
+      { kind: 'full', slot: IPAY_LOGO_GRADIENT, inset: true, wide: true },
+      { kind: 'pair', slots: [IPAY_TEE_COURT, IPAY_TEE_NAVY], inset: true, wide: true },
+      { kind: 'full', slot: IPAY_GUIDE_INDEX, inset: true, wide: true },
+      { kind: 'full', slot: IPAY_GUIDE_WHO, inset: true, wide: true },
+      { kind: 'full', slot: IPAY_GUIDE_STORY, inset: true, wide: true },
+      { kind: 'full', slot: IPAY_GUIDE_PROMISE, inset: true, wide: true },
+      { kind: 'pair', slots: [IPAY_GUIDE_LOGO, IPAY_GUIDE_LOGO_NAVY], inset: true, wide: true },
     ],
     next: '3Projects',
   },
@@ -782,4 +857,4 @@ export function caseLinkFor(projectName: string) {
 
 /* Parked iPayBTC slots (cut from the running order, kept for the ideas
    inbox). Exported so the build keeps them without placing them on the page. */
-export const IPAY_PARKED = { IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }
+export const IPAY_PARKED = { IPAY_TYPE, IPAY_TYPE_REEL, IPAY_ONBOARD_PHONE, IPAY_MERCH, IPAY_WRAP, FX21, FX30, IPAY_CAP, IPAY_TOTE, wrap1200, wrap2400, IPAY_BILLBOARD, IPAY_LOGO_NAVY, IPAY_ONBOARD, IPAY_TEE_CLOSE, IPAY_LANYARD, IPAY_POSTER_BORDER, IPAY_PHONE, IPAY_KEYPAD, IPAY_POLE, IPAY_PHONES, IPAY_LAPTOP, FX05, FX07, FX20, FX22, FX23, FX24, FX26, FX27, FX28, FX31, FX32, FX33, IPAY_SOCIAL, IPAY_WALL, IPAY_ICONS, IPAY_COIN, IPAY_WALLPOSTER, IPAY_POSTER_TEA, IPAY_POSTER_SPEND }
