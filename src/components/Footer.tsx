@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { NAV_LINKS } from '../data'
-import { KoraMark } from './KoraMark'
+import g0 from '../assets/glass/koraa-glass-0.webp'
+import g1 from '../assets/glass/koraa-glass-1.webp'
+import g2 from '../assets/glass/koraa-glass-2.webp'
+import g3 from '../assets/glass/koraa-glass-3.webp'
+import g4 from '../assets/glass/koraa-glass-4.webp'
+import g5 from '../assets/glass/koraa-glass-5.webp'
+
+const GLASS = [g0, g1, g2, g3, g4, g5]
 import { useContact } from '../contact/useContact'
 import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
 
@@ -24,7 +31,7 @@ function useScrollDrop() {
 
   useEffect(() => {
     const box = ref.current
-    const glyphs = box ? Array.from(box.querySelectorAll<SVGPathElement>('svg > path')) : []
+    const glyphs = box ? Array.from(box.querySelectorAll<HTMLElement>('.nx-glass > img')) : []
     if (!box || !glyphs.length) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
@@ -113,25 +120,14 @@ export function Footer() {
       </div>
 
       <div ref={logoRef} className="kora-footer-logo-box">
-        <KoraMark className="kora-footer-logo" />
-        {/* Dark glass: the letters are lit as a bevelled, polished surface
-            (a lighting filter on the shape itself, not a drop shadow). */}
-        <svg width="0" height="0" aria-hidden="true" style={{ position: 'absolute' }}>
-          <filter id="kora-glass" x="-2%" y="-10%" width="104%" height="120%" colorInterpolationFilters="sRGB">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="bump" />
-            <feSpecularLighting in="bump" surfaceScale="14" specularConstant="0.9" specularExponent="22" lightingColor="#c9ccd3" result="spec">
-              <feDistantLight azimuth="235" elevation="38" />
-            </feSpecularLighting>
-            <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn" />
-            <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="edgeBlur" />
-            <feSpecularLighting in="edgeBlur" surfaceScale="3" specularConstant="0.6" specularExponent="40" lightingColor="#ffffff" result="rim">
-              <feDistantLight azimuth="225" elevation="55" />
-            </feSpecularLighting>
-            <feComposite in="rim" in2="SourceAlpha" operator="in" result="rimIn" />
-            <feComposite in="SourceGraphic" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.8" k4="0" result="lit" />
-            <feComposite in="lit" in2="rimIn" operator="arithmetic" k1="0" k2="1" k3="0.25" k4="0" />
-          </filter>
-        </svg>
+        {/* The wordmark rendered in 3D (three.js, offline): grained dark
+            faces, polished chamfers. One layer per letter so each can drop
+            in on its own as the footer scrolls into view. */}
+        <div className="kora-footer-logo nx-glass" role="img" aria-label="Koraa’">
+          {GLASS.map((src) => (
+            <img key={src} src={src} alt="" loading="lazy" draggable={false} />
+          ))}
+        </div>
       </div>
 
       <div className="nx-foot-bottom">

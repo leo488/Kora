@@ -679,14 +679,19 @@
   mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
 }
 
-.nx-app .kora-footer-logo {
-  color: #141416;
-  filter: url(#kora-glass);
-  overflow: visible;
+.nx-glass {
+  position: relative;
+  aspect-ratio: 2632 / 793;
+  overflow: hidden;
 }
 
-.kora-app.is-light.nx-app .kora-footer-logo {
-  color: #c9c8c2;
+.nx-glass > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-box: fill-box;
+  will-change: translate;
 }
 
 /* The work-in-progress bar slides in over the top while scrolling: move the
@@ -934,4 +939,36 @@
 
 .nx-foot > * {
   width: 100%;
+}
+
+/* Rows, as Nonstop rules them: a hairline over every project, the same
+   small air above and below the picture, the copy pinned top and bottom. */
+.nx-rows {
+  gap: 0;
+  border-bottom: 1px solid var(--nx-line);
+}
+
+.nx-rows > li {
+  padding: var(--nx-g) 0;
+  border-top: 1px solid var(--nx-line);
+}
+
+.nx-row-head h3 {
+  font-size: clamp(18px, 1.45vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.nx-row-head .nx-meta {
+  font-size: 14px;
+}
+
+.nx-row-story {
+  max-width: 62ch;
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.4;
+}
+
+.nx-row-text {
+  padding-top: 0;
 }

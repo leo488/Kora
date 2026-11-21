@@ -1,0 +1,84 @@
+<!doctype html><html><body style="margin:0;background:transparent">
+<script src="node_modules/polygon-clipping/dist/polygon-clipping.umd.min.js"></script>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three'
+import { SVGLoader } from 'three/addons/loaders/SVGLoader.js'
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import { LOGO } from './logo.js'
+
+const P = new URLSearchParams(location.search)
+const W = +P.get('w') || 2880, H = +P.get('h') || 1100
+const only = P.has('only') ? +P.get('only') : -1
+
+const loader = new SVGLoader()
+const shapesOf = (d) => SVGLoader.createShapes(loader.parse(`<svg xmlns="http://www.w3.org/2000/svg"><path d="${d}"/></svg>`).paths[0])
+
+// star union polygon in O-local coords
+const OCX = 520.734, OCY = 63.0595, s = LOGO.ast.s
+const bar = shapesOf(LOGO.bar)[0].getPoints(6)
+const polys = [0, 60, 120].map((a) => {
+  const r = a * Math.PI / 180, c = Math.cos(r), sn = Math.sin(r)
+  const pts = bar.map((p) => { const x = p.x * c - p.y * sn, y = p.x * sn + p.y * c; return [OCX + s * (LOGO.ast.bx + x), OCY + s * (LOGO.ast.by + y)] })
+  pts.push(pts[0]); return [pts]
+})
+const star = polygonClipping.union(...polys)[0][0]
+
+const letters = [['K', 0], ['O', 1], ['R', 2], ['A', 3], ['A', 4], ['apos', -1]]
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true })
+renderer.setSize(W, H); renderer.setPixelRatio(1)
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = +P.get("ex")||1.0
+renderer.outputColorSpace = THREE.SRGBColorSpace
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap
+document.body.appendChild(renderer.domElement)
+const scene = new THREE.Scene()
+const pmrem = new THREE.PMREMGenerator(renderer)
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+scene.environmentIntensity = 0.18
+
+// fine grain: random bump
+const nc = document.createElement('canvas'); nc.width = nc.height = 512
+const nx = nc.getContext('2d'); const id = nx.createImageData(512, 512)
+for (let i = 0; i < id.data.length; i += 4) { const v = 150 + Math.random() * 105; id.data[i] = id.data[i+1] = id.data[i+2] = v; id.data[i+3] = 255 }
+nx.putImageData(id, 0, 0)
+const grain = new THREE.CanvasTexture(nc); grain.wrapS = grain.wrapT = THREE.RepeatWrapping; grain.repeat.set(0.16, 0.16)
+
+const gmap = grain.clone(); gmap.colorSpace = THREE.SRGBColorSpace
+const face = new THREE.MeshPhysicalMaterial({ color: 0x2a2a2e, map: gmap, roughnessMap: grain, roughness: 0.85, metalness: 0.35, bumpMap: grain, bumpScale: +P.get("bump")||1.2, clearcoat: 0.0 })
+const edge = new THREE.MeshPhysicalMaterial({ color: 0x2a2a2e, roughness: 0.22, metalness: 0.75, clearcoat: 1, clearcoatRoughness: 0.15 })
+
+const group = new THREE.Group(); scene.add(group)
+letters.forEach(([k, i], n) => {
+  let shapes = shapesOf(LOGO[k])
+  if (k === 'O') {
+    const outer = shapes.reduce((a, b) => (Math.abs(THREE.ShapeUtils.area(b.getPoints())) > Math.abs(THREE.ShapeUtils.area(a.getPoints())) ? b : a))
+    outer.holes.push(new THREE.Path(star.map(([x, y]) => new THREE.Vector2(x, y))))
+  }
+  const geo = new THREE.ExtrudeGeometry(shapes, { depth: 2.2, bevelEnabled: true, bevelThickness: 0.5, bevelSize: 0.42, bevelSegments: 6, curveSegments: 24 })
+  const m = new THREE.Mesh(geo, [face, edge])
+  m.position.x = i >= 0 ? LOGO.tx[i] : 0
+  m.castShadow = m.receiveShadow = true
+  m.visible = only < 0 || only === n
+  m.userData.n = n
+  group.add(m)
+})
+// svg y-down -> flip; centre
+group.scale.set(1, -1, -1)
+const box = new THREE.Box3().setFromObject(group); const c = box.getCenter(new THREE.Vector3())
+group.position.set(-c.x, -c.y, 0)
+const pivot = new THREE.Group(); scene.remove(group); pivot.add(group); scene.add(pivot)
+pivot.rotation.set(+P.get("rx")||-0.2, +P.get("ry")||0.18, 0.0)
+
+const cam = new THREE.PerspectiveCamera(+P.get('fov') || 22, W / H, 1, 2000)
+cam.position.set(0, -6, +P.get('z') || 300); cam.lookAt(0, -2, 0)
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.05))
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(160, 120, 140); key.castShadow = true
+key.shadow.mapSize.set(4096, 4096); Object.assign(key.shadow.camera, { left: -80, right: 80, top: 40, bottom: -40, near: 1, far: 600 }); key.shadow.bias = -0.0004
+scene.add(key)
+const rim = new THREE.DirectionalLight(0xdfe4ff, 3.0); rim.position.set(-200, -160, 60); scene.add(rim)
+const fill = new THREE.PointLight(0xffffff, +P.get("fl")||5000, 0, 2); fill.position.set(75, 10, 45); scene.add(fill)
+
+renderer.render(scene, cam)
+window.DONE = renderer.domElement.toDataURL('image/png')
+</script></body></html>
