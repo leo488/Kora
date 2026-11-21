@@ -1,3 +1,4 @@
+import { ARTICLES } from './blog/posts'
 import blog01 from './assets/blog/blog-01.jpg'
 import blog02 from './assets/blog/blog-02.jpg'
 import blog03 from './assets/blog/blog-03.jpg'
@@ -531,11 +532,11 @@ export const PARTNERS: Partner[] = [
   { name: '3PROJECTS', logo: logoThreeProjects, scale: 0.82 },
 ]
 
-/* Posts — shared by the Blog index and the Happenings strip on Home.
-   TODO(kora): placeholder posts — swap for real articles (and their images)
-   when they exist. */
+/* Posts — shared by the Blog index and the Happenings strip on Home. The
+   words live in blog/posts.ts; the card pictures are paired up here. */
 
 export interface Post {
+  slug: string
   title: string
   /** Card art; blank when unset. */
   image?: string
@@ -543,31 +544,19 @@ export interface Post {
   date: string
 }
 
-export const POSTS: Post[] = [
-  {
-    title: 'Bold wins in fintech',
-    image: blog01,
-    category: 'Branding',
-    date: 'Jun 2026',
-  },
-  {
-    title: 'Designing for trust',
-    image: blog02,
-    category: 'Case Study',
-    date: 'May 2026',
-  },
-  {
-    title: 'Identity in Web3',
-    image: blog03,
-    category: 'Insights',
-    date: 'Apr 2026',
-  },
-  {
-    title: 'Local roots, global reach',
-    category: 'Studio Notes',
-    date: 'Mar 2026',
-  },
-]
+const POST_ART: Record<string, string | undefined> = {
+  'bold-wins-in-fintech': blog01,
+  'designing-for-trust': blog02,
+  'identity-in-web3': blog03,
+}
+
+export const POSTS: Post[] = ARTICLES.map((a) => ({
+  slug: a.slug,
+  title: a.title,
+  image: POST_ART[a.slug],
+  category: a.category,
+  date: a.date,
+}))
 
 /** A reel of stills only — no films — for a calmer hero. Each entry names a
     project and which of its plates to show. */

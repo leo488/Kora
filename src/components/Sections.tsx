@@ -154,7 +154,7 @@ function FilmAfterImage({ src, delayMs, still, alt }: { src: string; delayMs: nu
 /** One post as a card: blank picture slot, kind, title, byline. */
 export function NewsCard({ post }: { post: Post }) {
   return (
-    <Link to="/blog" className="kora-rx-card">
+    <Link to={`/blog/${post.slug}`} className="kora-rx-card">
       <div className="kora-rx-card-media kora-rx-media" aria-hidden="true">
         <div className="kora-flare">
           {post.image && <img src={post.image} alt="" loading="lazy" draggable={false} />}
