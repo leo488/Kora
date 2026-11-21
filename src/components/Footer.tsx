@@ -85,59 +85,32 @@ export function Footer() {
   const logoRef = useScrollDrop()
 
   return (
-    <footer className="kora-footer">
-      <dl className="kora-footer-list kora-container">
-        <div className="kora-footer-item">
-          <dt>New business</dt>
-          <dd>
+    <footer className="kora-footer nx-foot">
+      <div className="nx-split nx-foot-top">
+        <p className="nx-label">Get in touch</p>
+        <div>
+          <p className="nx-lead nx-foot-mail">
             <a href={`mailto:${NEW_BUSINESS_EMAIL}`}>{NEW_BUSINESS_EMAIL}</a>
-          </dd>
-          <dd className="kora-footer-item-action">
             <CopyText text={NEW_BUSINESS_EMAIL} />
-          </dd>
-        </div>
-        <div className="kora-footer-item">
-          <dt>Find us</dt>
-          <dd>10C Momoh Close, Freedom Avenue, Abuja</dd>
-        </div>
-        <div className="kora-footer-item">
-          <dt>Brand test</dt>
-          <dd>
-            <Link to="/brand-test">Take the brand test</Link>
-          </dd>
-        </div>
-      </dl>
-
-      <div className="kora-footer-pills kora-container">
-        <button
-          type="button"
-          className="kora-pill is-solid kora-footer-cta"
-          onClick={() => openContact({ prefer: 'A call' })}
-        >
-          Book A Call
-        </button>
-        <div className="kora-footer-social">
-          {SOCIAL.map((s) => (
-            <a key={s.label} className="kora-pill is-solid" href={s.href}>
-              {s.label}
-            </a>
-          ))}
+          </p>
+          <ul className="nx-foot-list">
+            <li>
+              <span>Find us</span>
+              <span>10C Momoh Close, Freedom Avenue, Abuja</span>
+            </li>
+            <li>
+              <span>Brand test</span>
+              <Link to="/brand-test">Take the brand test</Link>
+            </li>
+            <li>
+              <span>Call</span>
+              <button type="button" onClick={() => openContact({ prefer: 'A call' })}>
+                Book a call
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
-
-      <nav className="kora-footer-sitemap kora-container" aria-label="Footer">
-        {NAV_LINKS.map((item) =>
-          item.to ? (
-            <Link key={item.label} to={item.to}>
-              {item.label}
-            </Link>
-          ) : (
-            <a key={item.label} href="#">
-              {item.label}
-            </a>
-          ),
-        )}
-      </nav>
 
       <div ref={logoRef} className="kora-footer-logo-box">
         <KoraMark className="kora-footer-logo" />
@@ -161,10 +134,23 @@ export function Footer() {
         </svg>
       </div>
 
-      <div className="kora-footer-meta kora-container">
-        <span>&copy; 2026 Koraa Studios Ltd. All rights reserved.</span>
-        <span className="kora-footer-rc">RC 10005554</span>
-        <span>Designed &amp; built with care.</span>
+      <div className="nx-foot-bottom">
+        <nav className="nx-foot-links" aria-label="Footer">
+          {SOCIAL.map((s) => (
+            <a key={s.label} href={s.href}>
+              {s.label}
+            </a>
+          ))}
+          {NAV_LINKS.filter((item) => item.to).map((item) => (
+            <Link key={item.label} to={item.to!}>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+        <p className="nx-foot-meta">
+          <span>&copy; 2026 Koraa Studios Ltd.</span>
+          <span>RC 10005554</span>
+        </p>
       </div>
     </footer>
   )

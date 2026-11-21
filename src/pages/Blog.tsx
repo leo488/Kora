@@ -1,27 +1,39 @@
 import { POSTS } from '../data'
-import { Contact, NewsCard } from '../components/Sections'
-import { PageStatement } from '../components/PageStatement'
 
-/* Blog — every post, as the same cards Home's Happenings uses. */
+/* Blog: every post as a row, the picture on the left half and the title on
+   the right, the same rows as the work list. */
 
 export function Blog() {
   return (
-    <div className="kora-rx kora-rx-sub">
-      <PageStatement title="Blog">
-        Notes on branding, strategy, and building things that last.
-      </PageStatement>
-
-      <section className="kora-rx-news is-page" aria-label="Posts">
-        <ul className="kora-rx-news-grid">
-          {POSTS.map((post) => (
-            <li key={post.title}>
-              <NewsCard post={post} />
-            </li>
-          ))}
-        </ul>
+    <div className="nx-page">
+      <section className="nx-split nx-intro">
+        <h1 className="nx-label">Blog</h1>
+        <p className="nx-lead">Notes on branding, strategy, and building things that last.</p>
       </section>
 
-      <Contact />
+      <ul className="nx-rows">
+        {POSTS.map((post) => (
+          <li key={post.title}>
+            <div className="nx-row">
+              <div className="nx-row-media kora-rx-media">
+                <div className="kora-flare">
+                  {post.image && <img src={post.image} alt="" loading="lazy" draggable={false} />}
+                </div>
+              </div>
+              <div className="nx-row-text">
+                <div className="nx-row-head">
+                  <div>
+                    <h3>{post.title}</h3>
+                    <p className="nx-meta">
+                      {post.category} · {post.date}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

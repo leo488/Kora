@@ -704,3 +704,234 @@
     translate: none;
   }
 }
+
+/* Footer, in the split layout ------------------------------------------- */
+
+.nx-app .kora-footer.nx-foot {
+  padding: clamp(120px, 14vw, 220px) var(--nx-g) var(--nx-g);
+  background: var(--bg);
+}
+
+.nx-foot-mail {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  max-width: none;
+  margin-bottom: 20px;
+}
+
+.nx-foot-mail a {
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.nx-foot-mail a:hover {
+  color: var(--accent-ink);
+}
+
+.nx-foot-mail .kora-footer-action {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.nx-foot-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nx-foot-list li {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--nx-g);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--nx-line);
+  font-size: 15px;
+  color: var(--text-h);
+}
+
+.nx-foot-list li > span:first-child {
+  color: var(--text);
+}
+
+.nx-foot-list a,
+.nx-foot-list button {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--text-h);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nx-foot-list a:hover,
+.nx-foot-list button:hover {
+  color: var(--accent-ink);
+}
+
+.nx-app .nx-foot .kora-footer-logo-box {
+  margin-top: clamp(80px, 10vw, 160px);
+}
+
+.nx-foot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 8px;
+}
+
+.nx-foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 17px;
+}
+
+.nx-foot-links a {
+  color: var(--text-h);
+  text-decoration: none;
+}
+
+.nx-foot-links a:hover {
+  color: var(--accent-ink);
+}
+
+.nx-foot-meta {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* One button style everywhere: the pills left in older parts of the site
+   take the bar's square grey button. */
+.nx-app .kora-pill,
+.nx-app .kora-pill.is-solid {
+  border-radius: 4px;
+  border: 0;
+  background: var(--surface-hover);
+  color: var(--text-h);
+}
+
+.nx-app .kora-pill:hover,
+.nx-app .kora-pill.is-solid:hover {
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+}
+
+/* Brand test, on the split ----------------------------------------------- */
+
+.nx-app .kora-bt-stage {
+  grid-template-columns: 1fr 1fr;
+  gap: var(--nx-g);
+  padding: 12px var(--nx-g) 96px;
+  min-height: calc(100svh - var(--nx-head));
+}
+
+.nx-app .kora-bt-panel {
+  top: calc(var(--nx-head) + 12px);
+  height: calc(100svh - var(--nx-head) - 24px);
+}
+
+.nx-app .kora-bt-main {
+  align-items: flex-start;
+}
+
+.nx-app .kora-bt-step {
+  padding: 0;
+  max-width: none;
+  gap: 20px;
+}
+
+.nx-app .kora-bt-label {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text);
+}
+
+.nx-app .kora-bt-step h1 {
+  font-size: clamp(26px, 2.2vw, 34px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.nx-app .kora-bt-lede {
+  max-width: 34ch;
+  font-size: clamp(20px, 1.6vw, 26px);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+.nx-app .kora-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: none;
+}
+
+.nx-app .kora-field-label,
+.nx-app .kora-field-hint {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.nx-app .kora-field input {
+  width: 100%;
+  padding: 10px 0 14px;
+  border: 0;
+  border-bottom: 1px solid var(--nx-line);
+  border-radius: 0;
+  background: none;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 20px;
+  outline: none;
+}
+
+.nx-app .kora-field input:focus {
+  border-bottom-color: var(--text-h);
+}
+
+@media (max-width: 760px) {
+  .nx-app .kora-bt-stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nx-app .kora-bt-panel {
+    position: relative;
+    top: 0;
+    height: 46svh;
+    min-height: 0;
+  }
+
+  .nx-foot-list li {
+    grid-template-columns: 96px 1fr;
+  }
+
+  .nx-foot-mail {
+    flex-wrap: wrap;
+  }
+}
+
+.nx-app .kora-footer.nx-foot {
+  display: block;
+  border-top: 0;
+}
+
+.nx-foot > * {
+  width: 100%;
+}
