@@ -11,6 +11,23 @@
 
 import type { PhoneScreen } from './components/ipaybtc/ScreenOverlay'
 import type { SteamSpot } from './components/ipaybtc/Steam'
+import p3f02a from './assets/3projects-02-1200.jpg'
+import p3f02b from './assets/3projects-02-2000.jpg'
+import p3f02c from './assets/3projects-02-3000.jpg'
+import p3f03a from './assets/3projects-03-1200.jpg'
+import p3f03b from './assets/3projects-03-2000.jpg'
+import p3f03c from './assets/3projects-03-3000.jpg'
+import tg01a from './assets/tagmi-01-1200.jpg'
+import tg01b from './assets/tagmi-01-2000.jpg'
+import tg01c from './assets/tagmi-01-3000.jpg'
+import tg02a from './assets/tagmi-02-1200.jpg'
+import tg02b from './assets/tagmi-02-2000.jpg'
+import tg02c from './assets/tagmi-02-3000.jpg'
+import tg03a from './assets/tagmi-03-1200.jpg'
+import tg03b from './assets/tagmi-03-2000.jpg'
+import tg03c from './assets/tagmi-03-3000.jpg'
+import tg04a from './assets/tagmi-04-1200.jpg'
+import tg04b from './assets/tagmi-04-1774.jpg'
 import table1600 from './assets/ipaybtc-table-1600.jpg'
 import table2800 from './assets/ipaybtc-table-2800.jpg'
 import tableFull from './assets/ipaybtc-table-full.jpg'
@@ -230,6 +247,8 @@ export interface CaseStudy {
   /** Matches Project.name in data.ts, and is the URL: /work/<slug>. */
   slug: string
   title: string
+  /** The short line beside the name, as Nonstop writes theirs. */
+  tagline?: string
   /** One or two sentences under the title. */
   summary: string
   facts: Array<{ label: string; value: string }>
@@ -525,10 +544,27 @@ const RF_TOTECOPY: CaseSlot = { label: '“Give where you can see.” and the re
 const RF_LANYARD: CaseSlot = { label: 'Ask Refreeg on a phone hanging from a lanyard', ratio: '4096 / 4096', src: rf_lanyard_full, srcSet: set([[rf_lanyard_1600, 1600], [rf_lanyard_2800, 2800], [rf_lanyard_full, 4096]]) }
 const RF_TYPE: CaseSlot = { label: '“Give where you can see.” in Recoleta', ratio: '3840 / 1920', src: rf_type_full, srcSet: set([[rf_type_1600, 1600], [rf_type_2800, 2800], [rf_type_full, 3840]]) }
 
+/* 3PROJECTS and Tagmi plates from the homepage frames (3000px masters). */
+const frameSlot = (label: string, a: string, b: string, c: string): CaseSlot => ({
+  label,
+  ratio: '3000 / 1481',
+  src: c,
+  srcSet: set([[a, 1200], [b, 2000], [c, 3000]]),
+})
+const P3_TAG = frameSlot('The 3PROJECTS key tag on 3PROJECTS Blue', p3f02a, p3f02b, p3f02c)
+const P3_POSTER = frameSlot('“We focus on what matters. Everything else waits.”', p3f03a, p3f03b, p3f03c)
+const TG_CAST = frameSlot('The Tagmi cast of 3D characters on Tagmi Red', tg04a, tg04b, tg04b)
+const TG_EARN = frameSlot('“a new way to earn.”', tg01a, tg01b, tg01c)
+const TG_MARK = frameSlot('The Tagmi mark in 3D', tg02a, tg02b, tg02c)
+const TG_STREET = frameSlot('“where attention becomes income” on a street wall', tg03a, tg03b, tg03c)
+TG_CAST.ratio = '1774 / 887'
+TG_CAST.srcSet = set([[tg04a, 1200], [tg04b, 1774]])
+
 export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: 'ipaybtc',
     title: 'iPayBTC',
+    tagline: 'Bitcoin, spent like money',
     // TODO(kora): draft copy. The structure is final; swap every sentence
     // below for the real brief, and add highlights only if they are true.
     summary:
@@ -600,6 +636,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: '3projects',
     title: '3PROJECTS',
+    tagline: 'Complexity as an asset',
     // Copy taken from the 3PROJECTS Visual Identity Guidelines.
     summary:
       '3PROJECTS operates at the intersection of enterprise transformation and technology-driven business optimization, working with organizations between $50M and $1B in revenue.',
@@ -633,12 +670,16 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
     ],
     hero: P3_BILLBOARD,
-    gallery: [{ kind: 'full', slot: P3_FILM }],
+    gallery: [
+      { kind: 'pair', slots: [P3_TAG, P3_POSTER] },
+      { kind: 'full', slot: P3_FILM },
+    ],
     next: 'Refreeg',
   },
   {
     slug: 'refreeg',
     title: 'Refreeg',
+    tagline: 'Giving you can see',
     // Copy taken from the Refreeg brand book.
     summary: 'Giving you can see, from the first naira to the last.',
     facts: [
@@ -646,7 +687,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: 'Services', value: 'Brand identity, Product design, Web app, Campaign' },
       { label: 'Year', value: '2025' },
     ],
-    highlights: [],
+    highlights: ['Raised ₦50 million in funding.'],
     sections: [
       {
         heading: 'Proof, not trust',
@@ -690,6 +731,35 @@ export const CASE_STUDIES: CaseStudy[] = [
       { kind: 'full', slot: RF_BEANIE, inset: true },
       { kind: 'pair', slots: [RF_TOTECOPY, RF_LANYARD], inset: true },
     ],
+    next: 'Tagmi',
+  },
+  {
+    slug: 'tagmi',
+    title: 'Tagmi',
+    tagline: 'Where attention becomes income',
+    summary: 'Tagmi is a social media platform where attention becomes income. It is still in development.',
+    facts: [
+      { label: 'Client', value: 'Tagmi' },
+      { label: 'Industry', value: 'Social media' },
+      { label: 'Services', value: 'Brand identity, 3D, Campaign' },
+      { label: 'Status', value: 'In development' },
+    ],
+    highlights: [],
+    sections: [
+      {
+        heading: 'The idea',
+        paragraphs: ['A new way to earn: Tagmi turns the posts, tags and attention people already give away into income.'],
+      },
+      {
+        heading: 'The identity',
+        paragraphs: ['An @ that holds a t, a loud red, an acid green and a cast of 3D characters who live on their phones.'],
+      },
+    ],
+    hero: TG_CAST,
+    gallery: [
+      { kind: 'pair', slots: [TG_EARN, TG_MARK] },
+      { kind: 'full', slot: TG_STREET },
+    ],
     next: 'Ipaybtc',
   },
 ]
@@ -700,7 +770,7 @@ export function caseStudyFor(slug: string | undefined) {
 
 /** The case study link for a project, if it has one. */
 /** Case studies that are out. Every other project shows a "coming" note. */
-const PUBLISHED = new Set(['ipaybtc'])
+const PUBLISHED = new Set(['ipaybtc', '3projects', 'refreeg', 'tagmi'])
 
 /** When the unpublished case studies are due. */
 export const CASE_STUDY_DUE = 'December 2026'

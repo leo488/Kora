@@ -1,23 +1,13 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import type { ReactNode } from 'react'
-import { ContactDialog } from './ContactDialog'
+import { useNavigate } from 'react-router-dom'
 import { ContactContext } from './useContact'
 import type { ContactSeed } from './useContact'
 
+/* Every "contact" button on the site goes to the contact page, carrying any
+   context (how to reply, a brand test result) along with it. */
 export function ContactProvider({ children }: { children: ReactNode }) {
-  const [open, setOpen] = useState(false)
-  const [seed, setSeed] = useState<ContactSeed>({})
-
-  const openContact = useCallback((next?: ContactSeed) => {
-    setSeed(next ?? {})
-    setOpen(true)
-  }, [])
-  const close = useCallback(() => setOpen(false), [])
-
-  return (
-    <ContactContext.Provider value={openContact}>
-      {children}
-      <ContactDialog open={open} seed={seed} onClose={close} />
-    </ContactContext.Provider>
-  )
+  const navigate = useNavigate()
+  const openContact = useCallback((next?: ContactSeed) => navigate('/contact', { state: next ?? {} }), [navigate])
+  return <ContactContext.Provider value={openContact}>{children}</ContactContext.Provider>
 }

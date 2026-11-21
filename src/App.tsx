@@ -2,11 +2,12 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import { Intro } from './components/Intro'
 import { Layout } from './components/Layout'
-import { Home } from './pages/Home'
-import { Work } from './pages/Work'
+import { NxHome } from './nx/NxHome'
+import { NxCase } from './nx/NxCase'
+import { NxContact } from './nx/NxContact'
+import { NxWork } from './nx/NxWork'
 import { About } from './pages/About'
 import { Blog } from './pages/Blog'
-import { CaseStudy } from './pages/CaseStudy'
 import { BrandTest } from './pages/BrandTest'
 
 function App() {
@@ -19,9 +20,10 @@ function App() {
 
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/work" element={<Work />} />
-          <Route path="/work/:slug" element={<CaseStudy />} />
+          <Route path="/" element={<NxHome />} />
+          <Route path="/work" element={<NxWork />} />
+          <Route path="/work/:slug" element={<NxCase />} />
+          <Route path="/contact" element={<NxContact />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/brand-test" element={<BrandTest />} />
