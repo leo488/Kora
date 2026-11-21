@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { PointerEvent, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { PROJECTS, srcSetFor } from '../data'
 import type { Project } from '../data'
@@ -18,6 +18,14 @@ function RowLink({ to, children }: { to?: string; children: ReactNode }) {
   )
 }
 
+/** Keeps the hover pill under the pointer while it is over a project image. */
+function followCursor(event: PointerEvent<HTMLDivElement>) {
+  if (event.pointerType !== 'mouse') return
+  const box = event.currentTarget.getBoundingClientRect()
+  event.currentTarget.style.setProperty('--kora-vx', `${event.clientX - box.left}px`)
+  event.currentTarget.style.setProperty('--kora-vy', `${event.clientY - box.top}px`)
+}
+
 /** "Brand — Line" headlines lose the brand, which the row already names. */
 const lineOf = (project: Project) => {
   const [, rest] = project.headline.split(/\s+—\s+/)
@@ -35,7 +43,7 @@ export function NxRow({ project }: { project: Project }) {
   return (
     <li>
       <RowLink to={to}>
-        <div className="nx-row-media kora-rx-media">
+        <div className="nx-row-media kora-rx-media" onPointerMove={followCursor}>
           <div className="kora-flare">
             {project.film && !project.film.afterImageMs ? (
               <video
@@ -60,6 +68,9 @@ export function NxRow({ project }: { project: Project }) {
               />
             )}
           </div>
+          <span className="nx-view" aria-hidden={to ? true : undefined}>
+            {to ? 'View' : `Case study out ${CASE_STUDY_DUE}`}
+          </span>
         </div>
 
         <div className="nx-row-text">

@@ -4422,7 +4422,7 @@
    --------------------------------------------------------------------------- */
 
 .kora-rx-media {
-  --kora-flare: 80px;
+  --kora-flare: 120px;
   position: relative;
 }
 
@@ -4482,7 +4482,7 @@
 
 @media (max-width: 760px) {
   .kora-rx-media {
-    --kora-flare: 48px;
+    --kora-flare: 60px;
   }
 }
 
