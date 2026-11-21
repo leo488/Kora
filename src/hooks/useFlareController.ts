@@ -30,8 +30,10 @@ export function useFlareController() {
         const H = box.height
         // The reach either side, as laid out by CSS.
         const m = (W - frameEl.clientWidth) / 2
-        const r = Math.min(FLARE_MAX, m, H)
-        const Z = r * ZONE
+        // Home keeps the original fold: a tight quarter circle, 80px reach.
+        const classic = !!layer.closest('.nx-home')
+        const r = Math.min(classic ? 80 : FLARE_MAX, m, H)
+        const Z = classic ? r : r * ZONE
         const zoneTop = vh - Z - box.top // where the bend starts, in layer px
         const edge = vh - box.top // the bottom of the screen, in layer px
 
@@ -46,10 +48,14 @@ export function useFlareController() {
         // flat at full reach on the screen's bottom edge. The same curve runs
         // in reverse when scrolling back up, so it folds in as it folded out.
         const at = (y: number) => {
+          if (classic) {
+            const d = Math.min(Math.max(y - zoneTop, 0), r)
+            return r - Math.sqrt(r * r - d * d)
+          }
           const t = Math.min(Math.max((y - zoneTop) / Z, 0), 1)
           return r * t * t * (3 - 2 * t)
         }
-        const STEPS = 28
+        const STEPS = classic ? 14 : 28
         const ys: number[] = [Math.max(zoneTop, 0)]
         for (let i = 1; i <= STEPS; i++) ys.push(zoneTop + (Z * i) / STEPS)
         ys.push(H)
