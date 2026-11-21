@@ -61,6 +61,8 @@ import under1200 from './assets/ipaybtc-w-under-1200.jpg'
 import under2400 from './assets/ipaybtc-w-under-2400.jpg'
 import laptop1200 from './assets/ipaybtc-w-laptop-1200.jpg'
 import laptop2400 from './assets/ipaybtc-w-laptop-2400.jpg'
+import ipayNails1200 from './assets/ipaybtc-ipay-nails-1200.jpg'
+import ipayNails2400 from './assets/ipaybtc-ipay-nails-2400.jpg'
 import landscape1200 from './assets/ipaybtc-w-landscape-1200.jpg'
 import landscape2400 from './assets/ipaybtc-w-landscape-2400.jpg'
 import lanyard1200 from './assets/ipaybtc-lanyard-blue-1200.jpg'
@@ -398,6 +400,7 @@ const IPAY_TYPE_REEL = art('The iPayBTC typefaces, then the campaign posters', '
 const IPAY_POSTER_BORDER = art('No bank opening hours. No border. No permission.', '16 / 10', 'ipaybtc-poster-border')
 const IPAY_WRAP: CaseSlot = { label: '“Your Bitcoin can travel.” wrapped on a building', ratio: '3 / 4', src: building800 }
 const IPAY_PHONE = art('The app buying Bitcoin', '4 / 5', 'ipaybtc-phone')
+const IPAY_NAILS = plate('i, p, a, y painted on her nails in the brand gradient', '5504 / 3072', [ipayNails1200, ipayNails2400])
 const IPAY_UNDER = plate('“Your Naira can’t travel. Your Bitcoin can.” on an underground platform', '5504 / 3072', [under1200, under2400])
 const IPAY_KEYPAD: CaseSlot = {
   ...plate('Sending sats from the road', '1200 / 670', [roadtrip1200, roadtrip2400]),
@@ -663,6 +666,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       { kind: 'full', slot: IPAY_LOGO, inset: true, wide: true },
       { kind: 'pair', slots: [IPAY_ICON, IPAY_HAND], inset: true, wide: true },
+      { kind: 'full', slot: IPAY_NAILS },
       { kind: 'full', slot: IPAY_MOTION, inset: true, wide: true },
       { kind: 'full', slot: IPAY_CARD_VIDEO },
       {
