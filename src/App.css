@@ -4486,6 +4486,18 @@
   }
 }
 
+/* Home keeps the original, tighter fold (Leo, Nov 21: the wider sweep stays
+   on case studies only). */
+.nx-home .kora-rx-media {
+  --kora-flare: 80px;
+}
+
+@media (max-width: 760px) {
+  .nx-home .kora-rx-media {
+    --kora-flare: 48px;
+  }
+}
+
 /* Narrowest phones (320–374px): the pill nav needs about 60px back to keep
    Book A Call on screen. */
 @media (max-width: 374px) {
