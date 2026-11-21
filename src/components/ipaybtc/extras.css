@@ -794,7 +794,7 @@
 /* Nov 20 (7), revised Nov 21: social on the light grey. Leo wants the
    bold display type back on posts and cards (not DM Sans), and the Chinese
    poster on the iPayBTC pink with the coins taken out. */
-.ips.ips-social { background: #eceef3; }
+.ips.ips-social { background: #dcedfa; } /* a light tint of Harmattan Sky (Leo, Nov 21) */
 .kora-case-frame > .kora-cnposter-bg { background: #f6d5dd; animation: none; }
 .ips-social-track.is-snap { transition: none; }
 
