@@ -222,8 +222,50 @@
 }
 
 .nx-row-media {
+  position: relative;
   aspect-ratio: 16 / 9;
   overflow: visible;
+}
+
+/* The hover pill that follows the pointer over a project picture: green
+   "View" on a live case study, purple with the date on one coming soon. */
+.nx-view {
+  position: absolute;
+  left: var(--kora-vx, 50%);
+  top: var(--kora-vy, 50%);
+  z-index: 2;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--koraa-plantain);
+  color: var(--koraa-ink);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nx-row.is-soon .nx-view {
+  background: var(--koraa-dusk);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nx-row:hover .nx-view {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .nx-row:hover .nx-row-media {
+    cursor: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .nx-row.is-soon .nx-view {
+    left: 16px;
+    top: 16px;
+    transform: none;
+  }
 }
 
 .nx-row-media .kora-flare > img,
@@ -237,6 +279,8 @@
 }
 
 .nx-row-text {
+  position: relative;
+  z-index: 1; /* stays above the picture's flare as it sweeps out */
   display: flex;
   flex-direction: column;
   justify-content: space-between;

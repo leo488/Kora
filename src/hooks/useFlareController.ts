@@ -3,7 +3,11 @@ import { useLocation } from 'react-router-dom'
 
 /* Drives the bottom-of-screen flare on every FlareMedia; see Flare.tsx. */
 
-const FLARE_MAX = 80
+const FLARE_MAX = 120
+/** How far up from the screen's bottom the bend begins, in multiples of the
+    reach. Longer than the reach so the fold opens gradually, like a page
+    curling out, rather than a tight corner. */
+const ZONE = 2.6
 
 /** One controller for the whole page, mounted once in Layout. */
 export function useFlareController() {
@@ -27,7 +31,8 @@ export function useFlareController() {
         // The reach either side, as laid out by CSS.
         const m = (W - frameEl.clientWidth) / 2
         const r = Math.min(FLARE_MAX, m, H)
-        const zoneTop = vh - r - box.top // where the bend starts, in layer px
+        const Z = r * ZONE
+        const zoneTop = vh - Z - box.top // where the bend starts, in layer px
         const edge = vh - box.top // the bottom of the screen, in layer px
 
         if (r <= 0 || box.top >= vh || zoneTop >= H || box.bottom < 0) {
@@ -37,13 +42,16 @@ export function useFlareController() {
 
         const right: string[] = []
         const left: string[] = []
+        // Smoothstep: the sides leave the frame gently, sweep out, and land
+        // flat at full reach on the screen's bottom edge. The same curve runs
+        // in reverse when scrolling back up, so it folds in as it folded out.
         const at = (y: number) => {
-          const d = Math.min(Math.max(y - zoneTop, 0), r)
-          return r - Math.sqrt(r * r - d * d)
+          const t = Math.min(Math.max((y - zoneTop) / Z, 0), 1)
+          return r * t * t * (3 - 2 * t)
         }
-        const STEPS = 14
+        const STEPS = 28
         const ys: number[] = [Math.max(zoneTop, 0)]
-        for (let i = 1; i <= STEPS; i++) ys.push(zoneTop + (r * i) / STEPS)
+        for (let i = 1; i <= STEPS; i++) ys.push(zoneTop + (Z * i) / STEPS)
         ys.push(H)
 
         for (const raw of ys) {
