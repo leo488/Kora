@@ -29,6 +29,8 @@ export interface PhoneScreen {
   glare?: string
   /** A laptop: the web app at 1440 × 900 instead of the phone app. */
   web?: boolean
+  /** The phone's own notch, [width, height] in the 390 × 844 screen, drawn on top. */
+  notch?: [number, number]
 }
 
 
@@ -82,7 +84,7 @@ export function ScreenOverlay({ screen }: { screen: PhoneScreen }) {
         {screen.web ? (
           <WebDash playing={playing} />
         ) : screen.flow === 'onboard' ? (
-          <OnboardScreen playing={playing} dark />
+          <OnboardScreen playing={playing} />
         ) : screen.flow === 'receive' ? (
           <ReceiveApp playing={playing} />
         ) : screen.flow === 'card' ? (
@@ -92,6 +94,7 @@ export function ScreenOverlay({ screen }: { screen: PhoneScreen }) {
         ) : (
           <AppScreen flow={screen.flow} playing={playing} />
         )}
+        {screen.notch && <i className="kora-screen-notch" style={{ width: screen.notch[0], height: screen.notch[1] }} />}
       </div>
       {screen.flow === 'swap' && burst > 0 && pts && <CoinBurst key={burst} pts={pts} />}
     </div>
