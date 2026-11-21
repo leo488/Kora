@@ -171,38 +171,21 @@
   max-width: 40ch;
 }
 
-/* The wordmark across the whole page. Each letter rises out of its own
-   line on load: a clip, never a fade. */
+/* The logo animation, looping in grey across the whole page. */
 .nx-mark {
-  margin: clamp(48px, 9vw, 160px) 0 clamp(16px, 2vw, 28px);
-  color: var(--text-h);
-  overflow: hidden;
+  margin: clamp(32px, 6vw, 110px) 0 clamp(8px, 1vw, 16px);
+  --nx-loop: #2a2a2a;
+  --nx-loop-fly: #3a3a3a;
 }
 
-.nx-mark svg {
+.kora-app.is-light .nx-mark {
+  --nx-loop: #dcdbd5;
+  --nx-loop-fly: #cfcec8;
+}
+
+.nx-loop {
   display: block;
   width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-.nx-mark svg > path {
-  animation: nx-rise 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-.nx-mark svg > path:nth-of-type(2) { animation-delay: 0.06s; }
-.nx-mark svg > path:nth-of-type(3) { animation-delay: 0.12s; }
-.nx-mark svg > path:nth-of-type(4) { animation-delay: 0.18s; }
-.nx-mark svg > path:nth-of-type(5) { animation-delay: 0.24s; }
-.nx-mark svg > path:nth-of-type(6) { animation-delay: 0.3s; }
-
-@keyframes nx-rise {
-  from { translate: 0 110%; }
-  to { translate: 0 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nx-mark svg > path { animation: none; }
 }
 
 .nx-logos {
@@ -685,5 +668,39 @@
 
   .nx-list-row .nx-meta {
     display: none;
+  }
+}
+
+/* Footer wordmark: dark glass, lit from the top left, sinking into the page
+   at its foot. */
+.nx-app .kora-footer-logo-box {
+  position: relative;
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
+}
+
+.nx-app .kora-footer-logo {
+  color: #141416;
+  filter: url(#kora-glass);
+  overflow: visible;
+}
+
+.kora-app.is-light.nx-app .kora-footer-logo {
+  color: #c9c8c2;
+}
+
+/* The work-in-progress bar slides in over the top while scrolling: move the
+   bar down under it, at the same pace, so the links stay reachable. */
+.nx-head {
+  transition: translate 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nx-app:has(.kora-wip-bar.is-shown) .nx-head {
+  translate: 0 46px;
+}
+
+@media (max-width: 760px) {
+  .nx-app:has(.kora-wip-bar.is-shown) .nx-head {
+    translate: none;
   }
 }

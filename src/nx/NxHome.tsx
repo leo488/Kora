@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { BrandMarquee } from '../components/BrandMarquee'
-import { KoraMark } from '../components/KoraMark'
+import { NxHeroLoop } from './NxHeroLoop'
 import { POSTS, SERVICES } from '../data'
 import { NxArrow } from './NxHeader'
 import { NxWorkList } from './NxWorkList'
@@ -25,8 +25,8 @@ export function NxHome() {
         </p>
       </section>
 
-      <div className="nx-mark" aria-hidden="true">
-        <KoraMark />
+      <div className="nx-mark">
+        <NxHeroLoop />
       </div>
 
       <section className="nx-logos" aria-label="Brands we have worked with">

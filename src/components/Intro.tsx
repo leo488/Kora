@@ -52,7 +52,15 @@ const alreadyPlayed = () => {
   }
 }
 
-function makeRenderer(ctx: CanvasRenderingContext2D) {
+export const INTRO_END = A.END
+
+/** fg/fly recolour it; scale(W, H) overrides the logo's size in px per unit. */
+export function makeRenderer(
+  ctx: CanvasRenderingContext2D,
+  opts: { fg?: string; fly?: string; scale?: (W: number, H: number) => number } = {},
+) {
+  const FGc = opts.fg ?? FG
+  const FLYc = opts.fly ?? FLY
   const BAR = new Path2D(LOGO.bar)
   const P = {
     K: new Path2D(LOGO.K),
@@ -70,7 +78,7 @@ function makeRenderer(ctx: CanvasRenderingContext2D) {
     ctx.rotate(rot * D2R)
     ctx.scale(s, s)
     ctx.translate(LOGO.ast.bx, LOGO.ast.by)
-    ctx.fillStyle = FLY
+    ctx.fillStyle = FLYc
     for (const a of [0, 60, 120]) {
       ctx.save()
       ctx.rotate(a * D2R)
@@ -94,7 +102,7 @@ function makeRenderer(ctx: CanvasRenderingContext2D) {
     c.clearRect(0, 0, W, H)
     // The kit sets the logo 200 px tall on a 1920 frame; keep that share of
     // the width, but never let it outgrow a phone screen.
-    const LS = (Math.min(W / 1920, H / 1080) * 1.4 * 200) / 31.08
+    const LS = opts.scale ? opts.scale(W, H) : (Math.min(W / 1920, H / 1080) * 1.4 * 200) / 31.08
     const push = 1 + 0.035 * ioS(pr(t, 0, A.END))
     const tauHit = t - A.hitT
     const recoil = [-1.0, 0, 1.0, 0.6, 0.35].map((v) => v * spring(tauHit, 13, 5))
@@ -104,8 +112,8 @@ function makeRenderer(ctx: CanvasRenderingContext2D) {
     c.translate(W / 2, H / 2)
     c.scale(s, s)
     c.translate(-LUX, -LUY)
-    c.fillStyle = FG
-    c.strokeStyle = FG
+    c.fillStyle = FGc
+    c.strokeStyle = FGc
     c.lineJoin = 'round'
     c.lineWidth = 0.7
 

@@ -5,7 +5,6 @@ import type { Theme } from '../theme/theme'
 import { NxHeader } from '../nx/NxHeader'
 import '../nx/nx.css'
 import { useFlareController } from '../hooks/useFlareController'
-import { Offices } from './Offices'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
 import { Announcement } from './Announcement'
@@ -51,7 +50,6 @@ export function Layout() {
           <Announcement />
           <NxHeader />
           <Outlet />
-          <Offices />
           <Footer />
           <CookieBar />
         </ContactProvider>

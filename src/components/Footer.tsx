@@ -141,6 +141,24 @@ export function Footer() {
 
       <div ref={logoRef} className="kora-footer-logo-box">
         <KoraMark className="kora-footer-logo" />
+        {/* Dark glass: the letters are lit as a bevelled, polished surface
+            (a lighting filter on the shape itself, not a drop shadow). */}
+        <svg width="0" height="0" aria-hidden="true" style={{ position: 'absolute' }}>
+          <filter id="kora-glass" x="-2%" y="-10%" width="104%" height="120%" colorInterpolationFilters="sRGB">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="9" result="bump" />
+            <feSpecularLighting in="bump" surfaceScale="14" specularConstant="0.9" specularExponent="22" lightingColor="#c9ccd3" result="spec">
+              <feDistantLight azimuth="235" elevation="38" />
+            </feSpecularLighting>
+            <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn" />
+            <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="edgeBlur" />
+            <feSpecularLighting in="edgeBlur" surfaceScale="3" specularConstant="0.6" specularExponent="40" lightingColor="#ffffff" result="rim">
+              <feDistantLight azimuth="225" elevation="55" />
+            </feSpecularLighting>
+            <feComposite in="rim" in2="SourceAlpha" operator="in" result="rimIn" />
+            <feComposite in="SourceGraphic" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.8" k4="0" result="lit" />
+            <feComposite in="lit" in2="rimIn" operator="arithmetic" k1="0" k2="1" k3="0.25" k4="0" />
+          </filter>
+        </svg>
       </div>
 
       <div className="kora-footer-meta kora-container">
