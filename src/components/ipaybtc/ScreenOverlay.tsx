@@ -3,7 +3,8 @@ import { AppScreen } from './AppScreen'
 import { CardPayApp, SwapApp } from './SwapApp'
 import { ReceiveApp } from './ReceiveApp'
 import { CoinBurst } from './CoinBurst'
-import { WebDash, OnboardStrip } from './Scenes'
+import { WebDash } from './Scenes'
+import { OnboardScreen } from './Extras'
 import type { AppFlow } from './AppScreen'
 
 /* Puts the live app screen onto the phone in a still photo.
@@ -81,7 +82,7 @@ export function ScreenOverlay({ screen }: { screen: PhoneScreen }) {
         {screen.web ? (
           <WebDash playing={playing} />
         ) : screen.flow === 'onboard' ? (
-          <OnboardStrip playing={playing} />
+          <OnboardScreen playing={playing} dark />
         ) : screen.flow === 'receive' ? (
           <ReceiveApp playing={playing} />
         ) : screen.flow === 'card' ? (

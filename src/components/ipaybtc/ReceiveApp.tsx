@@ -118,7 +118,7 @@ export function ReceiveApp({ playing = true }: { playing?: boolean }) {
       <div className="irc-sheet">
         <span className="irc-grab" />
         <span className="irc-tick" aria-hidden>
-          <svg viewBox="0 0 84 84"><ellipse cx="42" cy="42" rx="30" ry="41" transform="rotate(32 42 42)" fill="#8ce8b4" /><path d="M29 43l9 9 18-19" fill="none" stroke="#0a3a2a" strokeWidth="5.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <svg viewBox="0 0 84 84"><ellipse cx="42" cy="42" rx="30" ry="41" transform="rotate(32 42 42)" fill="#8cc4ee" /><path d="M29 43l9 9 18-19" fill="none" stroke="#040246" strokeWidth="5.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </span>
         <p className="irc-sheet-k">You received</p>
         <p className="irc-sheet-v">

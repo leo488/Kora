@@ -340,9 +340,9 @@ type Post = { bg: string; fg: string; lines: string[]; sub?: string; obj: string
 export const POSTS: Post[] = [
   { bg: '#0a31f5', fg: '#ffef6b', lines: ['Your Naira', 'can’t travel.', 'Your Bitcoin can.'], obj: d3swap },
   { bg: '#ffef6b', fg: '#050e7f', lines: ['Buy Bitcoin', 'before your', 'tea gets cold.'], obj: d3coin },
-  { bg: '#050e7f', fg: '#ffef6b', lines: ['Pay NEPA', 'in sats.'], sub: 'Airtime, data and light bills, straight from your Bitcoin.', obj: d3check },
+  { bg: '#ff8619', fg: '#040246', lines: ['Pay NEPA', 'in sats.'], sub: 'Airtime, data and light bills, straight from your Bitcoin.', obj: d3check },
   { bg: '#8cc4ee', fg: '#050e7f', lines: ['No bank opening hours.', 'No border.', 'No permission.'], obj: d3bank },
-  { bg: '#0a31f5', fg: '#fff', lines: ['Bitcoin was', 'never meant', 'to sit still.'], sub: 'Spend it.', obj: d3ring },
+  { bg: '#f7a6d6', fg: '#050e7f', lines: ['Bitcoin was', 'never meant', 'to sit still.'], sub: 'Spend it.', obj: d3ring },
 ]
 
 /** One 4:5 social post. */

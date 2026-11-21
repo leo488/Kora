@@ -885,15 +885,15 @@
   font-family: 'Barlow Condensed', 'Noto Sans SC', sans-serif;
 }
 
-.ips-type[data-tone='sky'] { background: #a9d2ff; color: #050e7f; }
-.ips-type[data-tone='peach'] { background: #ffb28c; color: #050e7f; }
-.ips-type[data-tone='mint'] { background: #8ce8b4; color: #0a3a2a; }
-.ips-type[data-tone='plantain'] { background: #ffd84a; color: #050e7f; }
-.ips-type[data-tone='navy'] { background: #050e7f; color: #ffd84a; }
+.ips-type[data-tone='sky'] { background: #8cc4ee; color: #050e7f; }
+.ips-type[data-tone='peach'] { background: #ff8619; color: #050e7f; }
+.ips-type[data-tone='mint'] { background: #f7a6d6; color: #040246; }
+.ips-type[data-tone='plantain'] { background: #ffef6b; color: #050e7f; }
+.ips-type[data-tone='navy'] { background: #050e7f; color: #ffef6b; }
 .ips-type[data-tone='sky'] .ips-type-logo,
 .ips-type[data-tone='peach'] .ips-type-logo,
 .ips-type[data-tone='plantain'] .ips-type-logo { color: #050e7f; }
-.ips-type[data-tone='mint'] .ips-type-logo { color: #0a3a2a; }
+.ips-type[data-tone='mint'] .ips-type-logo { color: #040246; }
 .ips-type-objs { width: 42%; height: 58%; aspect-ratio: auto; }
 
 .ips-onboard {
@@ -923,7 +923,7 @@
 .ips-reel > .ips { position: absolute; inset: 0; }
 .ips-spec { position: absolute; inset: 0; }
 .ips-spec.is-bold { background: #0a31f5; color: #ffffff; }
-.ips-spec.is-body { background: #050e7f; color: #ffd84a; }
+.ips-spec.is-body { background: #050e7f; color: #ffef6b; }
 .ips-spec-rows {
   position: absolute;
   left: calc(var(--kora-flare, 0px) + 5%);
