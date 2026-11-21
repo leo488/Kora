@@ -444,8 +444,10 @@ const IPAY_LANDSCAPE: CaseSlot = {
   screen: {
     flow: 'onboard',
     size: [5504, 3072],
-    corners: [[2346, 664], [3155, 667], [3158, 2436], [2336, 2434]],
-    radius: 60,
+    // Measured off the photo's screen edge (Nov 21), inside the bezel.
+    corners: [[2347, 679], [3153, 679], [3153, 2438], [2347, 2438]],
+    radius: 48,
+    notch: [143, 34],
   },
 }
 /* Leo's Figma frames, exported from Figma as they are. */

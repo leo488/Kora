@@ -4569,6 +4569,16 @@
   pointer-events: none;
 }
 
+.kora-screen-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 3;
+  transform: translateX(-50%);
+  background: #0b0b0d;
+  border-radius: 0 0 18px 18px;
+}
+
 .kora-screen-glass {
   position: absolute;
   left: 0;
