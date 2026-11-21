@@ -9,6 +9,7 @@ import { NxWork } from './nx/NxWork'
 import { About } from './pages/About'
 import { Blog } from './pages/Blog'
 import { BrandTest } from './pages/BrandTest'
+import { BlogPost } from './pages/BlogPost'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/contact" element={<NxContact />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/brand-test" element={<BrandTest />} />
         </Route>
       </Routes>

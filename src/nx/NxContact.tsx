@@ -56,6 +56,7 @@ export function NxContact() {
     }
     const brief: Brief = {
       services,
+      budget: '',
       company: site.trim() || name.trim(),
       goal,
       timeline,

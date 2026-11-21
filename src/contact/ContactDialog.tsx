@@ -20,13 +20,17 @@ const SERVICES = [
   'Packaging',
   'Not sure yet',
 ]
-const TIMELINES = ['As soon as possible', 'In 1 to 3 months', 'Later than that', 'Just exploring']
+const BUDGETS = ['Under $2k', '$2k to $5k', '$5k to $15k', '$15k and up', 'Not sure yet']
+const TIMELINES = ['As soon as possible', 'In the next month', 'In 1 to 3 months', 'Just exploring']
 const REPLY_BY = ['Email', 'A call', 'WhatsApp'] as const
 
-const STEPS = ['What do you need?', 'About the project', 'Your details']
+// One question per screen. The single-answer ones move on as soon as they
+// are answered.
+const STEPS = ['What do you need?', 'Budget', 'Timing', 'About the project', 'Your details']
 
 const EMPTY: Brief = {
   services: [],
+  budget: '',
   company: '',
   goal: '',
   timeline: '',
@@ -45,8 +49,10 @@ const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 function check(step: number, brief: Brief): Errors {
   const errors: Errors = {}
   if (step === 0 && brief.services.length === 0) errors.services = 'Pick at least one.'
-  if (step === 1 && !brief.company.trim()) errors.company = 'Tell us the brand or company name.'
-  if (step === 2) {
+  if (step === 1 && !brief.budget) errors.budget = 'Pick the closest one.'
+  if (step === 2 && !brief.timeline) errors.timeline = 'Pick the closest one.'
+  if (step === 3 && !brief.company.trim()) errors.company = 'Tell us the brand or company name.'
+  if (step === 4) {
     if (!brief.name.trim()) errors.name = 'Tell us your name.'
     if (!EMAIL_SHAPE.test(brief.email.trim())) errors.email = 'Enter an email we can reply to.'
     if (brief.prefer !== 'Email' && !brief.phone.trim())
@@ -59,12 +65,16 @@ export function ContactDialog({
   open,
   seed,
   onClose,
+  inline = false,
 }: {
   open: boolean
   seed: ContactSeed
   onClose: () => void
+  /** On the contact page: the same flow, laid out in the page, no modal. */
+  inline?: boolean
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const inlineRef = useRef<HTMLElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const [step, setStep] = useState(0)
   const [brief, setBrief] = useState<Brief>(EMPTY)
@@ -77,7 +87,7 @@ export function ContactDialog({
 
   useEffect(() => {
     const dialog = dialogRef.current
-    if (!dialog) return
+    if (!dialog || inline) return
     if (open && !dialog.open) {
       dialog.showModal()
       document.documentElement.classList.add('kora-modal-open')
@@ -85,7 +95,7 @@ export function ContactDialog({
       dialog.close()
     }
     if (!open) document.documentElement.classList.remove('kora-modal-open')
-  }, [open])
+  }, [open, inline])
 
   // Each time it opens: take what the opener passed in, and start a fresh
   // brief if the last one was already sent.
@@ -106,9 +116,22 @@ export function ContactDialog({
 
   // Moving between steps puts focus on the new question, so a keyboard or
   // screen reader user lands where the content changed.
+  const moved = useRef(false)
   useEffect(() => {
+    // Inline, the first question is not focused on arrival, only after a move.
+    if (inline && !moved.current) return
     if (open) headingRef.current?.focus()
-  }, [open, step, done])
+  }, [open, step, done, inline])
+
+  const goTo = (next: number) => {
+    moved.current = true
+    setStep(next)
+  }
+
+  const pick = (key: 'budget' | 'timeline', value: string) => {
+    set(key, value)
+    goTo(step + 1)
+  }
 
   const set = <K extends keyof Brief>(key: K, value: Brief[K]) => {
     setBrief((current) => ({ ...current, [key]: value }))
@@ -131,14 +154,14 @@ export function ContactDialog({
     setErrors(found)
     const firstBad = Object.keys(found)[0]
     if (firstBad) {
-      dialogRef.current
+      ;(inline ? inlineRef.current : dialogRef.current)
         ?.querySelector<HTMLElement>(`[data-field="${firstBad}"] input, [data-field="${firstBad}"] textarea`)
         ?.focus()
       return
     }
 
     if (step < STEPS.length - 1) {
-      setStep(step + 1)
+      goTo(step + 1)
       return
     }
 
@@ -157,17 +180,7 @@ export function ContactDialog({
 
   const firstName = brief.name.trim().split(/\s+/)[0]
 
-  return (
-    <dialog
-      ref={dialogRef}
-      className="kora-dialog"
-      aria-labelledby="kora-dialog-title"
-      onClose={onClose}
-      onMouseDown={(event) => {
-        // The dialog element itself is only reachable as the backdrop.
-        if (event.target === dialogRef.current) onClose()
-      }}
-    >
+  const panel = (
       <div className="kora-dialog-panel">
         <header className="kora-dialog-head">
           {done ? (
@@ -184,9 +197,11 @@ export function ContactDialog({
               </ol>
             </>
           )}
-          <button type="button" className="kora-pill is-outline kora-dialog-close" onClick={onClose}>
-            Close
-          </button>
+          {!inline && (
+            <button type="button" className="kora-pill is-outline kora-dialog-close" onClick={onClose}>
+              Close
+            </button>
+          )}
         </header>
 
         {done ? (
@@ -228,9 +243,11 @@ export function ContactDialog({
             <Link to="/brand-test" className="kora-pill is-outline is-large" onClick={onClose}>
               Take the brand test
             </Link>
-            <button type="button" className="kora-pill is-solid is-large" onClick={onClose}>
-              Done
-            </button>
+            {!inline && (
+              <button type="button" className="kora-pill is-solid is-large" onClick={onClose}>
+                Done
+              </button>
+            )}
           </div>
           </>
         ) : (
@@ -238,8 +255,10 @@ export function ContactDialog({
             <div className="kora-dialog-body" key={step}>
               <h2 id="kora-dialog-title" ref={headingRef} tabIndex={-1}>
                 {step === 0 && 'What can we help you with?'}
-                {step === 1 && 'Tell us about the project.'}
-                {step === 2 && 'Where should we reply?'}
+                {step === 1 && 'Rough budget for this?'}
+                {step === 2 && 'When do you want to start?'}
+                {step === 3 && 'Tell us about the project.'}
+                {step === 4 && 'Where should we reply?'}
               </h2>
 
               {step === 0 && (
@@ -265,6 +284,50 @@ export function ContactDialog({
 
               {step === 1 && (
                 <>
+                  <p className="kora-dialog-lede">
+                    This does not fix a price. It only tells us whether we are a good fit.
+                  </p>
+                  <Field name="budget" error={errors.budget} plain>
+                    <div className="kora-chips" role="radiogroup" aria-label="Rough budget">
+                      {BUDGETS.map((budget) => (
+                        <label key={budget} className="kora-chip">
+                          <input
+                            type="radio"
+                            name="budget"
+                            checked={brief.budget === budget}
+                            onChange={() => pick('budget', budget)}
+                          />
+                          <span>{budget}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </Field>
+                </>
+              )}
+
+              {step === 2 && (
+                <>
+                  <p className="kora-dialog-lede">Pick the closest.</p>
+                  <Field name="timeline" error={errors.timeline} plain>
+                    <div className="kora-chips" role="radiogroup" aria-label="When do you want to start?">
+                      {TIMELINES.map((timeline) => (
+                        <label key={timeline} className="kora-chip">
+                          <input
+                            type="radio"
+                            name="timeline"
+                            checked={brief.timeline === timeline}
+                            onChange={() => pick('timeline', timeline)}
+                          />
+                          <span>{timeline}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </Field>
+                </>
+              )}
+
+              {step === 3 && (
+                <>
                   <Field name="company" label="Brand or company name" error={errors.company}>
                     <input
                       value={brief.company}
@@ -280,25 +343,10 @@ export function ContactDialog({
                       onChange={(e) => set('goal', e.target.value)}
                     />
                   </Field>
-                  <Field name="timeline" label="When do you want to start?" plain>
-                    <div className="kora-chips" role="radiogroup" aria-label="When do you want to start?">
-                      {TIMELINES.map((timeline) => (
-                        <label key={timeline} className="kora-chip">
-                          <input
-                            type="radio"
-                            name="timeline"
-                            checked={brief.timeline === timeline}
-                            onChange={() => set('timeline', timeline)}
-                          />
-                          <span>{timeline}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </Field>
                 </>
               )}
 
-              {step === 2 && (
+              {step === 4 && (
                 <>
                   <Field name="name" label="Your name" error={errors.name}>
                     <input
@@ -375,7 +423,7 @@ export function ContactDialog({
                   className="kora-pill is-outline is-large"
                   onClick={() => {
                     setStatus('idle')
-                    setStep(step - 1)
+                    goTo(step - 1)
                   }}
                 >
                   Back
@@ -400,6 +448,28 @@ export function ContactDialog({
           </form>
         )}
       </div>
+  )
+
+  return inline ? (
+    <section
+      ref={inlineRef}
+      className="kora-dialog is-inline"
+      aria-labelledby="kora-dialog-title"
+    >
+      {panel}
+    </section>
+  ) : (
+    <dialog
+      ref={dialogRef}
+      className="kora-dialog"
+      aria-labelledby="kora-dialog-title"
+      onClose={onClose}
+      onMouseDown={(event) => {
+        // The dialog element itself is only reachable as the backdrop.
+        if (event.target === dialogRef.current) onClose()
+      }}
+    >
+      {panel}
     </dialog>
   )
 }

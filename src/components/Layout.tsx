@@ -10,6 +10,7 @@ import { CookieBar } from './CookieBar'
 import { Announcement } from './Announcement'
 import { ContactProvider } from '../contact/ContactContext'
 import '../system.css'
+import { applyMeta } from '../applyMeta'
 
 export function Layout() {
   // Dark by default, with a light mode the visitor can switch to. The choice is
@@ -27,6 +28,8 @@ export function Layout() {
   useEffect(() => {
     document.documentElement.dataset.theme = shown
   }, [shown])
+
+  useEffect(() => applyMeta(pathname), [pathname])
 
   useEffect(() => {
     try {

@@ -22,7 +22,9 @@ export function NxCase() {
 
   const project = PROJECTS.find((p) => p.name.toLowerCase() === study.slug)
   const nextProject = PROJECTS.find((p) => p.name === study.next)
-  const nextStudy = caseStudyFor(study.next)
+  const nextCandidate = caseStudyFor(study.next)
+  // Only point at a next case study that is out.
+  const nextStudy = nextCandidate && caseLinkFor(nextCandidate.slug) ? nextCandidate : undefined
   const year = study.facts.find((f) => f.label === 'Year')?.value ?? project?.year
 
   const items = [

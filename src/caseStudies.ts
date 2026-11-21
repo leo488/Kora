@@ -835,7 +835,8 @@ export function caseStudyFor(slug: string | undefined) {
 
 /** The case study link for a project, if it has one. */
 /** Case studies that are out. Every other project shows a "coming" note. */
-const PUBLISHED = new Set(['ipaybtc', '3projects', 'refreeg', 'tagmi'])
+const PUBLISHED = new Set(['ipaybtc'])
+
 
 /** When the unpublished case studies are due. */
 export const CASE_STUDY_DUE = 'December 2026'
