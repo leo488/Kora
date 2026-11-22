@@ -120,7 +120,7 @@ export function ClientRow({ project, index }: { project: Project; index?: number
 
 /** The still shows first; once the row is in view the film fades in over it
  *  and loops. Reduced motion keeps the still. */
-function FilmAfterImage({ src, delayMs, still, alt }: { src: string; delayMs: number; still: ProjectImage; alt: string }) {
+export function FilmAfterImage({ src, delayMs, still, alt }: { src: string; delayMs: number; still: ProjectImage; alt: string }) {
   const box = useRef<HTMLDivElement>(null)
   const video = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(false)

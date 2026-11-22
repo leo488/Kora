@@ -189,27 +189,10 @@
   will-change: translate;
 }
 
-/* The letters drop in one after another, hold, then lift out, on a loop.
-   Clean moves, no fades. */
+/* Each letter is moved by HeroMark (the kit's logo animation), from its
+   own baseline pivot. */
 .nx-hero-mark > img {
-  animation: nx-hero-drop 7s cubic-bezier(0.22, 1, 0.36, 1) infinite both;
-}
-.nx-hero-mark > img:nth-child(2) { animation-delay: 0.08s; }
-.nx-hero-mark > img:nth-child(3) { animation-delay: 0.16s; }
-.nx-hero-mark > img:nth-child(4) { animation-delay: 0.24s; }
-.nx-hero-mark > img:nth-child(5) { animation-delay: 0.32s; }
-.nx-hero-mark > img:nth-child(6) { animation-delay: 0.4s; }
-
-@keyframes nx-hero-drop {
-  0% { translate: 0 -180%; }
-  14% { translate: 0 0; }
-  82% { translate: 0 0; animation-timing-function: cubic-bezier(0.64, 0, 0.78, 0); }
-  92% { translate: 0 -180%; }
-  100% { translate: 0 -180%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nx-hero-mark > img { animation: none; }
+  will-change: transform;
 }
 
 

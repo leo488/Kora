@@ -1186,8 +1186,11 @@
   align-items: center;
   gap: var(--kora-logo-gap, 76px);
   /* Matches the gap so the join between the two tracks is evenly spaced. */
-  padding: 0 calc(var(--kora-logo-gap, 76px) / 2) 0 0;
-  margin: 0 var(--kora-logo-gap, 76px) 0 0;
+  /* The track's own trailing gap, inside its width, so sliding it by
+     exactly its width lands the second track where the first began and
+     the join is spaced like every other pair. */
+  padding: 0 var(--kora-logo-gap, 76px) 0 0;
+  margin: 0;
   list-style: none;
   animation: kora-marquee 46s linear infinite;
   will-change: transform;
@@ -5082,7 +5085,6 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.9s ease;
 }
 
 .kora-film-after.is-playing video {

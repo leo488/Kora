@@ -114,6 +114,7 @@ function HeroMark() {
       cancelAnimationFrame(frame)
     }
   }, [])
+  useKitLoop(ref)
   return (
     <div ref={ref} className="nx-hero-mark nx-glass" role="img" aria-label="Koraa’">
       {GLASS.map((src) => (
@@ -194,4 +195,77 @@ function Newsletter() {
       )}
     </section>
   )
+}
+
+/* The brand kit's logo animation (the same one the grey hero loop and the
+   intro play), applied to the six 3D letters: they rise one by one with an
+   overshoot and squash, the apostrophe drops in, winds up and flings, and
+   the o takes the hit and the others recoil. Then a hold, and again.
+   Numbers are the kit's (see components/Intro.tsx). */
+const K_END = 5.4
+const K_HOLD = 2.6
+const HIT = 2.62
+const WIND = 1.72
+const FLING = 1.98
+/* Glass layer geometry: about 25 px per logo unit on a 2675 x 805 render. */
+const PX_W = 25 / 2675
+const PX_H = 25 / 805
+const BASE = 0.947
+const CX = [0.126, 0.3187, 0.4961, 0.6591, 0.8686]
+
+const clamp = (v: number) => Math.max(0, Math.min(1, v))
+const prog = (t: number, a: number, b: number) => clamp((t - a) / (b - a))
+const backOut = (k: number, s = 1.5) => {
+  k = clamp(k)
+  return 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2)
+}
+const ring = (tau: number, f = 15, d = 5.5) => (tau <= 0 ? 0 : Math.exp(-d * tau) * Math.sin(f * tau))
+
+function useKitLoop(ref: { current: HTMLDivElement | null }) {
+  useEffect(() => {
+    const box = ref.current
+    if (!box) return
+    const imgs = Array.from(box.querySelectorAll<HTMLImageElement>('img'))
+    imgs.forEach((img, i) => {
+      img.style.transformOrigin = i < 5 ? `${CX[i] * 100}% ${BASE * 100}%` : '95% 33.7%'
+    })
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let visible = true
+    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting))
+    io.observe(box)
+    let frame = 0
+    const start = performance.now()
+    const tick = (now: number) => {
+      frame = requestAnimationFrame(tick)
+      if (!visible) return
+      const t = Math.min(((now - start) / 1000) % (K_END + K_HOLD), K_END)
+      const tau = t - HIT
+      const recoil = [-1, 0, 1, 0.6, 0.35].map((v) => v * ring(tau, 13, 5))
+      for (let i = 0; i < 5; i++) {
+        const kk = prog(t, 0.1 + i * 0.075, 0.82 + i * 0.075)
+        const y = (1 - backOut(kk, 2.1)) * 34
+        const sy = kk <= 0 ? 1 : 1 + 0.17 * Math.sin(2 * Math.PI * kk) * (1 - kk)
+        let sx = 1 / Math.sqrt(Math.max(0.5, sy))
+        let syy = sy
+        if (i === 1) {
+          const ant = Math.sin(Math.PI * prog(t, HIT - 0.22, HIT)) * 0.05
+          const hit = tau >= 0 ? 0.16 * Math.exp(-4.5 * tau) * Math.cos(13 * tau) : 0
+          sx *= (1 + ant * 0.6) * (1 + hit)
+          syy *= (1 - ant) * (1 + hit * 0.8)
+        }
+        imgs[i].style.transform = `translate(${(recoil[i] * PX_W * 100).toFixed(3)}%, ${(y * PX_H * 100).toFixed(3)}%) scale(${sx.toFixed(4)}, ${syy.toFixed(4)})`
+      }
+      const ka = prog(t, 0.62, 1.12)
+      const load = Math.sin((Math.PI / 2) * prog(t, WIND, FLING)) * (t < FLING ? 1 : 0)
+      const fl = t >= FLING ? -16 * Math.exp(-4 * (t - FLING)) * Math.cos(11 * (t - FLING)) : 0
+      const sq = 1 - 0.2 * load + (t >= FLING ? 0.18 * ring(t - FLING, 14, 6) : 0)
+      const ay = ka <= 0 ? -200 : -(1 - backOut(ka, 2.4)) * 12 * PX_H * 100
+      imgs[5].style.transform = `translate(${(recoil[4] * 0.8 * PX_W * 100).toFixed(3)}%, ${ay.toFixed(3)}%) rotate(${(12 * load + fl).toFixed(3)}deg) scale(${(1 / Math.sqrt(sq)).toFixed(4)}, ${sq.toFixed(4)})`
+    }
+    frame = requestAnimationFrame(tick)
+    return () => {
+      cancelAnimationFrame(frame)
+      io.disconnect()
+    }
+  }, [ref])
 }

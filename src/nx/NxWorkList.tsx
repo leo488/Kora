@@ -4,6 +4,7 @@ import { PROJECTS, srcSetFor } from '../data'
 import type { Project } from '../data'
 import { CASE_STUDY_DUE, caseLinkFor, caseStudyFor } from '../caseStudies'
 import { NxArrow } from './NxHeader'
+import { FilmAfterImage } from '../components/Sections'
 
 /* The work list: one project per row, the picture on the left half, the
    name, line and a short story on the right half, an arrow in the corner. */
@@ -45,7 +46,14 @@ export function NxRow({ project }: { project: Project }) {
       <RowLink to={to}>
         <div className="nx-row-media kora-rx-media" onPointerMove={followCursor}>
           <div className="kora-flare">
-            {project.film && !project.film.afterImageMs ? (
+            {project.film?.afterImageMs ? (
+              <FilmAfterImage
+                src={project.film.src}
+                delayMs={project.film.afterImageMs}
+                still={lead}
+                alt={project.brand}
+              />
+            ) : project.film ? (
               <video
                 src={project.film.src}
                 poster={project.film.poster.src}
