@@ -102,7 +102,7 @@ function HeroMark() {
     const update = () => {
       frame = 0
       const y = Math.min(window.scrollY, window.innerHeight * 1.5)
-      el.style.translate = `0 ${(y * 0.5).toFixed(1)}px`
+      el.style.translate = `0 calc(30% + ${(y * 0.5).toFixed(1)}px)`
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update)
