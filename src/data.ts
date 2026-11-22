@@ -297,7 +297,7 @@ export const PROJECTS: Project[] = [
     headline: 'Refreeg — Giving, made direct',
     stat: '₦50 million',
     statNote: 'Raised in funding',
-    film: { src: refreegFilm, poster: frame([[refreegFilmPoster, 1600]]), durationMs: 10000 },
+    film: { src: refreegFilm, poster: frame([[refreegFilmPoster, 1600]]), durationMs: 10000, afterImageMs: 1600 },
     images: [FRAMES.refreeg01, FRAMES.refreeg02, FRAMES.refreeg03],
   },
   {
@@ -523,14 +523,14 @@ export interface Partner {
 export const PARTNERS: Partner[] = [
   { name: 'Õhobù', logo: logoOhobu, scale: 0.98 },
   { name: 'Tagmi', logo: logoTagmi, scale: 1.05 },
-  { name: 'Cleon', logo: logoCleon, scale: 1.62 },
+  { name: 'Cleon', logo: logoCleon, scale: 1.42 },
   { name: 'Refreeg', logo: logoRefreeg, scale: 0.85 },
   { name: 'Cleon de Spotless', logo: logoCleonSpotless, scale: 1.05 },
   { name: 'Squaremetre', logo: logoSquaremetre, scale: 0.72 },
   { name: 'Whot', logo: logoWhot, scale: 0.78 },
   { name: 'Frame Fest', logo: logoFrameFest, scale: 0.9 },
   { name: 'FourStrides', logo: logoFourStrides, scale: 0.76 },
-  { name: '3PROJECTS', logo: logoThreeProjects, scale: 0.82 },
+  { name: '3PROJECTS', logo: logoThreeProjects, scale: 0.67 },
 ]
 
 /* Posts — shared by the Blog index and the Happenings strip on Home. The
