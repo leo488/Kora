@@ -163,6 +163,17 @@
 
 /* Home ------------------------------------------------------------------- */
 
+/* The first screen: the intro up top, the 3D wordmark at the foot,
+   cropped by the bottom of the screen. The sheet after it is opaque and
+   sits above, so on scroll it slides up over the logo. */
+.nx-hero {
+  position: relative;
+  z-index: 0;
+  height: calc(100svh - var(--nx-head));
+  display: flex;
+  flex-direction: column;
+}
+
 .nx-intro {
   padding: 12px 0 0;
 }
@@ -171,21 +182,28 @@
   max-width: 40ch;
 }
 
-/* The logo animation, looping in grey across the whole page. */
-.nx-mark {
-  margin: clamp(32px, 6vw, 110px) 0 clamp(8px, 1vw, 16px);
-  --nx-loop: #2a2a2a;
-  --nx-loop-fly: #3a3a3a;
+.nx-hero-mark {
+  margin: auto calc(-1 * var(--nx-g)) 0;
+  flex: none;
+  translate: 0 30%;
+  will-change: translate;
 }
 
-.kora-app.is-light .nx-mark {
-  --nx-loop: #dcdbd5;
-  --nx-loop-fly: #cfcec8;
+
+.nx-hero-brands {
+  position: absolute;
+  left: 0;
+  bottom: 12px;
+  z-index: 1;
+  color: var(--text);
 }
 
-.nx-loop {
-  display: block;
-  width: 100%;
+.nx-sheet {
+  position: relative;
+  z-index: 1;
+  margin: 0 calc(-1 * var(--nx-g));
+  padding: 0 var(--nx-g);
+  background: var(--bg);
 }
 
 .nx-logos {

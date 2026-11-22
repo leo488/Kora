@@ -1,8 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { BrandMarquee } from '../components/BrandMarquee'
-import { NxHeroLoop } from './NxHeroLoop'
+import g0 from '../assets/glass/koraa-glass-0.webp'
+import g1 from '../assets/glass/koraa-glass-1.webp'
+import g2 from '../assets/glass/koraa-glass-2.webp'
+import g3 from '../assets/glass/koraa-glass-3.webp'
+import g4 from '../assets/glass/koraa-glass-4.webp'
+import g5 from '../assets/glass/koraa-glass-5.webp'
 import { POSTS, SERVICES } from '../data'
 import { NxArrow } from './NxHeader'
 import { NxWorkList } from './NxWorkList'
@@ -17,18 +22,20 @@ export const FEATURED = ['Ipaybtc', 'Refreeg', '3Projects', 'Tagmi']
 export function NxHome() {
   return (
     <div className="nx-page nx-home">
-      <section className="nx-split nx-intro">
-        <div />
-        <p className="nx-lead">
-          We help ambitious startups and businesses build brands and digital
-          products that are ready to compete globally.
-        </p>
+      <section className="nx-hero">
+        <div className="nx-split nx-intro">
+          <div />
+          <p className="nx-lead">
+            We help ambitious startups and businesses build brands and digital
+            products that are ready to compete globally.
+          </p>
+        </div>
+        <HeroMark />
+        <p className="nx-label nx-hero-brands">Some of the brands we have worked with:</p>
       </section>
 
-      <div className="nx-mark">
-        <NxHeroLoop />
-      </div>
-
+      {/* Everything below is one sheet that slides up over the pinned logo. */}
+      <div className="nx-sheet">
       <section className="nx-logos" aria-label="Brands we have worked with">
         <BrandMarquee />
       </section>
@@ -76,6 +83,42 @@ export function NxHome() {
       </section>
 
       <Newsletter />
+      </div>
+    </div>
+  )
+}
+
+const GLASS = [g0, g1, g2, g3, g4, g5]
+
+/* The 3D wordmark sits at the foot of the first screen, cropped by its
+   bottom edge. It drifts at half the scroll speed, so the sheet below
+   catches up with it and covers it. */
+function HeroMark() {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const y = Math.min(window.scrollY, window.innerHeight * 1.5)
+      el.style.translate = `0 ${(y * 0.5).toFixed(1)}px`
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(frame)
+    }
+  }, [])
+  return (
+    <div ref={ref} className="nx-hero-mark nx-glass" role="img" aria-label="Koraa’">
+      {GLASS.map((src) => (
+        <img key={src} src={src} alt="" draggable={false} fetchPriority="high" />
+      ))}
     </div>
   )
 }
