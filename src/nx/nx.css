@@ -163,6 +163,17 @@
 
 /* Home ------------------------------------------------------------------- */
 
+/* The first screen: the intro up top, the 3D wordmark at the foot,
+   cropped by the bottom of the screen. The sheet after it is opaque and
+   sits above, so on scroll it slides up over the logo. */
+.nx-hero {
+  position: relative;
+  z-index: 0;
+  height: calc(100svh - var(--nx-head));
+  display: flex;
+  flex-direction: column;
+}
+
 .nx-intro {
   padding: 12px 0 0;
 }
@@ -171,21 +182,51 @@
   max-width: 40ch;
 }
 
-/* The logo animation, looping in grey across the whole page. */
-.nx-mark {
-  margin: clamp(32px, 6vw, 110px) 0 clamp(8px, 1vw, 16px);
-  --nx-loop: #2a2a2a;
-  --nx-loop-fly: #3a3a3a;
+.nx-hero-mark {
+  margin: auto calc(-1 * var(--nx-g)) 0;
+  flex: none;
+  translate: 0 30%;
+  will-change: translate;
 }
 
-.kora-app.is-light .nx-mark {
-  --nx-loop: #dcdbd5;
-  --nx-loop-fly: #cfcec8;
+/* The letters drop in one after another, hold, then lift out, on a loop.
+   Clean moves, no fades. */
+.nx-hero-mark > img {
+  animation: nx-hero-drop 7s cubic-bezier(0.22, 1, 0.36, 1) infinite both;
+}
+.nx-hero-mark > img:nth-child(2) { animation-delay: 0.08s; }
+.nx-hero-mark > img:nth-child(3) { animation-delay: 0.16s; }
+.nx-hero-mark > img:nth-child(4) { animation-delay: 0.24s; }
+.nx-hero-mark > img:nth-child(5) { animation-delay: 0.32s; }
+.nx-hero-mark > img:nth-child(6) { animation-delay: 0.4s; }
+
+@keyframes nx-hero-drop {
+  0% { translate: 0 -180%; }
+  14% { translate: 0 0; }
+  82% { translate: 0 0; animation-timing-function: cubic-bezier(0.64, 0, 0.78, 0); }
+  92% { translate: 0 -180%; }
+  100% { translate: 0 -180%; }
 }
 
-.nx-loop {
-  display: block;
-  width: 100%;
+@media (prefers-reduced-motion: reduce) {
+  .nx-hero-mark > img { animation: none; }
+}
+
+
+.nx-hero-brands {
+  position: absolute;
+  left: 0;
+  bottom: 12px;
+  z-index: 1;
+  color: var(--text);
+}
+
+.nx-sheet {
+  position: relative;
+  z-index: 1;
+  margin: 0 calc(-1 * var(--nx-g));
+  padding: 0 var(--nx-g);
+  background: var(--bg);
 }
 
 .nx-logos {
@@ -724,7 +765,7 @@
 
 .nx-glass {
   position: relative;
-  aspect-ratio: 2632 / 793;
+  aspect-ratio: 2675 / 805;
   overflow: hidden;
 }
 
