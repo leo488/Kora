@@ -280,8 +280,6 @@
 }
 
 .nx-row-text {
-  position: relative;
-  z-index: 1; /* stays above the picture's flare as it sweeps out */
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -4422,7 +4422,7 @@
    --------------------------------------------------------------------------- */
 
 .kora-rx-media {
-  --kora-flare: 120px;
+  --kora-flare: 80px;
   position: relative;
 }
 
@@ -4482,18 +4482,6 @@
 
 @media (max-width: 760px) {
   .kora-rx-media {
-    --kora-flare: 60px;
-  }
-}
-
-/* Home keeps the original, tighter fold (Leo, Nov 21: the wider sweep stays
-   on case studies only). */
-.nx-home .kora-rx-media {
-  --kora-flare: 80px;
-}
-
-@media (max-width: 760px) {
-  .nx-home .kora-rx-media {
     --kora-flare: 48px;
   }
 }
