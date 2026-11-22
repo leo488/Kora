@@ -168,7 +168,8 @@ import framefest013000 from './assets/framefest-01-3000.jpg'
 import framefest021200 from './assets/framefest-02-1200.jpg'
 import framefest022000 from './assets/framefest-02-2000.jpg'
 import framefest023000 from './assets/framefest-02-3000.jpg'
-import refreegFilm from './assets/refreeg/refreeg-film.mp4'
+import refreegFilm from './assets/refreeg/refreeg-ai-loop.mp4'
+import refreegFilmPoster from './assets/refreeg/refreeg-ai-loop-poster.jpg'
 import refreeg011200 from './assets/refreeg-01-1200.jpg'
 import refreeg012000 from './assets/refreeg-01-2000.jpg'
 import refreeg013000 from './assets/refreeg-01-3000.jpg'
@@ -296,7 +297,7 @@ export const PROJECTS: Project[] = [
     headline: 'Refreeg — Giving, made direct',
     stat: '₦50 million',
     statNote: 'Raised in funding',
-    film: { src: refreegFilm, poster: FRAMES.refreeg01, durationMs: 14770, afterImageMs: 1600 },
+    film: { src: refreegFilm, poster: frame([[refreegFilmPoster, 1600]]), durationMs: 10000 },
     images: [FRAMES.refreeg01, FRAMES.refreeg02, FRAMES.refreeg03],
   },
   {
