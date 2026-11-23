@@ -26,13 +26,12 @@ export function NxHome() {
         <div className="nx-split nx-intro">
           <div />
           <p className="nx-lead">
-            We turn ambitious ideas into brands people understand at a glance
-            and products they actually want to use. For startups and businesses
-            in Nigeria and beyond, built to compete anywhere.
+            We help ambitious startups and businesses build brands and digital
+            products that are ready to compete globally.
           </p>
         </div>
         <HeroMark />
-        <p className="nx-label nx-hero-brands">Brands we’ve helped build:</p>
+        <p className="nx-label nx-hero-brands">Some of the brands we have worked with:</p>
       </section>
 
       {/* Everything below is one sheet that slides up over the pinned logo. */}
@@ -44,8 +43,8 @@ export function NxHome() {
       <section className="nx-split nx-section">
         <p className="nx-label">Selected work</p>
         <p className="nx-lead">
-          Complex ideas, made simple. Bitcoin you can spend like money, giving
-          you can see, a social platform where attention pays.
+          Brand identities, products and campaigns for founders in Nigeria and
+          beyond.
         </p>
       </section>
 

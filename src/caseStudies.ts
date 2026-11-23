@@ -810,7 +810,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'tagmi',
     title: 'Tagmi',
     tagline: 'Where attention becomes income',
-    summary: 'Tagmi is a social media platform where attention becomes income. A bold identity for a product launching soon.',
+    summary: 'Tagmi is a social media platform where attention becomes income. It is still in development.',
     facts: [
       { label: 'Client', value: 'Tagmi' },
       { label: 'Industry', value: 'Social media' },
