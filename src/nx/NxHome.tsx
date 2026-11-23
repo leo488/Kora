@@ -43,8 +43,8 @@ export function NxHome() {
       <section className="nx-split nx-section">
         <p className="nx-label">Selected work</p>
         <p className="nx-lead">
-          Brand identities, products and campaigns for founders in Nigeria and
-          beyond.
+          Brand identities, products and campaigns for ambitious brands,
+          wherever they are.
         </p>
       </section>
 
