@@ -629,7 +629,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { label: 'Client', value: 'iPayBTC' },
       { label: 'Industry', value: 'Fintech, Bitcoin payments' },
       { label: 'Services', value: 'Brand strategy, Creative direction, Visual identity, Mobile app UX/UI, Website, Campaign art direction, Motion, Brand guidelines' },
-      { label: 'Year', value: '2026' },
+      { label: 'Year', value: '2025' },
     ],
     highlights: ['Mobile app redesign now being adopted by the iPayBTC team'],
     sections: [
@@ -810,7 +810,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'tagmi',
     title: 'Tagmi',
     tagline: 'Where attention becomes income',
-    summary: 'Tagmi is a social media platform where attention becomes income. It is still in development.',
+    summary: 'Tagmi is a social media platform where attention becomes income. A bold identity for a product launching soon.',
     facts: [
       { label: 'Client', value: 'Tagmi' },
       { label: 'Industry', value: 'Social media' },

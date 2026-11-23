@@ -25,58 +25,62 @@ export const SERVICES: Service[] = [
   {
     name: 'Brand Strategy',
     description:
-      'Positioning, messaging, and a clear plan for how your brand shows up and grows.',
+      'Find the one thing your brand should stand for, then say it everywhere. Positioning, messaging and a clear plan for growth.',
   },
   {
     name: 'Visual Identity',
     description:
-      'Logo, color, type, and a system that holds together across every touchpoint.',
+      'Logo, colour, type and a system that looks like you on an app icon, a billboard and everything in between.',
   },
   {
     name: 'Web Design & Development',
     description:
-      'Fast, well-crafted websites and web apps built to convert and scale.',
+      'Websites and web apps that load fast, read clearly and turn visitors into customers.',
   },
   {
     name: 'Motion & Animation',
     description:
-      'Brand films, product animation, and motion systems that bring identity to life.',
+      'Brand films, product animation and motion systems that make your identity move the way it speaks.',
   },
   {
     name: 'Packaging Design',
     description:
-      'Shelf-ready packaging that stands out and stays true to the brand.',
+      'Packaging that wins the shelf in seconds and still feels like your brand once it’s home.',
   },
   {
     name: 'Art Direction',
     description:
-      'Photography and creative direction for campaigns, product, and content.',
+      'Photography and campaign direction that puts your brand in real life, with real people.',
   },
   {
     name: 'Social & Content',
     description:
-      'Ongoing content systems and social design that keep momentum going.',
+      'Content systems and social design that keep your brand showing up, week after week, in its own voice.',
   },
   {
     name: 'Product Design',
-    description: 'UX/UI for digital products, from first flow to shipped interface.',
+    description:
+      'UX/UI from first flow to shipped interface, so the product keeps the promise the brand makes.',
   },
   {
     name: 'Naming & Verbal Identity',
-    description: 'Names, taglines, and tone of voice that people actually remember.',
+    description:
+      'Names, taglines and a tone of voice people repeat without being asked.',
   },
   {
     name: 'Design Systems',
-    description: 'Scalable component libraries and documentation for growing teams.',
+    description:
+      'Component libraries and documentation that let your team ship faster without breaking the brand.',
   },
   {
     name: 'Pitch Decks & Investor Collateral',
-    description: 'Decks and materials that help founders raise with confidence.',
+    description:
+      'Decks and investor materials that make your story clear in the first three slides.',
   },
   {
     name: 'Rebranding & Brand Refresh',
     description:
-      'A full evaluation and evolution of an existing brand that has outgrown itself.',
+      'For brands that have outgrown themselves: an honest audit, then an evolution that keeps what works.',
   },
 ]
 
@@ -281,7 +285,7 @@ export const PROJECTS: Project[] = [
     name: 'Ipaybtc',
     brand: 'ipaybtc',
     category: 'Fintech',
-    year: '2026',
+    year: '2025',
     headline: 'iPayBTC — Re‑designing a Bitcoin brand for everyday use',
     stat: '—',
     film: IPAYBTC_FILM,
@@ -495,7 +499,6 @@ export function buildHeroReel(): HeroSlide[] {
 
 import logoOhobu from './assets/logo-ohobu.svg'
 import logoTagmi from './assets/logo-tagmi.svg'
-import logoCleon from './assets/logo-cleon.svg'
 import logoRefreeg from './assets/logo-refreeg.svg'
 import logoCleonSpotless from './assets/logo-cleon-de-spotless.svg'
 import logoSquaremetre from './assets/logo-squaremetre.svg'
@@ -517,20 +520,20 @@ export interface Partner {
   scale: number
 }
 
-/* Optical sizes (Nov 20): each mark's height follows its aspect ratio
-   (height ~ ratio^-0.42), so wide and stacked lockups carry the same visual
-   weight; the two very heavy marks (Whot, Frame Fest) sit a step smaller. */
+/* Optical sizes (Nov 23): measured from each logo's real ink, not its file.
+   Every mark gets the same visual area (height ~ ratio^-0.5), with a small
+   step down for the solid, heavy marks (Whot, Frame Fest) so no logo shouts.
+   One Cleon only: the de Spotless lockup, which reads cleanly in a row. */
 export const PARTNERS: Partner[] = [
-  { name: 'Õhobù', logo: logoOhobu, scale: 0.98 },
-  { name: 'Tagmi', logo: logoTagmi, scale: 1.05 },
-  { name: 'Cleon', logo: logoCleon, scale: 1.42 },
-  { name: 'Refreeg', logo: logoRefreeg, scale: 0.85 },
-  { name: 'Cleon de Spotless', logo: logoCleonSpotless, scale: 1.05 },
-  { name: 'Squaremetre', logo: logoSquaremetre, scale: 0.72 },
-  { name: 'Whot', logo: logoWhot, scale: 0.78 },
-  { name: 'Frame Fest', logo: logoFrameFest, scale: 0.9 },
-  { name: 'FourStrides', logo: logoFourStrides, scale: 0.76 },
-  { name: '3PROJECTS', logo: logoThreeProjects, scale: 0.67 },
+  { name: 'Õhobù', logo: logoOhobu, scale: 0.94 },
+  { name: 'Tagmi', logo: logoTagmi, scale: 0.96 },
+  { name: 'Refreeg', logo: logoRefreeg, scale: 0.8 },
+  { name: 'Cleon de Spotless', logo: logoCleonSpotless, scale: 0.98 },
+  { name: 'Squaremetre', logo: logoSquaremetre, scale: 0.66 },
+  { name: 'Whot', logo: logoWhot, scale: 0.7 },
+  { name: 'Frame Fest', logo: logoFrameFest, scale: 0.88 },
+  { name: 'FourStrides', logo: logoFourStrides, scale: 0.78 },
+  { name: '3PROJECTS', logo: logoThreeProjects, scale: 0.65 },
 ]
 
 /* Posts — shared by the Blog index and the Happenings strip on Home. The
