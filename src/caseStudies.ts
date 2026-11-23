@@ -623,35 +623,37 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'ipaybtc',
     title: 'iPayBTC',
     tagline: 'Bitcoin, spent like money',
-    // TODO(kora): draft copy. The structure is final; swap every sentence
-    // below for the real brief, and add highlights only if they are true.
     summary:
-      'iPayBTC makes Bitcoin feel like everyday money. We rebuilt the brand so paying, saving and sending in sats feels as familiar as any bank app.',
+      'Making Bitcoin feel like everyday money. One brand and one product, designed together: a complete identity and a redesigned mobile app that make Bitcoin simple to understand, easy to use and part of how people pay every day.',
     facts: [
       { label: 'Client', value: 'iPayBTC' },
-      { label: 'Industry', value: 'Fintech' },
-      { label: 'Services', value: 'Brand strategy, Visual identity, Product design, Motion' },
-      { label: 'Year', value: '2026' },
+      { label: 'Industry', value: 'Fintech, Bitcoin payments' },
+      { label: 'Services', value: 'Brand strategy, Creative direction, Visual identity, Mobile app UX/UI, Website, Campaign art direction, Motion, Brand guidelines' },
+      { label: 'Year', value: '2025' },
     ],
-    highlights: [],
+    highlights: ['Mobile app redesign now being adopted by the iPayBTC team'],
     sections: [
       {
         heading: 'The challenge',
         paragraphs: [
-          'Bitcoin still reads as technical, speculative and built for insiders. iPayBTC wanted the opposite: a brand that made spending and saving in Bitcoin feel ordinary, safe and a little bit joyful.',
+          'For most people, Bitcoin still feels complicated, unfamiliar and a long way from how they actually pay, save and send money.',
+          'iPayBTC needed to change that, with one simple message: you don’t need to understand crypto to use Bitcoin. And the brand had to speak to every generation, from digital natives to people who have never trusted a digital-first brand.',
         ],
       },
       {
         heading: 'Our approach',
         paragraphs: [
-          'We started with how people already talk about money, not about crypto. From there we built a bright, confident identity, a family of 3D objects that make abstract ideas tangible, and a product language that puts the next action first.',
-          'Every touchpoint, from the app to the billboards, uses the same small set of colours, shapes and words, so the brand is recognisable at a glance.',
+          'We treated the brand and the product as one job, not two. Strategy, identity and app were designed together, so the promise on a billboard is the same one you feel in the app.',
+          'The identity is built for movement and everyday life: expressive type, a confident spectrum of blues with bright accents, and real people in real places instead of abstract crypto imagery. Two typefaces share the work: a bold voice for a younger, digital-first audience, and a calm, familiar one that keeps the brand clear for everyone else.',
+          'Then we redesigned the mobile app to close the gap between the technology and the people using it, so paying, sending and receiving in Bitcoin feel as familiar as any bank app.',
         ],
       },
       {
         heading: 'The outcome',
         paragraphs: [
-          'A brand that feels at home on a phone screen and on a city street, and a system the iPayBTC team can keep building on.',
+          'A complete creative direction for iPayBTC as an accessible, everyday Bitcoin product, working across the app, the website, campaigns, merchandise and the street.',
+          'The mobile app redesign is now being adopted by the iPayBTC team. The full identity has not yet been rolled out in its entirety.',
+          'It’s how Koraa’ works: take a clear idea and turn it into a brand and a product people understand at a glance.',
         ],
       },
     ],
@@ -808,7 +810,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'tagmi',
     title: 'Tagmi',
     tagline: 'Where attention becomes income',
-    summary: 'Tagmi is a social media platform where attention becomes income. It is still in development.',
+    summary: 'Tagmi is a social media platform where attention becomes income. A bold identity for a product launching soon.',
     facts: [
       { label: 'Client', value: 'Tagmi' },
       { label: 'Industry', value: 'Social media' },
