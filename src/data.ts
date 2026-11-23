@@ -25,62 +25,58 @@ export const SERVICES: Service[] = [
   {
     name: 'Brand Strategy',
     description:
-      'Find the one thing your brand should stand for, then say it everywhere. Positioning, messaging and a clear plan for growth.',
+      'Positioning, messaging, and a clear plan for how your brand shows up and grows.',
   },
   {
     name: 'Visual Identity',
     description:
-      'Logo, colour, type and a system that looks like you on an app icon, a billboard and everything in between.',
+      'Logo, color, type, and a system that holds together across every touchpoint.',
   },
   {
     name: 'Web Design & Development',
     description:
-      'Websites and web apps that load fast, read clearly and turn visitors into customers.',
+      'Fast, well-crafted websites and web apps built to convert and scale.',
   },
   {
     name: 'Motion & Animation',
     description:
-      'Brand films, product animation and motion systems that make your identity move the way it speaks.',
+      'Brand films, product animation, and motion systems that bring identity to life.',
   },
   {
     name: 'Packaging Design',
     description:
-      'Packaging that wins the shelf in seconds and still feels like your brand once it’s home.',
+      'Shelf-ready packaging that stands out and stays true to the brand.',
   },
   {
     name: 'Art Direction',
     description:
-      'Photography and campaign direction that puts your brand in real life, with real people.',
+      'Photography and creative direction for campaigns, product, and content.',
   },
   {
     name: 'Social & Content',
     description:
-      'Content systems and social design that keep your brand showing up, week after week, in its own voice.',
+      'Ongoing content systems and social design that keep momentum going.',
   },
   {
     name: 'Product Design',
-    description:
-      'UX/UI from first flow to shipped interface, so the product keeps the promise the brand makes.',
+    description: 'UX/UI for digital products, from first flow to shipped interface.',
   },
   {
     name: 'Naming & Verbal Identity',
-    description:
-      'Names, taglines and a tone of voice people repeat without being asked.',
+    description: 'Names, taglines, and tone of voice that people actually remember.',
   },
   {
     name: 'Design Systems',
-    description:
-      'Component libraries and documentation that let your team ship faster without breaking the brand.',
+    description: 'Scalable component libraries and documentation for growing teams.',
   },
   {
     name: 'Pitch Decks & Investor Collateral',
-    description:
-      'Decks and investor materials that make your story clear in the first three slides.',
+    description: 'Decks and materials that help founders raise with confidence.',
   },
   {
     name: 'Rebranding & Brand Refresh',
     description:
-      'For brands that have outgrown themselves: an honest audit, then an evolution that keeps what works.',
+      'A full evaluation and evolution of an existing brand that has outgrown itself.',
   },
 ]
 
