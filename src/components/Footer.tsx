@@ -10,6 +10,7 @@ import g5 from '../assets/glass/koraa-glass-5.webp'
 
 const GLASS = [g0, g1, g2, g3, g4, g5]
 import { useContact } from '../contact/useContact'
+import { inDesktopView, onSmallScreen, setDesktopView } from './DesktopViewNotice'
 import { NEW_BUSINESS_EMAIL } from '../contact/sendBrief'
 
 /* Footer, after Ragged Edge's: a short list of ways in (label, value, one
@@ -146,6 +147,11 @@ export function Footer() {
         <p className="nx-foot-meta">
           <span>&copy; 2026 Koraa Studios Ltd.</span>
           <span>RC 10005554</span>
+          {onSmallScreen() && inDesktopView() && (
+            <button type="button" className="nx-foot-view" onClick={() => setDesktopView(false)}>
+              Back to mobile view
+            </button>
+          )}
         </p>
       </div>
     </footer>

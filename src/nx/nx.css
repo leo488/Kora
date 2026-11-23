@@ -195,6 +195,17 @@
   will-change: transform;
 }
 
+/* The star flies in a high arc above the letters, so the hero mark must not
+   clip it. The extra layers (the whole o, the star) only show while the
+   animation runs; at rest the logo is the six letters. */
+.nx-hero-mark.nx-glass {
+  overflow: visible;
+}
+
+.nx-glass > .nx-glass-extra {
+  opacity: 0;
+}
+
 
 .nx-hero-brands {
   position: absolute;
@@ -748,7 +759,7 @@
 
 .nx-glass {
   position: relative;
-  aspect-ratio: 2675 / 805;
+  aspect-ratio: 2786 / 814;
   overflow: hidden;
 }
 
@@ -1038,4 +1049,108 @@
 
 .nx-row-text {
   padding-top: 0;
+}
+
+
+/* Phones, final pass (Nov 23) ---------------------------------------------
+   Tighter spacing, taller project pictures (4:5, cropped from the centre),
+   and the "out soon" date set under the title instead of squeezed beside it.
+   Desktop is untouched. */
+@media (max-width: 760px) {
+  .nx-section {
+    padding-top: 72px;
+  }
+
+  .nx-rows {
+    margin-top: 28px;
+  }
+
+  .nx-rows > li {
+    padding: 16px 0 20px;
+  }
+
+  .nx-row-media {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .nx-row-media img,
+  .nx-row-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* The 3PROJECTS billboard: keep its headline in the taller crop. */
+  .nx-row-media img[src*='3projects-01'] {
+    object-position: 24% center;
+  }
+
+  /* A shorter first screen, so the wordmark sits closer to the intro. */
+  .nx-hero {
+    height: 72svh;
+  }
+
+  .nx-row-head {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+
+  .nx-row-head h3 {
+    font-size: 20px;
+  }
+
+  .nx-row-head .nx-soon {
+    order: 3;
+    flex-basis: 100%;
+    font-size: 12px;
+  }
+
+  .nx-row-story {
+    font-size: 15px;
+  }
+
+  .nx-lead {
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  .nx-app .kora-footer.nx-foot {
+    padding-top: 96px;
+  }
+}
+
+.nx-foot-view {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.kora-desktopnote-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Desktop view on a phone: the layout is 1280 px wide and zoomed to fit, so
+   a full screen is very tall. Use a laptop's screen height instead. */
+.kora-desktop-view .nx-hero {
+  height: 760px;
+}
+
+.kora-desktop-view .nx-case-panel,
+.kora-desktop-view .nx-app .kora-bt-panel {
+  height: 740px;
+}
+
+.kora-desktop-view .nx-contact,
+.kora-desktop-view .nx-app .kora-bt-stage {
+  min-height: 760px;
 }

@@ -4,7 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      /* The viewport. On a phone that chose the desktop view (see
+         components/DesktopViewNotice.tsx) the page lays out 1280 px wide and
+         the browser zooms it to fit; otherwise the usual phone width. Written
+         while the page parses, so every browser reads it as the page's own. */
+      ;(function () {
+        var desktop = false
+        try {
+          desktop = localStorage.getItem('kora-view') === 'desktop' && Math.min(screen.width, screen.height) <= 760
+        } catch (e) {}
+        document.write('<meta name="viewport" content="' + (desktop ? 'width=1280' : 'width=device-width, initial-scale=1.0') + '" />')
+        if (desktop) document.documentElement.classList.add('kora-desktop-view')
+      })()
+    </script>
+    <noscript><meta name="viewport" content="width=device-width, initial-scale=1.0" /></noscript>
     <!-- Tints the browser UI on Android to match the intro and contact band. -->
     <meta name="theme-color" content="#1A2DB7" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

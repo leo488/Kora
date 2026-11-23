@@ -8,6 +8,8 @@ import g2 from '../assets/glass/koraa-glass-2.webp'
 import g3 from '../assets/glass/koraa-glass-3.webp'
 import g4 from '../assets/glass/koraa-glass-4.webp'
 import g5 from '../assets/glass/koraa-glass-5.webp'
+import gPlainO from '../assets/glass/koraa-glass-o-plain.webp'
+import gStar from '../assets/glass/koraa-glass-star.webp'
 import { POSTS, SERVICES } from '../data'
 import { NxArrow } from './NxHeader'
 import { NxWorkList } from './NxWorkList'
@@ -120,6 +122,9 @@ function HeroMark() {
       {GLASS.map((src) => (
         <img key={src} src={src} alt="" draggable={false} fetchPriority="high" />
       ))}
+      {/* For the animation only: the o before the star lands, and the star. */}
+      <img src={gPlainO} alt="" draggable={false} className="nx-glass-extra" />
+      <img src={gStar} alt="" draggable={false} className="nx-glass-extra" />
     </div>
   )
 }
@@ -197,37 +202,68 @@ function Newsletter() {
   )
 }
 
-/* The brand kit's logo animation (the same one the grey hero loop and the
-   intro play), applied to the six 3D letters: they rise one by one with an
-   overshoot and squash, the apostrophe drops in, winds up and flings, and
-   the o takes the hit and the others recoil. Then a hold, and again.
-   Numbers are the kit's (see components/Intro.tsx). */
+/* The brand kit's logo animation (the same one the intro plays, see
+   components/Intro.tsx), applied to the flat 3D letters: they rise one by
+   one with an overshoot and squash; the apostrophe drops in, a star pops out
+   of it, winds up and is flung in an arc into the o; the o takes the hit,
+   the star opens up as the cut-out, and the others recoil. Then a hold, and
+   again. Numbers are the kit's.
+
+   Layers 0–5 are K, o (with the star cut out), r, a, a, apostrophe; layer 6
+   is the o before the star lands, layer 7 the star itself, rendered in place
+   at the centre of the o (scripts/glass-logo). Every layer is the full frame,
+   so moving one is a translate in % of the frame. */
 const K_END = 5.4
 const K_HOLD = 2.6
-const HIT = 2.62
+const POP = 1.25
 const WIND = 1.72
 const FLING = 1.98
-/* Glass layer geometry: about 25 px per logo unit on a 2675 x 805 render. */
-const PX_W = 25 / 2675
-const PX_H = 25 / 805
-const BASE = 0.947
-const CX = [0.126, 0.3187, 0.4961, 0.6591, 0.8686]
+const HIT = 2.62
+/* Frame geometry: 25 px per logo unit on a 2786 x 814 render. */
+const PX_W = 25 / 2786
+const PX_H = 25 / 814
+const BASE = 0.9638
+const CX = [0.1062, 0.3044, 0.4751, 0.6455, 0.8564]
+const APOS = '94.89% 31.02%'
+/* The centre of the o, in logo units and as a share of the frame. */
+const OX = 521.984
+const OY = 63.0595
+const O_ORIGIN = '30.44% 63.14%'
+/* One pixel of the kit's 1920 frame, in logo units (logo 200 px = 31.08). */
+const KPX = 31.08 / 200
 
 const clamp = (v: number) => Math.max(0, Math.min(1, v))
 const prog = (t: number, a: number, b: number) => clamp((t - a) / (b - a))
+const lerp = (a: number, b: number, k: number) => a + (b - a) * k
+const ease = (k: number) => -(Math.cos(Math.PI * clamp(k)) - 1) / 2
+const outCubic = (k: number) => 1 - Math.pow(1 - clamp(k), 3)
 const backOut = (k: number, s = 1.5) => {
   k = clamp(k)
   return 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2)
 }
 const ring = (tau: number, f = 15, d = 5.5) => (tau <= 0 ? 0 : Math.exp(-d * tau) * Math.sin(f * tau))
 
+/* The star's path, in logo units: out of the apostrophe, then an arc that
+   drops into the o. The logo runs edge to edge here, so the star waits a
+   little left of the kit's spot (on screen, not past the edge), and the arc
+   is lower so it stays clear of the intro text. */
+const AP = [594.6, 43.3]
+const REST_X = AP[0] - 9
+const LAUNCH = [REST_X, AP[1] - 55 * KPX]
+const CTRL = [(LAUNCH[0] + OX) / 2 + 40 * KPX, OY - 380 * KPX]
+const quad = (u: number) => [
+  (1 - u) ** 2 * LAUNCH[0] + 2 * (1 - u) * u * CTRL[0] + u * u * OX,
+  (1 - u) ** 2 * LAUNCH[1] + 2 * (1 - u) * u * CTRL[1] + u * u * OY,
+]
+
 function useKitLoop(ref: { current: HTMLDivElement | null }) {
   useEffect(() => {
     const box = ref.current
     if (!box) return
     const imgs = Array.from(box.querySelectorAll<HTMLImageElement>('img'))
+    const [, , , , , apos, plain, star] = imgs
     imgs.forEach((img, i) => {
-      img.style.transformOrigin = i < 5 ? `${CX[i] * 100}% ${BASE * 100}%` : '95% 33.7%'
+      img.style.transformOrigin = i === 5 ? APOS : i === 7 ? O_ORIGIN : `${CX[i === 6 ? 1 : i] * 100}% ${BASE * 100}%`
     })
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let visible = true
@@ -235,12 +271,17 @@ function useKitLoop(ref: { current: HTMLDivElement | null }) {
     io.observe(box)
     let frame = 0
     const start = performance.now()
+    const at = (x: number, y: number) =>
+      `translate(${((x - OX) * PX_W * 100).toFixed(3)}%, ${((y - OY) * PX_H * 100).toFixed(3)}%)`
+
     const tick = (now: number) => {
       frame = requestAnimationFrame(tick)
       if (!visible) return
       const t = Math.min(((now - start) / 1000) % (K_END + K_HOLD), K_END)
       const tau = t - HIT
       const recoil = [-1, 0, 1, 0.6, 0.35].map((v) => v * ring(tau, 13, 5))
+
+      // Letters rise, overshoot and settle; the o squashes as the star hits.
       for (let i = 0; i < 5; i++) {
         const kk = prog(t, 0.1 + i * 0.075, 0.82 + i * 0.075)
         const y = (1 - backOut(kk, 2.1)) * 34
@@ -253,14 +294,47 @@ function useKitLoop(ref: { current: HTMLDivElement | null }) {
           sx *= (1 + ant * 0.6) * (1 + hit)
           syy *= (1 - ant) * (1 + hit * 0.8)
         }
-        imgs[i].style.transform = `translate(${(recoil[i] * PX_W * 100).toFixed(3)}%, ${(y * PX_H * 100).toFixed(3)}%) scale(${sx.toFixed(4)}, ${syy.toFixed(4)})`
+        const tf = `translate(${(recoil[i] * PX_W * 100).toFixed(3)}%, ${(y * PX_H * 100).toFixed(3)}%) scale(${sx.toFixed(4)}, ${syy.toFixed(4)})`
+        imgs[i].style.transform = tf
+        if (i === 1) plain.style.transform = tf
       }
+
+      // The o: whole until the star lands, then the cut-out opens from the
+      // centre (the holed o, revealed in a growing circle over the whole one).
+      const open = tau < 0 ? 0 : outCubic(prog(t, HIT, HIT + 0.32))
+      plain.style.opacity = open >= 1 ? '0' : '1'
+      const r = (open * 13 * 25 * box.clientWidth / 2786).toFixed(1)
+      const hole = `radial-gradient(circle at ${O_ORIGIN}, transparent ${r}px, #000 ${r}px)`
+      plain.style.maskImage = hole
+      plain.style.webkitMaskImage = hole
+
+      // The apostrophe drops in, winds up, flings, and wobbles.
       const ka = prog(t, 0.62, 1.12)
       const load = Math.sin((Math.PI / 2) * prog(t, WIND, FLING)) * (t < FLING ? 1 : 0)
       const fl = t >= FLING ? -16 * Math.exp(-4 * (t - FLING)) * Math.cos(11 * (t - FLING)) : 0
       const sq = 1 - 0.2 * load + (t >= FLING ? 0.18 * ring(t - FLING, 14, 6) : 0)
       const ay = ka <= 0 ? -200 : -(1 - backOut(ka, 2.4)) * 12 * PX_H * 100
-      imgs[5].style.transform = `translate(${(recoil[4] * 0.8 * PX_W * 100).toFixed(3)}%, ${ay.toFixed(3)}%) rotate(${(12 * load + fl).toFixed(3)}deg) scale(${(1 / Math.sqrt(sq)).toFixed(4)}, ${sq.toFixed(4)})`
+      apos.style.transform = `translate(${(recoil[4] * 0.8 * PX_W * 100).toFixed(3)}%, ${ay.toFixed(3)}%) rotate(${(12 * load + fl).toFixed(3)}deg) scale(${(1 / Math.sqrt(sq)).toFixed(4)}, ${sq.toFixed(4)})`
+
+      // The star: pops out above the apostrophe, winds up with it, is flung
+      // in an arc and spins into the o. Gone the moment it lands.
+      if (t >= POP && t < FLING) {
+        const pop = backOut(prog(t, POP, POP + 0.34), 2.6)
+        const lw = Math.sin((Math.PI / 2) * prog(t, WIND, FLING))
+        const wig = 14 * Math.sin((t - POP) * 6) * (1 - lw)
+        const x = REST_X
+        const y = AP[1] - 95 * KPX * outCubic(prog(t, POP, POP + 0.35)) + 40 * KPX * lw
+        star.style.opacity = '1'
+        star.style.transform = `${at(x, y)} rotate(${(30 + wig).toFixed(2)}deg) scale(${(pop * (1 + 0.12 * lw)).toFixed(4)}, ${(pop * (1 - 0.16 * lw)).toFixed(4)})`
+      } else if (t >= FLING && t < HIT) {
+        const k = prog(t, FLING, HIT)
+        const u = lerp(k, ease(k), 0.45)
+        const [x, y] = quad(u)
+        star.style.opacity = '1'
+        star.style.transform = `${at(x, y)} rotate(${lerp(30, -330, u).toFixed(2)}deg)`
+      } else {
+        star.style.opacity = '0'
+      }
     }
     frame = requestAnimationFrame(tick)
     return () => {
