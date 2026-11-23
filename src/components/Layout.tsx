@@ -7,7 +7,7 @@ import '../nx/nx.css'
 import { useFlareController } from '../hooks/useFlareController'
 import { Footer } from './Footer'
 import { CookieBar } from './CookieBar'
-import { DesktopViewNotice } from './DesktopViewNotice'
+import { DesktopViewNotice, MobileViewButton } from './DesktopViewNotice'
 import { Announcement } from './Announcement'
 import { ContactProvider } from '../contact/ContactContext'
 import '../system.css'
@@ -57,6 +57,7 @@ export function Layout() {
           <Footer />
           <CookieBar />
           <DesktopViewNotice />
+          <MobileViewButton />
         </ContactProvider>
       </main>
     </ThemeContext.Provider>

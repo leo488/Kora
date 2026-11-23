@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { NOTE_DONE, noteStillPending } from './DesktopViewNotice'
 
 const STORAGE_KEY = 'kora-cookie-notice'
 
@@ -19,7 +20,15 @@ export function CookieBar() {
   // Deciding on the client after mount keeps the bar from flashing up for
   // someone who dismissed it on a previous visit.
   useEffect(() => {
-    if (!alreadyAcknowledged()) setOpen(true)
+    if (alreadyAcknowledged()) return
+    // On a phone the "made for larger screens" note comes first.
+    if (!noteStillPending()) {
+      setOpen(true)
+      return
+    }
+    const show = () => window.setTimeout(() => setOpen(true), 600)
+    window.addEventListener(NOTE_DONE, show, { once: true })
+    return () => window.removeEventListener(NOTE_DONE, show)
   }, [])
 
   if (!open) return null
