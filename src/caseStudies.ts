@@ -275,6 +275,8 @@ export interface CaseStudy {
   tagline?: string
   /** One or two sentences under the title. */
   summary: string
+  /** The short line on the Home and Work rows, when it differs from the summary. */
+  teaser?: string
   facts: Array<{ label: string; value: string }>
   /** Short bold lines after the summary — awards, funding, launches. */
   highlights: string[]
@@ -623,6 +625,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'ipaybtc',
     title: 'iPayBTC',
     tagline: 'Bitcoin, spent like money',
+    teaser:
+      'iPayBTC makes Bitcoin feel like everyday money. We rebuilt the brand so paying, saving and sending in sats feels as familiar as any bank app.',
     summary:
       'Making Bitcoin feel like everyday money. One brand and one product, designed together: a complete identity and a redesigned mobile app that make Bitcoin simple to understand, easy to use and part of how people pay every day.',
     facts: [

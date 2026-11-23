@@ -38,7 +38,7 @@ export function NxRow({ project }: { project: Project }) {
   const study = caseStudyFor(project.name)
   const lead = project.images[0]
   const title = study?.tagline ?? lineOf(project)
-  const story = study?.summary ?? `${project.brand}: ${lineOf(project)}.`
+  const story = study?.teaser ?? study?.summary ?? `${project.brand}: ${lineOf(project)}.`
   const hasStat = project.stat && project.stat !== '—'
 
   return (
