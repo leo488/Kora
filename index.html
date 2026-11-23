@@ -12,10 +12,21 @@
       ;(function () {
         var desktop = false
         try {
-          desktop = localStorage.getItem('kora-view') === 'desktop' && Math.min(screen.width, screen.height) <= 760
+          // Older builds kept the choice for good; now it lasts until the next reload.
+          localStorage.removeItem('kora-view')
+          var url = new URL(location.href)
+          desktop = url.searchParams.get('view') === 'desktop' && Math.min(screen.width, screen.height) <= 760
+          if (url.searchParams.has('view')) {
+            url.searchParams.delete('view')
+            history.replaceState(history.state, '', url.toString())
+          }
         } catch (e) {}
         document.write('<meta name="viewport" content="' + (desktop ? 'width=1280' : 'width=device-width, initial-scale=1.0') + '" />')
-        if (desktop) document.documentElement.classList.add('kora-desktop-view')
+        if (desktop) {
+          document.documentElement.classList.add('kora-desktop-view')
+          // How much the page is zoomed out, so on-screen controls can stay finger-sized.
+          document.documentElement.style.setProperty('--kora-dv', String(1280 / screen.width))
+        }
       })()
     </script>
     <noscript><meta name="viewport" content="width=device-width, initial-scale=1.0" /></noscript>

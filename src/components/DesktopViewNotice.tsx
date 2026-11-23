@@ -1,45 +1,35 @@
 import { useEffect, useState } from 'react'
 
-/* On a phone, after the cookie notice: a short note that the site is made
+/* On a phone, before the cookie notice: a short note that the site is made
    for larger screens, with a button that switches to the desktop layout.
 
    A page cannot flip Chrome's own "Desktop site" setting, so the switch is
    done here: the viewport is set to a desktop width (1280 px), which is what
-   that setting does too. The choice is remembered (index.html applies it
-   before the first paint) and can be undone from the footer. */
+   that setting does too. It lasts until the page is reloaded: a reload, a
+   new tab or a later visit opens on the phone layout again, with the note
+   (index.html applies it before the first paint). A "Mobile view" button
+   stays on screen to undo it sooner. The note comes first; the cookie notice
+   waits for it. */
 
-export const VIEW_KEY = 'kora-view'
-const SEEN_KEY = 'kora-desktop-note'
-const COOKIE_KEY = 'kora-cookie-notice'
 const PHONE = '(max-width: 760px)'
-
-const read = (store: Storage, key: string) => {
-  try {
-    return store.getItem(key)
-  } catch {
-    return null
-  }
-}
-const write = (store: Storage, key: string, value: string | null) => {
-  try {
-    if (value === null) store.removeItem(key)
-    else store.setItem(key, value)
-  } catch {
-    // Not remembering is a worse experience, not a broken one.
-  }
-}
 
 /** True when the visitor is on a phone-sized screen, whatever the layout. */
 export const onSmallScreen = () => Math.min(screen.width, screen.height) <= 760
 
-export const inDesktopView = () => read(localStorage, VIEW_KEY) === 'desktop'
+export const inDesktopView = () => document.documentElement.classList.contains('kora-desktop-view')
+
+/** Fired once the phone note is out of the way, so the cookie notice can show. */
+export const NOTE_DONE = 'kora-desktop-note-done'
+
+/** Whether the cookie notice should wait for the phone note first. */
+let noteDone = false
+export const noteStillPending = () => window.matchMedia(PHONE).matches && !inDesktopView() && !noteDone
 
 export function setDesktopView(on: boolean) {
-  write(localStorage, VIEW_KEY, on ? 'desktop' : null)
-  // Load the page again so it lays out at the new width. A plain reload
-  // would keep the old zoom, so this is a fresh load of the same address.
+  // A fresh load of the same address (a plain reload would keep the zoom).
   const url = new URL(window.location.href)
-  url.searchParams.set('view', on ? 'desktop' : 'mobile')
+  if (on) url.searchParams.set('view', 'desktop')
+  else url.searchParams.delete('view')
   window.location.replace(url.toString())
 }
 
@@ -48,24 +38,16 @@ export function DesktopViewNotice() {
   const [leaving, setLeaving] = useState(false)
 
   useEffect(() => {
-    if (!window.matchMedia(PHONE).matches || inDesktopView()) return
-    if (read(sessionStorage, SEEN_KEY) === 'yes') return
-    // Wait for the cookie notice to be dealt with, then show.
-    let timer = 0
-    const check = () => {
-      if (read(localStorage, COOKIE_KEY) !== 'acknowledged') return
-      window.clearInterval(timer)
-      window.setTimeout(() => setOpen(true), 900)
-    }
-    timer = window.setInterval(check, 500)
-    check()
-    return () => window.clearInterval(timer)
+    if (!noteStillPending()) return
+    const timer = window.setTimeout(() => setOpen(true), 900)
+    return () => window.clearTimeout(timer)
   }, [])
 
   if (!open) return null
 
   const close = () => {
-    write(sessionStorage, SEEN_KEY, 'yes')
+    noteDone = true
+    window.dispatchEvent(new Event(NOTE_DONE))
     setLeaving(true)
     setTimeout(() => setOpen(false), 300)
   }
@@ -89,5 +71,15 @@ export function DesktopViewNotice() {
         </button>
       </div>
     </div>
+  )
+}
+
+/** In desktop view on a phone: a small button to go back, always on screen. */
+export function MobileViewButton() {
+  if (!onSmallScreen() || !inDesktopView()) return null
+  return (
+    <button type="button" className="kora-mobileview" onClick={() => setDesktopView(false)}>
+      Mobile view
+    </button>
   )
 }

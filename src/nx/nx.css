@@ -1154,3 +1154,21 @@
 .kora-desktop-view .nx-app .kora-bt-stage {
   min-height: 760px;
 }
+
+/* The way back from desktop view, always on screen. The page is zoomed out,
+   so its size is scaled up by the zoom to stay finger-sized. */
+.kora-mobileview {
+  position: fixed;
+  left: calc(12px * var(--kora-dv, 1));
+  bottom: calc(12px * var(--kora-dv, 1));
+  z-index: 60;
+  padding: calc(9px * var(--kora-dv, 1)) calc(16px * var(--kora-dv, 1));
+  border: 0;
+  border-radius: 999px;
+  background: var(--koraa-plantain, #d7f24b);
+  color: #0b0b10;
+  font: inherit;
+  font-size: calc(14px * var(--kora-dv, 1));
+  font-weight: 600;
+  cursor: pointer;
+}
