@@ -24,7 +24,7 @@ const polys = [0, 60, 120].map((a) => {
 })
 const star = polygonClipping.union(...polys)[0][0]
 
-const letters = [['K', 0], ['O', 1], ['R', 2], ['A', 3], ['A', 4], ['apos', -1]]
+const letters = [['K', 0], ['O', 1], ['R', 2], ['A', 3], ['A', 4], ['apos', -1], ['Oplain', 1], ['star', 1]]
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true })
 renderer.setSize(W, H); renderer.setPixelRatio(1)
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = +P.get("ex")||1.0
@@ -49,7 +49,7 @@ const edge = new THREE.MeshPhysicalMaterial({ color: 0x2a2a2e, roughness: 0.22, 
 
 const group = new THREE.Group(); scene.add(group)
 letters.forEach(([k, i], n) => {
-  let shapes = shapesOf(LOGO[k])
+  let shapes = k === 'star' ? [new THREE.Shape(star.map(([x, y]) => new THREE.Vector2(x, y)))] : shapesOf(LOGO[k === 'Oplain' ? 'O' : k])
   if (k === 'O') {
     const outer = shapes.reduce((a, b) => (Math.abs(THREE.ShapeUtils.area(b.getPoints())) > Math.abs(THREE.ShapeUtils.area(a.getPoints())) ? b : a))
     outer.holes.push(new THREE.Path(star.map(([x, y]) => new THREE.Vector2(x, y))))
@@ -67,10 +67,19 @@ group.scale.set(1, -1, -1)
 const box = new THREE.Box3().setFromObject(group); const c = box.getCenter(new THREE.Vector3())
 group.position.set(-c.x, -c.y, 0)
 const pivot = new THREE.Group(); scene.remove(group); pivot.add(group); scene.add(pivot)
-pivot.rotation.set(+P.get("rx")||-0.2, +P.get("ry")||0.18, 0.0)
+const flat = P.get('cam') === 'ortho'
+pivot.rotation.set(flat ? 0 : (+P.get("rx")||-0.2), flat ? 0 : (+P.get("ry")||0.18), 0.0)
 
-const cam = new THREE.PerspectiveCamera(+P.get('fov') || 22, W / H, 1, 2000)
-cam.position.set(0, -6, +P.get('z') || 300); cam.lookAt(0, -2, 0)
+let cam
+if (flat) {
+  // Straight on: no tilt, no perspective. Depth reads only from the bevel.
+  const ppu = +P.get('ppu') || 25
+  cam = new THREE.OrthographicCamera(-W / 2 / ppu, W / 2 / ppu, H / 2 / ppu, -H / 2 / ppu, 1, 2000)
+  cam.position.set(0, 0, 300); cam.lookAt(0, 0, 0)
+} else {
+  cam = new THREE.PerspectiveCamera(+P.get('fov') || 22, W / H, 1, 2000)
+  cam.position.set(0, -6, +P.get('z') || 300); cam.lookAt(0, -2, 0)
+}
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.05))
 const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(160, 120, 140); key.castShadow = true
