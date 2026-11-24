@@ -633,15 +633,42 @@
 /* Phones ----------------------------------------------------------------- */
 
 @media (max-width: 760px) {
+  .ow-head {
+    height: 56px;
+  }
   .ow-main {
-    padding-top: 36px;
+    padding-top: 16px;
+  }
+  /* Each headline line stays on one line: sized to the screen width
+     ("None of the effort." is 8.9em wide). */
+  .ow-title {
+    margin-top: 18px;
+    font-size: calc((100vw - 48px) / 9);
+  }
+  .ow-line {
+    white-space: nowrap;
   }
   .ow-lede {
-    font-size: 17px;
+    margin-top: 14px;
+    font-size: 16px;
   }
+  .ow-form {
+    margin-top: 22px;
+    gap: 8px;
+  }
+  .ow-form input,
+  .ow-form button {
+    height: 50px;
+  }
+  .ow-fine {
+    margin-top: 12px;
+  }
+  /* Full-bleed stage, so the glow fades out at the screen edges instead of
+     being cut off at the page padding. */
   .ow-stage {
+    width: calc(100% + 48px);
     height: 540px;
-    margin-top: 48px;
+    margin-top: 28px;
   }
   /* No room beside the phone: the alerts show only as the notes inside it. */
   .ow-fly {
