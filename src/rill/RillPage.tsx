@@ -7,16 +7,16 @@ import gmailLogo from './logos/gmail.svg'
 import netflixLogo from './logos/netflix.svg'
 import openaiLogo from './logos/openai.svg'
 import uberLogo from './logos/uber.svg'
+import wordmark from './logos/rill-wordmark.svg'
 
 /* The product's waitlist page. Unlisted: reached only by its link, never
    from the site's menus, and kept out of search (see seo.ts).
    The name lives here alone, so a rename is one line. */
-const PRODUCT = { name: 'Rill', word: 'rill' }
+const PRODUCT = { name: 'Rill' }
 
 /** Flip to true when the waitlist form and inbox are ready. */
 const WAITLIST_OPEN = false
 
-const FONT_HREF = 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap'
 
 const upcoming = [
   { name: 'ChatGPT Plus', when: 'Renews in 2 days', soon: true, amount: '$20', logo: openaiLogo },
@@ -87,14 +87,9 @@ export function RillPage() {
     robots.name = 'robots'
     robots.content = 'noindex, nofollow'
     document.head.appendChild(robots)
-    const font = document.createElement('link')
-    font.rel = 'stylesheet'
-    font.href = FONT_HREF
-    document.head.appendChild(font)
     document.documentElement.dataset.theme = 'dark'
     return () => {
       robots.remove()
-      font.remove()
     }
   }, [])
 
@@ -103,7 +98,7 @@ export function RillPage() {
       <div className="ow-beam" />
       <header className="ow-head">
         <span className="ow-brand">
-          <b>{PRODUCT.word}</b>
+          <img className="ow-logo" src={wordmark} alt={PRODUCT.name} />
           <span>by Koraa’</span>
         </span>
         <a href="/">Back to Koraa’</a>

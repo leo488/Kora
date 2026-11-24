@@ -2,6 +2,50 @@
    Koraa’ Dusk (#b8a6ff) as the one accent, so the product reads as
    part of the studio. */
 
+/* Fonts ship with the site (SIL Open Font License), so the page never waits on Google. */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/plus-jakarta-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/plus-jakarta-sans-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/plus-jakarta-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/plus-jakarta-sans-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('./fonts/plus-jakarta-sans-latin-800-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('./fonts/rubik-latin-800-normal.woff2') format('woff2');
+}
+
 .ow-page {
   --ow-bg: #0f0f0f;
   --ow-card: #1f1f1f;
@@ -16,6 +60,7 @@
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.4;
+  letter-spacing: normal;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -90,13 +135,14 @@
 
 .ow-brand {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   gap: 10px;
 }
-.ow-brand b {
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.04em;
+/* The wordmark: Rubik ExtraBold, drawn as a shape with even spacing and a 10° forward slant. */
+.ow-logo {
+  display: block;
+  height: 24px;
+  width: auto;
 }
 .ow-brand span {
   font-size: 13px;
@@ -136,11 +182,11 @@
 .ow-title {
   margin: 26px 0 0;
   color: var(--ow-text);
-  font-family: inherit;
+  font-family: 'Rubik', 'Plus Jakarta Sans', system-ui, sans-serif;
   font-size: clamp(44px, 7vw, 92px);
   line-height: 1;
   font-weight: 800;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.035em;
 }
 .ow-line {
   display: block;
