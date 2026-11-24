@@ -647,6 +647,35 @@
   .ow-fly {
     display: none;
   }
+  /* Scale the whole phone down so it never runs past the screen edges,
+     leaving room either side for the glow. */
+  .ow-phone,
+  .ow-edge-wrap {
+    transform: scale(var(--ow-phone-scale, 0.9));
+    transform-origin: 50% 0;
+  }
+  /* A smaller, higher horizon, so the warm light shows around the phone. */
+  .ow-horizon {
+    width: 620px;
+    height: 460px;
+    margin-left: -310px;
+    bottom: -30px;
+  }
+}
+
+@media (max-width: 420px) {
+  .ow-page {
+    --ow-phone-scale: 0.82;
+  }
+  .ow-stage {
+    height: 500px;
+  }
+}
+
+@media (max-width: 360px) {
+  .ow-page {
+    --ow-phone-scale: 0.76;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
