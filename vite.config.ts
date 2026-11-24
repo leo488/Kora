@@ -29,6 +29,7 @@ function seoPages(): Plugin {
         const head = [
           `<title>${esc(page.title)}</title>`,
           `<meta name="description" content="${esc(page.description)}" />`,
+          page.unlisted ? `<meta name="robots" content="noindex, nofollow" />` : '',
           `<link rel="canonical" href="${url}" />`,
           `<meta property="og:site_name" content="${SITE.name}" />`,
           `<meta property="og:locale" content="${SITE.locale}" />`,
@@ -54,7 +55,7 @@ function seoPages(): Plugin {
         writeFileSync(join(dir, 'index.html'), html)
       }
       const today = new Date().toISOString().slice(0, 10)
-      const urls = PAGES.map(
+      const urls = PAGES.filter((p) => !p.unlisted).map(
         (p) =>
           `  <url><loc>${SITE.url}${p.path === '/' ? '/' : p.path}</loc><lastmod>${p.published ?? today}</lastmod></url>`,
       ).join('\n')

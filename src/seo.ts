@@ -19,6 +19,8 @@ export interface PageMeta {
   /** og:type; pages default to website. */
   type?: 'website' | 'article'
   published?: string
+  /** Link-only page: gets its preview tags, but noindex and no sitemap entry. */
+  unlisted?: boolean
 }
 
 const CASES: PageMeta[] = [
@@ -76,6 +78,13 @@ export const PAGES: PageMeta[] = [
     title: 'Brand test | How strong is your brand? | Koraa’',
     description:
       'A short, honest test of how clear, consistent and memorable your brand is, with what to fix first. From the Koraa’ studio.',
+  },
+  {
+    path: '/rill',
+    title: 'Rill by Koraa’ | All your money. None of the effort.',
+    description:
+      'Rill reads your bank alerts and email receipts, logs every payment and keeps an eye on your subscriptions. Coming soon from Koraa’.',
+    unlisted: true,
   },
 ]
 
