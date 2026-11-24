@@ -111,12 +111,12 @@ export function RillPage() {
         <h1 className="ow-title">
           <span className="ow-line">
             <span className="ow-rise" style={{ animationDelay: '.1s' }}>
-              All your money.
+              All your<br className="ow-mbr" /> money.
             </span>
           </span>
           <span className="ow-line">
             <span className="ow-rise ow-shine" style={{ animationDelay: '.2s, 1.2s' }}>
-              None of the effort.
+              None of the<br className="ow-mbr" /> effort.
             </span>
           </span>
         </h1>
