@@ -1,0 +1,619 @@
+/* Rill waitlist page. Its own look: Plus Jakarta Sans on near-black, with
+   Koraa’ Dusk (#b8a6ff) as the one accent, so the product reads as
+   part of the studio. */
+
+.ow-page {
+  --ow-bg: #0f0f0f;
+  --ow-card: #1f1f1f;
+  --ow-text: #f4f4f4;
+  --ow-muted: #a3a3a3;
+  --ow-dusk: #b8a6ff;
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--ow-bg);
+  color: var(--ow-text);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ow-page a {
+  color: var(--ow-muted);
+  text-decoration: none;
+}
+.ow-page a:hover {
+  color: var(--ow-text);
+}
+
+.ow-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* Light ------------------------------------------------------------------ */
+
+.ow-beam {
+  position: absolute;
+  left: 50%;
+  top: -260px;
+  width: 1400px;
+  height: 1000px;
+  margin-left: -700px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 35% 55% at 50% 0%,
+    rgba(214, 204, 255, 0.55),
+    rgba(184, 166, 255, 0.22) 40%,
+    rgba(120, 140, 255, 0.08) 65%,
+    transparent 80%
+  );
+  animation: ow-breathe 7s ease-in-out infinite;
+}
+
+.ow-horizon {
+  position: absolute;
+  left: 50%;
+  bottom: -120px;
+  width: 1300px;
+  height: 620px;
+  margin-left: -650px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 50% 45% at 50% 100%,
+    rgba(184, 166, 255, 0.75),
+    rgba(130, 150, 255, 0.35) 38%,
+    rgba(255, 170, 140, 0.12) 60%,
+    transparent 75%
+  );
+  filter: blur(10px);
+  animation: ow-drift 9s ease-in-out infinite;
+}
+
+/* Header ----------------------------------------------------------------- */
+
+.ow-head {
+  position: relative;
+  max-width: 1240px;
+  height: 64px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.ow-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.ow-brand b {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+.ow-brand span {
+  font-size: 13px;
+  color: #7a7a7a;
+}
+
+/* Hero ------------------------------------------------------------------- */
+
+.ow-main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 56px 24px 0;
+}
+
+.ow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #1c1c1c;
+  font-size: 13px;
+  color: #d9d9d9;
+}
+.ow-pill i,
+.ow-note i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ow-dusk);
+}
+
+.ow-title {
+  margin: 26px 0 0;
+  color: var(--ow-text);
+  font-family: inherit;
+  font-size: clamp(44px, 7vw, 92px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+}
+.ow-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 6px;
+}
+
+.ow-lede {
+  max-width: 560px;
+  margin: 22px 0 0;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ow-muted);
+}
+
+.ow-form {
+  width: 100%;
+  max-width: 560px;
+  margin-top: 34px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ow-form input {
+  flex: 1 1 180px;
+  min-width: 0;
+  height: 56px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: 1px solid #2a2a2a;
+  background: #181818;
+  color: var(--ow-text);
+  font: inherit;
+  font-size: 16px;
+}
+.ow-form input::placeholder {
+  color: #7a7a7a;
+}
+.ow-form input:focus {
+  outline: none;
+  border-color: var(--ow-dusk);
+}
+.ow-form input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.ow-form button {
+  flex: 1 1 100%;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ow-dusk);
+  color: #141414;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ow-form button:disabled {
+  background: #2a2a2a;
+  color: #cfcfcf;
+  cursor: not-allowed;
+}
+
+.ow-fine {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: #7a7a7a;
+}
+
+/* Stage: phone, light and the alerts flying in ------------------------- */
+
+.ow-stage {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  height: 600px;
+  margin-top: 64px;
+  overflow: hidden;
+}
+
+.ow-edge-wrap {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 338px;
+  height: 722px;
+  margin-left: -169px;
+  border-radius: 57px;
+  overflow: hidden;
+  background: #2a2a2a;
+}
+.ow-edge {
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(from 0deg, transparent 0 62%, #b8a6ff 75%, #ffffff 80%, #9fb4ff 85%, transparent 95%);
+  animation: ow-spin 5s linear infinite;
+}
+
+.ow-phone {
+  position: absolute;
+  left: 50%;
+  top: 1px;
+  width: 336px;
+  height: 720px;
+  margin-left: -168px;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 56px;
+  background: #1a1a1a;
+}
+.ow-phone-inner {
+  position: relative;
+  width: 312px;
+  height: 696px;
+  border-radius: 46px;
+  overflow: hidden;
+  background: #141414;
+  text-align: left;
+}
+
+/* The app screen, laid out at phone size (390 wide) and scaled into the frame. */
+.ow-screen {
+  width: 390px;
+  height: 844px;
+  box-sizing: border-box;
+  padding: 60px 20px 0;
+  transform: scale(0.8);
+  transform-origin: 0 0;
+}
+.ow-screen-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.ow-greet {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.ow-greet span {
+  color: #9b9b9b;
+}
+.ow-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ow-dusk);
+  color: #141414;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+.ow-card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  padding: 18px 20px 8px;
+  border-radius: 24px;
+  background: var(--ow-card);
+}
+.ow-card.is-hero {
+  margin-top: 24px;
+  padding-bottom: 20px;
+}
+.ow-label {
+  font-size: 14px;
+  color: #9b9b9b;
+}
+.ow-big {
+  margin-top: 6px;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.ow-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+.ow-card-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 600;
+}
+.ow-card-title em {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #9b9b9b;
+}
+
+.ow-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+.ow-tile {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ow-tile img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.ow-row-text {
+  flex: 1;
+  line-height: 1.3;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ow-row-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+.ow-row-sub {
+  margin-top: 1px;
+  font-size: 13px;
+  color: #9b9b9b;
+}
+.ow-row-sub.is-accent {
+  color: var(--ow-dusk);
+}
+.ow-row-amount {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* "Logged" notes that drop in at the top of the phone. */
+.ow-toast {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 12px;
+  height: 56px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 18px;
+  background: #262626;
+  transform: translateY(-140%);
+}
+.ow-toast .ow-tile {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+}
+.ow-toast .ow-tile img {
+  width: 20px;
+  height: 20px;
+}
+.ow-toast .ow-row-name,
+.ow-toast .ow-row-amount {
+  font-size: 13px;
+  font-weight: 600;
+}
+.ow-toast .ow-row-sub {
+  font-size: 12px;
+}
+.ow-toast-a {
+  animation: ow-toast 6s cubic-bezier(0.16, 1, 0.3, 1) infinite 1.4s;
+}
+.ow-toast-b {
+  animation: ow-toast 6s cubic-bezier(0.16, 1, 0.3, 1) infinite 4.4s;
+}
+
+/* The bank SMS and the Gmail receipt, flying into the phone. */
+.ow-fly {
+  position: absolute;
+  width: 270px;
+  padding: 16px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background: #1c1c1c;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+}
+.ow-fly strong {
+  margin-top: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.ow-fly-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ow-muted);
+}
+.ow-fly-meta img {
+  width: 14px;
+  height: 14px;
+}
+.ow-fly-sub {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--ow-muted);
+}
+.ow-fly-l {
+  left: 0;
+  top: 150px;
+  animation: ow-fly-l 6s cubic-bezier(0.16, 1, 0.3, 1) infinite 1.4s;
+}
+.ow-fly-r {
+  right: 0;
+  top: 250px;
+  animation: ow-fly-r 6s cubic-bezier(0.16, 1, 0.3, 1) infinite 4.4s;
+}
+
+/* Entrances -------------------------------------------------------------- */
+
+.ow-rise {
+  display: block;
+  transform: translateY(110%);
+  animation: ow-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.ow-shine {
+  background: linear-gradient(90deg, #b8a6ff 0%, #ffffff 25%, #9fb4ff 50%, #b8a6ff 75%, #ffffff 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation:
+    ow-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    ow-shine 6s linear infinite;
+}
+.ow-up {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: ow-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ow-rise {
+  to {
+    transform: none;
+  }
+}
+@keyframes ow-up {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ow-shine {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes ow-breathe {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.12);
+  }
+}
+@keyframes ow-drift {
+  0%,
+  100% {
+    transform: translateX(-40px) scaleY(1);
+  }
+  50% {
+    transform: translateX(40px) scaleY(1.15);
+  }
+}
+@keyframes ow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ow-toast {
+  0%,
+  58% {
+    transform: translateY(-140%);
+  }
+  66%,
+  88% {
+    transform: none;
+  }
+  96%,
+  100% {
+    transform: translateY(-140%);
+  }
+}
+@keyframes ow-fly-l {
+  0% {
+    opacity: 0;
+    transform: translate(-40px, 10px);
+  }
+  10%,
+  48% {
+    opacity: 1;
+    transform: none;
+  }
+  62%,
+  100% {
+    opacity: 0;
+    transform: translate(200px, -30px) scale(0.55);
+  }
+}
+@keyframes ow-fly-r {
+  0% {
+    opacity: 0;
+    transform: translate(40px, 10px);
+  }
+  10%,
+  48% {
+    opacity: 1;
+    transform: none;
+  }
+  62%,
+  100% {
+    opacity: 0;
+    transform: translate(-200px, -30px) scale(0.55);
+  }
+}
+
+/* Phones ----------------------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .ow-main {
+    padding-top: 36px;
+  }
+  .ow-lede {
+    font-size: 17px;
+  }
+  .ow-stage {
+    height: 540px;
+    margin-top: 48px;
+  }
+  /* No room beside the phone: the alerts show only as the notes inside it. */
+  .ow-fly {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ow-page *,
+  .ow-page *::before {
+    animation: none !important;
+  }
+  .ow-rise,
+  .ow-up {
+    opacity: 1;
+    transform: none;
+  }
+  .ow-fly {
+    display: none;
+  }
+}

@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
 import { Intro } from './components/Intro'
 import { Layout } from './components/Layout'
@@ -10,14 +10,17 @@ import { About } from './pages/About'
 import { Blog } from './pages/Blog'
 import { BrandTest } from './pages/BrandTest'
 import { BlogPost } from './pages/BlogPost'
+import { RillPage } from './rill/RillPage'
 
 function App() {
+  // Product pages (unlisted, link-only) open straight on their own hero.
+  const productPage = useLocation().pathname.startsWith('/rill')
   return (
     <>
       {/* Outside the router and outside .kora-app: a sibling of the whole page,
           so no ancestor transform can trap its fixed positioning. */}
       {/* The Koraa’ logo animation, once per visit, whichever page it opens on. */}
-      <Intro />
+      {!productPage && <Intro />}
 
       <Routes>
         <Route element={<Layout />}>
@@ -30,6 +33,8 @@ function App() {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/brand-test" element={<BrandTest />} />
         </Route>
+        {/* Unlisted: no menu links, kept out of search. Shared by link only. */}
+        <Route path="/rill" element={<RillPage />} />
       </Routes>
     </>
   )
